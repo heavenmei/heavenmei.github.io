@@ -13,9 +13,9 @@ hasCJKLanguage = true
 home = ["HTML", "RSS", "Algolia"]
 
 [params]
-  header_image = "img/home-bg-jeep.jpg"
-  SEOTitle = "黄海文的博客 | HuangHaiwen Blog"
-  description = "黄海文，程序员, | 这里是 黄海文 的博客，与你一起发现更大的世界。"
+  header_image = "img/home-bg.jpg"
+  SEOTitle = "HuangHaiwen Blog | 黄海文的博客"
+  description = "黄海文，程序员| 这里是 黄海文 的博客，与你一起发现更大的世界。"
   keyword = "黄海文, huanghaiwen, Heavenmei Blog, 博客, 个人网站,"
   slogan = "路在脚下，心向远方"
 
@@ -54,7 +54,7 @@ home = ["HTML", "RSS", "Algolia"]
   twikoo_env_id = ""
 
   #Enable wechat pay & alipay to allow readers send reward money if they like the articles 
-  reward = true 
+  reward = false 
   # reward_guide = "如果这篇文章对你有用,请随意打赏" 
 
   friends = true

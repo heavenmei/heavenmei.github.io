@@ -2,7 +2,7 @@
 layout: page
 ---
 
-## [Go 语言学习笔记](https://zhaohuabing.com/learning-golang)
+## [Go 语言学习笔记]
 
-## [Envoy 学习笔记](https://zhaohuabing.com/learning-envoy) 
+## Envoy 学习笔记
 
