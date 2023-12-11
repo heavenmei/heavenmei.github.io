@@ -1,5 +1,7 @@
 # Heavenmei Blog
 
+https://heavenmei.github.io/
+
 本地调试
 `hugo serve`
 http://localhost:1313/

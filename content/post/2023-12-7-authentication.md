@@ -9,7 +9,7 @@ tags:
   - tag1
   - tag2
 categories:
-  - Tech
+  - Post
 ---
 
 > 常见的鉴权方式有以下几种方式：

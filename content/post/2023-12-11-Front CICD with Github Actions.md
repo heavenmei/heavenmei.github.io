@@ -76,7 +76,8 @@ jobs:
 
 ### 打包
 本地开发时会把所需要的环境编写在.env 文件内，并且不会上传到github上以保证仓库隐私性。因此，在打包时若有相关生产环境变量，可以直接定义在 secret中
-![[./img/Pasted image 20231211150807.png]]
+![Pasted image 20231211153742](./img/Pasted%20image%2020231211150807.png)
+
 在脚本中引用
 ```yaml
 
@@ -161,9 +162,7 @@ action 执行该脚本
 
 ### 执行
  GitHub Actions 绑定`.github/workflows/demo.yml` ，执行结果如下：
-
-
-![[Pasted image 20231211153742.png]]
+![Pasted image 20231211153742](./img/Pasted%20image%2020231211153742.png)
 
 ### 完整代码
 
