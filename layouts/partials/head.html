@@ -46,14 +46,14 @@
      <!-- end ogp -->
 
     <meta name="keyword"  content="{{ .Site.Params.keyword }}">
-    <link rel="shortcut icon" href="{{ "img/avatar.png" | relURL }}">
+    <link rel="shortcut icon" href="{{ "img/avatar.jng" | relURL }}">
 
     <title>{{ if .Title }}{{ .Title }} | {{ .Site.Params.SEOTitle }}{{ else }}{{ .Site.Params.SEOTitle }}{{ end }}</title>
 
     <link rel="canonical" href="{{ .RelPermalink }}">
 
     {{ if .Site.Params.disqus_proxy }}
-    <link rel="stylesheet" href="{{ "css/iDisqus.min.css" | relURL }}"/> -->
+    <link rel="stylesheet" href="{{ "css/iDisqus.min.css" | relURL }}"/>
     {{ end }}
     
     <!-- Bootstrap Core CSS -->
