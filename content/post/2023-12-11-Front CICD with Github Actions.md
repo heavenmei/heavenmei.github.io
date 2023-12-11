@@ -1,11 +1,11 @@
 ---
-title: 前端自动化CI：Github action部署项目到服务器
+title: 前端自动化CI/CD：Github Action部署项目到服务器
 date: 2023-12-11
 author: heavenmei
 categories:
   - Post
 ---
-> **What‘s Github Action？**
+> **What‘s Github Action？** <br/>
 > [GitHub Actions](https://github.com/features/actions) 是 GitHub 的持续集成服务(CI/CD)。
 > 想要了解的朋友移步 [GitHub Actions 入门教程](https://link.juejin.cn/?target=https%3A%2F%2Fwww.ruanyifeng.com%2Fblog%2F2019%2F09%2Fgetting-started-with-github-actions.html "https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html")
 
