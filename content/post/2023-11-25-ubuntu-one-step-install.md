@@ -1,9 +1,16 @@
 ---
 title: ubuntu系统重装+ 一键配置脚本
+subtitle: 适用于ubuntu和mac 的一键安装相关环境脚本
+layout: post
 date: 2023-11-25
 author: heavenmei
 categories:
   - Post
+description: 装环境实在太麻烦啦，mark一些安装命令，以备不时之需。
+tags:
+  - Linux
+URL: /2023-11-25-one-step-install
+image:
 ---
 
 
