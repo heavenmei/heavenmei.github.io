@@ -1,5 +1,5 @@
 ---
-title: An Example Post
+title: 鉴权方式
 subtitle: ""
 description: ""
 date: 2023-11-25
@@ -28,6 +28,13 @@ categories:
 4. 客户端通过cookie或者其他方式将token存储起来
 5. 客户端以后发送请求都需要带上token
 6. 服务端验证token的合法性，校验通过则返回资源，不通过则返回401状态码
+
+
+
+
+
+
+
 
 
 
