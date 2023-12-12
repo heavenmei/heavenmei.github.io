@@ -1,6 +1,7 @@
 ---
 tags:
   - skill
+layout: list
 ---
 
 
