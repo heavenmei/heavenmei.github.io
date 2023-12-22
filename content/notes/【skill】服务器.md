@@ -1,7 +1,10 @@
 ---
+title: Linux 使用技巧
 tags:
   - skill
 layout: list
+categories:
+  - Notes
 ---
 
 
