@@ -4,11 +4,16 @@ tags:
   - skill
 layout: list
 categories:
-  - Notes
+  - Note
 ---
 
 
->ecnu13: ssh [haiwen@172.23.137.2](mailto:haiwen@172.23.137.2)
+>ecnu13: `ssh haiwen@172.23.137.29`
+
+## 基本命令
+rm [-rf] dirName 
+
+参数：-r 将目录及以下之档案亦逐一删除，-f 强行删除，不需询问。
 
 ## 科学上网
 
@@ -27,7 +32,43 @@ categories:
 Tailscale属于一种虚拟组网工具，把安装了Tailscale服务的机器，都放到同一个局域网，稳定连接
 
 ecnu5 内网ip： 100.115.188.110 -p 49940
-## 本地打开服务器的localhost
+## ssh
+```shell
+apt-get install -y openssh-server
+# 设置登录密码
+passwd
+# 修改配置文件
+vim /etc/ssh/sshd_config
+# 开启root登录 PermitRootLogin yes
+# 开启密码认证 PasswordAuthentication yes
+
+# 查看 ssh 状态
+service ssh status/start/restart
+
+# 开机自动启动ssh命令
+sudo systemctl enable ssh
+ 
+# 关闭ssh开机自动启动命令
+sudo systemctl disable ssh
+ 
+# 单次开启ssh
+sudo systemctl start ssh
+ 
+# 单次关闭ssh
+sudo systemctl stop ssh
+ 
+# 设置好后重启系统
+reboot
+ 
+#查看ssh是否启动，看到Active: active (running)即表示成功
+sudo systemctl status ssh
+
+```
+
+
+
+
+
 ssh链接时 将服务器的8097端口重定向到本机18097端口： `ssh -L 18097:127.0.0.1:8097 username@xx.xx.xx.xx -p PORT`
 
 
@@ -46,23 +87,65 @@ ssh链接时 将服务器的8097端口重定向到本机18097端口： `ssh -L 1
 
 
 ## 防火墙
-服务器端口无法访问
+> 检查端口网站：[https://tool.chinaz.com/port](https://tool.chinaz.com/port)
 
-A：防火墙未开启
+```shell
+# 查看端口是否开启（无返回信息则表示该端口未开放。）
+lsof -i:22
+# 查看当前主机在监听的端口
+netstat -tlunp
+netstat -tlunp | grep 22
+```
 
-查看防火墙中允许被访问的端口号：sudo firewall-cmd --list-all （ports选项）
 
-`firewall-cmd --zone=public --list-ports`
 
-开启端口：sudo firewall-cmd --zone=public --add-port=8885/tcp --permanent
+> 常见的linux系统防火墙有：UFW、firewall、[iptables](https://so.csdn.net/so/search?q=iptables&spm=1001.2101.3001.7020)，
+> 其中，UFW是Debian系列的默认防火墙，firewall 是红帽系列7及以上的防火墙（如CentOS7.x）
+> 相互作用影响
 
-重启防火墙：sudo firewall-cmd --reload
+### ufw
+```shell
+# 防火墙状态/规则：inactive是关闭，active是开启
+sudo ufw status
+# 开启防火墙
+sudo ufw enable/disable
+# 重启防火墙
+sudo ufw reload
+#恢复初始化设置
+sudo ufw reset 
+# 允许/拒绝访问20端口
+sudo ufw allow/deny 20[/tcp]
+# 批量打开
+sudo ufw allow 4900:5000/tcp
+# 比如删除端口
+sudo ufw delete allow 3690 
 
-关闭端口：sudo firewall-cmd --zone=public --remove-port=7890/tcp --permanent 
+```
 
-再次检查
 
-检查端口网站：https://tool.chinaz.com/port
+### firewall-cmd
+```shell
+# 状态
+sudo firewall-cmd --state
+# 查看防火墙中允许被访问的端口号
+sudo firewall-cmd --list-all 
+sudo firewall-cmd --zone=public --list-ports
+
+# 开启端口
+sudo firewall-cmd --zone=public --add-port=8885/tcp --permanent
+# 重启
+sudo firewall-cmd --reload
+# 关闭
+sudo firewall-cmd --zone=public --remove-port=7890/tcp --permanent 
+
+```
+
+
+
+
+
+
+
 
 
 ## 通信
@@ -73,7 +156,7 @@ A：防火墙未开启
 scp 用户名@计算机IP或者计算机名称:文件名   本地路径
  
 #示例
-scp -r root@172.23.148.93:/data/jsq/pix2pix-zero/output  /Users/heavenmei/Documents/homework/CV/HW/p2p
+scp -r haiwen@172.23.137.29:/data/jsq/pix2pix-zero/output  /Users/heavenmei/Documents/homework/CV/HW/p2p
 ```
 
 从本地上传到服务器：
@@ -91,6 +174,7 @@ scp中也有-r参数，使用-r参数，可以实现文件夹的复制
 
 
 
+
 ## pm2
 - npm install pm2 -g
 - pm2 list
@@ -99,3 +183,38 @@ scp中也有-r参数，使用-r参数，可以实现文件夹的复制
 - pm2 stop {app_name}
 - pm2 delete app_name}
 - pm2 clean --all
+
+
+## tmux
+[Tmux 配置：打造最适合自己的终端复用工具 - zuorn - 博客园](https://www.cnblogs.com/zuoruining/p/11074367.html)
+
+
+```shell
+
+#启动新session： 
+tmux [new -s 会话名 -n 窗口名] 
+#恢复session： 
+tmux at [-t 会话名] 
+#列出所有sessions： 
+tmux ls 
+#关闭session： 
+tmux kill-session -t 会话名 
+#关闭整个tmux服务器： 
+tmux kill-server
+
+```
+
+
+
+## Docker
+https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170329365416800186525040%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170329365416800186525040&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-125074080-null-null.142^v96^pc_search_result_base7&utm_term=docker-compose%20%E5%90%AF%E5%8A%A8pytorch&spm=1018.2226.3001.4187
+
+
+
+
+
+## 磁盘管理
+查看磁盘信息：`lsblk`
+
+
+QA： [2023-11-25-ubuntu-config](../post/2023-11-25-ubuntu-config.md)

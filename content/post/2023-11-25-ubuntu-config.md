@@ -1,5 +1,5 @@
 ---
-title: ubuntu系统重装+ 一键配置脚本
+title: ubuntu环境配置
 subtitle: 适用于ubuntu和mac 的一键安装相关环境脚本
 layout: post
 date: 2023-11-25
@@ -114,11 +114,30 @@ WantedBy=multi-user.target
 之后可以在本机电脑 ssh username@ip -p PORT 远程连接
 
 ### docker
+https://www.runoob.com/docker/docker-container-connection.html
 
 for ubuntu20+
 
 [Ubuntu中docker的安装和使用_ubuntu docker_urnotlanxi的博客-CSDN博客](https://blog.csdn.net/urnotlanxi/article/details/128005616)
 
-### tmux
 
-[Tmux 配置：打造最适合自己的终端复用工具 - zuorn - 博客园](https://www.cnblogs.com/zuoruining/p/11074367.html)
+### conda
+```shell
+# download
+curl -O https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
+# 安装
+sudo bash ./Anaconda3-5.2.0-Linux-x86_64.sh 
+# 添加环境变量 
+echo 'export PATH=~/anaconda3/bin:$PATH' >> ~/.bashrc 
+# 刷新bashrc
+source ~/.bashrc 
+```
+
+
+## QA
+##### Q: sudo: command not found
+`apt install sudo`
+
+##### Q：apt & apt-get
+_apt_ 和 _apt-get_ 之间的区别不仅在于 _apt_ 是 _apt-get_ 的较新版本。_apt_ 命令被设计为对用户更加友好的 _apt-get_ 替代方案，结合了多个包管理工具的功能，为用户提供便利。
+[APT 与 APT-GET 之间有什么区别？](https://aws.amazon.com/cn/compare/the-difference-between-apt-and-apt-get/)

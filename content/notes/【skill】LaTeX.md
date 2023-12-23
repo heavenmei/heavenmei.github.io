@@ -4,8 +4,10 @@ tags:
   - skill
 layout: list
 categories:
-  - Notes
+  - Note
 ---
+
+**高亮**： `\hl` (`usepackage{soul}`)
 
 **新开页：** `\clearpage` 
 **新开一列**：  `\newpage` 
