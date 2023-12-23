@@ -209,6 +209,47 @@ tmux kill-server
 ## Docker
 https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170329365416800186525040%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170329365416800186525040&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-125074080-null-null.142^v96^pc_search_result_base7&utm_term=docker-compose%20%E5%90%AF%E5%8A%A8pytorch&spm=1018.2226.3001.4187
 
+### image
+
+
+
+**delete image**
+
+```shell
+# 删除单个镜像
+docker rmi -f [image_id/image_name]
+# 删除多个镜像
+docker rmi -f [image_id] [image_id]
+# 删除所有镜像
+docker rmi -f $(docker images -aq)
+
+```
+
+### container
+**run**
+```shell
+docker run [params] [image_id/name]
+
+--name="Name" 容器名字 
+-d 后台方式运行 
+-it 指定交互方式运行，进入容器查看内容
+-p 8080:8080 (主机端口:容器端口)
+-gpus all : 指定gpu
+
+```
+
+#### copy container
+```shell
+# 查找正在运行的容器
+docker ps
+# 将容器打包为镜像 
+docker commit [container_id/container_name] [image_name]
+# 查看镜像
+docker images
+# 重新启动新的容器
+docker run -it [image_name]
+```
+
 
 
 
@@ -217,4 +258,36 @@ https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%25
 查看磁盘信息：`lsblk`
 
 
-QA： [2023-11-25-ubuntu-config](../post/2023-11-25-ubuntu-config.md)
+## GPU
+`nvidia-smi` & `nvidia-smi -l` （自动实时刷新GPU的使用情况）
+上图显示的显卡信息，第一行是版本信息，第二行是标题栏，第三行是具体的显卡信息。如果有多个显卡，就会有多行对应标题栏的信息。例如我上面显示了共0~4号，共5个卡。
+
+GPU：显卡编号，从0开始。
+Fan：风扇转速，在0~100%之间变动。这个速度是计算机期望的风扇转速，实际情况下如果风扇堵转，可能就不会显示具体转速值。有的设备不会返回转速，因为它不依赖风扇冷却，而是通过其他外设保持低温，比如我们实验室的服务器是常年放在空掉房间里面的。
+Name：显卡名，以上都是Tesla。
+Temp：显卡内部的温度，以上分别是54、49、46、50、39摄氏度。
+Perf：性能状态，从P0到P12，P0性能最大，P12最小 。
+Persistence-M：持续模式的状态开关，持续模式虽然耗能大，但是在新的GPU应用启动时，花费的时间更少。以上都是Off的状态。
+Pwr：能耗表示。
+Bus-Id：涉及GPU总线的相关信息。
+Disp.A：是Display Active的意思，表示GPU的显示是否初始化。
+Memory-Usage：显存的使用率。
+GPU-Util：GPU的利用率。
+Compute M.：计算模式。
+下面的Process显示每块GPU上每个进程所使用的显存情况。
+显卡占用和GPU占用是两个不一样的东西，显卡是由GPU和显卡等组成的，显卡和GPU的关系有点类似于内存和CPU的关系，两个指标的占用率不一定是互相对应的。例如跑tensorflow代码的时候，可能显存占得多，GPU占得少。
+
+
+
+**判断cuda是否可用：**
+`python -c "import torch; print(torch.cuda.is_available())"`
+
+
+
+tip：
+内存使用： `free -m`
+cpu使用：`top`
+
+
+## QA
+[2023-11-25-ubuntu-config](../post/2023-11-25-ubuntu-config.md)

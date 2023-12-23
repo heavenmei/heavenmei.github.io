@@ -54,3 +54,7 @@ echo "export \$(cat /proc/1/environ |tr '\0' '\n' | xargs)" >> ~/.bashrc
 
 
 
+
+## 已有容器添加gpu
+
+
