@@ -32,6 +32,8 @@ rm [-rf] dirName 
 Tailscale属于一种虚拟组网工具，把安装了Tailscale服务的机器，都放到同一个局域网，稳定连接
 
 ecnu5 内网ip： 100.115.188.110 -p 49940
+
+
 ## ssh
 ```shell
 apt-get install -y openssh-server
@@ -153,10 +155,10 @@ sudo firewall-cmd --zone=public --remove-port=7890/tcp --permanent
 
 ```bash
 #命令格式
-scp 用户名@计算机IP或者计算机名称:文件名   本地路径
+scp [-params] 用户名@计算机IP或者计算机名称:文件名   本地路径
  
 #示例
-scp -r haiwen@172.23.137.29:/data/jsq/pix2pix-zero/output  /Users/heavenmei/Documents/homework/CV/HW/p2p
+scp -P 4900 -r haiwen@172.23.137.29:/data/jsq/pix2pix-zero/output  /Users/heavenmei/Documents/homework/CV/HW/p2p
 ```
 
 从本地上传到服务器：
@@ -170,7 +172,9 @@ scp  ./files_name.txt git@166.111.77.123:/home/shangyj/files
 
 ```
 
-scp中也有-r参数，使用-r参数，可以实现文件夹的复制
+**参数**
+- -r :  复制
+- -P：port
 
 
 
@@ -204,8 +208,8 @@ tmux kill-server
 
 ```
 
-
-
+**vscode 中tmux无法选中复制？**
+vscode->setting->macOptionClickForcesSelection :true-> option+选中复制
 ## Docker
 https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170329365416800186525040%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170329365416800186525040&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-125074080-null-null.142^v96^pc_search_result_base7&utm_term=docker-compose%20%E5%90%AF%E5%8A%A8pytorch&spm=1018.2226.3001.4187
 
@@ -238,7 +242,7 @@ docker run [params] [image_id/name]
 
 ```
 
-#### copy container
+### copy container
 ```shell
 # 查找正在运行的容器
 docker ps
@@ -246,7 +250,7 @@ docker ps
 docker commit [container_id/container_name] [image_name]
 # 查看镜像
 docker images
-# 重新启动新的容器
+# 启动新的容器
 docker run -it [image_name]
 ```
 
@@ -290,4 +294,4 @@ cpu使用：`top`
 
 
 ## QA
-[2023-11-25-ubuntu-config](../post/2023-11-25-ubuntu-config.md)
+[2023-11-25-ubuntu-environment](../post/2023-11-25-ubuntu-environment.md)

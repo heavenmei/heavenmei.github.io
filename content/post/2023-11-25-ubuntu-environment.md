@@ -36,19 +36,14 @@ ubuntu分配桌面版和服务器版，在主机上安装桌面版
 ## 3、Clash
 
 下载文件 `clash-linux-amd64-v1.17.0.gz`
+> 链接: https://pan.baidu.com/s/1RzYl_CGHLF9IUS9I5xyvZg?pwd=53kc 提取码: 53kc
 
 解压：`gunzip clash-linux-amd64-v1.17.0.gz`
-
 移动重命名： `sudo mv clash-linux-amd64-v1.17.0 /usr/local/bin/clash`
-
 给 Clash 添加执行权限：`sudo chmod +x /usr/local/bin/clash`
-
 启动 Clash自动创建initial config file：`clash -d ~/.config/clash`
-
 替换订阅文件：`curl https:/xxxx.yaml > ~/.config/clash/config.yaml`（或者手动复制）
-
 启动 Clash：`clash -d ~/.config/clash`
-
 写入 ~/zshrc
 
 ```json
