@@ -33,6 +33,6 @@ var fileList = [];
 const timeStart = new Date();
 const filePath = path.resolve("static/sx");
 readDirRecur(filePath, function () {
-  console.log("done", new Date() - timeStart); //done 3
+  console.log("done1", new Date() - timeStart); //done 3
   console.log(fileList); //打印出目录下的所有文件
 });
