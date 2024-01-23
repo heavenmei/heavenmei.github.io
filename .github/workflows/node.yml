@@ -55,8 +55,9 @@ jobs:
           yarn build
     # 部署
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v4
+      uses: JamesIves/github-pages-deploy-action@v3
       with:
-        ssh-key: ${{ secrets.DEPLOY_KEY }}
-        # REPOSITORY_NAME: heavenmei/heavenmei.github.io
-        folder: dist  # npm run build 生成静态资源的路径
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        REPOSITORY_NAME: heavenmei/heavenmei.github.io
+        BRANCH: gh-pages
+        FOLDER: dist  # npm run build 生成静态资源的路径
