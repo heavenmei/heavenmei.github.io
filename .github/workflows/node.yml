@@ -71,6 +71,6 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        REPOSITORY_NAME: heavenmei/heavenmei.github.io
+        # REPOSITORY_NAME: heavenmei/heavenmei.github.io
         BRANCH: gh-pages
         FOLDER: content
