@@ -55,22 +55,10 @@ jobs:
           yarn build
     # 部署
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        REPOSITORY_NAME: heavenmei/heavenmei.github.io
-        BRANCH: gh-pages
-        FOLDER: dist  # npm run build 生成静态资源的路径
-
-  deploy-assets:
-    runs-on: ubuntu-latest
-
-    steps:
-    # 部署 content下的文档
-    - name: Deploy Content
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        # REPOSITORY_NAME: heavenmei/heavenmei.github.io
-        BRANCH: gh-pages
-        FOLDER: content
+        token: ${{ secrets.TOKEN }}
+        repository-name: heavenmei/heavenmei.github.io
+        branch: gh-pages
+        target-folder: content
+        folder: dist  # npm run build 生成静态资源的路径
