@@ -14,7 +14,7 @@ env:
     cache-name: note
     
 jobs:
-  build:
+  build-and-deploy:
 
     runs-on: ubuntu-latest
 
@@ -53,9 +53,10 @@ jobs:
     - name: Build
       run: |
           yarn build
-     # 上传打包资源
+    # 部署
     - name: Deploy
-      run: |
-          git config --global user.email "1394003825@qq.com"
-          git config --global user.name "heavenmei"
-          yarn deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        # ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        # REPOSITORY_NAME: heavenmei/heavenmei.github.io
+        folder: dist  # npm run build 生成静态资源的路径
