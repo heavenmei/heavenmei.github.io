@@ -4,7 +4,7 @@ import Post from "./pages/post";
 function App() {
   return (
     <>
-      <Post url="../content/post/20231125ubuntu_environment.md" />
+      <Post url="../content/post/2023-11-25-ubuntu-environment.md" />
     </>
   );
 }
