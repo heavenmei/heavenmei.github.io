@@ -1,0 +1,186 @@
+{
+  "main": {
+    "id": "4d9e135b7654da3f",
+    "type": "split",
+    "children": [
+      {
+        "id": "2dfff53b5341aa57",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9bc42ff0402495cd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2023-11-27-vite+vue.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a4f88818a057cdac",
+    "type": "split",
+    "children": [
+      {
+        "id": "90574d07c29f939c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3fb5c915ac77de91",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "62996d23ef17be54",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "30092b991f6bc1b5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7321f83d4d4c5849",
+    "type": "split",
+    "children": [
+      {
+        "id": "d0a45c154df835f6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ab7208ca43179430",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "2023-11-27-vite+vue.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "ae951546d28d8b42",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2023-11-27-vite+vue.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "6d6da56c34880bd9",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3884b0fed608b52c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "2023-11-27-vite+vue.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "9bc42ff0402495cd",
+  "lastOpenFiles": [
+    "2023-11-27-vite+vue.md",
+    "2023-11-26-React+TS.md",
+    "2023-12-7-authentication.md",
+    "2023-12-11-Front CICD with Github Actions.md",
+    "2023-12-01-Diffusion Learning.md",
+    "2023-11-28-Time-series-data.md",
+    "2023-11-26.md",
+    "2023-11-25-ubuntu-one-step-install.md",
+    "未命名.md",
+    "about/index.md",
+    "notes/2023-12-11.md",
+    "archive/index.md",
+    "post/2023-11-25-ubuntu-one-step-install.md",
+    "post/2023-11-26-vite+vue.md",
+    "post/2023-12-11-Front CICD with Github Actions.md",
+    "post/2023-12-7-authentication.md",
+    "sth/2023-12-11-Front CICD with Github Actions.md",
+    "sth",
+    "notes/index.md",
+    "search/placeholder.md",
+    "未命名.canvas",
+    "2023-12-11.md",
+    "readme.md",
+    "content/post/img/Pasted image 20231211153742.png.md",
+    "content/post/img",
+    "content/post",
+    "content",
+    "img/Pasted image 20231211153742.png",
+    "pm2.md",
+    "img/Pasted image 20231211150807.png",
+    "2017-11-04-istio-install_and_example.md",
+    "img/istio-install_and_example/5-a.png.md",
+    "img/istio-install_and_example",
+    "img"
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "main": {
+    "id": "ba2c1c0c991b1fd1",
+    "type": "split",
+    "children": [
+      {
+        "id": "836a2ceea6e5b394",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "080785270717ebd6",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/【idea】产业地图.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "53a9e54ca25d0dbc",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/【idea】语义地图2.0+GVQA.md",
+                "mode": "source",
+                "source": false
+              },
+              "pinned": true
+            }
+          },
+          {
+            "id": "2ba75132604182ce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "notes/【skill】服务器.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "68da5206ab6a45ac",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "post/2024-01-12-Git.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "11c77d65da7630f9",
+    "type": "split",
+    "children": [
+      {
+        "id": "c02ca98a19841ee0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a4bbeed5a25f8284",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "cf98390c084daf1a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "df4a8d5fe0d3d12e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 233.5
+  },
+  "right": {
+    "id": "2eaa11b2cc70e5e0",
+    "type": "split",
+    "children": [
+      {
+        "id": "e9a4befb2abefd8b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "198fab374a94d2a8",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "post/2024-01-12-Git.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "64e93934844fc294",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "post/2024-01-12-Git.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "9f28aae74d8fdbeb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "e209fa4433f7f472",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "post/2024-01-12-Git.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "68da5206ab6a45ac",
+  "lastOpenFiles": [
+    "archive/index.md",
+    "notes/【idea】语义地图2.0+GVQA.md",
+    "notes/assets/Pasted image 20240118151607.png",
+    "notes/assets/Pasted image 20240120125130.png",
+    "notes/assets/Pasted image 20240120135840.png",
+    "notes/assets/Pasted image 20240122143343.png",
+    "post/2024-01-12-Git.md",
+    "post/2023-12-28-swagger2ts-pont.md",
+    "post/2024-01-17-Modal2Panel.md",
+    "post/2024-01-17-.md",
+    "notes/【skill】服务器.md",
+    "notes/【AAA-Pin】todo.md",
+    "notes/【idea】 河口海岸.md",
+    "notes/index.md",
+    "notes/【idea】产业地图.md",
+    "notes/assets/Pasted image 20240118151423.png",
+    "notes/2024-01-03 河口海岸启动会.md",
+    "notes/SemanticMap翻译稿.md",
+    "post/2023-11-27-vite+vue.md",
+    "post/2023-12-23-ubuntu-docker-pytorch-ssh.md",
+    "post/2023-12-27-tiptap.md",
+    "post/assets/Pasted image 20240112144245.png",
+    "post/assets",
+    "notes/assets/【会议通知】项目启动暨实施方案研讨会.pdf",
+    "notes/2023-12-11 产业地图.md",
+    "post/2023-11-25-ubuntu-environment.md",
+    "post/2023-12-11-Front CICD with Github Actions.md",
+    "post/2023-12-7-authentication.md",
+    "post/2023-11-26-React+TS.md",
+    "2023-12-23.md",
+    "notes/【skill】LaTeX.md",
+    "2023-12-11.md",
+    "post/2023-12-01-Diffusion Learning.md",
+    "notes/assets/IMG_0935.jpeg",
+    "notes/assets/IMG_0933.jpeg",
+    "notes/assets/IMG_0932.jpeg",
+    "notes/assets/IMG_0934.jpeg",
+    "notes/【idea】diffusion Vis.md",
+    "assets",
+    "imgs"
+  ]
+}

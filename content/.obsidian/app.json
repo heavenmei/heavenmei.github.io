@@ -1,0 +1,8 @@
+{
+  "promptDelete": false,
+  "newLinkFormat": "relative",
+  "attachmentFolderPath": "./assets",
+  "alwaysUpdateLinks": true,
+  "useMarkdownLinks": true,
+  "defaultViewMode": "preview"
+}
