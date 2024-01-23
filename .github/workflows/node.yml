@@ -71,8 +71,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
-     # 部署
-    - name: Deploy
+     # 部署 Images
+    - name: Deploy Images
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
         token: ${{ secrets.TOKEN }}
@@ -80,3 +80,13 @@ jobs:
         branch: gh-pages
         folder: images
         target-folder: images
+        
+    # 部署 Content 
+    - name: Deploy Content
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        token: ${{ secrets.TOKEN }}
+        repository-name: heavenmei/heavenmei.github.io
+        branch: gh-pages
+        folder: content
+        target-folder: content
