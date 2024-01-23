@@ -61,6 +61,9 @@ jobs:
         repository-name: heavenmei/heavenmei.github.io
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
+        clean-exclude: 
+            'content'
+            "images"
 
   deploy-assets:
 
@@ -76,3 +79,4 @@ jobs:
         repository-name: heavenmei/heavenmei.github.io
         branch: gh-pages
         folder: content
+        target-folder: content
