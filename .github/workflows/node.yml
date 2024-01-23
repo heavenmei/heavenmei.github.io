@@ -57,6 +57,6 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        # ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ssh-key: ${{ secrets.DEPLOY_KEY }}
         # REPOSITORY_NAME: heavenmei/heavenmei.github.io
         folder: dist  # npm run build 生成静态资源的路径
