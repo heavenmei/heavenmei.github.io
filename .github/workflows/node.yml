@@ -63,6 +63,7 @@ jobs:
         folder: dist  # npm run build 生成静态资源的路径
         target-folder: docs
         clean: true
+        force: true
         clean-exclude: 
             content
             images
