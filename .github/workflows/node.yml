@@ -52,7 +52,6 @@ jobs:
     # 打包
     - name: Build
       run: |
-          echo "VITE_SERVER_NAME = ${{ env.VITE_SERVER_NAME }}" > .env
           yarn build
      # 上传打包资源
     - name: Deploy
