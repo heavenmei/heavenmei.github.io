@@ -68,7 +68,7 @@ jobs:
             images
 
   Deploy-Static:
-    need: [Build-Deploy2Branch]
+    needs: [Build-Deploy2Branch]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
