@@ -5,3 +5,5 @@ declare module "*.md" {
 }
 
 declare module "markdown-navbar";
+declare module "fs";
+declare module "path";
