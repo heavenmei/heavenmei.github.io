@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./assets/css/main.css";
 import "./assets/css/github-markdown.css";
 import "markdown-navbar/dist/navbar.css";
 
