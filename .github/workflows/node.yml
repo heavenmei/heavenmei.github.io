@@ -78,5 +78,5 @@ jobs:
         token: ${{ secrets.TOKEN }}
         repository-name: heavenmei/heavenmei.github.io
         branch: gh-pages
-        folder: content
-        target-folder: content
+        folder: images
+        target-folder: images
