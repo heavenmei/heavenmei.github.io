@@ -30,20 +30,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
      #缓存依赖
-    # - name: Cache nodemodules
-    #   uses: actions/cache@v1
-    #   env:
-    #       cache-name: cache-node-modules
-    #   with:
-    #       # 需要缓存的文件的路径
-    #       path: ./node_modules 
-    #       # 对缓存的文件指定的唯一标识
-    #       key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }} 
-    #       # 用于没有再找目标key的缓存的backup选项
-    #       restore-keys: |
-    #           ${{ runner.os }}-build-${{ env.cache-name }}-
-    #           ${{ runner.os }}-build-
-    #           ${{ runner.os }}-
+    - name: Cache nodemodules
+      uses: actions/cache@v1
+      env:
+          cache-name: cache-node-modules
+      with:
+          # 需要缓存的文件的路径
+          path: ./node_modules 
+          # 对缓存的文件指定的唯一标识
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }} 
+          # 用于没有再找目标key的缓存的backup选项
+          restore-keys: |
+              ${{ runner.os }}-build-${{ env.cache-name }}-
+              ${{ runner.os }}-build-
+              ${{ runner.os }}-
     # 装依赖
     - name: Install
       run: |
@@ -62,8 +62,7 @@ jobs:
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
         target-folder: docs
-        clean: true
-        force: true
+        single-commit: true
         clean-exclude: 
             content
             images
