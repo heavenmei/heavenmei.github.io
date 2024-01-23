@@ -62,10 +62,10 @@ jobs:
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
         single-commit: true # 每一次commit 强制执行
-        clean: true
-        clean-exclude: 
-            content
-            images
+        # clean: true
+        # clean-exclude: 
+        #     content
+        #     images
 
   deploy-assets:
 
