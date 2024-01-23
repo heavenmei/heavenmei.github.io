@@ -55,7 +55,7 @@ jobs:
           yarn build
     # 部署
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@v3
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
         REPOSITORY_NAME: heavenmei/heavenmei.github.io
