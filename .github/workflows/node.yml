@@ -62,9 +62,9 @@ jobs:
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
         target-folder: docs
-        clean-exclude: 
-            content
-            images
+        # clean-exclude: 
+        #     content
+        #     images
 
   deploy-assets:
 
