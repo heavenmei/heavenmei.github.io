@@ -71,14 +71,9 @@ jobs:
         repository-name: heavenmei/heavenmei.github.io
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
-        clean: true
-        force: true
-        commit-message: Artifacts from https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        single-commit: false
-        silent: false
-        clean-exclude: 
-            content
-            images
+        # clean-exclude: 
+        #     content
+        #     images
 
   Deploy-Static:
     needs: [Build-Deploy2Branch]
