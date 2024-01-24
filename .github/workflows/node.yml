@@ -73,7 +73,9 @@ jobs:
         folder: dist  # npm run build 生成静态资源的路径
         clean: true
         force: true
-        commit-message: true
+        commit-message: Artifacts from https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        single-commit: false
+        silent: false
         clean-exclude: 
             content
             images
