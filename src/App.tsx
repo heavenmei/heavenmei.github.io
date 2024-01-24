@@ -1,10 +1,13 @@
-import Post from "./pages/post";
+import Footer from "./components/Footer";
+import Nav from "./components/Nav";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Post url="../content/post/2023-11-25-ubuntu-environment.md" />
-      <div>sdsdsds</div>
+      <Nav />
+      <Outlet />
+      <Footer />
     </>
   );
 }

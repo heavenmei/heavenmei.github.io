@@ -2,13 +2,13 @@ import { FC, useEffect, useState } from "react";
 import MarkNav from "markdown-navbar"; // markdown 目录
 import ReactMarkdown from "react-markdown";
 
-interface PostProps {
+interface MarkdownProps {
   url: string;
   content?: string;
 }
-const Post: FC<PostProps> = (props) => {
+const MarkdownWrap: FC<MarkdownProps> = (props) => {
   const { content, url } = props;
-  const [currentArticle, setCurrentArticle] = useState<PostProps>({
+  const [currentArticle, setCurrentArticle] = useState<MarkdownProps>({
     url: "",
     content: content,
   });
@@ -30,11 +30,7 @@ const Post: FC<PostProps> = (props) => {
   return (
     <div className="postWrap flex">
       <div className="leftSide text-start" style={{ minWidth: 200 }}>
-        <MarkNav
-          // className="tocList"
-          source={currentArticle.content}
-          ordered={false}
-        />
+        <MarkNav source={currentArticle.content} ordered={false} />
       </div>
       <div className="markdown-body content">
         <ReactMarkdown>{currentArticle.content}</ReactMarkdown>
@@ -43,4 +39,4 @@ const Post: FC<PostProps> = (props) => {
   );
 };
 
-export default Post;
+export default MarkdownWrap;
