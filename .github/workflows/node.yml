@@ -68,7 +68,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
         token: ${{ secrets.TOKEN }}
-        repository-name: heavenmei/heavenmei.github.io
+        # repository-name: heavenmei/heavenmei.github.io
         branch: gh-pages
         folder: dist  # npm run build 生成静态资源的路径
         clean-exclude: 
