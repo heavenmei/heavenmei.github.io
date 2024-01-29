@@ -63,6 +63,7 @@ jobs:
     - name: Build
       run: |
           yarn build
+          yarn deploy
     # 部署
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v4
