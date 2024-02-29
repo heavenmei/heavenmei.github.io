@@ -1,0 +1,126 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node CI
+
+# 触发workflow的条件
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+    
+jobs:
+  Build-Deploy2Branch:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.18.2]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+     #缓存依赖
+    - name: Cache nodemodules
+      uses: actions/cache@v1
+      env:
+          cache-name: cache-node-modules
+      with:
+          # 需要缓存的文件的路径
+          path: ./node_modules 
+          # 对缓存的文件指定的唯一标识
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./package.json') }} 
+          # 用于没有再找目标key的缓存的backup选项
+          restore-keys: |
+              ${{ runner.os }}-build-${{ env.cache-name }}-
+              ${{ runner.os }}-build-
+              ${{ runner.os }}-
+    # 装依赖
+    - name: Install
+      run: |
+          npm install -g yarn@1.22.19
+          yarn install
+    # 打包
+    - name: Build
+      run: |
+          yarn build
+    # 部署
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        token: ${{ secrets.TOKEN }}
+        # repository-name: heavenmei/heavenmei.github.io
+        branch: gh-pages
+        folder: dist  # npm run build 生成静态资源的路径
+        # clean-exclude: 
+            # content
+        #     images
+
+  Deploy-Assets:
+    needs: [Build-Deploy2Branch]
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+     # 部署 Images
+    - name: Deploy Images
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        token: ${{ secrets.TOKEN }}
+        repository-name: heavenmei/heavenmei.github.io
+        branch: gh-pages
+        folder: images
+        target-folder: images
+        
+    # 部署 Content 
+    - name: Deploy Content
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        token: ${{ secrets.TOKEN }}
+        repository-name: heavenmei/heavenmei.github.io
+        branch: gh-pages
+        folder: content
+        target-folder: content
+
+  Deploy-Static:
+    needs: [Deploy-Assets]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+
