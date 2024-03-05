@@ -145,3 +145,6 @@ Q：Please help me plan the most interesting travel route in Shanghai.
 
 
 ## CONCLUSION
+
+- 近年来，有关V-NLI的相关研究文献不断涌现，本文收集了 57 篇关于接受自然语言作为输入和输出可视化的 VNLI 的论文，对文献进行组织分类并全面分析概括。
+- 基于经典信息可视化管道和 V-NLI 层的扩展开发了分类维度，提出了新的信息可视化pipeline，包含以下七个阶段：查询解释、数据转换、可视化映射、视图转换、人机交互、对话管理和演示。

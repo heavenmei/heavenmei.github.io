@@ -12,7 +12,6 @@ pdf:  [Zotero](<%= it.backlink %>) <%= it.fileLink %>
 **原文：**
 <%= it.abstractNote.first().replace(/[\r\n]+/g, " ") %>
 
-
 ## Research Objectives
 
 
