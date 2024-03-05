@@ -5,15 +5,18 @@ import path from "path";
 import { readMdFile } from "./lib/posts-md.js";
 
 const PostPath = path.join(__dirname, "./content/post");
-const MdFiles = readMdFile(PostPath);
-console.log("markdown files", MdFiles);
+const NotePath = path.join(__dirname, "./content/notes");
+const PostFiles = readMdFile(PostPath);
+const NoteFiles = readMdFile(NotePath);
+console.log("markdown files", PostFiles);
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), md()],
   // 挂在到window
   define: {
-    MDFILES: MdFiles,
+    PostFiles: PostFiles,
+    NoteFiles: NoteFiles,
   },
   resolve: {
     alias: {

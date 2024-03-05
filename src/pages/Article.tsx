@@ -4,27 +4,30 @@ import Banner from "../components/Banner";
 import MarkNav from "markdown-navbar"; // markdown 目录
 import ReactMarkdown from "react-markdown";
 import { Pagination } from "@arco-design/web-react";
+import { useLocation } from "react-router-dom";
 
 const Article: FC = () => {
   const [currentArticle, setCurrentArticle] = useState<string>();
   const [curIndex, setCurIndex] = useState<number>(-1);
   //@ts-ignore
-  const postList = window.MDFILES;
+  const postList = window.PostFiles;
+  const { state } = useLocation();
+  console.log(state);
 
   // 更改当前文档
   const changeCurrentArticle = async (url: string) => {
     const res = await fetch(url);
     const text = await res.text();
     const content = text.split("---")[2];
-    // console.log(content);
+    console.log(content);
 
     setCurrentArticle(content);
   };
 
   const curMD = useMemo(() => {
-    const postURL = location.pathname.split("/").pop();
+    const url = location.pathname.split("/").pop();
     const _curIndex = postList.findIndex(
-      (item: any) => item.URL?.split("/")[1] == postURL
+      (item: any) => item.URL?.split("/")[1] == url
     );
 
     if (_curIndex === -1) {

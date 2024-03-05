@@ -7,15 +7,15 @@ interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
   // const { content, url } = props;
   //@ts-ignore
-  const mdFiles = window.MDFILES;
-  // console.log("===window.MDFILES", window.MDFILES[0]);
+  const PostFiles = window.PostFiles;
+  // console.log("===window.PostFiles", window.PostFiles[0]);
 
   return (
     <>
       <Banner />
       <div className="post-list container flex w-9/12">
         <div className="flex flex-col flex-1 pl-4 pr-[100px] gap-4">
-          {mdFiles.map((file: any) => (
+          {PostFiles.map((file: any) => (
             <>
               <div className="post-item flex flex-col" key={file.title}>
                 <Link to={`/posts${file.URL}`}>

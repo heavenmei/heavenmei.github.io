@@ -4,6 +4,7 @@ import App from "../App";
 import Banner from "../components/Banner";
 import PostList from "../pages/PostList";
 import Home from "../pages/Home";
+import NoteList from "../pages/NoteList";
 
 export const routes = [
   {
@@ -21,10 +22,24 @@ export const routes = [
     element: <PostList />,
   },
   {
-    path: "posts/:postURL",
+    path: "posts/:url",
     name: "post",
     navShow: false,
     label: "POSTS",
+    element: <Article />,
+  },
+  {
+    path: "notes",
+    name: "notes",
+    label: "NOTES",
+    navShow: true,
+    element: <NoteList />,
+  },
+  {
+    path: "notes/:url",
+    name: "notes",
+    label: "NOTES",
+    navShow: true,
     element: <Article />,
   },
   {

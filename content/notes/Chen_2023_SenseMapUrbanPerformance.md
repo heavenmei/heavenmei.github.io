@@ -2,24 +2,24 @@
 zotero-key: QHHGZAAZ
 zt-attachments:
   - "1310"
-Title: "SenseMap: Urban Performance Visualization and Analytics via Semantic Textual Similarity"
-CiteKey: Chen_2023_SenseMapUrbanPerformance
-Authors: Juntong Chen, Qiaoyun Huang, Changbo Wang, Chenhui Li
-Publication: IEEE Transactions on Visualization and Computer Graphics
-Date: "2023"
-Tags:
+title: "SenseMap: Urban Performance Visualization and Analytics via Semantic Textual Similarity"
+citekey: Chen_2023_SenseMapUrbanPerformance
+authors: Juntong Chen, Qiaoyun Huang, Changbo Wang, Chenhui Li
+publication: IEEE Transactions on Visualization and Computer Graphics
+date: "2023"
+tags:
   - 📖PaperReading
 ---
-> title-zh:  SenseMap：通过语义文本相似性进行城市绩效可视化和分析
-> pdf:  [Zotero](zotero://select/library/items/QHHGZAAZ) [attachment](<file:///Users/heavenmei/Zotero/storage/WIII72K3/Chen%20et%20al_2023_SenseMap.pdf>)
+```ad-info
+title-zh:  SenseMap：通过语义文本相似性进行城市绩效可视化和分析
+pdf:  [Zotero](zotero://select/library/items/QHHGZAAZ) [attachment](<file:///Users/heavenmei/Zotero/storage/WIII72K3/Chen%20et%20al_2023_SenseMap.pdf>)
+```
 
 ## Abstract
   随着城市人口的增长，有效获取宜居性和舒适度等城市绩效指标变得越来越重要，因为它们具有重大的社会经济影响。虽然兴趣点 (POI) 数据已用于基于位置的服务中的各种应用，但其城市性能分析的潜力仍未得到开发。在本文中，我们提出了 SenseMap，这是一种利用 POI 数据作为城市功能的语义表示来分析城市绩效的新方法。我们通过计算构建的语料库上的语义文本相似性来量化 POI 对不同城市绩效指标的贡献。我们提出了语义自适应核密度估计，它考虑了 POI 在不同流量分析区域的影响区域和语义贡献，以生成用于测量的语义密度图。我们设计并实施了功能丰富的实时视觉分析系统，供用户探索周围环境的城市表现。人类判断和参考数据的评估证明了我们方法的可行性和有效性。使用场景和用户研究展示了我们系统的能力、可用性和可解释性。
 rate: -1
 **原文：**
 As urban populations grow, effectively accessing urban performance measures such as livability and comfort becomes increasingly important due to their significant socioeconomic impacts. While Point of Interest (POI) data has been utilized for various applications in location-based services, its potential for urban performance analytics remains unexplored. In this paper, we present SenseMap, a novel approach for analyzing urban performance by leveraging POI data as a semantic representation of urban functions. We quantify the contribution of POIs to different urban performance measures by calculating semantic textual similarities on our constructed corpus. We propose Semantic-adaptive Kernel Density Estimation which takes into account POIs' influential areas across different Traffic Analysis Zones and semantic contributions to generate semantic density maps for measures. We design and implement a feature-rich, real-time visual analytics system for users to explore the urban performance of their surroundings. Evaluations with human judgment and reference data demonstrate the feasibility and validity of our method. Usage scenarios and user studies demonstrate the capability, usability and explainability of our system.
-
-
 
 ## Old Translation
 
@@ -53,39 +53,49 @@ As urban populations grow, effectively accessing urban performance measures such
 - 度量的语义图 D 的生成包括两个步骤。首先，我们生成类级密度图 Dt。其次，结合Dt生成语义图D，如图5所示。我们提出语义自适应核密度估计（SAKDE）来生成Dt并在4.5节中描述融合过程
 
 
+## Research Objectives
+
+
+## Advantage
+
+
+## Limitations
+
+
 ## Annotations
 
-### yellow
-
-> [!yellow] Page 1
+> [!yellow] Page 1 [link](zotero://open-pdf/library/items/WIII72K3?page=1&annotation=TUP63L3W)
+> <p style="color: #ffd400;">Urban performance refers to the ability of an urban area to meet the needs and expectations of its residents in terms of environmental, social, economic, and other aspects [</p>
 > 
-> Urban performance refers to the ability of an urban area to meet the needs and expectations of its residents in terms of environmental, social, economic, and other aspects [
+> 
+> ---
 > ^TUP63L3WaWIII72K3p1
 
-> [!yellow] Page 6
+> [!gray] Page 1 [link](zotero://open-pdf/library/items/WIII72K3?page=1&annotation=LFKSWLT6)
+> <p style="color: #aaaaaa;">wellbeing</p>
 > 
-> Based on our trial-and-error experiments, we set λ = 0.75, resulting in 75% coefficients being positive and the remaining 25% negative
+> 
+> ---
+> ^LFKSWLT6aWIII72K3p1
+
+> [!red] Page 6 [link](zotero://open-pdf/library/items/WIII72K3?page=6&annotation=SATLPUPI)
+> <p style="color: #ff6666;">But their contribution to urban performance has not been considered. These contributions can be either positive or negative.</p>
+> 
+> 
+> ---
+> ^SATLPUPIaWIII72K3p6
+
+> [!yellow] Page 6 [link](zotero://open-pdf/library/items/WIII72K3?page=6&annotation=H9YXUJC7)
+> <p style="color: #ffd400;">Based on our trial-and-error experiments, we set λ = 0.75, resulting in 75% coefficients being positive and the remaining 25% negative</p>
+> 
+> 
+> ---
 > ^H9YXUJC7aWIII72K3p6
 
-> [!yellow] Page 9
+> [!yellow] Page 9 [link](zotero://open-pdf/library/items/WIII72K3?page=9&annotation=EI865WU8)
+> <p style="color: #ffd400;">Filter controls (b2) allow multiple filters for different measures.</p>
 > 
-> Filter controls (b2) allow multiple filters for different measures.
 > 
 > ---
 > 筛选功能
 > ^EI865WU8aWIII72K3p9
-
-### gray
-
-> [!gray] Page 1
-> 
-> wellbeing
-> ^LFKSWLT6aWIII72K3p1
-
-### red
-
-> [!red] Page 6
-> 
-> But their contribution to urban performance has not been considered. These contributions can be either positive or negative.
-> ^SATLPUPIaWIII72K3p6
-

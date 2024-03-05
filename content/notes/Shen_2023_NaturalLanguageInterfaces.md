@@ -2,12 +2,12 @@
 zotero-key: JEK3MWBZ
 zt-attachments:
   - "1336"
-Title: "Towards Natural Language Interfaces for Data Visualization: A Survey"
-CiteKey: Shen_2023_NaturalLanguageInterfaces
-Authors: Leixian Shen, Enya Shen, Yuyu Luo, Xiaocong Yang, Xuming Hu, Xiongshuai Zhang, Zhiwei Tai, Jianmin Wang
-Publication: IEEE Transactions on Visualization and Computer Graphics
-Date: "2023"
-Tags:
+title: "Towards Natural Language Interfaces for Data Visualization: A Survey"
+citekey: Shen_2023_NaturalLanguageInterfaces
+authors: Leixian Shen, Enya Shen, Yuyu Luo, Xiaocong Yang, Xuming Hu, Xiongshuai Zhang, Zhiwei Tai, Jianmin Wang
+publication: IEEE Transactions on Visualization and Computer Graphics
+date: "2023"
+tags:
   - 📖PaperReading
 ---
 ```ad-info
@@ -95,7 +95,7 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
 
 > [!yellow] Page 3 [link](zotero://open-pdf/library/items/5MX56RJV?page=3&annotation=QFMJQTPC)
 > 
-> ![](https://raw.githubusercontent.com/heavenmei/heavenmei.github.io/master/images/202403051135046.png)
+> ![](notes/assets/QFMJQTPC.png)
 > ---
 > ^QFMJQTPCa5MX56RJVp3
 

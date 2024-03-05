@@ -1,6 +1,6 @@
-Title: "<%= it.title %>"
-CiteKey: "<%= it.citekey %>"
-Authors: "<%= it.authors.join(', ') %>"
-Publication:   "<%= it.publicationTitle %>"
-Date:   "<%= it.date %>"
-Tags: [📖PaperReading]
+title: "<%= it.title %>"
+citekey: "<%= it.citekey %>"
+authors: "<%= it.authors.join(', ') %>"
+publication:   "<%= it.publicationTitle %>"
+date:   "<%= it.date %>"
+tags: [📖PaperReading]
