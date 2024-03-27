@@ -24,8 +24,8 @@ As urban populations grow, effectively accessing urban performance measures such
 ## Old Translation
 
 ### OVERVIEW
-- SemanticMap 使用一组 POI 和特定的城市绩效指标作为输入，生成城市绩效指标的连续密度图（定义为语义地图）。**七项城市绩效指标**：舒适性、宜居性、便利性、流动性，经济活力，交通安全，老年友善。此外，我们添加浪漫是为了分析人类对其居住区的完全主观感知。
-- 使用上海地图，使用流量分析区域（TAZ）作为基本单元来分析本地 POI 密度，并在生成语义地图时自适应设置 KDE 参数。 **TAZ是城市地理单元的基本街区**，具有相似的社会经济和人口特征，常用于城市研究和交通研究[72]。图 2.A 显示了我们研究中使用的 TAZ 边界。如图所示，由于城市形态和道路网络更加复杂，城市中心区的TAZ比周边地区更密集。 TAZ 的使用为不同城市地区的 KDE 参数选择提供了适当的灵活性，以适应城市形态的复杂变化。在生成语义地图时，我们将图像分辨率限制在大约 (8000, 8000) 以避免消耗太多内存，在给定城市范围直径（100 到 120 公里）的情况下提供 15 米的精度。
+
+
 - 形式上，POI 由集合 P = {p1, p2 …, pn} 表示。每个 POI pi 被定义为一个元组 ⟨t, T, (x, y)⟩，包含地理位置 (x, y) 和分类标签 t 和 T 。类别标签 T ，例如教育、交通和生活服务提供了更广泛的分类级别，而类别标签 t ，例如图书馆、公交车站和邮局提供了更精细的分类级别。在我们的 POI 数据中，我们有 113 个类别，分为 12 个类别。要分析的目标绩效衡量标准表示为 M 。用于计算 POI 的语义文本相似性的语料库和性能度量表示为 CM 和 CP。生成的语义图DM是表示每个地理位置的测量得分的二维密度场。 D 是通过组合中间类级别密度图 Dt 生成的。 SemanticMap 的整体流程可以表示为 **(P, M, CM, CP) → DM** ，如图 1 所示。我们的流程构建如下：
 1.  数据预处理：为了确保只使用有用的信息并方便用户交互和评估，我们通过过滤琐碎的项目对 POI 数据进行预处理，并将 POI 分为 12 类。我们改进 TAZ 边界以避免交叉或重叠。
 2. 语义贡献测量：为了量化不同 POI 对 M 的贡献，我们使用词典定义和上下文文本构建 POI 和 M 的语料库，然后计算它们的语义相似度
@@ -52,7 +52,6 @@ As urban populations grow, effectively accessing urban performance measures such
 #### Semantic-adaptive Kernel Density Estimation
 - 度量的语义图 D 的生成包括两个步骤。首先，我们生成类级密度图 Dt。其次，结合Dt生成语义图D，如图5所示。我们提出语义自适应核密度估计（SAKDE）来生成Dt并在4.5节中描述融合过程
 
-
 ## Research Objectives
 
 
@@ -63,20 +62,30 @@ As urban populations grow, effectively accessing urban performance measures such
 
 
 ## Annotations
-
 > [!yellow] Page 1 [link](zotero://open-pdf/library/items/WIII72K3?page=1&annotation=TUP63L3W)
 > <p style="color: #ffd400;">Urban performance refers to the ability of an urban area to meet the needs and expectations of its residents in terms of environmental, social, economic, and other aspects [</p>
 > 
 > 
 > ---
+> 🔤城市绩效是指城市地区在环境、社会、经济等方面满足居民需求和期望的能力。🔤
 > ^TUP63L3WaWIII72K3p1
 
-> [!gray] Page 1 [link](zotero://open-pdf/library/items/WIII72K3?page=1&annotation=LFKSWLT6)
-> <p style="color: #aaaaaa;">wellbeing</p>
+
+> [!yellow] Page 1 [link](zotero://open-pdf/library/items/WIII72K3?page=1&annotation=ADNSITRN)
+> <p style="color: #ffd400;">Human subjective perceptions of urban areas are challenging to measure and cannot be quantiﬁed through visualizing and analyzing individual domain problems. It is a combination of heterogeneous knowledge and data.</p>
 > 
 > 
 > ---
-> ^LFKSWLT6aWIII72K3p1
+> 🔤人类对城市地区的主观感知很难测量，并且无法通过可视化和分析个别领域问题来量化。它是异构知识和数据的组合。🔤
+> ^ADNSITRNaWIII72K3p1
+
+> [!yellow] Page 2 [link](zotero://open-pdf/library/items/WIII72K3?page=2&annotation=PV7WJE63)
+> <p style="color: #ffd400;">We collect comments from locationbased social media and analyze the semantic information with a DistilRoBERTa [18] model.</p>
+> 
+> 
+> ---
+> 🔤我们从基于位置的社交媒体收集评论，并使用 DistilRoBERTa [18] 模型分析语义信息。🔤
+> ^PV7WJE63aWIII72K3p2
 
 > [!red] Page 6 [link](zotero://open-pdf/library/items/WIII72K3?page=6&annotation=SATLPUPI)
 > <p style="color: #ff6666;">But their contribution to urban performance has not been considered. These contributions can be either positive or negative.</p>
@@ -90,6 +99,7 @@ As urban populations grow, effectively accessing urban performance measures such
 > 
 > 
 > ---
+> 🔤根据我们的试错实验，我们设置 λ = 0.75，导致 75% 的系数为正，其余 25% 为负🔤
 > ^H9YXUJC7aWIII72K3p6
 
 > [!yellow] Page 9 [link](zotero://open-pdf/library/items/WIII72K3?page=9&annotation=EI865WU8)
@@ -98,4 +108,6 @@ As urban populations grow, effectively accessing urban performance measures such
 > 
 > ---
 > 筛选功能
+> 🔤过滤器控件 (b2) 允许针对不同的度量使用多个过滤器。🔤
 > ^EI865WU8aWIII72K3p9
+

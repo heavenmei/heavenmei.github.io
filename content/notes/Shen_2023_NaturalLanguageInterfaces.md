@@ -3,7 +3,7 @@ zotero-key: JEK3MWBZ
 zt-attachments:
   - "1336"
 title: "Towards Natural Language Interfaces for Data Visualization: A Survey"
-citekey: Shen_2023_NaturalLanguageInterfaces
+citekey: Shen_2023_Natural
 authors: Leixian Shen, Enya Shen, Yuyu Luo, Xiaocong Yang, Xuming Hu, Xiongshuai Zhang, Zhiwei Tai, Jianmin Wang
 publication: IEEE Transactions on Visualization and Computer Graphics
 date: "2023"
@@ -34,12 +34,33 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
  
 数据转换：
 - ==大多数都是处理表格数据，而且只展示原始数据而不进行数据转换==
-- 
+- 为了扩充数据的准确性，外接数据库，将query转SQL查询
 
-可视化映射、视图转换、人机交互、对话管理和演示
+可视化映射：
+- 空间基底： xy轴
+- 图形元素： 点线面体
+- 图形属性：形状、颜色、大小等
+
+视图转换：
+- 很少使用
+
+
+人机交互：
+- 歧义部件
+- 自动补充，推荐指令
+- 多模态（AR）
+
+对话管理：
+- 对话上下文管理
+
+演示：
+- 注释，可解释性
 
 ## Limitations
-
+- 领域知识、外接数据库
+- 更先进的NLP model
+- 交互上，为用户提供更丰富的prompt
+- 交互上，联系上下文推断用户意图
 
 ## Annotations
 
@@ -75,13 +96,6 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
 > 🔤最后，我们收集了 57 篇关于接受自然语言作为输入和输出可视化的 VNLI 的论文。🔤
 > ^TTLQ2YDZa5MX56RJVp3
 
-> [!yellow] Page 3 [link](zotero://open-pdf/library/items/5MX56RJV?page=3&annotation=VRZTM5LG)
-> <p style="color: #ffd400;">Data Transformation (B)</p>
-> 
-> 
-> ---
-> transforming raw data -> data you need (most is tabular format)
-> ^VRZTM5LGa5MX56RJVp3
 
 > [!yellow] Page 3 [link](zotero://open-pdf/library/items/5MX56RJV?page=3&annotation=SVHUW4JF)
 > <p style="color: #ffd400;">The three elements of visual mapping for information visualization are spatial substrate, graphical elements, and graphical properties [28].</p>
@@ -140,13 +154,6 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
 > 🔤然而，它们是在 NLP 数据集上进行训练的，因此缺乏对可视化元素（例如标记、视觉通道和编码属性）的充分考虑。🔤
 > ^CZGPIMF2a5MX56RJVp4
 
-> [!gray] Page 5 [link](zotero://open-pdf/library/items/5MX56RJV?page=5&annotation=WF9JIZWA)
-> <p style="color: #aaaaaa;">crowdsourced</p>
-> 
-> 
-> ---
-> ^WF9JIZWAa5MX56RJVp5
-
 > [!green] Page 6 [link](zotero://open-pdf/library/items/5MX56RJV?page=6&annotation=YCRMXILU)
 > <p style="color: #5fb236;">Recently, Shen et al. [211] summarized 18 classical analytic tasks by a survey covering both academia and industry.</p>
 > 
@@ -196,16 +203,6 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
 > 🔤然而，当涉及未指定或模糊的查询（例如，包括不同领域的同义词、缩写和术语）时，这些系统通常无法生成适当的可视化🔤
 > ^2AV32SE2a5MX56RJVp7
 
-> [!gray] Page 8 [link](zotero://open-pdf/library/items/5MX56RJV?page=8&annotation=HK2876ZI)
-> <p style="color: #aaaaaa;">consensus</p>
-> 
-> 
-> ---
-> 🔤consensus
-> 英 [kənˈsensəs]
-> 美 [kənˈsensəs]
-> n. 一致看法，共识🔤
-> ^HK2876ZIa5MX56RJVp8
 
 > [!yellow] Page 8 [link](zotero://open-pdf/library/items/5MX56RJV?page=8&annotation=8PJ8F9MW)
 > <p style="color: #ffd400;">To describe related works, we categorize tabular data into four types: temporal, quantitative, nominal, and ordinal, which are widely adopted in the visualization community [168].</p>
@@ -270,3 +267,79 @@ Utilizing Visualization-oriented Natural Language Interfaces (V-NLI) as a comple
 > ---
 > 🔤一种是通过推断未指定的自然语言话语来生成适当的默认值，这将在 4.4 节中讨论。另一种是通过歧义小部件将决策权归还给用户。🔤
 > ^J9H4CNCKa5MX56RJVp10
+
+
+> [!red] Page 15 [link](zotero://open-pdf/library/items/5MX56RJV?page=15&annotation=28Z3NJJP)
+> <p style="color: #ff6666;">A major limitation of most existing V-NLI systems is the absence of domain knowledge.</p>
+> 
+> 
+> ---
+> 🔤大多数现有 V-NLI 系统的主要限制是缺乏领域知识。🔤
+> ^28Z3NJJPa5MX56RJVp15
+
+> [!green] Page 15 [link](zotero://open-pdf/library/items/5MX56RJV?page=15&annotation=J77M4D2E)
+> <p style="color: #5fb236;">CogNet [249], a knowledge base dedicated to integrating various existing knowledge bases (e.g., FrameNet, YAGO, Freebase, DBpedia, Wikidata, and ConceptNet), may be useful for broadening the repertoire of utterances supported.</p>
+> 
+> 
+> ---
+> 🔤CogNet [249] 是一个致力于集成各种现有知识库（例如 FrameNet、YAGO、Freebase、DBpedia、Wikidata 和 ConceptNet）的知识库，可能有助于扩大支持的话语库。🔤
+> ^J77M4D2Ea5MX56RJVp15
+
+> [!yellow] Page 16 [link](zotero://open-pdf/library/items/5MX56RJV?page=16&annotation=N4X3MZ7N)
+> <p style="color: #ffd400;">However, just considering the semantics of the NL query is limited, and the semantics of the dataset should also be taken into consideration. The existing technologies for data attribute matching only conﬁne to the letter-matching level but do not go deep into the semantic-matching level, as described in Section 4.3.</p>
+> 
+> 
+> ---
+> 🔤然而，仅仅考虑NL查询的语义是有限的，还应该考虑数据集的语义。现有的数据属性匹配技术仅局限于字母匹配级别，而没有深入到语义匹配级别，如4.3节所述。🔤
+> ^N4X3MZ7Na5MX56RJVp16
+
+> [!green] Page 16 [link](zotero://open-pdf/library/items/5MX56RJV?page=16&annotation=RRYLYG7N)
+> <p style="color: #5fb236;">A promising way to augment semantic interpretation ability is to connect with recent semantic data type detection models for visualization like Sherlock [90], Sato [278], ColNet [31], DCOM [156], EXACTA [267], and Doduo [238]</p>
+> 
+> 
+> ---
+> 🔤增强语义解释能力的一种有前途的方法是与最新的语义数据类型检测模型连接以进行可视化，例如 Sherlock [90]、Sato [278]、ColNet [31]、DCOM [156]、EXACTA [267] 和 Doduo [238] ]🔤
+> ^RRYLYG7Na5MX56RJVp16
+
+> [!yellow] Page 16 [link](zotero://open-pdf/library/items/5MX56RJV?page=16&annotation=T26BPF4Z)
+> <p style="color: #ffd400;">The user may not be aware of what input is valid and what chart types are supported by the system with open-ended textboxes. As described in Section 8.2, discoverability has received relatively little attention in current V-NLIs compared to other characteristics.</p>
+> 
+> 
+> ---
+> 🔤用户可能不知道什么输入是有效的以及具有开放式文本框的系统支持什么图表类型。如第 8.2 节所述，与其他特性相比，可发现性在当前的 V-NLI 中受到的关注相对较少。🔤
+> ^T26BPF4Za5MX56RJVp16
+
+> [!green] Page 16 [link](zotero://open-pdf/library/items/5MX56RJV?page=16&annotation=R73DYV7N)
+> <p style="color: #5fb236;">etlur et al. [206] conducted a crowdsourcing study regarding the efﬁcacy of autocompletion suggestions. The insights drawn from the studies are of great value to inspire the future design of V-NLI</p>
+> 
+> 
+> ---
+> 🔤埃特鲁尔等人[206]进行了一项关于自动完成建议的功效的众包研究。研究得出的见解对于启发 V-NLI 的未来设计具有重要价值🔤
+> ^R73DYV7Na5MX56RJVp16
+
+> [!green] Page 16 [link](zotero://open-pdf/library/items/5MX56RJV?page=16&annotation=QC3273JU)
+> <p style="color: #5fb236;">Recently, Zehrung et al. [276] conducted a crowdsourcing study analyzing trust in humans versus algorithmically generated visualization recommendations. Based on the results, they suggested that the recommendation system should be customized according to the speciﬁc user’s information search strategy. Personalized information derived from historical user interaction and context can provide a richer model to satisfy the user’s analytic tasks. A large number of innovative models in the recommendation system [281] can also be applied for reference</p>
+> 
+> 
+> ---
+> 🔤最近，Zehung 等人。 [276]进行了一项众包研究，分析对人类的信任与算法生成的可视化建议。根据结果​​，他们建议推荐系统应根据特定用户的信息搜索策略进行定制。从历史用户交互和上下文中得出的个性化信息可以提供更丰富的模型来满足用户的分析任务。推荐系统中的大量创新模型[281]也可以借鉴🔤
+> ^QC3273JUa5MX56RJVp16
+
+> [!green] Page 17 [link](zotero://open-pdf/library/items/5MX56RJV?page=17&annotation=PQFHTCBT)
+> <p style="color: #5fb236;">To assist the deployment of learning-based techniques for parsing human language, Fu et al. [61] proposed Quda, containing diverse user queries annotated with analytic tasks</p>
+> 
+> 
+> ---
+> 🔤为了协助部署基于学习的技术来解析人类语言，Fu 等人。 [61]提出了 Quda，包含用分析任务注释的不同用户查询🔤
+> ^PQFHTCBTa5MX56RJVp17
+
+
+
+> [!red] Page 15 [link](zotero://open-pdf/library/items/5MX56RJV?page=15&annotation=8CNDCM9Z)
+> <p style="color: #ff6666;">The performance of V-NLI depends to a great extent on NLP models. As shown in Table 3 (column NLP Toolkit or Technology and column Recommendation Algorithm), most of the existing V-NLI systems just apply hand-crafted grammar rules or typical NLP toolkits for convenience. Recently, several state-of-the-art NLP models have reached human performance in speciﬁc tasks, such as ELMO [179], BERT [49], GPT-3 [25], and CPM-2 [283]. S</p>
+> 
+> 
+> ---
+> 🔤V-NLI的性能很大程度上取决于NLP模型。如表3（NLP工具包或技术栏和推荐算法栏）所示，大多数现有的V-NLI系统只是为了方便而应用手工编写的语法规则或典型的NLP工具包。最近，一些最先进的 NLP 模型已经在特定任务中达到了人类的表现，例如 ELMO [179]、BERT [49]、GPT-3 [25] 和 CPM-2 [283]。 S🔤
+> ^8CNDCM9Za5MX56RJVp15
+

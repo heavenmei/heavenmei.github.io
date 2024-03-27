@@ -71,3 +71,21 @@ categories:
 
 
 ```
+
+
+
+
+#### 中文使用
+
+https://www.cnblogs.com/chuqianyu/p/14620014.html
+```latex
+%test.tex 
+\documentclass{article}
+\usepackage{CJKutf8}
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+这是一个CJKutf8的例子，使用的字体是gbsn。
+\end{CJK}
+\end{document}
+```
+用pdflatex编译tex文件，即可得到输出结果。
