@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
 import MySideBar from "../components/MySideBar";
@@ -9,7 +9,7 @@ const NoteList: FC<NoteListProps> = () => {
   // const { content, url } = props;
   //@ts-ignore
   const NoteFiles = window.NoteFiles;
-  console.log("===window.NoteFiles", window.NoteFiles[5]);
+  // console.log("===window.NoteFiles", NoteFiles[5]);
 
   // todo bug
   const curMD = useCallback((url: string) => {
