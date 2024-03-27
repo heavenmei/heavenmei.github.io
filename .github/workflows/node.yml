@@ -24,7 +24,7 @@ concurrency:
 
     
 jobs:
-  Build-Deploy2Branch:
+  Build-Branch:
 
     runs-on: ubuntu-latest
 
@@ -75,8 +75,8 @@ jobs:
             # content
         #     images
 
-  Deploy-Assets:
-    needs: [Build-Deploy2Branch]
+  Deploy-Images&Content:
+    needs: [Build-Branch]
     runs-on: ubuntu-latest
 
     steps:
@@ -101,26 +101,26 @@ jobs:
         folder: content
         target-folder: content
 
-  Deploy-Static:
-    needs: [Deploy-Assets]
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # Deploy-GithubPages:
+  #   needs: [Deploy-Images&Content]
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: gh-pages
+  #     - name: Setup Pages
+  #       uses: actions/configure-pages@v4
+  #     - name: Upload artifact
+  #       uses: actions/upload-pages-artifact@v3
+  #       with:
+  #         # Upload entire repository
+  #         path: '.'
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v4
 
 
