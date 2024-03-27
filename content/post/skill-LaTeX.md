@@ -47,7 +47,7 @@ categories:
 		\Comment Compute reference cross-attention map
 		\For{$t=T \dots 1$ }
     	\State ${\hat{\epsilon},M_{t}^{\mathrm{ref}} \leftarrow \epsilon_{\theta}(x_{t},t,c)}$ 
-            \State ${{x_{t-1}=\mathrm{UPDATE}(x_{t},\hat{\epsilon},t)}}$
+            \State ${ { x_{t-1} =\mathrm{UPDATE}(x_{t},\hat{\epsilon},t)} }$
 		\EndFor
 
         \vspace{1em}
