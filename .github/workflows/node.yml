@@ -75,7 +75,7 @@ jobs:
             # content
         #     images
 
-  Deploy-Images&Content:
+  Deploy-ImagesContent:
     needs: [Build-Branch]
     runs-on: ubuntu-latest
 
