@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { IconEmail, IconGithub } from "@arco-design/web-react/icon";
+import avatar from "../../public/avatar.jpg";
 
 const MySideBar: FC = () => {
   // todo getTags
@@ -8,7 +9,7 @@ const MySideBar: FC = () => {
       <img
         style={{ width: 200, height: 200 }}
         className="rounded-xl"
-        src="/public/avatar.jpg"
+        src={avatar}
       ></img>
       <div>Haiwen Huang,</div>
       <div className="contact-btns flex gap-2">
