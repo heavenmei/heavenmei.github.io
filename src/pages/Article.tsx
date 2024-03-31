@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 // import MarkdownWrap from "../components/MarkdownWrap";
 import Banner from "../components/Banner";
 import MarkNav from "markdown-navbar"; // markdown 目录
@@ -9,8 +9,7 @@ import { useLocation } from "react-router-dom";
 const Article: FC = () => {
   const [currentArticle, setCurrentArticle] = useState<string>();
   const [curIndex, setCurIndex] = useState<number>(-1);
-  //@ts-ignore
-  const postList = window.PostFiles;
+  const articleList: any = process.env.PostFiles;
   const { state } = useLocation();
   console.log(state);
 
@@ -26,7 +25,7 @@ const Article: FC = () => {
 
   const curMD = useMemo(() => {
     const url = location.pathname.split("/").pop();
-    const _curIndex = postList.findIndex(
+    const _curIndex = articleList.findIndex(
       (item: any) => item.URL?.split("/")[1] == url
     );
 
@@ -34,7 +33,7 @@ const Article: FC = () => {
       return;
     }
     setCurIndex(_curIndex);
-    const _curMD = postList[_curIndex];
+    const _curMD = articleList[_curIndex];
     console.log("====cur", _curMD);
 
     // todo 本地模式
@@ -79,7 +78,7 @@ const Article: FC = () => {
               current={curIndex}
               itemRender={itemRender}
               pageSize={1}
-              total={postList.length}
+              total={articleList.length}
             />
           </div>
         </div>
