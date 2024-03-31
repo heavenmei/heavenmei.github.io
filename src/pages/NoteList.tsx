@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
 import MySideBar from "../components/MySideBar";
@@ -7,9 +7,8 @@ interface NoteListProps {}
 const NoteList: FC<NoteListProps> = () => {
   const [curIndex, setCurIndex] = useState<number>(-1);
   // const { content, url } = props;
-  //@ts-ignore
-  const NoteFiles = window.NoteFiles;
-  // console.log("===window.NoteFiles", NoteFiles[5]);
+  const NoteFiles: any = process.env.NoteFiles;
+  // console.log("===window.PostFiles", process.env.NoteFiles);
 
   // todo bug
   const curMD = useCallback((url: string) => {
@@ -36,8 +35,8 @@ const NoteList: FC<NoteListProps> = () => {
           {NoteFiles.map(
             (file: any) =>
               file.title && (
-                <>
-                  <div className="post-item flex flex-col" key={file.title}>
+                <React.Fragment key={file.title}>
+                  <div className="post-item flex flex-col">
                     <Link
                       to={`/notes/${file.citekey}`}
                       state={{
@@ -55,7 +54,7 @@ const NoteList: FC<NoteListProps> = () => {
                     </div>
                   </div>
                   <hr />
-                </>
+                </React.Fragment>
               )
           )}
         </div>

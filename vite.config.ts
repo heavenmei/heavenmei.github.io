@@ -8,15 +8,15 @@ const PostPath = path.join(__dirname, "./content/post");
 const NotePath = path.join(__dirname, "./content/notes");
 const PostFiles = readMdFile(PostPath);
 const NoteFiles = readMdFile(NotePath);
-console.log("markdown files", PostFiles);
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), md()],
-  // 挂在到window
   define: {
-    PostFiles: PostFiles,
-    NoteFiles: NoteFiles,
+    "process.env": {
+      PostFiles: PostFiles,
+      NoteFiles: NoteFiles,
+    },
   },
   resolve: {
     alias: {
