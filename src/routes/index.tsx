@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Article from "../pages/Article";
 import App from "../App";
 import Banner from "../components/Banner";
-import PostList from "../pages/PostList";
-import Home from "../pages/Home";
+import PostList from "../pages/PostList/PostList";
+import Home from "../pages/Home/Home";
 import NoteList from "../pages/NoteList";
 
 export const routes = [

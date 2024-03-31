@@ -1,0 +1,17 @@
+@import "@/assets/css/common.scss";
+
+.pubList {
+  position: relative;
+  width: 100%;
+
+  .pubItem {
+    width: 100%;
+
+    &_content {
+      overflow: hidden;
+      div {
+        @include ellipsis;
+      }
+    }
+  }
+}
