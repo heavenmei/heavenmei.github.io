@@ -7,7 +7,6 @@ import "./assets/css/github-markdown.css";
 import "markdown-navbar/dist/navbar.css";
 import "./assets/css/index.css";
 import "./main.scss";
-import "animate.css";
 import "@arco-design/web-react/dist/css/arco.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
