@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// @import 'typography.scss';
+
+:root {
+  --foreground-color: #333;
+  --secondary-fg-color: #666;
+  --background-color: #fff;
+  --secondary-bg-color: #eeeeeebb;
+  --background-opacity-color: #ffffffbb;
+  --theme-color: #927bbb;
+  --theme-color-light: #be420030;
+  --navline-width: 0.5rem;
+}
+
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --foreground-color: #ddd;
+//     --secondary-fg-color: #aaa;
+//     --background-color: #222;
+//     --secondary-bg-color: #555;
+//     --background-opacity-color: #222222bb;
+//     --theme-color: #fe7d49;
+//     --theme-color-light: #fe7d4930;
+//   }
+// }
+
+html {
+  font-size: 13px; // Used as 1rem size.
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+body {
+  color: var(--foregound-color);
+  background: var(--background-color);
+  font-family: var(--font-ibmplexsans), -apple-system, Microsoft Yahei UI,
+    sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  ::selection {
+    background: var(--theme-color);
+    color: var(--background-color);
+    border-radius: 5px;
+  }
+}
+
+.main-content {
+  margin-left: 2rem;
+  margin-top: 6rem;
+  width: calc(100vw - 4rem);
+
+  @media (min-width: 768px) {
+    width: calc(100vw - 16rem);
+    margin-left: 8rem;
+    margin-top: 8rem;
+  }
+
+  @media (min-width: 1500px) {
+    width: calc(100vw - 36rem);
+  }
+}
+
+.footer {
+  margin-right: 2rem;
+
+  @media (min-width: 768px) {
+    margin-right: 7rem;
+  }
+
+  @media (min-width: 1500px) {
+    margin-right: 23rem;
+  }
+}
+
+.textcolor-body {
+  color: var(--foreground-color);
+}
+
+.textcolor-theme {
+  color: var(--theme-color);
+}
+
+.textcolor-secondary {
+  color: var(--secondary-fg-color);
+}
+
+button {
+  @apply border px-4 py-2 transition-all duration-200;
+  border-color: var(--theme-color);
+  border-radius: 3px;
+  color: var(--theme-color);
+
+  &:hover {
+    background-color: var(--theme-color-light);
+  }
+}
+
+img {
+  transition: all 0.2s;
+}
