@@ -1,0 +1,20 @@
+{
+  "title": "鉴权方式",
+  "url": "/2023-12-07-secret",
+  "description": "",
+  "date": "2023-11-25T00:00:00.000Z",
+  "body": {
+    "raw": "\n> 常见的鉴权方式有以下几种方式：\n>\n> 1. token\n> 2. session + cookie\n> 3. OAuth\n\n## token\n\n### 流程\n\n1. 客户端使用账密登录\n2. 服务端验证账密\n3. 账密验证通过，服务端生成一个token，再把token发送给客户端\n4. 客户端通过cookie或者其他方式将token存储起来\n5. 客户端以后发送请求都需要带上token\n6. 服务端验证token的合法性，校验通过则返回资源，不通过则返回401状态码\n\n\n\n\n\n\n\n\n\n\n",
+    "html": "<blockquote>\n<p>常见的鉴权方式有以下几种方式：</p>\n<ol>\n<li>token</li>\n<li>session + cookie</li>\n<li>OAuth</li>\n</ol>\n</blockquote>\n<h2>token</h2>\n<h3>流程</h3>\n<ol>\n<li>客户端使用账密登录</li>\n<li>服务端验证账密</li>\n<li>账密验证通过，服务端生成一个token，再把token发送给客户端</li>\n<li>客户端通过cookie或者其他方式将token存储起来</li>\n<li>客户端以后发送请求都需要带上token</li>\n<li>服务端验证token的合法性，校验通过则返回资源，不通过则返回401状态码</li>\n</ol>"
+  },
+  "_id": "post/2023-12-7-authentication.md",
+  "_raw": {
+    "sourceFilePath": "post/2023-12-7-authentication.md",
+    "sourceFileName": "2023-12-7-authentication.md",
+    "sourceFileDir": "post",
+    "contentType": "markdown",
+    "flattenedPath": "post/2023-12-7-authentication"
+  },
+  "type": "Post",
+  "id": ""
+}

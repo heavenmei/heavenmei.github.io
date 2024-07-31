@@ -4,7 +4,7 @@ date: 2023-12-23
 author: heavenmei
 categories:
   - Post
-URL: /2023-12-23-ubuntu-docker
+url: /2023-12-23-ubuntu-docker
 ---
 > 在服务器中安装docker， 并创建pytorch运行环境，实现ssh远程端口登录
 

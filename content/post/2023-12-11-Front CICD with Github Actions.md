@@ -4,7 +4,7 @@ date: 2023-12-11
 author: heavenmei
 categories:
   - Post
-URL: /2023-12-11-CICD
+url: /2023-12-11-CICD
 ---
 > **What‘s Github Action？**  
 > [GitHub Actions](https://github.com/features/actions) 是 GitHub 的持续集成服务(CI/CD)。

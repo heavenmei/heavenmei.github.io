@@ -1,0 +1,20 @@
+{
+  "title": "ubuntu Clash 科学上网",
+  "url": "/2024-07-29-Clash",
+  "description": "装环境实在太麻烦啦，mark一些安装命令，以备不时之需。",
+  "date": "2023-11-25T00:00:00.000Z",
+  "body": {
+    "raw": "下载文件 `clash-linux-amd64-v1.17.0.gz`\n> 链接: https://pan.baidu.com/s/1RzYl_CGHLF9IUS9I5xyvZg?pwd=53kc 提取码: 53kc\n\n解压：`gunzip clash-linux-amd64-v1.17.0.gz`\n移动重命名： `sudo mv clash-linux-amd64-v1.17.0 /usr/local/bin/clash`\n给 Clash 添加执行权限：`sudo chmod +x /usr/local/bin/clash`\n启动 Clash自动创建initial config file：`clash -d ~/.config/clash`\n替换订阅文件：`curl https:/xxxx.yaml > ~/.config/clash/config.yaml`（或者手动复制）\n启动 Clash：`clash -d ~/.config/clash`\n写入 ~/zshrc\n\n```json\necho 'export http_proxy=127.0.0.1:7890' >> ~/.zshrc\necho 'export https_proxy=$http_proxy' >> ~/.zshrc\n```\n\n**开机自启配置：**[https://blog.csdn.net/xiaxinkai/article/details/123563488](https://blog.csdn.net/xiaxinkai/article/details/123563488)\n\n`sudo vim /etc/systemd/system/clash.service`\n\n写入配置\n\n```json\n[Unit]\nDescription=clash service\nAfter=network.target\n \n[Service]\nExecStart=/usr/local/bin/clash -d /home/haiwen/.config/clash/\n \n[Install]\nWantedBy=multi-user.target\n```\n\n`sudo systemctl daemon-reload # 刷新配置` `sudo systemctl start clash # 启动clash.service` `sudo systemctl enable clash # 设置开机启动` `sudo systemctl status clash # 查看clash.service的状态`",
+    "html": "<p>下载文件 <code>clash-linux-amd64-v1.17.0.gz</code></p>\n<blockquote>\n<p>链接: https://pan.baidu.com/s/1RzYl_CGHLF9IUS9I5xyvZg?pwd=53kc 提取码: 53kc</p>\n</blockquote>\n<p>解压：<code>gunzip clash-linux-amd64-v1.17.0.gz</code>\n移动重命名： <code>sudo mv clash-linux-amd64-v1.17.0 /usr/local/bin/clash</code>\n给 Clash 添加执行权限：<code>sudo chmod +x /usr/local/bin/clash</code>\n启动 Clash自动创建initial config file：<code>clash -d ~/.config/clash</code>\n替换订阅文件：<code>curl https:/xxxx.yaml > ~/.config/clash/config.yaml</code>（或者手动复制）\n启动 Clash：<code>clash -d ~/.config/clash</code>\n写入 ~/zshrc</p>\n<pre><code class=\"language-json\">echo 'export http_proxy=127.0.0.1:7890' >> ~/.zshrc\necho 'export https_proxy=$http_proxy' >> ~/.zshrc\n</code></pre>\n<p><strong>开机自启配置：</strong><a href=\"https://blog.csdn.net/xiaxinkai/article/details/123563488\">https://blog.csdn.net/xiaxinkai/article/details/123563488</a></p>\n<p><code>sudo vim /etc/systemd/system/clash.service</code></p>\n<p>写入配置</p>\n<pre><code class=\"language-json\">[Unit]\nDescription=clash service\nAfter=network.target\n \n[Service]\nExecStart=/usr/local/bin/clash -d /home/haiwen/.config/clash/\n \n[Install]\nWantedBy=multi-user.target\n</code></pre>\n<p><code>sudo systemctl daemon-reload # 刷新配置</code> <code>sudo systemctl start clash # 启动clash.service</code> <code>sudo systemctl enable clash # 设置开机启动</code> <code>sudo systemctl status clash # 查看clash.service的状态</code></p>"
+  },
+  "_id": "post/2024-07-29-Clash.md",
+  "_raw": {
+    "sourceFilePath": "post/2024-07-29-Clash.md",
+    "sourceFileName": "2024-07-29-Clash.md",
+    "sourceFileDir": "post",
+    "contentType": "markdown",
+    "flattenedPath": "post/2024-07-29-Clash"
+  },
+  "type": "Post",
+  "id": ""
+}

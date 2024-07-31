@@ -9,7 +9,7 @@ categories:
 description: 
 tags:
   - Academic
-URL: /2023-12-01-Diffusion Learning
+url: /2023-12-01-Diffusion Learning
 image:
 ---
 

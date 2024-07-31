@@ -6,5 +6,5 @@ categories:
   - Post
 tags:
   - Front
-URL: /2024-01-17-modal2panel
+url: /2024-01-17-modal2panel
 ---

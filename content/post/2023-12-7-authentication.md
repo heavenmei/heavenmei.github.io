@@ -10,7 +10,7 @@ tags:
   - tag2
 categories:
   - Post
-URL: /2023-12-07-secret
+url: /2023-12-07-secret
 ---
 
 > 常见的鉴权方式有以下几种方式：

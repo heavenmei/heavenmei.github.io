@@ -2,7 +2,7 @@ import SalientTime from '@/assets/img/2024_salientime.jpg';
 
 export const PublicationList = [
   {
-    img: '/imgs/2024_salientime.jpg',
+    img: '/images/2024_salientime.jpg',
     title: `SalienTime: User-driven Selection of Salient Time Steps for Large-Scale Geospatial Data Visualization`,
     venue: `ACM SIGCHI Conference on Human Factors in Computing Systems 2024 (CHI 2024)`,
     authors: `Juntong Chen, Haiwen Huang, Huayuan Ye, Zhong Peng, Chenhui Li, Changbo Wang`,
@@ -12,7 +12,7 @@ export const PublicationList = [
 
 export const ProjectList = [
   {
-    img: '/img/2024_salientime.jpg',
+    img: '/images/2024_salientime.jpg',
     title: `SalienTime: User-driven Selection of Salient Time Steps for Large-Scale Geospatial Data Visualization`,
     venue: `ACM SIGCHI Conference on Human Factors in Computing Systems 2024 (CHI 2024)`,
     authors: `Juntong Chen, Haiwen Huang, Huayuan Ye, Zhong Peng, Chenhui Li, Changbo Wang`,

@@ -9,7 +9,7 @@ categories:
 description: 
 tags:
   - Academic
-URL: /2023-11-28-Time-series-data
+url: /2023-11-28-Time-series-data
 image:
 ---
 # Time-series-data

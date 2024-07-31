@@ -9,7 +9,7 @@ categories:
 description: 装环境实在太麻烦啦，mark一些安装命令，以备不时之需。
 tags:
   - Linux
-URL: /2023-11-25-one-step-install
+url: /2023-11-25-one-step-install
 image:
 ---
 
