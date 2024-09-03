@@ -108,13 +108,6 @@ WantedBy=multi-user.target
 
 之后可以在本机电脑 ssh username@ip -p PORT 远程连接
 
-### docker
-https://www.runoob.com/docker/docker-container-connection.html
-
-for ubuntu20+
-
-[Ubuntu中docker的安装和使用_ubuntu docker_urnotlanxi的博客-CSDN博客](https://blog.csdn.net/urnotlanxi/article/details/128005616)
-
 
 ### conda
 ```shell
