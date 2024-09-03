@@ -4,20 +4,15 @@ import MySideBar from '@/components/MySideBar';
 import React from 'react';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import { compareDesc, format, parseISO } from 'date-fns';
 import { allPosts, Post } from 'contentlayer/generated';
 import { formatDate } from '@/lib/utils';
+import dayjs from 'dayjs';
 
 interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
-  // const { content, url } = props;
-  // const PostFiles: any = process.env.PostFiles;
-  // console.log("===window.PostFiles", process.env.PostFiles);
-  const PostFiles = allPosts.sort((a, b) =>
-    compareDesc(new Date(a.date as any), new Date(b.date as any))
-  );
-  console.log('===', PostFiles);
+  const PostFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
+  console.log('===', PostFiles);
   return (
     <>
       <Banner />
