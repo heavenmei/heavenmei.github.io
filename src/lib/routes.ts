@@ -6,9 +6,9 @@ export const routes = [
     navShow: true,
   },
   {
-    path: 'posts',
-    name: 'posts',
-    label: 'POSTS',
+    path: 'post',
+    name: 'post',
+    label: 'POST',
     navShow: true,
   },
   {

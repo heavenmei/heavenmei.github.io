@@ -15,6 +15,14 @@
   --navline-width: 0.5rem;
 }
 
+html.light[data-theme='dark'] {
+  display: none;
+}
+
+html.dark[data-theme='light'] {
+  display: none;
+}
+
 // @media (prefers-color-scheme: dark) {
 //   :root {
 //     --foreground-color: #ddd;
