@@ -13,7 +13,7 @@ const CodeCopyButton = ({
   isTitle?: boolean;
 }) => {
   const [isCopied, setIsCopied] = useState(false);
-  console.log('🚨 CodeCopyButton ~', text);
+  // console.log('🚨 CodeCopyButton ~', text);
 
   const copy = async () => {
     await navigator.clipboard.writeText(text);

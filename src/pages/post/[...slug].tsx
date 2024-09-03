@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Banner from '@/components/Banner';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Mdx } from '@/components/mdx/MDXComponents';
+import { Mdx } from '@/components/mdx';
 
 function getPageFromParams(params: any) {
   const slug = params?.slug?.join('/');

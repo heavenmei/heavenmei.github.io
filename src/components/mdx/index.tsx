@@ -6,7 +6,7 @@ import type { MDXComponents } from 'mdx/types';
 import { cn } from '@/lib/utils';
 import { Callout } from '@/components/mdx/Callout';
 import { MdxCard } from '@/components/mdx/MdxCard';
-import CodeCopyButton from './code-copy-button';
+import CodeCopyButton from '@/components/mdx/CodeCopyButton';
 
 const components: MDXComponents = {
   h1: ({ className, ...props }) => (
