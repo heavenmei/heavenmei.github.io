@@ -5,21 +5,26 @@
 // @import 'typography.scss';
 
 :root {
-  --foreground-color: #333;
+  --foreground-color: #fff;
   --secondary-fg-color: #666;
-  --background-color: #fff;
+  --background-color: #0d1117;
   --secondary-bg-color: #eeeeeebb;
   --background-opacity-color: #ffffffbb;
   --theme-color: #927bbb;
-  --theme-color-light: #be420030;
+  --theme-color-light: #9b8eee;
   --navline-width: 0.5rem;
+
+  --secondary: #959595;
+
+  --theme-green: #8aeb93;
+  --theme-red: #ffa28b;
 }
 
-html.light[data-theme='dark'] {
+html.light[data-theme="dark"] {
   display: none;
 }
 
-html.dark[data-theme='light'] {
+html.dark[data-theme="light"] {
   display: none;
 }
 
@@ -47,13 +52,16 @@ html {
 }
 
 body {
-  color: var(--foregound-color);
-  background: var(--background-color);
+  position: relative;
+  color: var(--foreground-color);
+  background: url("/images/BG.png") no-repeat, #0d1117;
+  background-size: 3282px 1533px;
+  background-position: 70% 0;
   font-family: var(--font-ibmplexsans), -apple-system, Microsoft Yahei UI,
     sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  // box-sizing: border-box;
 
   ::selection {
     background: var(--theme-color);
@@ -62,20 +70,10 @@ body {
   }
 }
 
-.main-content {
-  margin-left: 2rem;
-  margin-top: 6rem;
-  width: calc(100vw - 4rem);
-
-  @media (min-width: 768px) {
-    width: calc(100vw - 16rem);
-    margin-left: 8rem;
-    margin-top: 8rem;
-  }
-
-  @media (min-width: 1500px) {
-    width: calc(100vw - 36rem);
-  }
+main {
+  position: relative;
+  top: 60px;
+  min-height: calc(100vh - 60px);
 }
 
 .footer {
@@ -103,16 +101,157 @@ body {
 }
 
 button {
-  @apply border px-4 py-2 transition-all duration-200;
-  border-color: var(--theme-color);
-  border-radius: 3px;
-  color: var(--theme-color);
+  @apply px-4 py-2 transition-all duration-200;
+  color: var(--foreground-color);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #7c6ce4 0%, #624de3 100%);
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.1),
+    0px -1px 0px 1px rgba(0, 0, 0, 0.25) inset,
+    0px 2px 0px 0px rgba(255, 255, 255, 0.2) inset;
 
   &:hover {
-    background-color: var(--theme-color-light);
+    background: var(--theme-color-light);
   }
+}
+
+button.rounded {
+  padding: 0.5rem;
+  border-radius: 8px;
 }
 
 img {
   transition: all 0.2s;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+
+
+.tag {
+  display: inline-flex;
+  padding: 4px 8px;
+  border-radius: 32px;
+  border: 1px solid;
+  font-size: 12px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 900;
+  font-weight: 800;
+  padding: 0 32px;
+
+  a {
+    text-decoration: none;
+  }
+
+  &.navbar-fix {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 0.5s; /* don't forget to set a duration! */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.self {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  top: 40px;
+  right: 10%;
+
+  .avatar {
+    width: 15%;
+    border-radius: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .sayHi {
+    display: inline;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: right;
+    line-height: 50px;
+  }
+}
+
+.container {
+  position: relative;
+  max-width: 85%;
+  margin: 0 auto;
+  padding: 10px 1rem;
+  padding-bottom: 100px;
+
+  @media (min-width: 1440px) {
+    max-width: 1280px;
+    padding: 50px 1rem;
+  }
+}
+
+.intro-header {
+  width: 100%;
+  background: url("/images/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+  margin-bottom: 20px;
+
+  .container {
+    padding: 150px 15px;
+    text-align: center;
+    margin: 0 auto;
+    color: #fff;
+    h1 {
+      font-size: 80px;
+    }
+  }
+}
+
+.person-side {
+  color: #bfbfbf;
+
+  .contact-icon {
+    background: #bfbfbf;
+    height: 32px;
+    display: inline-flex;
+    width: 32px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+
+  .tags {
+    margin-top: 1rem;
+
+    .tag {
+      display: inline-block;
+      border: 1px solid #bfbfbf;
+      border-radius: 999em;
+      padding: 0 10px;
+      line-height: 24px;
+      font-size: 14px;
+      text-decoration: none;
+      margin: 0 1px;
+      margin-bottom: 6px;
+    }
+  }
 }

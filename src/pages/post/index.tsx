@@ -1,27 +1,45 @@
-import { FC } from 'react';
-import Banner from '@/components/Banner';
-import MySideBar from '@/components/MySideBar';
-import React from 'react';
-import styles from './index.module.scss';
-import Link from 'next/link';
-import { allPosts, Post } from 'contentlayer/generated';
-import { formatDate } from '@/lib/utils';
-import dayjs from 'dayjs';
+import { FC } from "react";
+import Image from "next/image";
+import MySideBar from "@/components/MySideBar";
+import React from "react";
+import styles from "./index.module.scss";
+import Link from "next/link";
+import { allPosts, Post } from "contentlayer/generated";
+import { formatDate } from "@/lib/utils";
+import dayjs from "dayjs";
+import LineIcon from "@/components/lines/LineIcon";
+import SingleLine from "@/components/lines/SingleLine";
+import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
 
 interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
   const PostFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
-  console.log('===', PostFiles);
+  console.log("===", PostFiles);
   return (
     <>
-      <Banner />
-      <div className={`${styles.postList} container flex w-9/12`}>
-        <div className="flex flex-col flex-1 pl-4 pr-[100px] gap-4">
-          {PostFiles?.map((file: any) => (
-            <React.Fragment key={file.title}>
+      <div className="self">
+        <img className="avatar" src="/avatar.jpg"></img>
+        <p className="sayHi">Heavenmei’s Posts</p>
+      </div>
+
+      <div className="container flex">
+        <div className="w-full flex-1">
+          <Image
+            src={`/icons/firstLine.svg`}
+            alt=""
+            width={437}
+            height={42}
+            className="relative top-1"
+          />
+
+          {PostFiles.map((file: Post) => (
+            <div className={styles.postItem} key={file.title}>
+              <div>
+                <BranchLine type={BranchLineStyle.PURPLE} size="small" />
+              </div>
               <div
-                className={`${styles.postItem} flex flex-col`}
+                className={`${styles.postItem_content} flex flex-col`}
                 key={file.title}
               >
                 <Link href={`${file.slug}`}>
@@ -36,10 +54,18 @@ const PostList: FC<PostListProps> = () => {
                 </div>
               </div>
               <hr />
-            </React.Fragment>
+            </div>
           ))}
+
+          <SingleLine
+            color="linear-gradient(180deg, #A371F7 0%, #64557E 50%, #0D1117 100%)"
+            styles={{ position: "relative", top: "-8px" }}
+            height={100}
+          />
         </div>
-        <MySideBar />
+        <div className="relative top-[400px]">
+          <MySideBar />
+        </div>
       </div>
     </>
   );

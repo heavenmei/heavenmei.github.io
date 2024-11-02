@@ -1,0 +1,31 @@
+---
+title: WebGL 基础概念
+subtitle: 
+layout: post
+date: 2024-10-25
+author: heavenmei
+categories:
+  - Post
+description: 
+tags:
+  - WebGL
+url: 
+image:
+---
+### 图像处理
+上文讲到texture传递数据，从js获取图像展示。
+-> 图像处理的下一个问题是如何同时施加多种效果？
+-> 一个更灵活的方式是使用2个或以上的纹理，然后交替渲染它们
+-> **帧缓冲**: 一系列状态（一列附加物）不是任何形式的缓冲
+
+
+
+`texture2D(u_velocitiesTexture, a_textureCoordinates)`: 纹理数据，纹理坐标。返回四维向量(r,g,b,a)
+
+
+
+
+
+###  Reference
+[WebGL 三维纹理](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-3d-textures.html)
+[MDN WebGL API](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API)

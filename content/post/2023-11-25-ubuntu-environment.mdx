@@ -92,13 +92,50 @@ WantedBy=multi-user.target
 
 若不是zsh，请手动配置：`chsh -s $(which zsh)`，重启后可切换
 
-### nvm & node
+## nvm & node
+前往[https://github.com/nvm-sh/nvm/releases](https://github.com/nvm-sh/nvm/releases)确认目前nvm最新版本
 
-默认安装nvm，及node 16.20.0
+```bash
+# 二者选其一，注意wget命令里的-q参数表示--quiet，安静模式，无信息输出，看不到错误，也可去掉该参数
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-![](https://raw.githubusercontent.com/heavenmei/heavenmei.github.io/master/images/202312112015109.png)
+```
 
-### ssh
+ 镜像源
+```bash
+# 设置npm镜像源
+npm config set registry https://registry.npmmirror.com
+
+# 验证npm镜像源
+npm config get registry
+
+# 设置yarn镜像源
+yarn config set registry https://registry.npmmirror.com
+
+# 验证yarn镜像源
+yarn config get registry
+
+```
+
+nvm 镜像
+```bash
+node_mirror: http//npmmirror.com/mirrors/node/ 
+npm_mirror: http://npmmirror.com/mirrors/npm/
+
+
+vim ~/.bashrc
+
+# add
+export NVM_NODEJS_ORG_MIRROR=http://npmmirror.com/mirrors/node/
+
+source ~/.bashrc
+
+nvm ls-remote
+```
+
+
+## ssh
 
 配置端口号
 
@@ -109,7 +146,7 @@ WantedBy=multi-user.target
 之后可以在本机电脑 ssh username@ip -p PORT 远程连接
 
 
-### conda
+## conda
 ```shell
 # download
 curl -O https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
@@ -119,6 +156,39 @@ sudo bash ./Anaconda3-5.2.0-Linux-x86_64.sh
 echo 'export PATH=~/anaconda3/bin:$PATH' >> ~/.bashrc 
 # 刷新bashrc
 source ~/.bashrc 
+```
+
+
+
+
+
+
+## Git ssh
+查看是否由密钥
+```bash
+$ cd ~/.ssh
+$ ls
+authorized_keys2  id_dsa       known_hosts
+config            id_dsa.pub
+```
+
+若没有则生成
+```bash
+ssh-keygen -t rsa -C "youremail@youremail.com" 
+# or
+ssh-keygen -o
+```
+
+
+粘贴公钥->github ->setting -> SSH and GPG keys
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+
+验证
+```bash
+ ssh -T git@github.com
 ```
 
 

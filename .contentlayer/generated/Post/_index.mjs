@@ -13,8 +13,11 @@ import post__2024_07_29ClashMdx from './post__2024-07-29-Clash.mdx.json' assert 
 import post__2024_07_29DockerMdx from './post__2024-07-29-Docker.mdx.json' assert { type: 'json' }
 import post__2024_09_03ReactWebpackCliMdx from './post__2024-09-03-React+Webpack Cli.mdx.json' assert { type: 'json' }
 import post__2024_09_04Md2HtmlMdx from './post__2024-09-04-MD2HTML.mdx.json' assert { type: 'json' }
+import post__2024_10_22WebGlMdx from './post__2024-10-22-WebGL 基础概念.mdx.json' assert { type: 'json' }
+import post__2024_10_25WebGlMdx from './post__2024-10-25-WebGL  流体模拟.mdx.json' assert { type: 'json' }
+import Post15 from './post__2024-10-25-WebGL 纹理.mdx.json' assert { type: 'json' }
 import post__templateMdx from './post__Template.mdx.json' assert { type: 'json' }
 import post__skillLaTeXMdx from './post__skill-LaTeX.mdx.json' assert { type: 'json' }
 import post__skillMdx from './post__skill-服务器.mdx.json' assert { type: 'json' }
 
-export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26Mdx, post__2023_11_27ViteVueMdx, post__2023_12_01DiffusionLearningMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__templateMdx, post__skillLaTeXMdx, post__skillMdx]
+export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26Mdx, post__2023_11_27ViteVueMdx, post__2023_12_01DiffusionLearningMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__2024_10_22WebGlMdx, post__2024_10_25WebGlMdx, Post15, post__templateMdx, post__skillLaTeXMdx, post__skillMdx]

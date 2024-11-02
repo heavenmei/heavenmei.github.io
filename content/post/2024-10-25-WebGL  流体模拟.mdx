@@ -1,0 +1,42 @@
+---
+title: WebGL 流体模拟
+subtitle: 
+layout: post
+date: 2024-10-29
+author: heavenmei
+categories:
+  - Post
+description: 
+tags:
+  - WebGL
+url: 
+image:
+---
+粒子系统是模拟中的核心，采用了PIC/FLIP方法来模拟流体动力学。GPU并行处理能力的利用大大提升了模拟速度和渲染性能，而球形环境光遮挡体积技术则增强了3D模型的真实感。
+
+
+
+###  球形环境光遮挡体积技术
+
+
+
+快速近似抗锯齿（FXAA）算法。一种用于减少图像中锯齿现象的技术，特别是在实时渲染中非常有效。
+
+首先，代码定义了一些精度和变量。`precision highp float;` 指定了浮点数的精度。`varying vec2 v_coordinates;` 是从顶点着色器传递过来的纹理坐标。`uniform sampler2D u_input;` 是输入的纹理采样器，`uniform vec2 u_resolution;` 是屏幕的分辨率。
+
+接下来，代码定义了一些常量，这些常量用于控制 FXAA 算法的行为。[`FXAA_SPAN_MAX`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 定义了最大跨度，[`FXAA_REDUCE_MUL`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 和 [`FXAA_REDUCE_MIN`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 用于减少方向向量的影响。
+
+在 [`main`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 函数中，首先计算了每个像素的增量 [`delta`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html)，这是通过屏幕分辨率的倒数得到的。然后，代码从输入纹理中采样了当前像素及其周围的四个像素的颜色值，分别是左上（NW）、右上（NE）、左下（SW）和右下（SE）。
+
+接下来，代码计算了这些颜色值的亮度（luma），使用了一个常见的亮度计算公式 `vec3 luma = vec3(0.299, 0.587, 0.114);`。然后，计算了这些亮度值的最小值和最大值。
+
+代码还计算了一个方向向量 [`dir`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html)，这个向量表示亮度梯度的方向。为了避免方向向量过大，代码使用了 [`dirReduce`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 和 [`rcpDirMin`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 来缩放方向向量。
+
+然后，代码使用方向向量 [`dir`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 计算了两个新的颜色值 [`rgbA`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 和 [`rgbB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html)。[`rgbA`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 是通过在方向向量的三分之一和三分之二处采样得到的，而 [`rgbB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 则是通过在方向向量的负半和正半处采样得到的。
+
+最后，代码比较了 [`rgbB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 的亮度值 [`lumaB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 与之前计算的亮度最小值和最大值。如果 [`lumaB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 超出了这个范围，说明 [`rgbB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 可能包含锯齿现象，此时使用 [`rgbA`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 作为最终颜色，否则使用 [`rgbB`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html) 作为最终颜色。最终的颜色值被赋给 [`gl_FragColor`](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.esm.html)，这是片段着色器的输出颜色。
+
+
+
+###  Reference
+[# fluid:流体颗粒-http - 实时3D流体模拟与WebGL渲染](https://blog.csdn.net/weixin_42594427/article/details/142328230)

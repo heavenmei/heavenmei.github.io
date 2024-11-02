@@ -25,6 +25,7 @@ for ubuntu20+
 docker images
 
 docker pull <image_name>
+docker pull <镜像源>/<image_name>
 
 
 # delete
@@ -45,6 +46,9 @@ docker ps
 docker start <container_id_or_name>
 docker stop <container_id_or_name>
 
+# 删除
+docker rm <container_id_or_name>
+
 docker run <options> <image_name>
 
 # 查看容器资源使用情况
@@ -52,6 +56,10 @@ docker stats <container_id_or_name>
 
 # 进入容器
 docker exec -it <container_id_or_name> /bin/bash
+
+
+# 查看那详细信息
+docker inspect <container_id_or_name>
 
 ```
 
@@ -66,6 +74,23 @@ docker-compose down
 ```
 
 ### docker pull 加速
+```bash
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+    "registry-mirrors": [
+	    "https://dockerproxy.cn",
+        "https://dockerproxy.com",
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://docker.nju.edu.cn"
+    ]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+
 在挂了clash代理后docker pull的速度非常慢，后来得知docker不走系统代理，原来docker需要单独配置代理
 
 1. 使用 `sudo systemctl edit docker.service`编辑 Docker 的 systemd 服务文件

@@ -1,103 +1,184 @@
-import Image from 'next/image';
-import styles from './index.module.scss';
-import { PublicationList } from '@/lib/constant';
+import Image from "next/image";
+import styles from "./index.module.scss";
+import { PublicationList } from "@/lib/constant";
+import cx from "classnames";
+import LineIcon from "@/components/lines/LineIcon";
+import SingleLine from "@/components/lines/SingleLine";
+import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <div className={styles.homeBanner}>
-        <div className={styles.content}>
-          <div className={styles.sayHi}>
-            <div>Hi! 👋</div>
-            <div>{`I'm Heavenmei`}</div>
-            <div>Front-end developer | Based in Shanghai</div>
-          </div>
-          <div className={styles.avatar}>
-            <img className="rounded-xl" src="/avatar.jpg"></img>
-          </div>
-        </div>
-        <div className={styles.contactBtn}>
-          <a
-            href="mailto:heavenmei.huang@gmail.com"
-            className="contact-icon"
-            target="_blank"
-          >
-            <Image src="/icons/email.svg" width={20} height={20} alt="" />
-          </a>
-          <a
-            href="https://github.com/heavenmei"
-            className="contact-icon"
-            target="_blank"
-          >
-            <Image src="/icons/github.svg" width={20} height={20} alt="" />
-          </a>
-        </div>
-        <div className={styles.scrollUp}>
-          {/* <IconDoubleUp className={styles.icon} /> */}
-        </div>
-        <div className={styles.homeBg}></div>
+    <>
+      <div className="self">
+        <img className="avatar" src="/avatar.jpg"></img>
+        <p className="sayHi">
+          Hi~👋 <br />
+          I’m Heavenmei
+        </p>
       </div>
-      <div className={styles.homeContent}>
-        <div className="w-3/4 m-auto">
-          <section>
-            <div className={styles.sectionTitle}>Publications</div>
-            <div className={`flex flex-col ${styles.pubList}`}>
-              {PublicationList.map((item) => (
-                <div
-                  className={`${styles.pubItem} flex gap-4`}
-                  key={item.title}
-                >
-                  <Image src={item.img} width={275} height={105} alt="" />
-                  <div
-                    className={`${styles.pubItem_content} flex flex-col gap-1 w-full`}
-                  >
-                    <strong>{item.title}</strong>
-                    <div>
-                      {item.authors.split(',')?.map((author, index) => {
-                        const cmp =
-                          author.trim() !== 'Haiwen Huang' ? (
-                            <span>{author}</span>
-                          ) : (
-                            <a href="#">{author}</a>
-                          );
-                        return (
-                          <>
-                            {cmp}
-                            {index === item.authors.length - 1 ? '' : ','}
-                          </>
-                        );
-                      })}
-                    </div>
-                    <div className={styles.lightText}>{item.venue}</div>
-                    <div className={styles.lightText}>{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
 
-          <section>
-            <div className={styles.sectionTitle}>Projects</div>
-            <div className={styles.projectList}></div>
-          </section>
+      <div className="container">
+        <Image src={`/icons/firstLine.svg`} alt="" width={437} height={522} />
 
+        {/* About me */}
+        <div className={styles.aboutMe}>
           <div>
-            <h2>Posts</h2>
-            <div className="pubList flex flex-col">
-              {PublicationList.map((item) => (
-                <div className="pulItem flex gap-4" key={item.title}>
-                  <div className="flex flex-col gap-1">
-                    <div>{item.title}</div>
-                    <div>{item.authors}</div>
-                    <div>{item.venue}</div>
-                    <div>{item.desc}</div>
-                  </div>
-                </div>
-              ))}
+            <LineIcon name="code" />
+            <SingleLine />
+          </div>
+          <div className={styles.aboutMe_content}>
+            <div className={styles.aboutMe_top}>
+              <Image src="/icons/github.svg" width={20} height={20} alt="" />
+              <p>GitHub Galaxy</p>
+              <Image
+                src="/icons/rightArrow.svg"
+                width={20}
+                height={20}
+                alt=""
+              />
+            </div>
+
+            <p className={styles.aboutMe_desc}>
+              Front-end developer | Based in Shanghai
+            </p>
+            <p className="text-secondary">
+              Flexible and powerful, Specify makes it easy to build the exact
+              Design Token workflow your Design System needs.
+            </p>
+            <div className={styles.aboutMe_contact}>
+              <button className="rounded">
+                <a
+                  href="mailto:heavenmei.huang@gmail.com"
+                  className="contact-icon"
+                  target="_blank"
+                >
+                  <Image src="/icons/email.svg" width={20} height={20} alt="" />
+                </a>
+              </button>
+              <button className="rounded">
+                <a
+                  href="https://github.com/heavenmei"
+                  className="contact-icon"
+                  target="_blank"
+                >
+                  <Image
+                    src="/icons/github.svg"
+                    width={20}
+                    height={20}
+                    alt=""
+                  />
+                </a>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* publication */}
+        <div className={styles.publication}>
+          <div>
+            <LineIcon name="file" color="#57D364" />
+            <SingleLine
+              color="linear-gradient(180deg, #56D364 0%, #2EA043 100%)"
+              height={100}
+            />
+          </div>
+          <div className={styles.publication_content}>
+            <h1>Publications</h1>
+            <p className="text-2xl font-light font-mono text-[#7EE787]">
+              Accelerate high-quality software development. Our platform drives
+              innovation with tools that boost developer velocity.
+            </p>
+          </div>
+        </div>
+        {PublicationList.map((item) => (
+          <div className={styles.pubList} key={item.title}>
+            <div>
+              <BranchLine type={BranchLineStyle.GREEN} />
+            </div>
+            <div className={styles.pubList_content}>
+              <div className="flex flex-col gap-1">
+                <div className="tag text-green mr-auto">{item.tag}</div>
+                <p className="text-green text-xl font-bold">{item.title}</p>
+                <div>
+                  {item.authors.split(",")?.map((author, index) => {
+                    const cmp =
+                      author.trim() !== "Haiwen Huang" ? (
+                        <span>{author}</span>
+                      ) : (
+                        <a href="#">{author}</a>
+                      );
+                    return (
+                      <>
+                        {cmp}
+                        {index === item.authors.length - 1 ? "" : ","}
+                      </>
+                    );
+                  })}
+                </div>
+                <div className="text-secondary text-sm">{item.venue}</div>
+                <div className="text-secondary text-sm">{item.desc}</div>
+              </div>
+              <Image src={item.img} width={300} height={107} alt="" />
+            </div>
+          </div>
+        ))}
+
+        {/* Project */}
+        <div className={styles.project}>
+          <div>
+            <SingleLine
+              color="linear-gradient(180deg, #2EA043 0%, #EC6547 50.5%, #FFA28B 100%)"
+              height={100}
+            />
+            <LineIcon name="file" color="#EA6045" />
+            <SingleLine
+              color="linear-gradient(180deg, #FFA28B 0%, #EC6545 100%)"
+              height={100}
+            />
+          </div>
+          <div className={styles.project_content}>
+            <h1>Projects</h1>
+            <p className="text-2xl font-light font-mono text-[#FFA28B]">
+              Accelerate high-quality software development. Our platform drives
+              innovation with tools that boost developer velocity.
+            </p>
+          </div>
+        </div>
+        {PublicationList.map((item) => (
+          <div className={styles.pubList} key={item.title}>
+            <div>
+              <BranchLine type={BranchLineStyle.RED} />
+            </div>
+            <div className={styles.pubList_content}>
+              <div className="flex flex-col gap-1">
+                <div className="tag text-red mr-auto">{item.tag}</div>
+                <strong className="text-red text-xl font-bold">
+                  {item.title}
+                </strong>
+                <div>
+                  {item.authors.split(",")?.map((author, index) => {
+                    const cmp =
+                      author.trim() !== "Haiwen Huang" ? (
+                        <span>{author}</span>
+                      ) : (
+                        <a href="#">{author}</a>
+                      );
+                    return (
+                      <>
+                        {cmp}
+                        {index === item.authors.length - 1 ? "" : ","}
+                      </>
+                    );
+                  })}
+                </div>
+                <div className="text-secondary text-sm">{item.venue}</div>
+                <div className="text-secondary text-sm">{item.desc}</div>
+              </div>
+              <Image src={item.img} width={300} height={107} alt="" />
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
+    </>
   );
 }
