@@ -5,26 +5,30 @@ import { routes } from "@/lib/routes";
 import Link from "next/link";
 
 const Nav = () => {
-  const [navClass, setNavClass] = useState("");
-
   const NavMenu = useMemo(
     () => routes.filter((item) => item.navShow),
     [routes]
   );
 
   useEffect(() => {
-    window.onscroll = () => {
+    const handleScroll = () => {
+      const navDom = document.querySelector("#navbar") as HTMLElement;
+
+      if (!navDom) return;
       const top = document.scrollingElement?.scrollTop ?? 0;
-      if (top > 400) {
-        setNavClass("navbar-fix");
+      if (top > 100) {
+        navDom.className = "navbar navbar-fix";
       } else {
-        setNavClass(" ");
+        navDom.className = "navbar";
       }
     };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className={`navbar flex justify-between items-center ${navClass}`}>
+    <nav id="navbar" className="navbar">
       <h3>Heavenmei </h3>
       <div className="nav-list flex gap-8">
         {NavMenu.map((item) => (

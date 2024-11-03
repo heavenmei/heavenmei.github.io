@@ -1,10 +1,10 @@
 import Image from "next/image";
 import styles from "./index.module.scss";
 import { PublicationList } from "@/lib/constant";
-import cx from "classnames";
 import LineIcon from "@/components/lines/LineIcon";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
+import config from "@/configs";
 
 export default function Home() {
   return (
@@ -48,7 +48,7 @@ export default function Home() {
             <div className={styles.aboutMe_contact}>
               <button className="rounded">
                 <a
-                  href="mailto:heavenmei.huang@gmail.com"
+                  href={`mailto:${config.email}`}
                   className="contact-icon"
                   target="_blank"
                 >
@@ -57,7 +57,7 @@ export default function Home() {
               </button>
               <button className="rounded">
                 <a
-                  href="https://github.com/heavenmei"
+                  href={config.github}
                   className="contact-icon"
                   target="_blank"
                 >

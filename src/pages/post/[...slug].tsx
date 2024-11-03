@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { allPosts, Post } from 'contentlayer/generated';
-import { useRouter } from 'next/router';
-import Banner from '@/components/Banner';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { Mdx } from '@/components/mdx';
+import * as React from "react";
+import { allPosts } from "contentlayer/generated";
+import { useRouter } from "next/router";
+import { Mdx } from "@/components/mdx";
+import MySideBar from "@/components/MySideBar";
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
+import { formatDate } from "@/lib/utils";
 
 function getPageFromParams(params: any) {
-  const slug = params?.slug?.join('/');
+  const slug = params?.slug?.join("/");
   const page = allPosts.find((page) => page.slugAsParams === slug);
-  console.log('props===', page);
+  console.log("props===", page);
 
   if (!page) {
     null;
@@ -32,25 +32,49 @@ export default function PostPage(props: PageProps) {
     return;
   }
 
-  return (
-    page && (
-      <>
-        <Banner title={page.title} />
-        <div className="container w-9/12 flex ">
-          {/* <MarkdownWrap url={`../content/post/${curMD.path}`} /> */}
-          <div
-            className="leftSide text-start w-1/5 mr-4"
-            style={{ minWidth: 200 }}
-          >
-            {/* <MarkNav source={currentArticle} ordered={false} /> */}
+  const Banner = (
+    <div className="banner">
+      <div className="-translate-x-[300px]">
+        {page.tags?.map((tag) => (
+          <span className="tag" key={tag}>
+            {tag}
+          </span>
+        ))}
+      </div>
+      <h1>{page.title}</h1>
+      <div className="text-sm text-white/50">{page.subtitle}</div>
+      <div className="text-sm text-white/50">{formatDate(page.date)}</div>
+    </div>
+  );
+
+  return page ? (
+    <>
+      <div className="container">
+        <Breadcrumbs
+          variant="bordered"
+          classNames={{
+            list: "bg-white mb-4 border-none",
+          }}
+          itemClasses={{
+            item: "text-black data-[current=true]:text-primary",
+            separator: "text-black/80",
+          }}
+        >
+          <BreadcrumbItem href="/">Home</BreadcrumbItem>
+          <BreadcrumbItem href="/post">Post</BreadcrumbItem>
+          <BreadcrumbItem href="#">{page.title}</BreadcrumbItem>
+        </Breadcrumbs>
+
+        <div className="flex gap-8">
+          <div className="markdown-body rounded-xl p-6 flex-1 h-full">
+            {Banner}
+            <Mdx code={page.body.code} />
           </div>
-          <div className=" content">
-            <div className="markdown-body">
-              <Mdx code={page.body.code} />
-            </div>
-          </div>
+          <MySideBar isAvatar={true} isMenu={true} isTags={true} />
         </div>
-      </>
-    )
+      </div>
+    </>
+  ) : (
+    <h1>Not Found</h1>
   );
 }

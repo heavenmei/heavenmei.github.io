@@ -33,10 +33,15 @@ yarn add contentlayer next-contentlayer -S
 
 
 ## Markdown优化插件
-- **`rehype-pretty-code`**：用于美化代码块的样式和显示。它可以对代码进行语法高亮、添加行号等操作，以提升代码的可读性。
-- **`rehype-raw`**：用于保留 HTML 标签的原始内容，而不进行任何转换。它可以用于处理包含自定义 HTML 标签或特殊需求的内容。
-- **`rehype-slug`**：用于为标题生成唯一的 slug（URL-friendly string，常用于锚链接）。它可以将标题文本转换为小写、移除特殊字符等，以生成易于处理和识别的 slug。
-- **`rehype-stringify`**：用于将 **`rehype`** 的 AST（Abstract Syntax Tree）转换回 HTML 字符串。它可以将经过处理的 AST 转换为有效的 HTML 代码。
+
 - **`remark-gfm`**：用于扩展 **`remark`** 的功能，支持 GitHub Flavored Markdown (GFM) 的语法。它可以处理 GFM 的特殊语法，如任务列表、表格等。
 - **`remark-math`**：用于在 Markdown 中支持数学公式的渲染。它可以解析 LaTeX 或 MathML 格式的数学公式，并将其转换为 HTML 或其他格式进行显示。
 - **`remark-rehype`**：用于将 **`remark`** 的 AST 转换为 **`rehype`** 的 AST。它可以在 **`remark`** 和 **`rehype`** 之间进行转换，以便使用 **`rehype`** 的插件对 Markdown 进行进一步处理。
+
+
+
+- **`rehype-pretty-code`**：用于美化代码块的样式和显示。它可以对代码进行语法高亮、添加行号等操作，以提升代码的可读性。
+- **`rehype-raw`**：用于保留 HTML 标签的原始内容，而不进行任何转换。它可以用于处理包含自定义 HTML 标签或特殊需求的内容。
+- **`rehype-stringify`**：用于将 **`rehype`** 的 AST（Abstract Syntax Tree）转换回 HTML 字符串。它可以将经过处理的 AST 转换为有效的 HTML 代码。
+- [`rehype-slug`](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Frehypejs%2Frehype-slug "https://github.com/rehypejs/rehype-slug"): h1-h6 标签添加 id，用于为标题生成唯一的 slug（URL-friendly string，常用于锚链接）。它可以将标题文本转换为小写、移除特殊字符等，以生成易于处理和识别的 slug。
+- [`rehype-autolink-headings`](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Frehypejs%2Frehype-autolink-headings "https://github.com/rehypejs/rehype-autolink-headings"): 添加锚点

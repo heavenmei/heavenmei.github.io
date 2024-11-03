@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "common.scss";
+
 // @import 'typography.scss';
 
 :root {
@@ -9,11 +11,12 @@
   --secondary-fg-color: #666;
   --background-color: #0d1117;
   --secondary-bg-color: #eeeeeebb;
-  --background-opacity-color: #ffffffbb;
+  --background-opacity-color: #ffffffd3;
   --theme-color: #927bbb;
   --theme-color-light: #9b8eee;
   --navline-width: 0.5rem;
 
+  --primary: #8975dc;
   --secondary: #959595;
 
   --theme-green: #8aeb93;
@@ -72,8 +75,8 @@ body {
 
 main {
   position: relative;
-  top: 60px;
-  min-height: calc(100vh - 60px);
+  padding-top: 60px;
+  min-height: 100vh;
 }
 
 .footer {
@@ -138,8 +141,6 @@ h3 {
   font-weight: 500;
 }
 
-
-
 .tag {
   display: inline-flex;
   padding: 4px 8px;
@@ -156,6 +157,9 @@ h3 {
   z-index: 900;
   font-weight: 800;
   padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   a {
     text-decoration: none;
@@ -194,11 +198,11 @@ h3 {
 }
 
 .container {
+  height: 100%;
   position: relative;
   max-width: 85%;
   margin: 0 auto;
-  padding: 10px 1rem;
-  padding-bottom: 100px;
+  padding: 10px 1rem 60px;
 
   @media (min-width: 1440px) {
     max-width: 1280px;
@@ -206,23 +210,35 @@ h3 {
   }
 }
 
-.intro-header {
+.banner {
   width: 100%;
+  border-radius: 20px;
   background: url("/images/home-bg.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: scroll;
   background-size: cover;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 
-  .container {
-    padding: 150px 15px;
-    text-align: center;
-    margin: 0 auto;
-    color: #fff;
-    h1 {
-      font-size: 80px;
-    }
+  height: 200px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightSideBar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 250px;
+
+  &-fix {
+    position: fixed;
+    top: 80px;
+    animation: slideInDown; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 0.5s; /* don't forget to set a duration! */
   }
 }
 
@@ -230,7 +246,7 @@ h3 {
   color: #bfbfbf;
 
   .contact-icon {
-    background: #bfbfbf;
+    background: rgba(255, 255, 255, 0.5);
     height: 32px;
     display: inline-flex;
     width: 32px;
@@ -252,6 +268,69 @@ h3 {
       text-decoration: none;
       margin: 0 1px;
       margin-bottom: 6px;
+    }
+  }
+}
+
+.tag-side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  height: auto;
+}
+
+.toc {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  background: #ffffff;
+  color: #000;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  height: auto;
+
+  .label {
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+
+  .js-toc {
+    & > .toc-list {
+      overflow: hidden;
+
+      position: relative;
+    }
+    .toc-list {
+      padding-left: 0.8rem;
+    }
+    .toc-list-item {
+      margin: 8px 0;
+    }
+
+    .toc-link::before {
+      background-color: #fff;
+      content: " ";
+      display: inline-block;
+      height: 100%;
+      left: 0;
+      margin-top: -1px;
+      position: absolute;
+      width: 4px;
+    }
+
+    .is-active-link {
+      color: var(--theme-color);
+
+      &::before {
+        background: var(--theme-color);
+      }
     }
   }
 }

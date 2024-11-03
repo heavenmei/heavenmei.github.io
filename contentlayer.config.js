@@ -1,8 +1,14 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
+
+// Remark packages
 import remarkGfm from "remark-gfm";
-import rehypePrettyCode from "rehype-pretty-code";
 import remarkCodeTitles from "remark-flexible-code-titles";
 import { preProcess, postProcess } from "./src/lib/rehype-pre-raw";
+
+// Rehype packages
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const commonFields = {
   slug: {
@@ -21,6 +27,7 @@ export const Post = defineDocumentType(() => ({
   contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
+    tags: { type: "list", of: { type: "string" } },
     author: { type: "string" },
     subtitle: { type: "string" },
     url: { type: "string", required: false },
@@ -30,11 +37,11 @@ export const Post = defineDocumentType(() => ({
     date: { type: "date", required: false },
   },
   computedFields: {
-    id: {
-      type: "string",
-      resolve: (item) =>
-        item._raw.sourceFileName.split("_").slice(1).join("_").split(".")[0],
-    },
+    // id: {
+    //   type: "string",
+    //   resolve: (item) =>
+    //     item._raw.sourceFileName.split("_").slice(1).join("_").split(".")[0],
+    // },
     ...commonFields,
   },
 }));
@@ -60,14 +67,24 @@ export default makeSource({
     ],
     // TODO: fix postProcess
     rehypePlugins: [
-      preProcess,
+      // preProcess,
       [
         rehypePrettyCode,
         {
           theme: "github-dark",
         },
       ],
-      postProcess,
+      // postProcess,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          // 锚点设置类名
+          properties: {
+            class: "header-anchor",
+          },
+        },
+      ],
     ],
   },
 });

@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import LineIcon from "@/components/lines/LineIcon";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
+import config from "@/configs";
 
 interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
@@ -19,7 +20,21 @@ const PostList: FC<PostListProps> = () => {
   return (
     <>
       <div className="self">
-        <img className="avatar" src="/avatar.jpg"></img>
+        <div className="flex ml-auto items-end justify-end">
+          <div className="contact-btns flex gap-6 mb-4 mr-4 flex-row-reverse">
+            <a
+              href={`mailto:${config.email}`}
+              className="contact-icon"
+              target="_blank"
+            >
+              <Image src="/icons/email.svg" width={28} height={28} alt="" />
+            </a>
+            <a href={config.github} className="contact-icon" target="_blank">
+              <Image src="/icons/github.svg" width={28} height={28} alt="" />
+            </a>
+          </div>
+          <img className="avatar" src="/avatar.jpg"></img>
+        </div>
         <p className="sayHi">Heavenmei’s Posts</p>
       </div>
 
@@ -63,8 +78,8 @@ const PostList: FC<PostListProps> = () => {
             height={100}
           />
         </div>
-        <div className="relative top-[400px]">
-          <MySideBar />
+        <div className="relative mt-[400px] ">
+          <MySideBar isTags={true} />
         </div>
       </div>
     </>
