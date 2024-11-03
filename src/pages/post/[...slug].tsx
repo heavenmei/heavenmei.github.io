@@ -26,6 +26,8 @@ interface PageProps {
 
 export default function PostPage(props: PageProps) {
   const router = useRouter();
+  console.log("router===", router);
+
   const page = getPageFromParams(router.query);
 
   if (!page) {
