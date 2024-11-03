@@ -1,4 +1,5 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import { writeFileSync } from "fs";
 
 // Remark packages
 import remarkGfm from "remark-gfm";
@@ -9,6 +10,9 @@ import { preProcess, postProcess } from "./src/lib/rehype-pre-raw";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+
+const root = process.cwd();
+const isProduction = process.env.NODE_ENV === "production";
 
 const commonFields = {
   slug: {
@@ -45,6 +49,34 @@ export const Post = defineDocumentType(() => ({
     ...commonFields,
   },
 }));
+
+/**
+ * Count the occurrences of all tags across blog posts and write to json file
+ */
+function createTagCount(allBlogs) {
+  const tagCount = {};
+  // const slugger = new GithubSlugger()
+  allBlogs.forEach((file) => {
+    if (file.tags && (!isProduction || file.draft !== true)) {
+      file.tags.forEach((tag) => {
+        if (tag in tagCount) {
+          tagCount[tag] += 1;
+        } else {
+          tagCount[tag] = 1;
+        }
+      });
+    }
+  });
+  writeFileSync("public/tag-data.json", JSON.stringify(tagCount));
+}
+
+// function createSearchIndex(allBlogs) {
+//   writeFileSync(
+//     `public/search.json`,
+//     JSON.stringify(allCoreContent(sortPosts(allBlogs)))
+//   );
+//   console.log("Local search index generated...");
+// }
 
 export default makeSource({
   contentDirPath: "content",
@@ -86,5 +118,10 @@ export default makeSource({
         },
       ],
     ],
+  },
+  onSuccess: async (importData) => {
+    const { allPosts } = await importData();
+    createTagCount(allPosts);
+    // createSearchIndex(allPosts);
   },
 });

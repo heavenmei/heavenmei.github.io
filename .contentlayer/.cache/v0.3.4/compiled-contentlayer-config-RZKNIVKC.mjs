@@ -1,5 +1,6 @@
 // contentlayer.config.js
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
+import { writeFileSync } from "fs";
 import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
 
@@ -10,6 +11,8 @@ import { visit } from "unist-util-visit";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+var root = process.cwd();
+var isProduction = process.env.NODE_ENV === "production";
 var commonFields = {
   slug: {
     type: "string",
@@ -44,6 +47,21 @@ var Post = defineDocumentType(() => ({
     ...commonFields
   }
 }));
+function createTagCount(allBlogs) {
+  const tagCount = {};
+  allBlogs.forEach((file) => {
+    if (file.tags && (!isProduction || file.draft !== true)) {
+      file.tags.forEach((tag) => {
+        if (tag in tagCount) {
+          tagCount[tag] += 1;
+        } else {
+          tagCount[tag] = 1;
+        }
+      });
+    }
+  });
+  writeFileSync("public/tag-data.json", JSON.stringify(tagCount));
+}
 var contentlayer_config_default = makeSource({
   contentDirPath: "content",
   contentDirExclude: ["ZtTemplates", ".trash", ".obsidian"],
@@ -84,10 +102,14 @@ var contentlayer_config_default = makeSource({
         }
       ]
     ]
+  },
+  onSuccess: async (importData) => {
+    const { allPosts } = await importData();
+    createTagCount(allPosts);
   }
 });
 export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-5IYUULNI.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-RZKNIVKC.mjs.map

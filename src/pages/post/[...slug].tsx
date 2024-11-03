@@ -8,14 +8,14 @@ import { formatDate } from "@/lib/utils";
 
 function getPageFromParams(params: any) {
   const slug = params?.slug?.join("/");
-  const page = allPosts.find((page) => page.slugAsParams === slug);
-  console.log("props===", page);
+  const post = allPosts.find((page) => page.slugAsParams === slug);
+  console.log("props===", allPosts, post, slug);
 
-  if (!page) {
+  if (!post) {
     null;
   }
 
-  return page;
+  return post;
 }
 
 interface PageProps {
