@@ -1,8 +1,8 @@
-import { withContentlayer } from 'next-contentlayer';
+import { withContentlayer } from "next-contentlayer";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: 'export',
+  output: "export",
   images: { unoptimized: true },
   reactStrictMode: true,
   swcMinify: true,
