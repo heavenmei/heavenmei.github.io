@@ -2,6 +2,7 @@
 title: LaTex 使用技巧
 tags:
   - skill
+date: 2024-8-25
 layout: list
 categories:
   - Note
@@ -9,8 +10,8 @@ categories:
 
 **高亮**： `\hl` (`usepackage{soul}`)
 
-**新开页：** `\clearpage` 
-**新开一列**：  `\newpage` 
+**新开页：** `\clearpage`
+**新开一列**： `\newpage`
 
 **Figure**
 
@@ -24,13 +25,14 @@ categories:
 ```
 
 **Algorithm**
+
 ```latex
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}  % 这个和algorithmic不兼容，
 \renewcommand{\algorithmiccomment}[1]{\\$\triangleright$ #1}
-\renewcommand{\algorithmicrequire}{ \textbf{Input:}}    
-\renewcommand{\algorithmicensure}{ \textbf{Output:}}   
+\renewcommand{\algorithmicrequire}{ \textbf{Input:}}
+\renewcommand{\algorithmicensure}{ \textbf{Output:}}
 
 
 \begin{algorithm}[t]
@@ -46,7 +48,7 @@ categories:
         \vspace{1em}
 		\Comment Compute reference cross-attention map
 		\For{$t=T \dots 1$ }
-    	\State ${\hat{\epsilon},M_{t}^{\mathrm{ref}} \leftarrow \epsilon_{\theta}(x_{t},t,c)}$ 
+    	\State ${\hat{\epsilon},M_{t}^{\mathrm{ref}} \leftarrow \epsilon_{\theta}(x_{t},t,c)}$
             \State ${ { x_{t-1} =\mathrm{UPDATE}(x_{t},\hat{\epsilon},t)} }$
 		\EndFor
 
@@ -72,14 +74,12 @@ categories:
 
 ```
 
-
-
-
 #### 中文使用
 
 https://www.cnblogs.com/chuqianyu/p/14620014.html
+
 ```latex
-%test.tex 
+%test.tex
 \documentclass{article}
 \usepackage{CJKutf8}
 \begin{document}
@@ -88,4 +88,5 @@ https://www.cnblogs.com/chuqianyu/p/14620014.html
 \end{CJK}
 \end{document}
 ```
-用pdflatex编译tex文件，即可得到输出结果。
+
+用 pdflatex 编译 tex 文件，即可得到输出结果。

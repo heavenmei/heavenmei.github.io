@@ -15,7 +15,7 @@ interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
   const PostFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
-  console.log("===", PostFiles);
+  console.log("PostFiles ===", PostFiles);
   return (
     <>
       <div className="self">
@@ -34,7 +34,7 @@ const PostList: FC<PostListProps> = () => {
           />
 
           {PostFiles.map((file: Post) => (
-            <div className={styles.postItem} key={file.title}>
+            <div className={styles.postItem} key={file._id}>
               <div>
                 <BranchLine type={BranchLineStyle.PURPLE} size="small" />
               </div>

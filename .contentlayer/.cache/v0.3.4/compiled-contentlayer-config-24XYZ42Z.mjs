@@ -41,6 +41,8 @@ var Post = defineDocumentType(() => ({
   contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
+    author: { type: "string" },
+    subtitle: { type: "string" },
     url: { type: "string", required: false },
     titleAlt: { type: "string", required: false },
     description: { type: "string", required: false },
@@ -91,4 +93,4 @@ export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-WWSWWTYT.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-24XYZ42Z.mjs.map
