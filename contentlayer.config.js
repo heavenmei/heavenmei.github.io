@@ -11,7 +11,6 @@ import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
-const root = process.cwd();
 const isProduction = process.env.NODE_ENV === "production";
 
 const commonFields = {
