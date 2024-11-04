@@ -1,6 +1,5 @@
 import * as React from "react";
-import { allPosts } from "contentlayer/generated";
-import { useRouter } from "next/router";
+import { allPosts, Post } from "contentlayer/generated";
 import { Mdx } from "@/components/mdx";
 import MySideBar from "@/components/MySideBar";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
@@ -18,17 +17,15 @@ function getPageFromParams(params: any) {
   return post;
 }
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+type PageProps = {
+  slug: string;
+  page: Post;
+};
 
 export default function PostPage(props: PageProps) {
-  const router = useRouter();
-  console.log("router===", router);
-
-  const page = getPageFromParams(router.query);
+  const { slug, page } = props;
+  console.log("PostPage props ===> ", props);
+  // const page = getPageFromParams(router.query);
 
   if (!page) {
     return;
@@ -80,3 +77,26 @@ export default function PostPage(props: PageProps) {
     <h1>Not Found</h1>
   );
 }
+
+export async function getStaticProps(paths: any) {
+  const { params } = paths;
+  const page = allPosts.find((page) => page.slugAsParams === params.slug);
+  // console.log("getStaticProps===>", params, page?.title);
+
+  return { props: { slug: params.slug, page: page } };
+}
+
+// 使用getStaticPaths将会build多个页面
+export const getStaticPaths = async () => {
+  const paths = allPosts.map((post) => ({
+    params: { slug: post.slugAsParams },
+  }));
+
+  console.log("getStaticPaths===", paths);
+  return {
+    // 这里的数据将提供给getStaticProps使用
+    paths,
+    // fallback为false，表示如果不在以上参数的路由将返回404
+    fallback: false,
+  };
+};

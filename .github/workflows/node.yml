@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  Build-Branch:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
