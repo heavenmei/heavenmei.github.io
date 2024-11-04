@@ -7,7 +7,7 @@ import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { formatDate } from "@/lib/utils";
 
 function getPageFromParams(params: any) {
-  const slug = params?.slug?.join("/");
+  const slug = params?.slug;
   const post = allPosts.find((page) => page.slugAsParams === slug);
   console.log("props===", allPosts, post, slug);
 
@@ -20,7 +20,7 @@ function getPageFromParams(params: any) {
 
 interface PageProps {
   params: {
-    slug: string[];
+    slug: string;
   };
 }
 
