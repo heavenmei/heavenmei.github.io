@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { routes } from "@/lib/routes";
+import { routes } from "@/configs/routes";
 import Link from "next/link";
 
 const Nav = () => {

@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import Image from "next/image";
 // @ts-ignore
 import tocbot from "tocbot";
@@ -9,6 +9,8 @@ const MySideBar: FC<{
   isTags?: boolean;
   isMenu?: boolean;
 }> = ({ isAvatar = false, isTags = false, isMenu }) => {
+  const [tags, setTags] = useState({});
+
   // https://tscanlin.github.io/tocbot/
   useEffect(() => {
     tocbot.init({
@@ -42,6 +44,18 @@ const MySideBar: FC<{
     return () => window.addEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    fetch("/tag-data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setTags(data);
+        console.log("Tags data:", data);
+      })
+      .catch((error) => {
+        console.error("Error fetching the JSON data:", error);
+      });
+  }, []);
+
   return (
     <div className="w-[250px]">
       {isAvatar && (
@@ -67,11 +81,7 @@ const MySideBar: FC<{
           <hr />
           <div>
             <h5>FEATURED TAGS</h5>
-            <div className="tags">
-              <a href="/tags/" className="tag">
-                Font
-              </a>
-            </div>
+            <div className="tags"></div>
           </div>
         </div>
       )}
@@ -85,12 +95,14 @@ const MySideBar: FC<{
 
         {isTags && (
           <div className="tag-side flex flex-col  gap-4">
-            <div className="label">Types of blog</div>
+            <div className="text-xl mb-2">Types of blog</div>
 
-            <div className="tags">
-              <a href="#" className="tag">
-                Font
-              </a>
+            <div className="flex flex-wrap gap-3">
+              {Object.entries(tags).map(([key, value]) => (
+                <a href={`#${key}`} className="tag" key={key}>
+                  {key} ({value as string})
+                </a>
+              ))}
             </div>
           </div>
         )}

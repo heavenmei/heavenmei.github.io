@@ -16,7 +16,7 @@ interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
   const PostFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
-  console.log("PostFiles ===", PostFiles);
+  console.log("PostFiles ===", PostFiles.length);
   return (
     <>
       <div className="self">

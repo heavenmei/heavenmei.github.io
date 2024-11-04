@@ -1,12 +1,20 @@
 import Image from "next/image";
 import styles from "./index.module.scss";
-import { PublicationList } from "@/lib/constant";
 import LineIcon from "@/components/lines/LineIcon";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
 import config from "@/configs";
 
 export default function Home() {
+  const {
+    aboutMe,
+    aboutMeDesc,
+    publication,
+    publicationList,
+    project,
+    projectList,
+  } = config;
+
   return (
     <>
       <div className="self">
@@ -38,13 +46,8 @@ export default function Home() {
               />
             </div>
 
-            <p className={styles.aboutMe_desc}>
-              Front-end developer | Based in Shanghai
-            </p>
-            <p className="text-secondary">
-              Flexible and powerful, Specify makes it easy to build the exact
-              Design Token workflow your Design System needs.
-            </p>
+            <p className={styles.aboutMe_desc}>{aboutMe}</p>
+            <p className="text-secondary">{aboutMeDesc}</p>
             <div className={styles.aboutMe_contact}>
               <button className="rounded">
                 <a
@@ -84,13 +87,13 @@ export default function Home() {
           </div>
           <div className={styles.publication_content}>
             <h1>Publications</h1>
-            <p className="text-2xl font-light font-mono text-[#7EE787]">
-              Accelerate high-quality software development. Our platform drives
-              innovation with tools that boost developer velocity.
+            <p className="text-2xl font-light font-mono">
+              <span className="text-[#7EE787]">{publication[0]}</span>&nbsp;
+              {publication[1]}
             </p>
           </div>
         </div>
-        {PublicationList.map((item) => (
+        {publicationList.map((item) => (
           <div className={styles.pubList} key={item.title}>
             <div>
               <BranchLine type={BranchLineStyle.GREEN} />
@@ -138,13 +141,13 @@ export default function Home() {
           </div>
           <div className={styles.project_content}>
             <h1>Projects</h1>
-            <p className="text-2xl font-light font-mono text-[#FFA28B]">
-              Accelerate high-quality software development. Our platform drives
-              innovation with tools that boost developer velocity.
+            <p className="text-2xl font-light font-mono ">
+              <span className="text-[#FFA28B]">{project[0]}</span>&nbsp;
+              {project[1]}
             </p>
           </div>
         </div>
-        {PublicationList.map((item) => (
+        {projectList.map((item) => (
           <div className={styles.pubList} key={item.title}>
             <div>
               <BranchLine type={BranchLineStyle.RED} />
