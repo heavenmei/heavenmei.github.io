@@ -49,7 +49,7 @@ const MySideBar: FC<{
       .then((response) => response.json())
       .then((data) => {
         setTags(data);
-        console.log("Tags data:", data);
+        // console.log("Tags data:", data);
       })
       .catch((error) => {
         console.error("Error fetching the JSON data:", error);

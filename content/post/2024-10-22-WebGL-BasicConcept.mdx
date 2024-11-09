@@ -36,7 +36,7 @@ WebGL在电脑的GPU中运行。因此你需要使用能够在GPU上运行的代
 ##### 着色器(shader)获取数据方法
 1. **Attributes 属性**  (从缓冲中获取的数据) 缓冲是发送到GPU的一些二进制数据序列，顶点着色器 每一次运行属性会从指定的缓冲中按照指定规则依次获取下一个值。
 2.  **Uniforms 全局变量** (在一次绘制中对所有顶点保持一致值)
-3. **Textures 纹理** (从像素或纹理元素中获取的数据，来自于图片的数据)
+3. **Textures 纹理** (从像素或纹理元素中获取的数据，来自于图片的数据), 纹理是一个数据序列,*也可以随意存放除了颜色数据以外的其它数据*。
 4. **Varyings 可变量**（一种顶点着色器给片断着色器传值的方式）
 
 ```js
@@ -44,7 +44,7 @@ gl_Position = vec4(x，y,z，w);
 gl_FragColor = vec4(r,g,b,a);
 ```
 
-![](assets/Pasted%20image%2020241024161847.png)
+![](assets/20241024161847.png)
 
 
 ### Pipeline
@@ -266,7 +266,29 @@ onResize() {
 
 
 
+### Summary
+初始化阶段
 
+- 创建所有着色器和程序并寻找参数位置 `gl.getUniformLocation`
+- 创建缓冲并上传顶点数据
+- 创建纹理并上传纹理数据
+
+渲染阶段
+
+- 清空并设置视图和其他全局状态（开启深度检测，剔除等等）
+- 对于想要绘制的每个物体
+    - 调用 `gl.useProgram` 使用需要的程序
+    - 设置物体的属性变量
+        - 为每个属性调用 `gl.bindBuffer`, `gl.vertexAttribPointer`, `gl.enableVertexAttribArray`
+    - 设置物体的全局变量
+        - 为每个全局变量调用 `gl.uniformXXX`
+        - 调用 `gl.activeTexture` 和 `gl.bindTexture` 设置纹理到纹理单元
+    - 调用 `gl.drawArrays` 或 `gl.drawElements`
+
+编译着色器
+
+>  [WebGL 码少趣多](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-less-code-more-fun.html)
+>  [典型的WebGL着色程序模板](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-boilerplate.html)，
 
 ###  Reference
 [WebGL 基础知识](https://web.dev/articles/webgl-fundamentals?hl=zh-cn)

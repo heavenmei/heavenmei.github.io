@@ -1,15 +1,17 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import { writeFileSync } from "fs";
+import path from "node:path";
 
 // Remark packages
 import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
-import { preProcess, postProcess } from "./src/lib/rehype-pre-raw";
+import { preProcess, postProcess } from "./lib/rehype-pre-raw";
 
 // Rehype packages
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import mdxImages from "./lib/static-images";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -98,6 +100,15 @@ export default makeSource({
     ],
     // TODO: fix postProcess
     rehypePlugins: [
+      [
+        mdxImages,
+        {
+          publicDir: path.join(process.cwd(), "public"),
+          sourceRoot: path.join(process.cwd(), "content"),
+          resourcePath: "",
+        },
+      ],
+
       // preProcess,
       [
         rehypePrettyCode,

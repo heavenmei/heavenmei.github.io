@@ -5,7 +5,7 @@ import React from "react";
 import styles from "./index.module.scss";
 import Link from "next/link";
 import { allPosts, Post } from "contentlayer/generated";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/utils";
 import dayjs from "dayjs";
 import LineIcon from "@/components/lines/LineIcon";
 import SingleLine from "@/components/lines/SingleLine";

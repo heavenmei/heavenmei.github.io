@@ -3,7 +3,7 @@ import { allPosts, Post } from "contentlayer/generated";
 import { Mdx } from "@/components/mdx";
 import MySideBar from "@/components/MySideBar";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
-import { formatDate } from "@/lib/utils";
+import { formatDate } from "@/utils";
 
 function getPageFromParams(params: any) {
   const slug = params?.slug;
@@ -24,8 +24,7 @@ type PageProps = {
 
 export default function PostPage(props: PageProps) {
   const { slug, page } = props;
-  console.log("PostPage props ===> ", props);
-  // const page = getPageFromParams(router.query);
+  // console.log("PostPage props ===> ", props);
 
   if (!page) {
     return;
@@ -92,7 +91,7 @@ export const getStaticPaths = async () => {
     params: { slug: post.slugAsParams },
   }));
 
-  console.log("getStaticPaths===", paths);
+  // console.log("getStaticPaths===", paths);
   return {
     // 这里的数据将提供给getStaticProps使用
     paths,

@@ -3,7 +3,6 @@
 import post__2023_11_25UbuntuEnvironmentMdx from './post__2023-11-25-ubuntu-environment.mdx.json' assert { type: 'json' }
 import post__2023_11_26FontProjectWaysMdx from './post__2023-11-26-font-project-ways.mdx.json' assert { type: 'json' }
 import post__2023_11_27ViteVueMdx from './post__2023-11-27-vite+vue.mdx.json' assert { type: 'json' }
-import post__2023_12_01DiffusionLearningMdx from './post__2023-12-01-Diffusion-Learning.mdx.json' assert { type: 'json' }
 import post__2023_12_11FrontCicdWithGithubActionsMdx from './post__2023-12-11-Front-CICD-with-Github-Actions.mdx.json' assert { type: 'json' }
 import post__2023_12_23UbuntuDockerPytorchSshMdx from './post__2023-12-23-ubuntu-docker-pytorch-ssh.mdx.json' assert { type: 'json' }
 import post__2023_12_27TiptapMdx from './post__2023-12-27-tiptap.mdx.json' assert { type: 'json' }
@@ -16,8 +15,8 @@ import post__2024_09_03ReactWebpackCliMdx from './post__2024-09-03-React+Webpack
 import post__2024_09_04Md2HtmlMdx from './post__2024-09-04-MD2HTML.mdx.json' assert { type: 'json' }
 import post__2024_10_22WebGlBasicConceptMdx from './post__2024-10-22-WebGL-BasicConcept.mdx.json' assert { type: 'json' }
 import post__2024_10_25WebGlFliudMdx from './post__2024-10-25-WebGL-Fliud.mdx.json' assert { type: 'json' }
-import post__2024_10_26WebGlTextureMdx from './post__2024-10-26-WebGL-Texture.mdx.json' assert { type: 'json' }
+import post__2024_10_26WebGl_2DMdx from './post__2024-10-26-WebGL-2D.mdx.json' assert { type: 'json' }
 import post__templateMdx from './post__Template.mdx.json' assert { type: 'json' }
 import post__skillLaTeXMdx from './post__skill-LaTeX.mdx.json' assert { type: 'json' }
 
-export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26FontProjectWaysMdx, post__2023_11_27ViteVueMdx, post__2023_12_01DiffusionLearningMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_08_25ServerSkillMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__2024_10_22WebGlBasicConceptMdx, post__2024_10_25WebGlFliudMdx, post__2024_10_26WebGlTextureMdx, post__templateMdx, post__skillLaTeXMdx]
+export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26FontProjectWaysMdx, post__2023_11_27ViteVueMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_08_25ServerSkillMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__2024_10_22WebGlBasicConceptMdx, post__2024_10_25WebGlFliudMdx, post__2024_10_26WebGl_2DMdx, post__templateMdx, post__skillLaTeXMdx]
