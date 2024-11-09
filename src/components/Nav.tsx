@@ -13,13 +13,18 @@ const Nav = () => {
   useEffect(() => {
     const handleScroll = () => {
       const navDom = document.querySelector("#navbar") as HTMLElement;
-
-      if (!navDom) return;
+      const oAffix = document.querySelector("#affix") as HTMLElement;
       const top = document.scrollingElement?.scrollTop ?? 0;
-      if (top > 100) {
-        navDom.className = "navbar navbar-fix";
-      } else {
-        navDom.className = "navbar";
+
+      if (navDom) {
+        top > 100
+          ? (navDom.className = "navbar navbar-fix")
+          : (navDom.className = "navbar");
+      }
+      if (oAffix) {
+        top >= 300
+          ? (oAffix.style.display = "block")
+          : (oAffix.style.display = "none");
       }
     };
 

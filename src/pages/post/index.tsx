@@ -1,22 +1,31 @@
-import { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
-import MySideBar from "@/components/MySideBar";
-import React from "react";
-import styles from "./index.module.scss";
 import Link from "next/link";
+import { Pagination } from "@nextui-org/react";
+
 import { allPosts, Post } from "contentlayer/generated";
-import { formatDate } from "@/utils";
 import dayjs from "dayjs";
-import LineIcon from "@/components/lines/LineIcon";
+import styles from "./index.module.scss";
+import { formatDate } from "@/utils";
+import config from "@/configs";
+import MySideBar from "@/components/MySideBar";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
-import config from "@/configs";
+
+const PAGE_SIZE = 20;
 
 interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
-  const PostFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+  const [page, setPage] = useState(1);
+  const [postFiles, setPostFiles] = useState<Post[]>([]);
+  const allFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
-  console.log("PostFiles ===", PostFiles.length);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setPostFiles(allFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
+  }, [page]);
+
+  console.log("postFiles ===", postFiles.length);
   return (
     <>
       <div className="self">
@@ -48,7 +57,7 @@ const PostList: FC<PostListProps> = () => {
             className="relative top-1"
           />
 
-          {PostFiles.map((file: Post) => (
+          {postFiles.map((file: Post) => (
             <div className={styles.postItem} key={file._id}>
               <div>
                 <BranchLine type={BranchLineStyle.PURPLE} size="small" />
@@ -76,6 +85,23 @@ const PostList: FC<PostListProps> = () => {
             color="linear-gradient(180deg, #A371F7 0%, #64557E 50%, #0D1117 100%)"
             styles={{ position: "relative", top: "-8px" }}
             height={100}
+          />
+
+          <Pagination
+            classNames={{
+              base: "bg-transparent color-white  ",
+              wrapper: "ml-[100px] bg-white/20 color-white text-white ",
+              prev: "bg-transparent hover:!bg-secondary",
+              next: "bg-transparent hover:!bg-secondary",
+              item: "bg-transparent hover:!bg-secondary",
+              // cursor: "bg-red",
+            }}
+            isCompact
+            showControls
+            total={Math.ceil(allFiles.length / PAGE_SIZE)}
+            initialPage={page}
+            variant="light"
+            onChange={(page) => setPage(page)}
           />
         </div>
         <div className="relative mt-[400px] ">

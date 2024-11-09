@@ -12,12 +12,6 @@ export const routes = [
     navShow: true,
   },
   {
-    path: "/post/:url",
-    name: "post",
-    navShow: false,
-    label: "POSTS",
-  },
-  {
     path: "/project",
     name: "project",
     label: "PROJECTS",
