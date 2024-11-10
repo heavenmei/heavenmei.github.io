@@ -18,9 +18,7 @@ export type Post = {
   author?: string | undefined
   subtitle?: string | undefined
   url?: string | undefined
-  titleAlt?: string | undefined
   description?: string | undefined
-  descriptionAlt?: string | undefined
   date?: IsoDateTimeString | undefined
   /** MDX file body */
   body: MDX

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Pagination } from "@nextui-org/react";
@@ -18,14 +18,21 @@ interface PostListProps {}
 const PostList: FC<PostListProps> = () => {
   const [page, setPage] = useState(1);
   const [postFiles, setPostFiles] = useState<Post[]>([]);
+  const [activeTag, setActiveTag] = useState<string>();
+
   const allFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setPostFiles(allFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-  }, [page]);
 
-  console.log("postFiles ===", postFiles.length);
+    const filterFiles = activeTag
+      ? allFiles.filter((file) => file.tags?.includes(activeTag))
+      : allFiles;
+    setPostFiles(filterFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
+  }, [page, activeTag]);
+
+  // console.log("postFiles ===", postFiles.length);
+
   return (
     <>
       <div className="self">
@@ -105,7 +112,11 @@ const PostList: FC<PostListProps> = () => {
           />
         </div>
         <div className="relative mt-[400px] ">
-          <MySideBar isTags={true} />
+          <MySideBar
+            isTags={true}
+            activeTag={activeTag}
+            setActiveTag={setActiveTag}
+          />
         </div>
       </div>
     </>

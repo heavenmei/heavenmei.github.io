@@ -155,6 +155,10 @@ a {
   font-size: 12px;
 }
 
+.tag-active {
+  background-color: var(--theme-color);
+}
+
 .navbar {
   position: fixed;
   top: 0;

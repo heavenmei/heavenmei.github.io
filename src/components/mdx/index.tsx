@@ -111,7 +111,6 @@ const components: MDXComponents = {
         }
       }
     }
-    console.log(isEmpty);
 
     return (
       <div className="my-6 w-full overflow-y-auto">
@@ -157,7 +156,6 @@ const components: MDXComponents = {
     >
       {/* @ts-ignore */}
       <CodeCopyButton text={props.raw} />
-      {/* @ts-ignore */}
       {props.children}
     </pre>
   ),

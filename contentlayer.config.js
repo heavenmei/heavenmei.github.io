@@ -5,7 +5,7 @@ import path from "node:path";
 // Remark packages
 import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
-import { preProcess, postProcess } from "./lib/rehype-pre-raw";
+import { preProcess, postProcess } from "./lib/copy-code";
 
 // Rehype packages
 import rehypePrettyCode from "rehype-pretty-code";
@@ -36,9 +36,7 @@ export const Post = defineDocumentType(() => ({
     author: { type: "string" },
     subtitle: { type: "string" },
     url: { type: "string", required: false },
-    titleAlt: { type: "string", required: false },
     description: { type: "string", required: false },
-    descriptionAlt: { type: "string", required: false },
     date: { type: "date", required: false },
   },
   computedFields: {
@@ -108,15 +106,6 @@ export default makeSource({
           resourcePath: "",
         },
       ],
-
-      // preProcess,
-      [
-        rehypePrettyCode,
-        {
-          theme: "github-dark",
-        },
-      ],
-      // postProcess,
       rehypeSlug,
       [
         rehypeAutolinkHeadings,
@@ -127,6 +116,17 @@ export default makeSource({
           },
         },
       ],
+
+      // 获取代码块内容
+      preProcess,
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+        },
+      ],
+      // 代码块内容放进pre.raw
+      postProcess,
     ],
   },
   onSuccess: async (importData) => {

@@ -41,7 +41,7 @@
     "tailwind.config.js",
     "src/pages/_app.js",
     "contentlayer.config.js"
-  ],
+, "lib/copy-code.js"  ],
   "exclude": [
     "node_modules"
   ]

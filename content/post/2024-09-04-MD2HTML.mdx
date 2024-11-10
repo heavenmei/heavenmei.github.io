@@ -279,3 +279,116 @@ export function Mdx({ code }: { code: string }) {
 }
 
 ```
+
+
+
+
+## 自定义rehype 插件-代码块复制
+**思路**
+1. 获取`pre`的内容放在该节点raw参数中
+2. 由于`rehypePrettyCode`会把代码格式化，将`pre`的属性重置到`figure`标签中，并对代码按行拆分。因此，该函数得在该插件之前执行
+3. 将后置处理时，将`figure`标签中raw参数重新复制到`pre`标签上
+4. 配置插件
+
+`copy-code.js`
+```js
+import { visit } from "unist-util-visit";
+
+// 获取代码块内容
+export const preProcess = () => (tree) => {
+  visit(tree, (node) => {
+    if (node?.type === "element" && node?.tagName === "pre") {
+      const [codeEl] = node.children;
+
+      if (codeEl.tagName !== "code") return;
+      node.properties.raw = codeEl.children?.[0].value;
+      // console.log("🚨 preProcess ~", node);
+    }
+  });
+};
+
+// 代码块内容放进pre.raw
+export const postProcess = () => (tree) => {
+  visit(tree, "element", (node) => {
+    if (node?.type === "element" && node?.tagName === "figure") {
+      if (!("data-rehype-pretty-code-figure" in node.properties)) {
+        return;
+      }
+
+      for (const child of node.children) {
+        if (child.tagName === "pre") {
+          child.properties["raw"] = node.properties.raw;
+          node.properties.raw = undefined;
+          // console.log("🚨 postProcess ~", child, node.properties.raw);
+        }
+      }
+    }
+  });
+};
+
+
+```
+
+`contentlayer.config.js` 中引用该插件
+```js
+import { preProcess, postProcess } from "./lib/copy-code";
+
+...
+export default makeSource({
+  ...
+  mdx: {
+    remarkPlugins: [
+     ...
+    ],
+    rehypePlugins: [
+      // 获取代码块内容
+      preProcess,
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark",
+        },
+      ],
+      // 代码块内容放进pre.raw
+      postProcess,
+      ...
+    ],
+  },
+});
+```
+
+`Markdown.tsx` 在组件中使用并传递参数
+```js
+import { useMDXComponent } from "next-contentlayer/hooks";
+import type { MDXComponents } from "mdx/types";
+
+const components: MDXComponents = {
+  ...
+  pre: ({ className, ...props }) => (
+    <pre
+      className={cn(
+        "px-0",
+        "group relative m-0 overflow-x-auto rounded-md py-4",
+        className
+      )}
+      {...props}
+    >
+      {/* @ts-ignore */}
+      {/* 自己编写的复制按钮，props.raw为代码块内容 */}
+      <CodeCopyButton text={props.raw} />
+      {props.children}
+    </pre>
+  ),
+};
+
+export function Mdx({ code }: { code: string }) {
+  const Component = useMDXComponent(code);
+
+  return (
+    <div className="mdx">
+      <Component components={components} />
+    </div>
+  );
+}
+
+```

@@ -14,11 +14,11 @@ import post__2024_08_25ServerSkillMdx from './post__2024-08-25-server-skill.mdx.
 import post__2024_09_03ReactWebpackCliMdx from './post__2024-09-03-React+Webpack Cli.mdx.json' assert { type: 'json' }
 import post__2024_09_04Md2HtmlMdx from './post__2024-09-04-MD2HTML.mdx.json' assert { type: 'json' }
 import post__2024_10_22WebGlBasicConceptMdx from './post__2024-10-22-WebGL-BasicConcept.mdx.json' assert { type: 'json' }
+import post__2024_10_25WebGlDavidFluidMdx from './post__2024-10-25-WebGL-david-Fluid.mdx.json' assert { type: 'json' }
 import post__2024_10_26WebGl_2DMdx from './post__2024-10-26-WebGL-2D.mdx.json' assert { type: 'json' }
 import post__2024_11_10NextJsImageOptimizeMdx from './post__2024-11-10-Next.js-image-optimize.mdx.json' assert { type: 'json' }
 import post__2024_11_10FfmpegMdx from './post__2024-11-10-ffmpeg.mdx.json' assert { type: 'json' }
 import post__templateMdx from './post__Template.mdx.json' assert { type: 'json' }
 import post__skillLaTeXMdx from './post__skill-LaTeX.mdx.json' assert { type: 'json' }
-import post__2024_10_25WebGlDavidFluidMdx from './post__2024-10-25-WebGL-david-Fluid.mdx.json' assert { type: 'json' }
 
-export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26FontProjectWaysMdx, post__2023_11_27ViteVueMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_08_25ServerSkillMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__2024_10_22WebGlBasicConceptMdx, post__2024_10_26WebGl_2DMdx, post__2024_11_10NextJsImageOptimizeMdx, post__2024_11_10FfmpegMdx, post__templateMdx, post__skillLaTeXMdx, post__2024_10_25WebGlDavidFluidMdx]
+export const allPosts = [post__2023_11_25UbuntuEnvironmentMdx, post__2023_11_26FontProjectWaysMdx, post__2023_11_27ViteVueMdx, post__2023_12_11FrontCicdWithGithubActionsMdx, post__2023_12_23UbuntuDockerPytorchSshMdx, post__2023_12_27TiptapMdx, post__2023_12_28Swagger2tsPontMdx, post__2023_12_7AuthenticationMdx, post__2024_07_29ClashMdx, post__2024_07_29DockerMdx, post__2024_08_25ServerSkillMdx, post__2024_09_03ReactWebpackCliMdx, post__2024_09_04Md2HtmlMdx, post__2024_10_22WebGlBasicConceptMdx, post__2024_10_25WebGlDavidFluidMdx, post__2024_10_26WebGl_2DMdx, post__2024_11_10NextJsImageOptimizeMdx, post__2024_11_10FfmpegMdx, post__templateMdx, post__skillLaTeXMdx]

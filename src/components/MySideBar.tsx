@@ -1,14 +1,35 @@
-import { FC, useEffect, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import Image from "next/image";
 // @ts-ignore
 import tocbot from "tocbot";
 import config from "@/configs";
 
-const MySideBar: FC<{
+interface MySideBarProps {
   isAvatar?: boolean;
   isTags?: boolean;
   isMenu?: boolean;
-}> = ({ isAvatar = false, isTags = false, isMenu }) => {
+  activeTag?: string;
+  setActiveTag?: (tag?: string) => void;
+}
+
+export type MySideBarRefType = {
+  activeTag: string | null;
+};
+
+const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
+  const {
+    isAvatar = false,
+    isTags = false,
+    isMenu,
+    activeTag,
+    setActiveTag,
+  } = props;
   const [tags, setTags] = useState({});
 
   // https://tscanlin.github.io/tocbot/
@@ -56,6 +77,8 @@ const MySideBar: FC<{
       });
   }, []);
 
+  // useImperativeHandle(ref, () => ({}));
+
   return (
     <div className="w-[250px]">
       {isAvatar && (
@@ -95,11 +118,17 @@ const MySideBar: FC<{
 
         {isTags && (
           <div className="tag-side flex flex-col  gap-4">
-            <div className="text-xl mb-2">Types of blog</div>
+            <div className="text-xl mb-2">Blog Tags</div>
 
             <div className="flex flex-wrap gap-3">
               {Object.entries(tags).map(([key, value]) => (
-                <a href={`#${key}`} className="tag" key={key}>
+                <a
+                  className={`tag ${activeTag === key ? "tag-active" : ""}`}
+                  key={key}
+                  onClick={() => {
+                    setActiveTag?.(activeTag === key ? undefined : key);
+                  }}
+                >
                   {key} ({value as string})
                 </a>
               ))}
@@ -109,6 +138,7 @@ const MySideBar: FC<{
       </div>
     </div>
   );
-};
+});
 
+MySideBar.displayName = "MySideBar";
 export default MySideBar;

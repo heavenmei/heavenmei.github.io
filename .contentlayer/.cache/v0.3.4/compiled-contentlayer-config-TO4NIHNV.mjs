@@ -5,8 +5,33 @@ import path2 from "node:path";
 import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
 
-// lib/rehype-pre-raw.js
+// lib/copy-code.js
 import { visit } from "unist-util-visit";
+var preProcess = () => (tree) => {
+  visit(tree, (node) => {
+    if (node?.type === "element" && node?.tagName === "pre") {
+      const [codeEl] = node.children;
+      if (codeEl.tagName !== "code")
+        return;
+      node.properties.raw = codeEl.children?.[0].value;
+    }
+  });
+};
+var postProcess = () => (tree) => {
+  visit(tree, "element", (node) => {
+    if (node?.type === "element" && node?.tagName === "figure") {
+      if (!("data-rehype-pretty-code-figure" in node.properties)) {
+        return;
+      }
+      for (const child of node.children) {
+        if (child.tagName === "pre") {
+          child.properties["raw"] = node.properties.raw;
+          node.properties.raw = void 0;
+        }
+      }
+    }
+  });
+};
 
 // contentlayer.config.js
 import rehypePrettyCode from "rehype-pretty-code";
@@ -125,9 +150,7 @@ var Post = defineDocumentType(() => ({
     author: { type: "string" },
     subtitle: { type: "string" },
     url: { type: "string", required: false },
-    titleAlt: { type: "string", required: false },
     description: { type: "string", required: false },
-    descriptionAlt: { type: "string", required: false },
     date: { type: "date", required: false }
   },
   computedFields: {
@@ -183,14 +206,6 @@ var contentlayer_config_default = makeSource({
           resourcePath: ""
         }
       ],
-      // preProcess,
-      [
-        rehypePrettyCode,
-        {
-          theme: "github-dark"
-        }
-      ],
-      // postProcess,
       rehypeSlug,
       [
         rehypeAutolinkHeadings,
@@ -200,7 +215,17 @@ var contentlayer_config_default = makeSource({
             class: "header-anchor"
           }
         }
-      ]
+      ],
+      // 获取代码块内容
+      preProcess,
+      [
+        rehypePrettyCode,
+        {
+          theme: "github-dark"
+        }
+      ],
+      // 代码块内容放进pre.raw
+      postProcess
     ]
   },
   onSuccess: async (importData) => {
@@ -212,4 +237,4 @@ export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-F52A6ZXU.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-TO4NIHNV.mjs.map
