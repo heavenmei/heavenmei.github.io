@@ -94,11 +94,34 @@ const components: MDXComponents = {
     />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
-  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-y-auto">
-      <table className={cn("w-full", className)} {...props} />
-    </div>
-  ),
+  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => {
+    let isEmpty = true;
+
+    // 若表头为空则不显示表头,用于排列图片的表格
+    if (
+      props.children &&
+      props.children instanceof Array &&
+      props.children[0]?.type === "thead"
+    ) {
+      const thead = props.children[0];
+      for (const th of thead.props.children.props.children) {
+        if (th.props.children) {
+          isEmpty = false;
+          break;
+        }
+      }
+    }
+    console.log(isEmpty);
+
+    return (
+      <div className="my-6 w-full overflow-y-auto">
+        <table
+          className={cn("w-full", isEmpty ? "table-no-head" : null, className)}
+          {...props}
+        />
+      </div>
+    );
+  },
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
     <tr
       className={cn("m-0 border-t p-0 even:bg-muted", className)}
@@ -147,16 +170,22 @@ const components: MDXComponents = {
       {...props}
     />
   ),
-  // img: ({
-  //   className,
-  //   ...props
-  // }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-  //   // eslint-disable-next-line @next/next/no-img-element
-  //   <img className={cn("rounded-md border", className)} {...props} />
-  // ),
-  img: ({ className, ...props }: any) => (
-    <Image className={cn("rounded-md border", className)} {...props} />
-  ),
+  img: ({ className, ...props }: any) => {
+    // Image必须指定width/height,若没有该值则用img标签自适应image本身大小
+    if (props.width) {
+      const altWidth = props.alt?.split("|")[1];
+      if (altWidth) {
+        props.width = altWidth;
+      }
+      return (
+        <Image
+          className={cn("rounded-sm border mx-auto", className)}
+          {...props}
+        />
+      );
+    }
+    return <img className={cn("rounded-sm border", className)} {...props} />;
+  },
   Callout,
   Card: MdxCard,
 };

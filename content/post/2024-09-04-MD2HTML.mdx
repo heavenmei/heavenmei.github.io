@@ -33,7 +33,7 @@ yarn add contentlayer next-contentlayer -S
 markdown 处理在[contentlayer](https://www.contentlayer.dev/)中是如何工作的。
 [contentlayer](https://www.contentlayer.dev/)使用[remark](https://github.com/remarkjs/remark)将 markdown 解析为[mdast](https://github.com/syntax-tree/mdast)。我们现在可以使用`remark plugins`来修改`mdast`。然后`rehype`发挥作用并将 转换`mdast`为[hast](https://github.com/syntax-tree/hast)。 `rehype plugins`现在可以修改`hast`。最后`hast`将 转换为[react](https://reactjs.org/)组件。
 
-![](./assets/20241109134809.png)
+![|500](./assets/20241109134809.png)
 
 
 
@@ -259,17 +259,13 @@ import type { MDXComponents } from "mdx/types";
 
 const components: MDXComponents = {
   ...
-  img: ({
-    className,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md border", className)} {...props} />
-  ),
-  // 使用Next/Image
-  img: ({ className, ...props }: any) => (
-    <Image className={cn("rounded-md border", className)} {...props} />
-  ),
+  img: ({ className, ...props }: any) =>
+    props.width ? (
+      //Image必须指定width/height,若没有该值则用img标签自适应image本身大小
+      <Image className={cn("rounded-md border m-auto", className)} {...props} />
+    ) : (
+      <img className={cn("rounded-md border", className)} {...props} />
+    ),
 };
 
 export function Mdx({ code }: { code: string }) {
