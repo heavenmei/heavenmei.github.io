@@ -36,8 +36,10 @@ yarn-error.log*
 next-env.d.ts
 
 # contentlayer
-# .contentlayer
+.contentlayer
 
 .DS_Store
 **/.obsidian/*
 **/.trash/*
+
+.vscode/*
