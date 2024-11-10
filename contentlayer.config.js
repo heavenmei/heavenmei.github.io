@@ -96,7 +96,6 @@ export default makeSource({
         },
       ],
     ],
-    // TODO: fix postProcess
     rehypePlugins: [
       [
         mdxImages,

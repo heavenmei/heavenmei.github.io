@@ -65,40 +65,14 @@ WebGL中实例化渲染的扩展。实例化渲染允许您在单个绘制调用
 
 
 ```js
-precision highp float;
-
-attribute vec3 a_vertexPosition;
-attribute vec3 a_vertexNormal;
-
-attribute vec2 a_textureCoordinates;
-
-uniform mat4 u_projectionMatrix;
-uniform mat4 u_viewMatrix;
-
-uniform sampler2D u_positionsTexture;
-uniform sampler2D u_velocitiesTexture;
-
-uniform float u_sphereRadius;
-
-varying vec3 v_viewSpacePosition;
-varying vec3 v_viewSpaceNormal;
-varying float v_speed;
-// * gl_FragColor = vec4(v_viewSpaceNormal.x, v_viewSpaceNormal.y, v_speed, XX);
-
-void main() {
-    vec3 spherePosition = texture2D(u_positionsTexture, a_textureCoordinates).rgb;
-
-    vec3 position = a_vertexPosition * u_sphereRadius + spherePosition;
-
-    v_viewSpacePosition = vec3(u_viewMatrix * vec4(position, 1.0));
-    v_viewSpaceNormal = vec3(u_viewMatrix * vec4(a_vertexNormal, 0.0)); //this assumes we're not doing any weird stuff in the view matrix
-
-    gl_Position = u_projectionMatrix * vec4(v_viewSpacePosition, 1.0);
-
-    vec3 velocity = texture2D(u_velocitiesTexture, a_textureCoordinates).rgb;
-    // 根据粒子的速度大小来调整其颜色、透明度或其他属性
-    v_speed = length(velocity);
-}
+ wgl.drawElementsInstancedANGLE(
+  sphereDrawState,
+  wgl.TRIANGLES, //三角形
+  this.sphereGeometry.indices.length, //索引数量
+  wgl.UNSIGNED_SHORT,
+  0,
+  this.particlesWidth * this.particlesHeight // 512*60个实例
+);
 
 ```
 
@@ -122,4 +96,5 @@ void main() {
 ![](assets/out.gif)
 ###  Reference
 [# fluid:流体颗粒-http - 实时3D流体模拟与WebGL渲染](https://blog.csdn.net/weixin_42594427/article/details/142328230)
+
 [WebGL入门-WebGL常用API说明详解_webgl api-CSDN博客](https://blog.csdn.net/qw8704149/article/details/115152067)

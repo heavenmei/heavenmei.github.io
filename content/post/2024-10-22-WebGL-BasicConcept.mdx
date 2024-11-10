@@ -16,6 +16,7 @@ image:
 
 WebGL 实际上是**一种 2D API**，而非 3D API。WebGL 只关心 2 个方面。2D 中的**剪裁空间坐标（-1~1）和颜色**。
 > 裁剪空间的`x`坐标范围是 -1 到 +1. 这就意味着0在中间并且正值在它右边。
+> 
 > 裁剪空间中 -1 是最底端 +1 是最顶端， 这也意味值0在中间，正值在上方
 
 WebGL在电脑的GPU中运行。因此你需要使用能够在GPU上运行的代码。 这样的代码需要提供成对的方法。每对方法包含：
@@ -284,11 +285,16 @@ onResize() {
 编译着色器
 
 >  [WebGL 码少趣多](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-less-code-more-fun.html)
+>  
 >  [典型的WebGL着色程序模板](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-boilerplate.html)，
 
 ###  Reference
 [WebGL 基础知识](https://web.dev/articles/webgl-fundamentals?hl=zh-cn)
+
 [MDN WebGL API](https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API)
+
 [WebGL 基础概念](https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-fundamentals.html#toc)
+
 [带你快速入门webgl与shader着色器渲染基础](https://blog.csdn.net/gdutRex/article/details/107658328)
+
 [WebGL状态可视化](https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html)

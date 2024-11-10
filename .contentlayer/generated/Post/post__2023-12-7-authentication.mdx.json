@@ -1,0 +1,24 @@
+{
+  "title": "鉴权方式",
+  "tags": [],
+  "author": "heavenmei",
+  "subtitle": "",
+  "url": "/2023-12-07-secret",
+  "description": "",
+  "date": "2023-11-25T00:00:00.000Z",
+  "body": {
+    "raw": "\n> 常见的鉴权方式有以下几种方式：\n>\n> 1. token\n> 2. session + cookie\n> 3. OAuth\n\n## token\n\n### 流程\n\n1. 客户端使用账密登录\n2. 服务端验证账密\n3. 账密验证通过，服务端生成一个token，再把token发送给客户端\n4. 客户端通过cookie或者其他方式将token存储起来\n5. 客户端以后发送请求都需要带上token\n6. 服务端验证token的合法性，校验通过则返回资源，不通过则返回401状态码\n\n\n\n\n\n\n\n\n\n\n",
+    "code": "var Component=(()=>{var d=Object.create;var c=Object.defineProperty;var k=Object.getOwnPropertyDescriptor;var m=Object.getOwnPropertyNames;var u=Object.getPrototypeOf,p=Object.prototype.hasOwnProperty;var x=(i,n)=>()=>(n||i((n={exports:{}}).exports,n),n.exports),f=(i,n)=>{for(var t in n)c(i,t,{get:n[t],enumerable:!0})},r=(i,n,t,l)=>{if(n&&typeof n==\"object\"||typeof n==\"function\")for(let o of m(n))!p.call(i,o)&&o!==t&&c(i,o,{get:()=>n[o],enumerable:!(l=k(n,o))||l.enumerable});return i};var g=(i,n,t)=>(t=i!=null?d(u(i)):{},r(n||!i||!i.__esModule?c(t,\"default\",{value:i,enumerable:!0}):t,i)),j=i=>r(c({},\"__esModule\",{value:!0}),i);var s=x((M,a)=>{a.exports=_jsx_runtime});var q={};f(q,{default:()=>N,frontmatter:()=>_});var e=g(s()),_={title:\"\\u9274\\u6743\\u65B9\\u5F0F\",subtitle:\"\",description:\"\",date:new Date(17008704e5),author:\"heavenmei\",image:\"\",tags:[],categories:[\"Post\"],url:\"/2023-12-07-secret\"};function h(i){let n=Object.assign({blockquote:\"blockquote\",p:\"p\",ol:\"ol\",li:\"li\",h2:\"h2\",a:\"a\",span:\"span\",h3:\"h3\"},i.components);return(0,e.jsxs)(e.Fragment,{children:[(0,e.jsxs)(n.blockquote,{children:[`\n`,(0,e.jsx)(n.p,{children:\"\\u5E38\\u89C1\\u7684\\u9274\\u6743\\u65B9\\u5F0F\\u6709\\u4EE5\\u4E0B\\u51E0\\u79CD\\u65B9\\u5F0F\\uFF1A\"}),`\n`,(0,e.jsxs)(n.ol,{children:[`\n`,(0,e.jsx)(n.li,{children:\"token\"}),`\n`,(0,e.jsx)(n.li,{children:\"session + cookie\"}),`\n`,(0,e.jsx)(n.li,{children:\"OAuth\"}),`\n`]}),`\n`]}),`\n`,(0,e.jsxs)(n.h2,{id:\"token\",children:[(0,e.jsx)(n.a,{className:\"header-anchor\",href:\"#token\",children:(0,e.jsx)(n.span,{className:\"icon icon-link\"})}),\"token\"]}),`\n`,(0,e.jsxs)(n.h3,{id:\"\\u6D41\\u7A0B\",children:[(0,e.jsx)(n.a,{className:\"header-anchor\",href:\"#\\u6D41\\u7A0B\",children:(0,e.jsx)(n.span,{className:\"icon icon-link\"})}),\"\\u6D41\\u7A0B\"]}),`\n`,(0,e.jsxs)(n.ol,{children:[`\n`,(0,e.jsx)(n.li,{children:\"\\u5BA2\\u6237\\u7AEF\\u4F7F\\u7528\\u8D26\\u5BC6\\u767B\\u5F55\"}),`\n`,(0,e.jsx)(n.li,{children:\"\\u670D\\u52A1\\u7AEF\\u9A8C\\u8BC1\\u8D26\\u5BC6\"}),`\n`,(0,e.jsx)(n.li,{children:\"\\u8D26\\u5BC6\\u9A8C\\u8BC1\\u901A\\u8FC7\\uFF0C\\u670D\\u52A1\\u7AEF\\u751F\\u6210\\u4E00\\u4E2Atoken\\uFF0C\\u518D\\u628Atoken\\u53D1\\u9001\\u7ED9\\u5BA2\\u6237\\u7AEF\"}),`\n`,(0,e.jsx)(n.li,{children:\"\\u5BA2\\u6237\\u7AEF\\u901A\\u8FC7cookie\\u6216\\u8005\\u5176\\u4ED6\\u65B9\\u5F0F\\u5C06token\\u5B58\\u50A8\\u8D77\\u6765\"}),`\n`,(0,e.jsx)(n.li,{children:\"\\u5BA2\\u6237\\u7AEF\\u4EE5\\u540E\\u53D1\\u9001\\u8BF7\\u6C42\\u90FD\\u9700\\u8981\\u5E26\\u4E0Atoken\"}),`\n`,(0,e.jsx)(n.li,{children:\"\\u670D\\u52A1\\u7AEF\\u9A8C\\u8BC1token\\u7684\\u5408\\u6CD5\\u6027\\uFF0C\\u6821\\u9A8C\\u901A\\u8FC7\\u5219\\u8FD4\\u56DE\\u8D44\\u6E90\\uFF0C\\u4E0D\\u901A\\u8FC7\\u5219\\u8FD4\\u56DE401\\u72B6\\u6001\\u7801\"}),`\n`]})]})}function b(i={}){let{wrapper:n}=i.components||{};return n?(0,e.jsx)(n,Object.assign({},i,{children:(0,e.jsx)(h,i)})):h(i)}var N=b;return j(q);})();\n;return Component;"
+  },
+  "_id": "post/2023-12-7-authentication.mdx",
+  "_raw": {
+    "sourceFilePath": "post/2023-12-7-authentication.mdx",
+    "sourceFileName": "2023-12-7-authentication.mdx",
+    "sourceFileDir": "post",
+    "contentType": "mdx",
+    "flattenedPath": "post/2023-12-7-authentication"
+  },
+  "type": "Post",
+  "slug": "/post/2023-12-7-authentication",
+  "slugAsParams": "2023-12-7-authentication"
+}

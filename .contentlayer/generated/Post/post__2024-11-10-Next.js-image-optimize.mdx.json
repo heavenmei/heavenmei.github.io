@@ -1,0 +1,24 @@
+{
+  "title": "next/image对图片加载做的优化",
+  "tags": [
+    "Front"
+  ],
+  "author": "heavenmei",
+  "description": null,
+  "date": "2024-11-10T00:00:00.000Z",
+  "body": {
+    "raw": "\n\n\n\n\n## Reference\n\n[# 发现 Next.js 对图片加载做了挺多优化的](https://github.com/findxc/blog/issues/68)",
+    "code": "var Component=(()=>{var m=Object.create;var r=Object.defineProperty;var d=Object.getOwnPropertyDescriptor;var u=Object.getOwnPropertyNames;var p=Object.getPrototypeOf,x=Object.prototype.hasOwnProperty;var f=(n,e)=>()=>(e||n((e={exports:{}}).exports,e),e.exports),g=(n,e)=>{for(var s in e)r(n,s,{get:e[s],enumerable:!0})},o=(n,e,s,c)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let a of u(e))!x.call(n,a)&&a!==s&&r(n,a,{get:()=>e[a],enumerable:!(c=d(e,a))||c.enumerable});return n};var j=(n,e,s)=>(s=n!=null?m(p(n)):{},o(e||!n||!n.__esModule?r(s,\"default\",{value:n,enumerable:!0}):s,n)),_=n=>o(r({},\"__esModule\",{value:!0}),n);var h=f((w,i)=>{i.exports=_jsx_runtime});var M={};g(M,{default:()=>F,frontmatter:()=>b});var t=j(h()),b={title:\"next/image\\u5BF9\\u56FE\\u7247\\u52A0\\u8F7D\\u505A\\u7684\\u4F18\\u5316\",description:null,layout:\"post\",date:new Date(17311968e5),author:\"heavenmei\",categories:[\"Post\"],tags:[\"Front\"],teaser:null};function l(n){let e=Object.assign({h2:\"h2\",a:\"a\",span:\"span\",p:\"p\"},n.components);return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsxs)(e.h2,{id:\"reference\",children:[(0,t.jsx)(e.a,{className:\"header-anchor\",href:\"#reference\",children:(0,t.jsx)(e.span,{className:\"icon icon-link\"})}),\"Reference\"]}),`\n`,(0,t.jsx)(e.p,{children:(0,t.jsx)(e.a,{href:\"https://github.com/findxc/blog/issues/68\",children:\"# \\u53D1\\u73B0 Next.js \\u5BF9\\u56FE\\u7247\\u52A0\\u8F7D\\u505A\\u4E86\\u633A\\u591A\\u4F18\\u5316\\u7684\"})})]})}function D(n={}){let{wrapper:e}=n.components||{};return e?(0,t.jsx)(e,Object.assign({},n,{children:(0,t.jsx)(l,n)})):l(n)}var F=D;return _(M);})();\n;return Component;"
+  },
+  "_id": "post/2024-11-10-Next.js-image-optimize.mdx",
+  "_raw": {
+    "sourceFilePath": "post/2024-11-10-Next.js-image-optimize.mdx",
+    "sourceFileName": "2024-11-10-Next.js-image-optimize.mdx",
+    "sourceFileDir": "post",
+    "contentType": "mdx",
+    "flattenedPath": "post/2024-11-10-Next.js-image-optimize"
+  },
+  "type": "Post",
+  "slug": "/post/2024-11-10-Next.js-image-optimize",
+  "slugAsParams": "2024-11-10-Next.js-image-optimize"
+}
