@@ -14,7 +14,7 @@ image:
 ---
 > 针对[https://github.com/dli/fluid](https://github.com/dli/fluid)该代码修改艺术粒子效果
 > [http://david.li/fluid](http://david.li/fluid) ([video](http://www.youtube.com/watch?v=DhNt_A3k4B4))
-> 粒子系统是模拟中的核心，采用了PIC/FLIP方法来模拟流体动力学。GPU并行处理能力的利用大大提升了模拟速度和渲染性能，而球形环境光遮挡体积技术则增强了3D模型的真实感。
+> 粒子系统是模拟中的核心，采用了PIC/FLIP方法来模拟流体动力学。GPU并行处理能力的利用大大提升了模拟速度和渲染性能，而球形环境光遮挡体积技术+ PCF(Percentage Closer Filtering)则增强了3D模型的真实感。
 > 
 
 
@@ -91,16 +91,21 @@ WebGL中实例化渲染的扩展。实例化渲染允许您在单个绘制调用
 
 
 
-### 球形环境光遮挡体积技术AO
+
 
 
 
 
 ### 最终效果
-根据输入图片赋值粒子颜色
+根据输入图片初始化赋值粒子颜色，随位移变化不变
 
-![](assets/out.gif)
-###  Reference
+![](assets/2024-10-25-WebGL-david-Fluid-20241117012616.gif)
+
+根据输入图片，赋值粒子颜色，保持图片不变
+
+![](assets/2024-10-25-WebGL-david-Fluid-20241118105708.gif)
+
+### Reference
 [# fluid:流体颗粒-http - 实时3D流体模拟与WebGL渲染](https://blog.csdn.net/weixin_42594427/article/details/142328230)
 
 [WebGL入门-WebGL常用API说明详解_webgl api-CSDN博客](https://blog.csdn.net/qw8704149/article/details/115152067)

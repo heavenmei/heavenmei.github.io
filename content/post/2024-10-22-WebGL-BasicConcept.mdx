@@ -263,6 +263,19 @@ onResize() {
 
 
 
+
+### 坐标系的种类
+在webgl中使用贴图前，需要了解的是坐标系的种类。
+**canvas坐标系统（左）**：左上角为坐标原点，往右是X轴正方向，往下是Y轴正方向
+**顶点坐标系统（中）**：右手坐标系，拇指X方向，食指Y方向，中指为Z方向。
+**纹理坐标系统（右）**：纹理坐标为`UV`，`U`代表水平坐标，`V`代表垂直坐标。
+
+|  |  |  |
+| :--: | :--: | ---- |
+| ![](assets/2024-10-22-WebGL-BasicConcept-20241117011528.png) | ![\|120](assets/2024-10-22-WebGL-BasicConcept-20241117011600.png) | ![](assets/2024-10-22-WebGL-BasicConcept-20241117011605.png) |
+
+
+
 ### Summary
 初始化阶段
 
@@ -298,3 +311,5 @@ onResize() {
 [带你快速入门webgl与shader着色器渲染基础](https://blog.csdn.net/gdutRex/article/details/107658328)
 
 [WebGL状态可视化](https://webglfundamentals.org/webgl/lessons/resources/webgl-state-diagram.html)
+
+https://thebookofshaders.com/02/?lan=ch
