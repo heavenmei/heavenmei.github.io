@@ -6,12 +6,14 @@ import path from "node:path";
 import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
 import { preProcess, postProcess } from "./lib/copy-code";
+import remarkMath from "remark-math";
 
 // Rehype packages
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import mdxImages from "./lib/static-images";
+import rehypeKatex from "rehype-katex";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -28,7 +30,7 @@ const commonFields = {
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
-  filePathPattern: `**/*.mdx`,
+  filePathPattern: `post/*.md`,
   contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
@@ -95,8 +97,10 @@ export default makeSource({
           }),
         },
       ],
+      remarkMath,
     ],
     rehypePlugins: [
+      [rehypeKatex, {}],
       [
         mdxImages,
         {

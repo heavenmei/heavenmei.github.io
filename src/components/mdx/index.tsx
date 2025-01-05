@@ -7,6 +7,7 @@ import { cn } from "@/utils";
 import { Callout } from "@/components/mdx/Callout";
 import { MdxCard } from "@/components/mdx/MdxCard";
 import CodeCopyButton from "@/components/mdx/CodeCopyButton";
+import "katex/dist/katex.min.css";
 
 const components: MDXComponents = {
   h1: ({ className, ...props }) => (

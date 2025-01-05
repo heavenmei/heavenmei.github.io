@@ -547,8 +547,8 @@
 .markdown-body table,
 .markdown-body pre,
 .markdown-body details {
-  margin-top: 0;
-  margin-bottom: 16px;
+  margin-top: 0 !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .markdown-body blockquote > :first-child {
