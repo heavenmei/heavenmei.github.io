@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Graphic
+  - CG
 image:
 ---
 > 针对https://github.com/dli/flow该代码修改艺术粒子效果

@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Graphic
+  - CG
 image:
 ---
 > 近期工作中在写AGP引擎，底层是用vulkan写的，所以来探索一下
@@ -70,7 +70,7 @@ target_link_libraries(VulkanSample ${librariesList})
 
 
 `main.cpp`
-```C++
+```cpp
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -116,7 +116,7 @@ int main()
 我们需要先创建一个窗口，才能实时看到之后渲染出来的结果
 
 `lve_window.cpp`
-```C++
+```cpp
 #include "lve_window.h"
 
 namespace lve {
@@ -146,7 +146,7 @@ namespace lve {
 ```
 
 `main.cpp` 运行起来
-```C++
+```cpp
 
 #include "lve_window.h"
 
