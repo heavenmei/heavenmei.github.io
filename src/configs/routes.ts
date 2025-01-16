@@ -6,9 +6,15 @@ export const routes = [
     navShow: true,
   },
   {
-    path: "/post",
+    path: "/post?id=post",
     name: "post",
     label: "POST",
+    navShow: true,
+  },
+  {
+    path: "/note",
+    name: "note",
+    label: "NOTE",
     navShow: true,
   },
   {
@@ -21,7 +27,7 @@ export const routes = [
     path: "/archive",
     name: "archive",
     label: "ARCHIVE",
-    navShow: true,
+    navShow: false,
   },
 ];
 

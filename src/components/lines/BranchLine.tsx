@@ -170,6 +170,112 @@ const BranchLine: React.FC<BranchLineProps> = ({
           <stop offset="0.925493" stopColor="#7D30FE" stopOpacity="0" />
         </linearGradient>
       </defs>
+      <defs>
+        <filter
+          id="filter_green"
+          x="11.3793"
+          y="51.3793"
+          width="49.2414"
+          height="49.2414"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="6.98276" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.337255 0 0 0 0 0.827451 0 0 0 0 0.392157 0 0 0 0.309804 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_119_152"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="9.31034" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.337255 0 0 0 0 0.827451 0 0 0 0 0.392157 0 0 0 1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_119_152"
+            result="effect2_dropShadow_119_152"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="2.32759" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.670588 0 0 0 0 0.705882 0 0 0 0 0.337255 0 0 0 0.827451 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect2_dropShadow_119_152"
+            result="effect3_dropShadow_119_152"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset />
+          <feGaussianBlur stdDeviation="6.98276" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.337255 0 0 0 0 0.827451 0 0 0 0 0.392157 0 0 0 1 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="effect3_dropShadow_119_152"
+            result="effect4_dropShadow_119_152"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect4_dropShadow_119_152"
+            result="shape"
+          />
+        </filter>
+        <linearGradient
+          id="paint_linear_green"
+          x1="16.3793"
+          y1="1.36802e-09"
+          x2="16.1019"
+          y2="150.001"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0D1117" />
+          <stop offset="0.24" stop-color="#2EA043" />
+          <stop offset="0.435" stop-color="#56D364" />
+          <stop offset="0.66" stop-color="#2EA043" />
+          <stop offset="0.791714" stop-color="#2EA043" />
+          <stop offset="0.956186" stop-color="#196C2E" stop-opacity="0" />
+        </linearGradient>
+      </defs>
     </svg>
   );
 

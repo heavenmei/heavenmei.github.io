@@ -18,13 +18,20 @@ import rehypeKatex from "rehype-katex";
 const isProduction = process.env.NODE_ENV === "production";
 
 const commonFields = {
+  parDir: {
+    type: "string",
+    resolve: (doc) => doc._raw.sourceFileDir,
+  },
   slug: {
     type: "string",
-    resolve: (doc) => `/${doc._raw.flattenedPath}`,
+    resolve: (doc) => {
+      const slug = doc._raw.flattenedPath.split("/").reverse()[0];
+      return `/post/${slug}`;
+    },
   },
   slugAsParams: {
     type: "string",
-    resolve: (doc) => doc._raw.flattenedPath.split("/").slice(1).join("/"),
+    resolve: (doc) => doc._raw.flattenedPath.split("/").reverse()[0],
   },
 };
 
@@ -47,6 +54,24 @@ export const Post = defineDocumentType(() => ({
     //   resolve: (item) =>
     //     item._raw.sourceFileName.split("_").slice(1).join("_").split(".")[0],
     // },
+    ...commonFields,
+  },
+}));
+
+export const Note = defineDocumentType(() => ({
+  name: "Note",
+  filePathPattern: `note/**/*.md`,
+  contentType: "mdx",
+  fields: {
+    title: { type: "string", required: true },
+    tags: { type: "list", of: { type: "string" } },
+    author: { type: "string" },
+    subtitle: { type: "string" },
+    url: { type: "string", required: false },
+    description: { type: "string", required: false },
+    date: { type: "date", required: false },
+  },
+  computedFields: {
     ...commonFields,
   },
 }));
@@ -82,7 +107,7 @@ function createTagCount(allBlogs) {
 export default makeSource({
   contentDirPath: "content",
   contentDirExclude: ["ZtTemplates", ".trash", ".obsidian"],
-  documentTypes: [Post],
+  documentTypes: [Post, Note],
   mdx: {
     remarkPlugins: [
       remarkGfm,
@@ -133,8 +158,8 @@ export default makeSource({
     ],
   },
   onSuccess: async (importData) => {
-    const { allPosts } = await importData();
-    createTagCount(allPosts);
+    const { allDocuments } = await importData();
+    createTagCount(allDocuments);
     // createSearchIndex(allPosts);
   },
 });

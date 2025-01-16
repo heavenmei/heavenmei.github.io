@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Pagination } from "@nextui-org/react";
 
-import { allPosts, Post } from "contentlayer/generated";
+import { allDocuments, Post, Note } from "contentlayer/generated";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import { formatDate } from "@/utils";
@@ -11,16 +11,24 @@ import config from "@/configs";
 import MySideBar from "@/components/MySideBar";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
+import { useRouter } from "next/router";
 
 const PAGE_SIZE = 20;
+export type PageType = Post | Note;
 
-interface PostListProps {}
-const PostList: FC<PostListProps> = () => {
+const PostList: FC = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [page, setPage] = useState(1);
-  const [postFiles, setPostFiles] = useState<Post[]>([]);
+  const [postFiles, setPostFiles] = useState<PageType[]>([]);
   const [activeTag, setActiveTag] = useState<string>();
 
-  const allFiles = allPosts.sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+  const allFiles = allDocuments
+    .filter((item) => (id ? item.parDir === id : true))
+    .sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+
+  // console.log("allFiles===>", allFiles);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -30,8 +38,6 @@ const PostList: FC<PostListProps> = () => {
       : allFiles;
     setPostFiles(filterFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
   }, [page, activeTag]);
-
-  // console.log("postFiles ===", postFiles.length);
 
   return (
     <>
@@ -64,7 +70,7 @@ const PostList: FC<PostListProps> = () => {
             className="relative top-1"
           />
 
-          {postFiles.map((file: Post) => (
+          {postFiles.map((file: PageType) => (
             <div className={styles.postItem} key={file._id}>
               <div>
                 <BranchLine type={BranchLineStyle.PURPLE} size="small" />

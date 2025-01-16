@@ -3,9 +3,9 @@ title: ubuntu 使用技巧
 tags:
   - Ubuntu
 date: 2024-8-25
-layout: list
+layout: post
 categories:
-  - Note
+  - Post
 ---
 
 > ecnu13: `ssh haiwen@172.23.137.29`
@@ -166,7 +166,6 @@ scp  ./files_name.txt git@166.111.77.123:/home/shangyj/files
 - `-r` : 复制
 - `-P`：port
 
-
 ## pm2
 
 ```bash
@@ -185,75 +184,75 @@ pm2 delete {app_name}
 pm2 clean --all
 ```
 
-
 ## tmux
 
 [Tmux 配置：打造最适合自己的终端复用工具 - zuorn - 博客园](https://www.cnblogs.com/zuoruining/p/11074367.html)
 
-
 ```bash
-#启动新session：  
-tmux [new -s 会话名 -n 窗口名]  
-#恢复session：  
-tmux at [-t 会话名]  
-#列出所有sessions：  
-tmux ls  
-#关闭session：  
-tmux kill-session -t 会话名  
-#关闭整个tmux服务器：  
-tmux kill-server  
+#启动新session：
+tmux [new -s 会话名 -n 窗口名]
+#恢复session：
+tmux at [-t 会话名]
+#列出所有sessions：
+tmux ls
+#关闭session：
+tmux kill-session -t 会话名
+#关闭整个tmux服务器：
+tmux kill-server
 ```
- ​
+
+​
 
 **vscode 中 tmux 无法选中复制？** vscode->setting->macOptionClickForcesSelection :true-> option+
-
 
 ## Docker
 
 [https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170329365416800186525040%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170329365416800186525040&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-125074080-null-null.142](https://blog.csdn.net/qq_38418314/article/details/125074080?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522170329365416800186525040%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=170329365416800186525040&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-125074080-null-null.142)v96pc_search_result_base7&utm_term=docker-compose%20%E5%90%AF%E5%8A%A8pytorch&spm=1018.2226.3001.4187
 
 ### image
+
 **delete image**
 
 ```bash
 
-# 删除单个镜像  
-docker rmi -f [image_id/image_name]  
-# 删除多个镜像  
-docker rmi -f [image_id] [image_id]  
-# 删除所有镜像  
-docker rmi -f $(docker images -aq)  
+# 删除单个镜像
+docker rmi -f [image_id/image_name]
+# 删除多个镜像
+docker rmi -f [image_id] [image_id]
+# 删除所有镜像
+docker rmi -f $(docker images -aq)
 ```
- ​
+
+​
 
 ### container
 
 **run**
 
 ```bash
-docker run [params] [image_id/name]  
-​  
---name="Name" 容器名字  
--d 后台方式运行  
--it 指定交互方式运行，进入容器查看内容  
--p 8080:8080 (主机端口:容器端口)  
--gpus all : 指定gpu  
+docker run [params] [image_id/name]
+​
+--name="Name" 容器名字
+-d 后台方式运行
+-it 指定交互方式运行，进入容器查看内容
+-p 8080:8080 (主机端口:容器端口)
+-gpus all : 指定gpu
 ```
- ​
+
+​
 
 ### copy container
 
 ```bash
-# 查找正在运行的容器  
-docker ps  
-# 将容器打包为镜像  
-docker commit [container_id/container_name] [image_name]  
-# 查看镜像  
-docker images  
-# 启动新的容器  
+# 查找正在运行的容器
+docker ps
+# 将容器打包为镜像
+docker commit [container_id/container_name] [image_name]
+# 查看镜像
+docker images
+# 启动新的容器
 docker run -it [image_name]
 ```
-
 
 ## 磁盘管理
 
