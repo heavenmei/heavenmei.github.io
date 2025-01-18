@@ -28,6 +28,22 @@ const config = {
       desc: ``,
     },
     {
+      id: "note/games101",
+      tag: "CG",
+      img: "/images/games101.jpeg",
+      title: "Games 101",
+      bread: "Games 101系列",
+      desc: ``,
+    },
+    {
+      id: "note/Java",
+      tag: "Java",
+      img: "/images/java.jpeg",
+      title: "Java 后端系列",
+      bread: "Java 后端系列",
+      desc: ``,
+    },
+    {
       // 根据文件夹名字来筛选
       id: "post",
       tag: "Post",

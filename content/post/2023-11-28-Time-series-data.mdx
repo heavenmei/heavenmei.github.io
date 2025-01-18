@@ -75,9 +75,9 @@ These integrated models account for the non-seasonal difference between periods 
 
 Hence, even the AR components in the model should be price differences, (ΔP) rather than prices (P). In a sense, we are “integrating” “d”-many times to construct a new time-series and then fitting said series into an ARMA (p, q) model.
 
-ARIMA (1,1,1): _ΔPt_ = _c_ + _ϕ_1_ΔPt_ − 1 + _θ_1_ϵt_ − 1 + _ϵt_
+ARIMA (1,1,1): $ΔPt = c + ϕ1Pt − 1 + θ1ϵt− 1 + ϵt$
 
-- $ ΔP_{t-1} $is the difference between prices in period “t” and prices in the preceding period (ΔPt = Pt-1-Pt). Therefore, _ΔP_ is an entire time-series, which represents the disparity between prices of consecutive periods
+- $ ΔP_{t-1} $is the difference between prices in period “t” and prices in the preceding period (ΔPt = Pt-1-Pt). Therefore, $ΔP$ is an entire time-series, which represents the disparity between prices of consecutive periods
 
 **Essentially, the entire ARIMA model is nothing more than an ARMA model for a newly generated time-series, which is stationary.**
 

@@ -314,9 +314,10 @@ a {
 
   .js-toc {
     & > .toc-list {
-      overflow: hidden;
-
       position: relative;
+      overflow: auto;
+      scrollbar-width: none;
+      max-height: 500px;
     }
     .toc-list {
       padding-left: 0.8rem;

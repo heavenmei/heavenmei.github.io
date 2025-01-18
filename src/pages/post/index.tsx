@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Pagination } from "@nextui-org/react";
@@ -18,17 +18,19 @@ export type PageType = Post | Note;
 
 const PostList: FC = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query.id as string;
 
   const [page, setPage] = useState(1);
   const [postFiles, setPostFiles] = useState<PageType[]>([]);
   const [activeTag, setActiveTag] = useState<string>();
 
-  const allFiles = allDocuments
-    .filter((item) => (id ? item.parDir === id : true))
-    .sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
-
-  // console.log("allFiles===>", allFiles);
+  const allFiles = useMemo(
+    () =>
+      allDocuments
+        .filter((item) => (id ? item.parDir === id : true))
+        .sort((a, b) => dayjs(b.date).diff(dayjs(a.date))),
+    [id]
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -37,7 +39,7 @@ const PostList: FC = () => {
       ? allFiles.filter((file) => file.tags?.includes(activeTag))
       : allFiles;
     setPostFiles(filterFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-  }, [page, activeTag]);
+  }, [allFiles, page, activeTag]);
 
   return (
     <>

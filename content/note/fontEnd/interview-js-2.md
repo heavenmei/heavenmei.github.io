@@ -1,0 +1,1988 @@
+---
+title: JS面试 之 进阶篇 (二)
+subtitle: 
+layout: post
+date: 2022-09-12
+author: heavenmei
+categories:
+  - Note
+description: 
+tags:
+  - Front
+image:
+---
+
+
+### 1、undeclared 与 undefined的区别？
+
+- undefined：声明了变量，但是没有赋值
+- undecalared：没有声明变量就直接使用
+
+```js
+var a; //undefined
+b;    // b is not defined
+```
+
+### 2、let & const与 var 的区别？
+
+- `var`存在变量提升，可重复声明同一变量，声明的变量均可改
+- `let`没有变量提升，不可重复声明同一变量，声明的变量均可改
+- `const`没有变量提升，不可重复声明同一变量，声明的基本数据类型不可改，引用类型可改属性，不可只声明变量而不赋值
+
+### 3、暂时性死区问题
+
+```js
+var a = 100;
+
+if(1){
+    a = 10;
+    //在当前块作用域中存在a使用let/const声明的情况下，给a赋值10时，只会在当前作用域找变量a，
+    // 而这时，还未到声明时候，所以控制台Error:Cannot access 'a' before initialization
+    let a = 1;
+}
+```
+
+### 4、获取DOM元素有哪些方法？
+
+| 方法                                     | 描述               |
+| -------------------------------------- | ---------------- |
+| document.getElementById(id)            | 通过id获取dom        |
+| document.getElementsByTagName(tagName) | 通过标签名获取dom       |
+| document.getElementsByClassName(class) | 通过class获取dom     |
+| document.getElementsByName(name)       | 通过标签的属性name获取dom |
+| document.querySelector(选择器)            | 通过选择器获取dom       |
+| document.querySelectorAll(选择器)         | 通过选择器获取dom       |
+
+### 5、操作DOM元素有哪些方法
+
+| 方法                     | 描述                                                               |
+| ---------------------- | ---------------------------------------------------------------- |
+| createElement          | 创建一个标签节点                                                         |
+| createTextNode         | 创建一个文本节点                                                         |
+| cloneNode(deep)        | 复制一个节点，连同属性与值都复制，deep为true时，<br />连同后代节点一起复制，不传或者传false，则只复制当前节点 |
+| createDocumentFragment | 创建一个文档碎片节点                                                       |
+| appendChild            | 追加子元素                                                            |
+| insertBefore           | 将元素插入前面                                                          |
+| removeChild            | 删除子元素                                                            |
+| replaceChild           | 替换子元素                                                            |
+| getAttribute           | 获取节点的属性                                                          |
+| createAttribute        | 创建属性                                                             |
+| setAttribute           | 设置节点属性                                                           |
+| romoveAttribute        | 删除节点属性                                                           |
+| element.attributes     | 将属性生成类数组对象                                                       |
+
+### 6、DOM的类型有哪几种？
+
+```js
+元素节点              Node.ELEMENT_NODE(1)
+属性节点              Node.ATTRIBUTE_NODE(2)
+文本节点              Node.TEXT_NODE(3)
+CDATA节点             Node.CDATA_SECTION_NODE(4)
+实体引用名称节点       Node.ENTRY_REFERENCE_NODE(5)
+实体名称节点          Node.ENTITY_NODE(6)
+处理指令节点          Node.PROCESSING_INSTRUCTION_NODE(7)
+注释节点              Node.COMMENT_NODE(8)
+文档节点              Node.DOCUMENT_NODE(9)
+文档类型节点          Node.DOCUMENT_TYPE_NODE(10)
+文档片段节点          Node.DOCUMENT_FRAGMENT_NODE(11)
+DTD声明节点            Node.NOTATION_NODE(12)
+```
+
+### 7、JS的作用域及作用域链
+
+#### 什么是作用域呢？
+
+在 Javascript 中，作用域分为 `全局作用域` 和 `函数作用域`
+
+- 全局作用域：代码在程序任何地方都能访问，window对象的内置属性都属于全局作用域
+- 函数作用域：在固定的代码片段才能被访问
+
+![图片](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvxtO1MZKI6pTwyFSSRIHLmf850RicUia6AK8VL6KPeGVgsZ335djBjsuA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+image.png
+
+作用域有上下级关系，上下级关系的确定就看函数是在哪个作用域下创建的。如上，fn作用域下创建了bar函数，那么“fn作用域”就是“bar作用域”的上级。
+
+作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。
+
+#### 什么是作用域链？
+
+一般情况下，变量取值到 创建 这个变量 的函数的作用域中取值
+
+但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链
+
+```js
+var x = 10;
+
+function fn(){
+    console.log(x);
+}
+
+function show(f){
+    var x = 20;
+    f();    // 10 
+}
+
+show(fn);
+```
+
+![图片](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvcNPB3dylMOicxOgsFJRwyWmKsNjF9hWNfwX0d8sruxlmOWr91YrYFyg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+image.png
+
+### 8、数组的splice 与 slice 的区别？
+
+| 方法     | 参数                                    |
+| ------ | ------------------------------------- |
+| splice | splice(start, num, item1, item2, ...) |
+| slice  | slice(start, end)                     |
+
+### 9、substr 和 substring 的区别？
+
+| 方法        | 参数                   |
+| --------- | -------------------- |
+| substr    | substr(start,length) |
+| substring | substring(start,end) |
+
+### 10、includes 比 indexOf好在哪？
+
+includes可以检测`NaN`，indexOf不能检测`NaN`，includes内部使用了`Number.isNaN`对`NaN`进行了匹配
+
+### 11、下面代码输出的结果？
+
+```js
+for(var i = 0; i < 3; i++){
+  setTimeout(function(){
+      console.log(i);   
+  },0); 
+};
+```
+
+答案：3，3，3
+
+解决方法
+
+```js
+for(let i = 0; i < 3; i++){
+  setTimeout(function(){
+      console.log(i);   
+  },0); 
+};
+// 0 1 2
+for (var i = 0; i < 3; i++) {
+  (function(i) {
+    setTimeout(function () {
+      console.log(i);
+    }, 0, i)
+  })(i)
+};
+// 0 1 2
+```
+
+### 12、什么是Promise？解决了什么问题？
+
+**好处**
+
+- 解决了回调地狱
+- 提高代码可读性
+- 状态不可逆不可变
+- 存值，使用时再执行方法
+
+**方法**
+
+- `then`
+- `catch`
+- `all`
+- `race`
+- `allSetteled`
+- `any`
+
+### 13、什么是async/await？解决了什么问题？
+
+是`generator + Promise`的语法糖，主要的作用是**用同步方式执行异步操作**，`await`只能在`async函数`中使用，`async函数`执行会返回一个`Promise`，值由函数的return值所决定
+
+### 14、常用的正则表达式有哪些？
+
+[有了这25个正则表达式，代码效率提高80%](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483954%26idx%3D1%26sn%3D18489d9cbcd0562a017094058bc91610%26chksm%3Dce4617a3f9319eb59a7e64703f87098382aa952f9d86f45b05c2ce47b0f248776276f453bdd4%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+### 15、JS延迟加载的方法有哪些？
+
+- 1、`<script async src="script.js"></script>`：给script标签加async属性，则加载和渲染后续文档元素的过程将和 `script.js` 的加载与执行并行进行（异步）
+- 2、`<script defer src="script.js"></script>`：给script标签加defer属性，加载后续文档元素的过程将和 `script.js` 的加载并行进行（异步），但是 `script.js` 的执行要在所有元素解析完成之后，`DOMContentLoaded` 事件触发之前完成
+- 3、动态创建script标签：等到`DOMContentLoaded` 事件触发时，生成一个script标签，渲染到页面上上
+- 4、setTimeout定时器延迟代码执行
+
+### 16、new操作符为什么能创建一个实例对象？
+
+分析一下new的整个过程：
+
+- 1、创建一个空对象
+- 2、继承构造函数的原型
+- 3、this指向obj，并调用构造函数
+- 4、返回对象
+
+简单实现一下new：
+
+```js
+function myNew (fn, ...args) {
+    // 第一步：创建一个空对象
+    const obj = {}
+
+    // 第二步：继承构造函数的原型
+    obj.__proto__ =  fn.prototype
+
+    // 第三步：this指向obj，并调用构造函数
+    fn.apply(obj, args)
+
+
+    // 第四步：返回对象
+    return obj
+}
+```
+
+### 17、什么是文档碎片？
+
+- 是什么：一个容器，用于暂时存放创建的dom元素，使用`document.createDocumentFragment()`创建
+- 有什么用：将需要添加的大量元素 先添加到文档碎片 中，再将文档碎片添加到需要插入的位置，大大减少dom操作，提高性能 例子
+
+```js
+var oFragmeng = document.createDocumentFragment(); 
+for(var i=0;i<10000;i++)
+{ 
+
+    var op = document.createElement("span"); 
+
+    var oText = document.createTextNode(i); 
+
+    op.appendChild(oText); 
+
+    //先附加在文档碎片中
+
+    oFragmeng.appendChild(op);  
+
+} 
+//最后一次性添加到document中
+document.body.appendChild(oFragmeng); 
+```
+
+### 18、async/await如何检测报错？
+
+```js
+/** 
+* @param { Promise } 传进去的请求函数 
+* @param { Object= } errorExt - 拓展错误对象 
+* @return { Promise } 返回一个Promise 
+*/
+export function to(
+  promise,  errorExt
+) {
+  return promise
+    .then(data => [null, data])
+    .catch(err => {
+      if (errorExt) {
+        const parsedError = Object.assign({}, err, errorExt)
+        return [parsedError, undefined]
+      }
+
+      return [err, undefined]
+    })
+}
+
+export default to
+```
+
+### 19、宏任务与微任务有哪些？
+
+#### 宏任务
+
+| #                         | 浏览器 | Node |
+| ------------------------- | --- | ---- |
+| **I/O**                   | ✅   | ✅    |
+| **setTimeout**            | ✅   | ✅    |
+| **setInterval**           | ✅   | ✅    |
+| **setImmediate**          | ❌   | ✅    |
+| **requestAnimationFrame** | ✅   | ❌    |
+
+#### 微任务
+
+| #                                        | 浏览器 | Node |
+| ---------------------------------------- | --- | ---- |
+| **Promise.prototype.then catch finally** | ✅   | ✅    |
+| **process.nextTick**                     | ❌   | ✅    |
+| **MutationObserver**                     | ✅   | ❌    |
+
+### 20、宏任务与微任务的执行顺序？说说EventLoop？
+
+[7关！setTimeout+Promise+Async输出顺序？你能过几关！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483940%26idx%3D1%26sn%3D7a97101836c2b697a270bd84707d441f%26chksm%3Dce4617b5f9319ea3e65092ef4a8b977c85cb0c589f89f49cf626df961de0900c2510297f0af9%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+### 21、Object.defineProperty(target, key, options)，options可传什么参数？
+
+- `value`：给target[key]设置初始值
+- `get`：调用target[key]时触发
+- `set`：设置target[key]时触发
+- `writable`：默认false，为true时此属性才能被赋值运算符修改
+- `enumerable`：默认false，为true时此属性才能被枚举
+- `configurable`：默认为false，为true时此属性的描述符才能被修改，才能被删除
+
+### 22、什么是防抖？什么是节流？
+
+| 操作  | 描述                                             | 场景                                                                       |
+| --- | ---------------------------------------------- | ------------------------------------------------------------------------ |
+| 防抖  | 频繁去触发一个事件，<br />但是只触发最后一次。以最后一次为准<br />期间清空定时器 | 1、电脑息屏时间，每动一次电脑又重新计算时间<br /> 2、input框变化频繁触发事件可加防抖 <br />3、频繁点击按钮提交表单可加防抖 |
+| 节流  | 频繁去触发一个事件，<br />但是只能每隔一段时间触发一次<br />期间多次触发不管   | 1、滚动频繁请求列表可加节流 <br />2、游戏里长按鼠标，但是动作都是每隔一段时间做一次                           |
+
+### 23、什么是高阶函数？简单实现一个？
+
+高阶函数：英文叫Higher-order function。JavaScript的函数其实都指向某个变量。既然变量可以指向函数，函数的参数能接收变量，**那么一个函数就可以接收另一个函数作为参数**，这种函数就称之为高阶函数。
+
+```js
+// 简单的高阶函数
+function add(x, y, f) {
+    return f(x) + f(y);
+}
+
+//用代码验证一下：
+add(-5, 6, Math.abs); // 11
+```
+
+像数组的`map、reduce、filter`这些都是高阶函数
+
+### 24、什么是函数柯里化？简单实现一个？
+
+柯里化，英语：Currying(果然是满满的英译中的既视感)，是把**接受多个参数的函数变换成接受一个单一参数**（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。
+
+```js
+// 普通的add函数
+function add(x, y) {
+    return x + y
+}
+
+// Currying后
+function curryingAdd(x) {
+    return function (y) {
+        return x + y
+    }
+}
+
+add(1, 2)           // 3
+curryingAdd(1)(2)   // 3
+```
+
+#### 好处
+
+- 1、参数复用
+
+```js
+// 正常正则验证字符串 reg.test(txt)
+
+// 普通情况
+function check(reg, txt) {
+    return reg.test(txt)
+}
+
+check(/\d+/g, 'test')       //false
+check(/[a-z]+/g, 'test')    //true
+
+// Currying后
+function curryingCheck(reg) {
+    return function(txt) {
+        return reg.test(txt)
+    }
+}
+
+var hasNumber = curryingCheck(/\d+/g)
+var hasLetter = curryingCheck(/[a-z]+/g)
+
+hasNumber('test1')      // true
+hasNumber('testtest')   // false
+hasLetter('21212')      // false
+```
+
+- 2、延迟执行 其实`Function.prototype.bind`就是科里化的实现例子
+
+```js
+function sayKey(key) {
+  console.log(this[key])
+}
+const person = {
+  name: 'Sunshine_Lin',
+  age: 23
+}
+// call不是科里化
+sayKey.call(person, 'name') // 立即输出 Sunshine_Lin
+sayKey.call(person, 'age') // 立即输出 23
+
+// bind是科里化
+const say = sayKey.bind(person) // 不执行
+// 想执行再执行
+say('name') // Sunshine_Lin
+say('age') // 23
+```
+
+### 25、什么是compose？简单实现一个？
+
+简单的compose函数：将需要嵌套执行的函数扁平化处理
+
+```js
+const compose = (a , b) => c => a( b( c ) );
+```
+
+例子：统计单词个数
+
+```js
+const space = (str) => str.split(' ')
+const len = (arr) => arr.length
+
+
+// 普通写法
+console.log(len(space('i am linsanxin'))) // 3
+console.log(len(space('i am 23 year old'))) // 5
+console.log(len(space('i am a author in juejin'))) // 6
+
+
+// compose写法
+const compose = (...fn) => value => {
+  return fn.reduce((value, fn) => {
+    return fn(value)
+  }, value)
+}
+const computedWord = compose(space, len)
+console.log(computedWord('i am linsanxin')) // 3
+console.log(computedWord('i am 23 year old')) // 5
+console.log(computedWord('i am a author in juejin')) // 6
+```
+
+### 26、箭头函数与普通函数的区别？
+
+- 1、箭头函数不能作为构造函数，不能new
+- 2、箭头函数没有自己的this
+- 3、箭头函数没有arguments对象
+- 4、箭头函数没有原型对象
+
+### 27、Symbol的应用场景？
+
+- 使用Symbol充当属性名
+- 使用Symbol充当变量
+- 使用Symbol实现私有属性
+
+### 28、AMD 和 CMD 的区别？
+
+| 模块化 | 代表应用       | 特点                                    |
+| --- | ---------- | ------------------------------------- |
+| AMD | require.js | 1、AMD的api默认一个当多个用 2、依赖前置，异步执行         |
+| CMD | sea.js     | 1、CMD的api严格区分，推崇职责单一 2、依赖就近，按需加载，同步执行 |
+
+### 29、Commonjs 和 ES6 Module的区别？
+
+- 1、前者是拷贝输出，后者是引用输出
+- 2、前者可修改引入值，后者只读
+- 3、前者是运行时，后者是编译时
+
+### 30、为什么Commonjs不适用于浏览器
+
+```
+var math = require('math');
+
+math.add(2, 3);
+```
+
+第二行math.add(2, 3)，在第一行require('math')之后运行，因此必须等math.js加载完成。也就是说，如果加载时间很长，整个应用就会停在那里等。
+
+这对服务器端不是一个问题，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于"假死"状态。
+
+因此，浏览器端的模块，不能采用"同步加载"（synchronous），只能采用"异步加载"（asynchronous）。这就是AMD规范诞生的背景。
+
+### 31、常用的ES6-ES12的语法有哪些？
+
+[总结了38个ES6-ES12的开发技巧，你能拿几分？嘿嘿](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247484979%26idx%3D1%26sn%3Dff9fd50664a1f75a770f7e396c72fd2e%26chksm%3Dce4613a2f9319ab4fb841798cc2fb2d17719545645a592b88f276731a3426773b3f86ee4aade%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+### 32、(a == 1 && a == 2 && a == 3) 有可能是 true 吗？
+
+```js
+// 第一种
+const a = {
+  i: 0,
+  toString() {
+    return ++this.i
+  }
+}
+console.log(a == 1 && a == 2 && a == 3) // true
+
+// 第二种
+const a = [1, 2, 3]
+a.join = a.shift
+console.log(a == 1 && a == 2 && a == 3) // true
+
+// 第三种
+let i = 0
+Object.defineProperty(global, 'a', {
+  get() {
+    return ++i
+  }
+})
+console.log(a == 1 && a == 2 && a == 3) // true
+```
+
+### 33、函数的length是多少？
+
+`length` 是函数对象的一个属性值，指该函数有多少个必须要传入的参数，即形参的个数。形参的数量不包括剩余参数个数，仅包括第一个具有默认值之前的参数个数
+
+### 35、JS中的 MUL 函数？
+
+MUL表示数的简单乘法。在这种技术中，将一个值作为参数传递给一个函数，而该函数将返回另一个函数，将第二个值传递给该函数，然后重复继续。例如:x*y*z可以表示为
+
+```
+const mul = x => y => z => x * y * z
+
+console.log(mul(1)(2)(3)) // 6
+```
+
+### 36、深度遍历广度遍历的区别？
+
+对于算法来说 无非就是时间换空间 空间换时间
+
+- 1、深度优先不需要记住所有的节点, 所以占用空间小, 而广度优先需要先记录所有的节点占用空间大
+- 2、深度优先有回溯的操作(没有路走了需要回头)所以相对而言时间会长一点
+- 3、深度优先采用的是堆栈的形式, 即先进后出
+- 4、广度优先则采用的是队列的形式, 即先进先出
+
+### 37、JS中的设计模式有哪些？
+
+- 创建模式：该模式抽象了对象实例化过程。
+- 结构型模式：这些模式处理不同的类和对象以提供新功能。
+- 行为模式：也称发布-订阅模式，定义了一个被观察者和多个观察者的、一对多的对象关系。
+- 并行设计模式：这些模式处理多线程编程范例。
+- 架构设计模式：这些模式用于处理架构设计
+
+### 38、forEach如何跳出循环？
+
+```js
+function getItemById(arr, id) {
+  var item = null;
+  try {
+    arr.forEach(function (curItem, i) {
+      console.log(i)
+      if (curItem.id == id) {
+        item = curItem;
+        throw Error();
+      }
+    })
+  } catch (e) {}
+  return item;
+}
+```
+
+### 39、JS中如何将页面重定向到另一个页面？
+
+- 1、使用 `location.href`：window.location.href =“[https://www.onlineinterviewquestions.com/”](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fwww.onlineinterviewquestions.com%2F%25E2%2580%259D&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN))
+- 2、使用 `location.replace`：window.location.replace(" [https://www.onlineinterviewquestions.com/;"](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fwww.onlineinterviewquestions.com%2F%3B%22&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN))
+
+### 40、实现一遍常用的JS原生方法？
+
+后面单独出一篇文章
+
+### 41、鼠标事件有哪些？
+
+| 事件         | 说明                      |
+| ---------- | ----------------------- |
+| click      | 单机鼠标左键触发                |
+| dbclick    | 双击鼠标左键触发                |
+| mousedown  | 单机鼠标任意一个按键都触发           |
+| mouseout   | 鼠标指针位于某个元素上且将要移出元素边界时触发 |
+| mouseover  | 鼠标指针出某个元素到另一个元素上时触发     |
+| mouseup    | 松开任意鼠标按键时触发             |
+| mousemove  | 鼠标在某个元素上时持续发生           |
+| mouseenter | 鼠标进入某个元素边界时触发           |
+| mouseleave | 鼠标离开某个元素边界时触发           |
+
+### 42、键盘事件有哪些？
+
+> 注明：`event`对象上的`keyCode`属性，是按下的按键的`ASCLL值`，通过这个值可辨别是按下哪个按键。`ASCLL`表在此ASCII码一览表，ASCII码对照表
+
+| 事件         | 说明                            |
+| ---------- | ----------------------------- |
+| onkeydown  | 某个键盘按键被按下时触发                  |
+| onkeyup    | 某个键盘按键被松开时触发                  |
+| onkeypress | 某个按键被按下时触发，不监听功能键，如ctrl，shift |
+
+### 43、JS中鼠标事件的各个坐标？
+
+| 属性      | 说明                                                     | 兼容性              |
+| ------- | ------------------------------------------------------ | ---------------- |
+| offsetX | 以当前的目标元素左上角为原点，定位x轴坐标                                  | 除Mozilla外都兼容     |
+| offsetY | 以当前的目标元素左上角为原点，定位y轴坐标                                  | 除Mozilla外都兼容     |
+| clientX | 以浏览器可视窗口左上角为原点，定位x轴坐标                                  | 都兼容              |
+| clientY | 以浏览器可视窗口左上角为原点，定位y轴坐标                                  | 都兼容              |
+| pageX   | 以doument对象左上角为原点，定位x轴坐标                                | 除IE外都兼容          |
+| pageY   | 以doument对象左上角为原点，定位y轴坐标                                | 除IE外都兼容          |
+| screenX | 以计算机屏幕左上顶角为原点，定位x轴坐标(多屏幕会影响)                           | 全兼容              |
+| screenY | 以计算机屏幕左上顶角为原点，定位y轴坐标                                   | 全兼容              |
+| layerX  | 最近的绝对定位的父元素（如果没有，则为 document 对象）<br />左上顶角为元素，定位 x 轴坐标 | Mozilla 和 Safari |
+| layerY  | 最近的绝对定位的父元素（如果没有，则为 document 对象）<br />左上顶角为元素，定位 y 轴坐标 | Mozilla 和 Safari |
+
+### 44、JS中元素视图的各个尺寸？
+
+| 属性           | 说明                                         |
+| ------------ | ------------------------------------------ |
+| offsetLeft   | 获取当前元素到定位父节点的left方向的距离                     |
+| offsetTop    | 获取当前元素到定位父节点的top方向的距离                      |
+| offsetWidth  | 获取当前元素 width + 左右padding + 左右border-width  |
+| offsetHeight | 获取当前元素 height + 上下padding + 上下border-width |
+| clientWidth  | 获取当前元素 width + 左右padding                   |
+| clientHeight | 获取当前元素 height + 上下padding                  |
+| scrollWidth  | 当前元素内容真实的宽度，内容不超出盒子宽度时为盒子的clientWidth      |
+| scrollHeight | 当前元素内容真实的高度，内容不超出盒子高度时为盒子的clientHeight     |
+
+### 45、Window视图的各个尺寸？
+
+| 属性          | 说明                                       |
+| ----------- | ---------------------------------------- |
+| innerWidth  | innerWidth 浏览器窗口可视区宽度（不包括浏览器控制台、菜单栏、工具栏） |
+| innerHeight | innerWidth 浏览器窗口可视区高度（不包括浏览器控制台、菜单栏、工具栏） |
+
+### 46、Document文档视图的各个尺寸？
+
+| 属性                                    | 说明                                      |
+| ------------------------------------- | --------------------------------------- |
+| document.documentElement.clientWidth  | 浏览器窗口可视区宽度<br />（不包括浏览器控制台、菜单栏、工具栏、滚动条） |
+| document.documentElement.clientHeight | 浏览器窗口可视区高度<br />（不包括浏览器控制台、菜单栏、工具栏、滚动条） |
+| document.documentElement.offsetHeight | 获取整个文档的高度（包含body的margin）                |
+| document.body.offsetHeight            | 获取整个文档的高度（不包含body的margin）               |
+| document.documentElement.scrollTop    | 返回文档的滚动top方向的距离（当窗口发生滚动时值改变）            |
+| document.documentElement.scrollLeft   | 返回文档的滚动left方向的距离（当窗口发生滚动时值改变）           |
+
+### 47、target 和 currentTarget的区别？
+
+[e.target 和 e.currentTarget 的区别？你到底知不知道？](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247485676%26idx%3D1%26sn%3D457d5c900d9c4ce20a7685c57669f626%26chksm%3Dce461d7df931946bae794365fb0e011a531b7ab86c067ace580ea5a6bc3cb0b20fc7ffde08c3%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+### 48、arguments对象
+
+```js
+function fn1 () {
+  console.log(arguments)
+}
+
+fn1(1, 2, 3)
+// [Arguments] { '0': 1, '1': 2, '2': 3 }
+
+
+const fn2 = () => {
+  console.log(arguments)
+}
+fn2(1, 2, 3)
+// arguments is not defined
+```
+
+### 49、监听ajax上传进度
+
+```js
+//【上传进度调用方法实现】
+xhr.upload.onprogress = progressFunction
+```
+
+### 50、['1', '2', '3'].map(parseInt)
+
+- parseInt('1', 0) //0为十进制
+- parseInt('2', 1) //没有一进制
+- parseInt('3', 2) // 二进制没有3
+
+```js
+[1, NaN, NaN]
+```
+
+将数组index作为第二个参数，parseInt第二参数指定转换进制
+
+## 大厂手写题
+
+### 1、实现原生 AJAX 封装
+
+```js
+const ajax = {
+  get(url, fn) {
+      // 创建 xhr 对象
+    const xhr = new XMLHttpRequest()
+    // method:要是用的HTTP方法，url：请求的主体，async(可选)：false为同步，true为异步，默认为同步
+    xhr.open('GET', url, true)
+      // 只要 readyState 属性发生变化，就会调用相应的处理函数。
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            // 从服务器端返回文本。
+            fn(xhr.responseText)
+        };
+      }
+    }
+    xhr.send()
+  },
+  post(url, fn, data) {
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', url, true)
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+    xhr.onreadystatechange = function() {
+      if(xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            // 从服务器端返回文本。
+            fn(xhr.responseText)
+        };
+      }
+    }
+    xhr.send(data)
+  }
+}
+```
+
+```js
+//原生Ajax封装成Promise
+var myNewAjax = function(url){
+    return new Promise(function(resolve,reject){
+        var xhr = new XMLHttpRequest()
+        xhr.open('get',url)
+        xhr.send(data)
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                var json = JSON.parse(xhr.responseText)
+                resolve(json)
+            }
+            else if(xhr.readyState === 4 && xhr.status !== 200){
+                reject('error')
+            }
+        }
+    })
+}
+```
+
+### 2、实现 new 过程
+
+```js
+function myNew(fn, ...args) {
+    const obj = {}
+
+    obj.__proto__ = fn.prototype
+
+    fn.apply(obj, args)
+
+    return obj
+}
+```
+
+### 3、打乱一个数组
+
+```js
+// 方法1
+const shuffle = (arr) => {
+  return arr.sort(() => {
+    return Math.random() > 0.5 ? 1 : -1
+  })
+}
+
+// 方法2
+const shuffle = (arr) => { 
+    let i = arr.length
+    while (i) { 
+        let j = Math.floor(Math.random() * i--)
+        [arr[j], arr[i]] = [arr[i], arr[j]]
+    } 
+}
+```
+
+### 4、防抖函数
+
+```js
+function debounce(fn, delay){
+    let task = null;
+    return function(){
+        if(task){
+            clearTimeout();
+            task = null;
+        }
+        task = setTimeout( () => {
+            fn.apply(this,arguments);
+        },delay)
+    }
+}
+```
+
+### 5、节流函数
+
+```js
+function throttle(fn, delay){
+    let task = null;
+    return function(){
+        if(!task){
+            task = setTimeout( () => {
+                task = null;
+                fn.apply(this,arguments);
+            },delay)
+        }
+
+    }
+}
+```
+
+### 6、数组去重
+
+```js
+// 方法1
+const quchong = (arr) => {
+  return [...new Set(arr)]
+}
+
+// 方法2
+const quchong = (arr) => {
+  const res = []
+  arr.reduce((pre, next) => {
+    if (!pre.has(next)) {
+      pre.set(next, 1)
+      res.push(next)
+    }
+    return pre
+  }, new Map())
+
+  return res
+}
+```
+
+### 7、setTimeout 实现 setInterval
+
+```js
+function mySetInterval(fn, delay,times){
+    times--;
+    if(!times) {
+        clearTimeout();
+        return
+    }
+
+    let timer = setTimeout(() =>{
+        fn();
+        mySetInterval(fn,delay,times);
+    },delay)
+
+}
+function fn(){
+    console.log("1")
+}
+mySetInterval(fn,1000,10)
+```
+
+### 8、setInterval 实现 setTimeout
+
+```js
+const mySetTimeout = (fn, delay) => {
+  const timer = setInterval(() => {
+    fn()
+    clearInterval(timer)
+  }, delay)
+}
+```
+
+### 9、compose 函数
+
+```js
+function fn1(x) {
+  return x + 1;
+}
+
+function fn2(x) {
+  return x + 2;
+}
+
+function fn3(x) {
+  return x + 3;
+}
+
+function fn4(x) {
+  return x + 4;
+}
+const compose = (...fns) => {
+  if (fns.length === 0) return (num) => num
+  if (fns.length === 1) return fns[0]
+  return fns.reduce((pre, next) => {
+    return (num) => {
+      return pre(next(num))
+    }
+  })
+}
+const a = compose(fn1, fn2, fn3, fn4)
+console.log(a(1)); // 1+2+3+4=11
+```
+
+### 10、curring 函数
+
+```js
+const add = (a, b, c) => a + b + c;
+const currying = (fn, ...args) => {
+  let allArgs = [...args]
+  const num = fn.length
+  const res = (...args2) => {
+    allArgs = [...allArgs, ...args2]
+    if (allArgs.length === num) {
+      return fn(...allArgs)
+    } else {
+      return res
+    }
+  }
+  return res
+}
+const a = currying(add, 1);
+console.log(a(2)(3)) // 1 + 2 + 3=6
+```
+
+### 11、LRU 算法
+
+![](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvXV9pxQQX9iaIDegK2J9xAwcZNz4B3kls1yOj5hchzgjegTwhxM3V4lw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+```js
+class LRUCache {
+  constructor(size) {
+    this.size = size
+    this.cache = new Map()
+  }
+  get(key) {
+    const hasKey = this.cache.has(key)
+    if (!hasKey) {
+      return -1
+    } else {
+      const val = this.cache.get(key)
+      this.cache.delete(key)
+      this.cache.set(key, val)
+      return val
+    }
+  }
+  put(key, value) {
+    const hasKey = this.cache.has(key)
+    if (hasKey) {
+      this.cache.delete(key)
+    }
+    this.cache.set(key, value)
+    if (this.cache.size > this.size) {
+      this.cache.delete(this.cache.keys().next().value)
+    }
+  }
+}
+```
+
+### 12、发布订阅模式
+
+实现on、off、emit、once。提示cache二维数组
+
+```js
+class EventEmitter {
+  constructor() {
+    this.cache = []
+  }
+
+  on(name, fn) {
+    const tasks = this.cache[name]
+    if (tasks) {
+      tasks.push(fn)
+    } else {
+      this.cache[name] = [fn]
+    }
+  }
+
+  off(name, fn) {
+    if (!name) {
+      this.cache = []
+      return
+    }
+    const tasks = this.cache[name]
+    if (tasks) {
+      if (!fn) {
+        this.cache[name] = []
+      }
+      const index = tasks.findIndex(item => item === fn)
+      if (index >= 0) {
+        tasks.splice(index, 1)
+      }
+    }
+  }
+
+  emit(name, ...args) {
+    // 复制一份。防止回调里继续on，导致死循环
+    const tasks = this.cache[name].slice()
+    if (tasks) {
+      for (let task of tasks) {
+        task(...args)
+      }
+    }
+  }
+
+  once(name, cb) {
+    const fn = (...args) => {
+      cb(...args)
+      this.off(name, fn)
+    }
+    this.on(name, fn)
+  }
+}
+```
+
+### 13、DOM 转 对象
+
+```js
+const dom2tree = (node) => {
+  const obj = {}
+  obj.tag = node.tagName
+  obj.children = []
+  node.childNodes.forEach(child => obj.children.push(dom2tree(child)))
+  return obj
+}
+```
+
+### 14、对象 转 DOM
+
+```js
+function _render(vnode) {
+  if (typeof vnode === 'number') {
+    vnode = String(vnode)
+  }
+
+  if (typeof vnode === 'string') {
+    return document.createTextNode(vnode)
+  }
+
+  const dom = document.createElement(vnode.tag)
+  if (vnode.attrs) {
+    Object.keys(attrs).forEach(key => {
+      const attr = artts[key]
+      dom.setAttribute(key, attr)
+    })
+  }
+  vnode.children.forEach(child => dom.appenChild(_render(child)))
+
+  return dom
+}
+```
+
+### 15、判断对象环引用
+
+```js
+const cycleDetector = (obj) => {
+  const arr = [obj]
+  let flag = false
+
+  const cycle = (o) => {
+    const values = Object.values(o)
+    for (let value of values) {
+      if (typeof value === 'object' && value !== null) {
+        if (arr.includes(value)) {
+          flag = true
+          return
+        }
+        arr.push(value)
+        cycle(value)
+      }
+    }
+  }
+
+  cycle(obj)
+
+  return flag
+}
+```
+
+### 16、计算对象的层数
+
+```js
+const loopGetLevel = (obj) => {
+  let num = 1
+
+  const computed = (obj, level) => {
+    level = level || 0
+    if (typeof obj === 'object' && obj !== null) {
+      Object.values(obj).forEach(v => {
+        if (typeof v === 'object' && v !== null) {
+          computed(v, level + 1)
+        } else {
+          num = level + 1 > num ? level + 1 : num
+        }
+      })
+    } else {
+      num = level > num ? level : num
+    }
+  }
+  computed(obj)
+
+  return num
+}
+```
+
+### 17、对象的扁平化
+
+```js
+const flatten = obj => {
+  if (!isObject(obj)) return
+  const res = {}
+  const dfs = (cur, prefix) => {
+    if (isObject(cur)) {
+      if (Array.isArray(cur)) {
+        for(let i in cur) {
+          dfs(cur[i], `${prefix}[${i}]`)
+        }
+      } else {
+        for(let i in cur) {
+          dfs(cur[i], `${prefix}${prefix ? '.' : ''}${i}`)
+        }
+      }
+    } else {
+      res[prefix] = cur
+    }
+  }
+  dfs(obj, '')
+
+  return res
+}
+```
+
+### 18、(a == 1 && a == 2 && a == 3)
+
+```js
+// 第一种方法
+var a = {
+  i: 1,
+  toString: function () {
+    return a.i++;
+  }
+}
+console.log(a == 1 && a == 2 && a == 3) // true
+
+// 第二种方法
+var a = [1, 2, 3];
+a.join = a.shift;
+console.log(a == 1 && a == 2 && a == 3); // true
+
+// 第三种方法
+var val = 0;
+Object.defineProperty(window, 'a', {
+    get: function () {
+        return ++val;
+    }
+});
+console.log(a == 1 && a == 2 && a == 3) // true
+```
+
+### 19、Promise并发器
+
+题目描述：
+
+```js
+JS 实现一个带并发限制的异步调度器 Scheduler，保证同时运行的任务最多有两个
+
+addTask(1000,"1");
+addTask(500,"2");
+addTask(300,"3");
+addTask(400,"4");
+的输出顺序是：2 3 1 4
+
+整个的完整执行流程：
+
+一开始1、2两个任务开始执行
+500ms时，2任务执行完毕，输出2，任务3开始执行
+800ms时，3任务执行完毕，输出3，任务4开始执行
+1000ms时，1任务执行完毕，输出1，此时只剩下4任务在执行
+1200ms时，4任务执行完毕，输出4
+```
+
+实现：
+
+```js
+class Scheduler {
+  constructor(limit) {
+    this.limit = limit
+    this.queue = []
+    this.count = 0
+  }
+  add(time, str) {
+    const request = () => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          console.log(str)
+          resolve()
+        }, time)
+      })
+    }
+    this.queue.push(request)
+  }
+  taskStart() {
+    for(let i = 0; i < this.limit; i++) {
+      this.request()
+    }
+  }
+
+  request() {
+    if (!this.queue.length || this.count > this.limit) {
+      return
+    }
+    this.count++
+    this.queue.shift()().then(() => {
+      this.count--
+      this.request()
+    })
+  }
+}
+```
+
+### 20、lazyMan 函数
+
+要求：
+
+```js
+实现一个LazyMan，可以按照以下方式调用:
+LazyMan(“Hank”)输出:
+Hi! This is Hank!
+
+LazyMan(“Hank”).sleep(10).eat(“dinner”)输出
+Hi! This is Hank!
+//等待10秒..
+Wake up after 10
+Eat dinner~
+
+LazyMan(“Hank”).eat(“dinner”).eat(“supper”)输出
+Hi This is Hank!
+Eat dinner~
+Eat supper~
+
+LazyMan(“Hank”).eat(“supper”).sleepFirst(5)输出
+//等待5秒
+Wake up after 5
+Hi This is Hank!
+Eat supper
+```
+
+解题：
+
+```js
+class _lazyMan {
+  constructor(name) {
+    const fn = () => {
+      console.log(`Hi! This is ${name}`)
+      this.next()
+    }
+    this.tasks = []
+    this.tasks.push(fn)
+    setTimeout(() => {
+      this.next()
+    })
+  }
+  next() {
+    const task = this.tasks.shift()
+    task && task()
+  }
+  sleep(delay) {
+    this.sleepWrapper(delay)
+    return this
+  }
+  sleepFirst(delay) {
+    this.sleepWrapper(delay, true)
+    return this
+  }
+  sleepWrapper(time, first) {
+    const fn = () => {
+      setTimeout(() => {
+        console.log(`Wake up after ${time}`)
+        this.next()
+      }, time * 1000)
+    }
+    if (first) {
+      this.tasks.unshift(fn)
+    } else {
+      this.tasks.push(fn)
+    }
+  }
+  eat(food) {
+    const fn = () => {
+      console.log(`Eat ${food}`)
+      this.next()
+    }
+    this.tasks.push(fn)
+    return this
+  }
+
+}
+
+const LazyMan = (name) => {
+  return new _lazyMan(name)
+}
+```
+
+### 21、add 函数 柯里化
+
+要求：实现一个 add 方法 使计算结果能够满足如下预期：
+
+- add(1)(2)(3)()=6
+- add(1,2,3)(4)()=10
+
+解题：
+
+```js
+function add(...args1) {
+  let allArgs = [...args1]
+
+  const fn = (...args2) => {
+    allArgs = [...args1, ...args2]
+
+    return fn
+  }
+
+  fn.toString = function() {
+    return allArgs.reduce((pre, next) => {
+      return pre + next
+    })
+  }
+
+  return fn
+}
+```
+
+### 22、深拷贝
+
+```js
+const tagMap = {
+  mapTag: '[object Map]',
+  setTag: '[object Set]',
+  arrayTag: '[object Array]',
+  objectTag: '[object Object]',
+  symbolTag: '[object Symbol]',
+  regexpTag: '[object RegExp]'
+}
+
+
+const checkType = (target) => {
+  return Object.prototype.toString.call(target)
+}
+
+const checkTemp = (target) => {
+  const c = target.constructor
+  return new c()
+}
+
+const cloneSymbol = (target) => {
+  return Object(Symbol.prototype.valueOf.call(target))
+}
+
+const cloneReg = (target) => {
+  const reFlags = /\w*$/
+  const result = new target.constructor(target.source, reFlags.exec(target))
+  result.lastIndex = target.lastIndex
+  return result
+}
+
+const deepClone = (target, map = new Map()) => {
+
+  const type = checkType(target)
+
+  if (!Object.values(tagMap).includes(type)) {
+    return target
+  }
+
+  if (type === tagMap.symbolTag) {
+    return cloneSymbol(target)
+  }
+  if (type === tagMap.regexpTag) {
+    return cloneReg(target)
+  }
+
+    const temp = checkTemp(target)
+
+  if (map.get(target)) {
+    return map.get(target)
+  }
+
+  map.set(target, temp)
+
+  if (type === tagMap.setTag) {
+    target.forEach(value => {
+      temp.add(deepClone(value, map))
+    })
+  }
+
+  if (type === tagMap.mapTag) {
+    target.forEach((value, key) => {
+      temp.set(key, deepClone(value, map))
+    })
+  }
+
+  for (const key in target) {
+    temp[key] = deepClone(target[key], map)
+  }
+  return temp
+}
+```
+
+### 23、计算 LocalStorage 总容量
+
+```js
+let str = '0123456789'
+let temp = ''
+// 先做一个 10KB 的字符串
+while (str.length !== 10240) {
+  str = str + '0123456789'
+}
+
+// 先清空
+localStorage.clear()
+
+const computedTotal = () => {
+  return new Promise((resolve) => {
+    // 不断往 LocalStorage 中累积存储 10KB
+    const timer = setInterval(() => {
+      try {
+        localStorage.setItem('temp', temp)
+      } catch {
+        // 报错说明超出最大存储
+        resolve(temp.length / 1024 - 10)
+        clearInterval(timer)
+        // 统计完记得清空
+        localStorage.clear()
+      }
+      temp += str
+    }, 0)
+  })
+}
+
+(async () => {
+  const total = await computedTotal()
+  console.log(`最大容量${total}KB`)
+})()
+```
+
+### 24、实现 async/await
+
+```js
+const toAsync = (fn) => {
+  return function() {
+    const gen = fn.apply(this. arguments)
+
+    return new Promise((resolve, reject) => {
+
+      function go(key, arg) {
+        let res
+        try {
+          res = gen[key](arg)
+        } catch(e) {
+          return reject(e)
+        }
+
+        const { value, done } = res
+        if (done) {
+          return resolve(value)
+        } else {
+          return Promise.resolve(value).then(val => {
+            go('next', val)
+          }).catch(err => {
+            go('throw', err)
+          })
+        }
+      }
+      go('next')
+    })
+  }
+}
+```
+
+### 25、Promise
+
+[三心的手写Promise原理，最通俗易懂的版本！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247484956%26idx%3D1%26sn%3Ddaad0f4436573d8dbc06470e9d3daf9c%26chksm%3Dce46138df9319a9bffb3ed4ba98910174a0313f20dca9251e530bc1ee2e60fa85a0d381c3f98%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+## 数组方法
+
+### 26、forEach
+
+```js
+Array.prototype.sx_forEach = (cb) => {
+    for (let i = 0; i < this.length; i++) {
+        cb && cb(this[i], i, this)
+    }
+}
+```
+
+### 27、map
+
+```js
+Array.prototype.sx_map = (cb) => {
+    const res = []
+    for (let i = 0; i < this.length; i++) {
+        res[i] = cb && cb(this[i], i, this)
+    }
+    return res
+}
+```
+
+### 28、filter
+
+```js
+Array.prototype.sx_filter = function (cb) {
+    const res = []
+    for (let i = 0; i < this.length; i++) {
+        cb && cb(this[i], i, this) && (res.push(this[i]))
+    }
+    return res
+}
+```
+
+### 29、every
+
+```js
+Array.prototype.sx_every = function (cb) {
+    for (let i = 0; i < this.length; i++) {
+        if (!cb && cb(this[i], i, this)) {
+            return false
+        }
+    }
+    return true
+}
+```
+
+### 30、some
+
+```js
+Array.prototype.sx_some = function (cb) {
+    for (let i = 0; i < this.length; i++) {
+        if (cb && cb(this[i], i, this)) {
+            return true
+        }
+    }
+    return false
+}
+```
+
+### 31、reduce
+
+```js
+Array.prototype.sx_reduce = function (cb, ...args) {
+    let pre, start = 0
+    if (args.length) {
+        pre = args[0]
+    } else {
+        pre = this[0]
+        start = 1
+    }
+    for (let i = start; i < this.length; i++) {
+        pre = cb(pre, this[i], i, this)
+    }
+    return pre
+}
+```
+
+### 32、findIndex
+
+```js
+Array.prototype.sx_findIndex = function (cb) {
+    for (let i = 0; i < this.length; i++) {
+        if (cb && cb(this[i], i, this)) {
+            return i
+        }
+    }
+    return -1
+}
+```
+
+### 33、find
+
+```js
+Array.prototype.sx_find = function (cb) {
+    for (let i = 0; i < this.length; i++) {
+        if (cb && cb(this[i], i, this)) {
+            return this[i]
+        }
+    }
+    return undefined
+}
+```
+
+### 34、fill
+
+```js
+Array.prototype.sx_fill = function (value, start = 0, end) {
+    end = end || this.length
+    for (let i = start; i < end; i++) {
+        this[i] = value
+    }
+    return this
+}
+```
+
+### 35、include
+
+```js
+Array.prototype.sx_include = function (value, start = 0) {
+    const isnan = Number.isNaN(value)
+    for (let i = start; i < this.length; i++) {
+        if (this[i] === value || (isnan && Number.isNaN(this[i]))) {
+            return true
+        }
+    }
+    return false
+}
+```
+
+### 36、join
+
+```js
+Array.prototype.sx_join = function (str = ',') {
+    let resStr = ''
+    for (let i = 0; i < this.length; i++) {
+        const item = this[i]
+        resStr = i === 0 ? item : `${resStr}${str}${item}`
+    }
+    return resStr
+}
+```
+
+### 37、flat
+
+```js
+Array.prototype.sx_flat = function (num = Infinity) {
+    let arr = this, i = 0
+    while (arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+        i++
+        if (i >= num) break
+    }
+    return arr
+}
+```
+
+### 38、splice
+
+```js
+Array.prototype.sx_splice = function (start, length, ...values) {
+    if (length === 0) return []
+    length = start + length > this.length - 1 ? this.length - start : length
+    console.log(length)
+    const res = [], tempArr = [...this]
+    for (let i = start; i < start + values.length; i++) {
+        this[i] = values[i - start]
+    }
+    this.length = start + values.length
+    if (values.length < length) {
+        const cha = length - values.length
+        for (let i = start + values.length; i < tempArr.length; i++) {
+            this[i] = tempArr[i + cha]
+        }
+        this.length = this.length - cha
+    }
+    if (values.length > length) {
+        for (let i = start + length; i < tempArr.length; i++) {
+            this.push(tempArr[i])
+        }
+    }
+    for (let i = start; i < start + length; i++) {
+        res.push(tempArr[i])
+    }
+    return res
+}
+```
+
+## 对象方法
+
+### 39、entries
+
+```
+Object.prototype.sx_entries = function (obj) {
+    const res = []
+    for (let key in obj) {
+        obj.hasOwnProperty(key) && (res.push([key, obj[key]]))
+    }
+    return res
+}
+```
+
+### 40、fromEntries
+
+```
+Object.prototype.sx_fromEntries = function (arr) {
+    const obj = {}
+    for (let item of arr) {
+        const [key, value] = item
+        obj[key] = item[value]
+    }
+    return obj
+}
+```
+
+### 41、keys
+
+```
+Object.prototype.sx_keys = function (obj) {
+    const res = []
+    for (let key in obj) {
+        obj.hasOwnProperty(key) && res.push(key)
+    }
+    return res
+}
+```
+
+### 42、values
+
+```
+Object.prototype.sx_values = function (obj) {
+    const res = []
+    for (let key in obj) {
+        obj.hasOwnProperty(key) && res.push(obj[key])
+    }
+    return res
+}
+```
+
+### 43、instanceOf
+
+```
+const instanceOf = function (parent, children) {
+    const fp = parent.prototype
+    let cp = children.__proto__
+    while (cp) {
+        if (fp === cp) {
+            return true
+        }
+        cp = cp.__proto__
+    }
+    return false
+}
+```
+
+### 44、is
+
+```
+Object.prototype.sx_is = function (x, y) {
+    if (x === y) {
+        // 防止 +0 和 -0
+        return x !== 0 && 1 / x === 1 / y
+    }
+
+    // 防止NaN
+    return x !== x && y !== y
+}
+```
+
+### 45、assign
+
+```
+Object.prototype.sx_assign = function (target, ...args) {
+    if (target === null || target === undefined) {
+        throw new TypeError('Cannot convert undefined or null to object')
+    }
+
+    target = Object(target)
+
+    for (let obj of args) {
+        for (let key in obj) {
+            obj.hasOwnProperty(key) && (target[key] = obj[key])
+        }
+    }
+
+    return target
+}
+```
+
+## Promise方法
+
+### 46、all
+
+```js
+Promise.sx_all = (promises) => {
+    return new Promise((resolve, reject) => {
+        const result = []
+        let count = 0
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                result[i] = res
+                count++
+                if (count === promises.length) {
+                    resolve(result)
+                }
+            }).catch(err => {
+                reject(err)
+            })
+        }
+    })
+}
+```
+
+### 47、race
+
+```js
+Promise.sx_race = (promises) => {
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        }
+    })
+}
+```
+
+### 48、allSettled
+
+```
+Promise.sx_allSettled = (promises) => {
+    return new Promise((resolve) => {
+        const result = []
+        let count = 0
+        const addData = (status, value, i) => {
+            result[i] = {
+                status,
+                value
+            }
+            count++
+            if (count === promises.length) {
+                resolve(result)
+            }
+        }
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                addData('fulfilled', res, i)
+            }).catch(err => {
+                addData('rejected', err, i)
+            })
+        }
+    })
+}
+```
+
+### 49、any
+
+```
+Promise.sx_any = (promises) => {
+    return new Promise((resolve, reject) => {
+        let count = 0
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                resolve(res)
+            }).catch(err => {
+                count++
+                if (count === promises.length) {
+                    reject('全错！！！')
+                }
+            })
+        }
+    })
+}
+```
+
+### 50、finally
+
+```
+Promise.prototype.sx_finally = function (fn) {
+  return this.then((res) => {
+    fn()
+    return res
+  }).catch((err) => {
+    fn()
+    return err
+  })
+}
+```
+
+## 函数
+
+### 51、call
+
+```js
+Function.prototype.sx_call = function(obj, ...args) {
+  obj = obj || window
+  const fn = Symbol()
+  obj[fn] = this
+  const res = obj[fn](...args)
+  delete obj[fn]
+  return res
+}
+```
+
+### 52、apply
+
+```js
+Function.prototype.sx_apply = function(obj, args) {
+  obj = obj || window
+  const fn = Symbol()
+  obj[fn] = this
+  const res = obj[fn](...args)
+  delete obj[fn]
+  return res
+}
+```
+
+### 53、bind
+
+```js
+Function.prototype.sx_bind = function(obj, ...args) {
+  obj = obj || window
+  const fn = Symbol()
+  obj[fn] = this
+  const _this = this
+
+  const res = function(...innerArgs) {
+    console.log(this, _this)
+    if (this instanceof _this) {
+      this[fn] = _this
+      this[fn](...[...args, ...innerArgs])
+      delete this[fn]
+    } else {
+      obj[fn](...[...args, ...innerArgs])
+      delete obj[fn]
+    }
+  }
+  res.prototype = Object.create(this.prototype)
+  return res
+}
+```
+
+## 字符串
+
+### 54、slice
+
+```
+String.prototype.sx_slice = function (start = 0, end) {
+    start = start < 0 ? this.length + start : start
+    end = !end && end !== 0 ? this.length : end
+
+    if (start >= end) return ''
+    let str = ''
+    for (let i = start; i < end; i++) {
+        str += this[i]
+    }
+
+    return str
+}
+```
+
+### 55、substr
+
+```
+String.prototype.sx_substr = function (start = 0, length) {
+    if (length < 0) return ''
+
+    start = start < 0 ? this.length + start : start
+    length = (!length && length !== 0) || length > this.length - start ? this.length : start + length
+
+    let str = ''
+    for (let i = start; i < length; i++) {
+        str += this[i]
+    }
+    return str
+}
+```
+
+### 56、substring
+
+```
+String.prototype.sx_sunstring = function (start = 0, end) {
+    start = start < 0 ? this.length + start : start
+    end = !end && end !== 0 ? this.length : end
+
+    if (start >= end) [start, end] = [end, start]
+    let str = ''
+    for (let i = start; i < end; i++) {
+        str += this[i]
+    }
+
+    return str
+}
+```

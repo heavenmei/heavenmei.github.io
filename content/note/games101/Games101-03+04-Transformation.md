@@ -5,7 +5,7 @@ layout: post
 date: 2025-01-12
 author: heavenmei
 categories:
-  - Post
+  - Note
 description: 
 tags:
   - CG

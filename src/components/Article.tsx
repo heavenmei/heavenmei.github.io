@@ -12,7 +12,7 @@ type ArticleProps = {
 
 export default function Article(props: ArticleProps) {
   const { slug, page } = props;
-  console.log("PostPage props ===> ", props);
+  // console.log("PostPage props ===> ", props);
 
   if (!page) {
     return;
