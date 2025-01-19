@@ -793,13 +793,9 @@ console.log(obj.fn()); // undefined
 | Math.pow(num, m)     | 对 num 取 m 次幂  |
 | Math.random() \* num | 取 0-num 的随机数 |
 
-### 42、哪些因素导致内存泄漏？如何解决？
-
-后面出一篇文章专门讲
 
 ### 43、讲讲 JavaScript 的垃圾回收机制
 
-看这篇文章
 
 [赠你 13 张图，助你 20 分钟打败了「V8 垃圾回收机制」！！！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483683%26idx%3D1%26sn%3D973b0280aa9c6eb1678ea530ee4d2381%26chksm%3Dce4614b2f9319da402278b86e63f44e818e832ecbaafdada344ba979de3df4443a8ed53b0cb1%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
