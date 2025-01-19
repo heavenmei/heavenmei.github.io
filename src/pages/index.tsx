@@ -202,7 +202,6 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <div className="text-secondary text-sm">{item.venue}</div>
                 <div className="text-secondary text-sm">{item.desc}</div>
               </div>
               <Image src={item.img} width={300} height={107} alt="" />
