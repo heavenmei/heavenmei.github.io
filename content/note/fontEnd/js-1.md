@@ -87,7 +87,7 @@ isNaN('sdsd') //true
 2. 注意转义字符 `\`
 3. `let x = 变量.toString()`
 4. 多行字符串（**反引号**）
-   ```JS
+   ```js
    //反引号 表示字面量
    var msg = `shdjsd
    hello
@@ -215,7 +215,7 @@ isNaN('sdsd') //true
 - 字符串类型
 - symbol 类型
 
-symbol可以接收一个描述，**但symbol 总是不同的值，即使它们有相同的名字。**。描述只是一个标签，不影响任何东西。
+symbol可以接收一个描述，**但symbol 总是不同的值，即使它们有相同的名字。**描述只是一个标签，不影响任何东西。
 
 ```js
 let id = Symbol()
@@ -421,7 +421,8 @@ jQuery 中就是使用的该方法：jQuery.name，简便写法：**$()**
 - 全局作用域：代码在程序任何地方都能访问，window对象的内置属性都属于全局作用域
 - 函数作用域：在固定的代码片段才能被访问
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvxtO1MZKI6pTwyFSSRIHLmf850RicUia6AK8VL6KPeGVgsZ335djBjsuA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+![](assets/js-1-20250119030050.png)
 
 
 
@@ -450,7 +451,7 @@ function show(f){
 show(fn);
 ```
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvcNPB3dylMOicxOgsFJRwyWmKsNjF9hWNfwX0d8sruxlmOWr91YrYFyg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![](assets/js-1-20250119030100.png)
 
 
 
