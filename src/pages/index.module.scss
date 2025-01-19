@@ -12,7 +12,7 @@
   }
 
   &_top {
-    display: flex;
+    display: inline-flex;
     margin-right: auto;
     align-items: center;
     gap: 1rem;
@@ -86,7 +86,6 @@
 
 .project {
   position: relative;
-  top: -3px;
   display: flex;
 
   &_content {

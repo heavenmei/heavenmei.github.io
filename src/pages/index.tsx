@@ -1,9 +1,12 @@
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./index.module.scss";
 import LineIcon from "@/components/lines/LineIcon";
 import SingleLine from "@/components/lines/SingleLine";
 import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
 import config from "@/configs";
+import Markdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 
 export default function Home() {
   const {
@@ -14,6 +17,21 @@ export default function Home() {
     project,
     projectList,
   } = config;
+
+  const [readme, setReadme] = useState<string>("");
+
+  const getGithubReadme = useCallback(async () => {
+    const res = await fetch(
+      "https://raw.githubusercontent.com/heavenmei/heavenmei/master/README.md"
+    );
+
+    const text = await res.text();
+    setReadme(text);
+  }, []);
+
+  useEffect(() => {
+    getGithubReadme();
+  }, []);
 
   return (
     <>
@@ -32,23 +50,26 @@ export default function Home() {
         <div className={styles.aboutMe}>
           <div>
             <LineIcon name="code" />
-            <SingleLine />
+            <SingleLine height={530} />
           </div>
           <div className={styles.aboutMe_content}>
-            <div className={styles.aboutMe_top}>
-              <Image src="/icons/github.svg" width={20} height={20} alt="" />
-              <p>GitHub Galaxy</p>
-              <Image
-                src="/icons/rightArrow.svg"
-                width={20}
-                height={20}
-                alt=""
-              />
-            </div>
-
             <p className={styles.aboutMe_desc}>{aboutMe}</p>
-            <p className="text-secondary">{aboutMeDesc}</p>
+            {/* <p className="text-secondary">{aboutMeDesc}</p> */}
             <div className={styles.aboutMe_contact}>
+              <a
+                className={styles.aboutMe_top}
+                href="https://github.com/heavenmei"
+              >
+                <Image src="/icons/github.svg" width={20} height={20} alt="" />
+                <p> heavenmei/README.md</p>
+                <Image
+                  src="/icons/rightArrow.svg"
+                  width={20}
+                  height={20}
+                  alt=""
+                />
+              </a>
+
               <button className="rounded">
                 <a
                   href={`mailto:${config.email}`}
@@ -72,6 +93,10 @@ export default function Home() {
                   />
                 </a>
               </button>
+            </div>
+
+            <div className="README mt-6  markdown-body transparent">
+              <Markdown rehypePlugins={[rehypeRaw]}>{readme}</Markdown>
             </div>
           </div>
         </div>
@@ -127,7 +152,7 @@ export default function Home() {
         ))}
 
         {/* Project */}
-        <div className={styles.project}>
+        <div className={`${styles.project} top-[-4px]`}>
           <div>
             <SingleLine
               color="linear-gradient(180deg, #2EA043 0%, #EC6547 50.5%, #FFA28B 100%)"
@@ -150,7 +175,10 @@ export default function Home() {
         {projectList.map((item) => (
           <div className={styles.pubList} key={item.title}>
             <div>
-              <BranchLine type={BranchLineStyle.RED} />
+              <BranchLine
+                type={BranchLineStyle.RED}
+                styles={{ transform: `translateY(-5px)` }}
+              />
             </div>
             <div className={styles.pubList_content}>
               <div className="flex flex-col gap-1">
@@ -181,6 +209,37 @@ export default function Home() {
             </div>
           </div>
         ))}
+
+        {/* Post */}
+        <div className={`${styles.project} top-[-6px]`}>
+          <div>
+            <SingleLine
+              color="linear-gradient(180deg, #EC6547 0%, #797EF9 100%);"
+              height={100}
+            />
+            <LineIcon name="file" color="#797EF9" />
+            <SingleLine
+              color="linear-gradient(180deg, #797EF9 0%, #ABB4FF 100%)"
+              height={100}
+            />
+          </div>
+          <div className={styles.project_content}>
+            <h1>Posts</h1>
+            <p className="text-2xl font-light font-mono ">
+              <span className="text-[#ABB4FF]">{project[0]}</span>&nbsp;
+              {project[1]}
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.pubList}>
+          <div>
+            <BranchLine
+              type={BranchLineStyle.BLUE}
+              styles={{ transform: `translateY(-7px)` }}
+            />
+          </div>
+        </div>
       </div>
     </>
   );

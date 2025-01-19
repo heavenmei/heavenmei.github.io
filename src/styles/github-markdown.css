@@ -98,8 +98,8 @@
     --color-border-default: #d0d7de;
     --color-border-muted: hsla(210, 18%, 87%, 1);
     --color-neutral-muted: rgba(175, 184, 193, 0.2);
-    --color-accent-fg: #0969da;
-    --color-accent-emphasis: #0969da;
+    --color-accent-fg: #7c6ce4;
+    --color-accent-emphasis: #7c6ce4;
     --color-success-fg: #1a7f37;
     --color-success-emphasis: #1f883d;
     --color-attention-fg: #9a6700;
@@ -125,6 +125,12 @@
   line-height: 1.5;
   word-wrap: break-word;
   overflow: auto;
+}
+
+.markdown-body.transparent,
+.markdown-body.transparent img {
+  background-color: transparent;
+  color: inherit;
 }
 
 .markdown-body .octicon {
@@ -166,6 +172,7 @@
   background-color: transparent;
   color: var(--color-accent-fg);
   text-decoration: none;
+  display: inline-block;
 }
 
 .markdown-body abbr[title] {

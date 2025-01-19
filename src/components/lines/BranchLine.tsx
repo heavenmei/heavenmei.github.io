@@ -12,6 +12,8 @@ export enum BranchLineStyle {
   GREEN = "green",
   PURPLE = "purple",
   RED = "red",
+  YELLOW = "yellow",
+  BLUE = "blue",
 }
 const BranchLineStyleMap = {
   [BranchLineStyle.GREEN]: {
@@ -29,12 +31,22 @@ const BranchLineStyleMap = {
     circle: "filter_red",
     line: "paint_linear_red",
   },
+  [BranchLineStyle.YELLOW]: {
+    color: "#C8AF10",
+    circle: "filter_yellow",
+    line: "paint_linear_yellow",
+  },
+  [BranchLineStyle.BLUE]: {
+    color: "#ABB4FF",
+    circle: "filter_blue",
+    line: "paint_linear_blue",
+  },
 };
 
 const BranchLine: React.FC<BranchLineProps> = ({
   size = "default",
   type = BranchLineStyle.PURPLE,
-  styles = { transform: `translateY(-4px)` },
+  styles = { transform: `translateY(-3px)` },
 }) => {
   const { circle, line, color } = BranchLineStyleMap[type];
 
@@ -306,17 +318,18 @@ const BranchLine: React.FC<BranchLineProps> = ({
             />
           </g>
           <rect x="5" width="3" height="300" fill={color} />
+          {/* GREEN */}
           <defs>
             <filter
               id="filter_green"
-              x="34.7931"
+              x="35.7931"
               y="126.219"
               width="49.2295"
               height="49.2295"
               filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
+              color-interpolation-filters="sRGB"
             >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
               <feColorMatrix
                 in="SourceAlpha"
                 type="matrix"
@@ -398,21 +411,20 @@ const BranchLine: React.FC<BranchLineProps> = ({
             </filter>
             <linearGradient
               id="paint_linear_green"
-              x1="25.4827"
+              x1="26.4827"
               y1="2.73605e-09"
-              x2="24.8662"
+              x2="25.8662"
               y2="300.002"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0.0515742" stopColor="#196C2E" stopOpacity="0" />
-              <stop offset="0.225992" stopColor="#2EA043" />
-              <stop offset="0.47249" stopColor="#2EA043" />
-              <stop offset="0.522324" stopColor="#56D364" />
-              <stop offset="0.561417" stopColor="#2EA043" />
-              <stop offset="0.791714" stopColor="#2EA043" />
-              <stop offset="0.956186" stopColor="#196C2E" stopOpacity="0" />
+              <stop stop-color="#0D1117" />
+              <stop offset="0.25" stop-color="#2EA043" />
+              <stop offset="0.5" stop-color="#56D364" />
+              <stop offset="0.75" stop-color="#2EA043" />
+              <stop offset="1" stop-color="#196C2E" stop-opacity="0" />
             </linearGradient>
           </defs>
+          {/* RED */}
           <defs>
             <filter
               id="filter_red"
@@ -421,9 +433,9 @@ const BranchLine: React.FC<BranchLineProps> = ({
               width="49.2295"
               height="49.2295"
               filterUnits="userSpaceOnUse"
-              colorInterpolationFilters="sRGB"
+              color-interpolation-filters="sRGB"
             >
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
               <feColorMatrix
                 in="SourceAlpha"
                 type="matrix"
@@ -511,13 +523,223 @@ const BranchLine: React.FC<BranchLineProps> = ({
               y2="300.002"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0.0515742" stopColor="#AC3220" stopOpacity="0" />
-              <stop offset="0.225992" stopColor="#EA6045" />
-              <stop offset="0.47249" stopColor="#EA6045" />
-              <stop offset="0.522324" stopColor="#FFA28B" />
-              <stop offset="0.561417" stopColor="#EA6045" />
-              <stop offset="0.791714" stopColor="#EA6045" />
-              <stop offset="0.956186" stopColor="#AC3220" stopOpacity="0" />
+              <stop stop-color="#AC3220" stop-opacity="0" />
+              <stop offset="0.25" stop-color="#EA6045" />
+              <stop offset="0.5" stop-color="#FFA28B" />
+              <stop offset="0.75" stop-color="#EA6045" />
+              <stop offset="1" stop-color="#AC3220" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          {/* YELLOW */}
+          <defs>
+            <filter
+              id="filter_yellow"
+              x="35.7931"
+              y="126.219"
+              width="49.2295"
+              height="49.2295"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="6.98276" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.784314 0 0 0 0 0.686275 0 0 0 0 0.0627451 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_124_141"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="9.31034" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.784314 0 0 0 0 0.686275 0 0 0 0 0.0627451 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect1_dropShadow_124_141"
+                result="effect2_dropShadow_124_141"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="2.32759" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.784314 0 0 0 0 0.686275 0 0 0 0 0.0627451 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect2_dropShadow_124_141"
+                result="effect3_dropShadow_124_141"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="6.98276" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.784314 0 0 0 0 0.686275 0 0 0 0 0.0627451 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect3_dropShadow_124_141"
+                result="effect4_dropShadow_124_141"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect4_dropShadow_124_141"
+                result="shape"
+              />
+            </filter>
+            <linearGradient
+              id="paint_linear_yellow"
+              x1="26.4827"
+              y1="2.73605e-09"
+              x2="25.8662"
+              y2="300.002"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#F0DE6A" stop-opacity="0" />
+              <stop offset="0.25" stop-color="#C8B95B" />
+              <stop offset="0.5" stop-color="#C8AF10" />
+              <stop offset="0.75" stop-color="#C8B95B" />
+              <stop offset="0.956186" stop-color="#F0DE6A" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          {/* BLUE */}
+          <defs>
+            <filter
+              id="filter_blue"
+              x="35.7931"
+              y="126.219"
+              width="49.2295"
+              height="49.2295"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="6.98276" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.47451 0 0 0 0 0.494118 0 0 0 0 0.976471 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_124_147"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="9.31034" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.47451 0 0 0 0 0.494118 0 0 0 0 0.976471 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect1_dropShadow_124_147"
+                result="effect2_dropShadow_124_147"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="2.32759" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.47451 0 0 0 0 0.494118 0 0 0 0 0.976471 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect2_dropShadow_124_147"
+                result="effect3_dropShadow_124_147"
+              />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="6.98276" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0.47451 0 0 0 0 0.494118 0 0 0 0 0.976471 0 0 0 1 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="effect3_dropShadow_124_147"
+                result="effect4_dropShadow_124_147"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect4_dropShadow_124_147"
+                result="shape"
+              />
+            </filter>
+            <linearGradient
+              id="paint_linear_blue"
+              x1="26.4827"
+              y1="2.73605e-09"
+              x2="25.8662"
+              y2="300.002"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#3C42D0" stop-opacity="0" />
+              <stop offset="0.25" stop-color="#797EF9" />
+              <stop offset="0.5" stop-color="#ABB4FF" />
+              <stop offset="0.75" stop-color="#797EF9" />
+              <stop offset="1" stop-color="#3C42D0" stop-opacity="0" />
             </linearGradient>
           </defs>
         </svg>
