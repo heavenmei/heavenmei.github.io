@@ -22,7 +22,7 @@ export default function Article(props: ArticleProps) {
 
   const Banner = (
     <div className="banner">
-      <div className="-translate-x-[300px]">
+      <div className="-translate-x-[200px]">
         {page.tags?.map((tag: any) => (
           <span className="tag" key={tag}>
             {tag}
@@ -41,11 +41,11 @@ export default function Article(props: ArticleProps) {
         <Breadcrumbs
           variant="bordered"
           classNames={{
-            list: "bg-white mb-4 border-none",
+            list: "next-breadcrumbs mb-4 border-none",
           }}
           itemClasses={{
-            item: "text-black data-[current=true]:text-primary",
-            separator: "text-black/80",
+            item: "next-breadcrumbs-item data-[current=true]:text-primary",
+            separator: "next-breadcrumbs-item",
           }}
         >
           <BreadcrumbItem href="/">Home</BreadcrumbItem>

@@ -4,23 +4,64 @@
 
 @import "common.scss";
 
-// @import 'typography.scss';
+@media (prefers-color-scheme: dark) {
+  :root,
+  [data-theme="dark"] {
+    /*dark*/
+    color-scheme: dark;
+    --foreground-color: #fff;
+    --secondary-fg-color: #666;
+    --background-color: #0d1117;
+    --secondary-bg-color: #eeeeeebb;
+    --background-opacity-color: #ffffffd3;
+    --theme-color: #927bbb;
+    --theme-color-light: #9b8eee;
+    --navline-width: 0.5rem;
 
-:root {
-  --foreground-color: #fff;
-  --secondary-fg-color: #666;
-  --background-color: #0d1117;
-  --secondary-bg-color: #eeeeeebb;
-  --background-opacity-color: #ffffffd3;
-  --theme-color: #927bbb;
-  --theme-color-light: #9b8eee;
-  --navline-width: 0.5rem;
+    --primary: #8975dc;
+    --secondary: #959595;
 
-  --primary: #8975dc;
-  --secondary: #959595;
+    --theme-green: #8aeb93;
+    --theme-red: #ffa28b;
 
-  --theme-green: #8aeb93;
-  --theme-red: #ffa28b;
+    --color-panel-bg: rgba(255, 255, 255, 0.2);
+    --color-panel: #fff;
+
+    --color-same-bg: #0d1117;
+    --color-same: #ffffff;
+
+    --color-toc-bg: #e6edf3;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root,
+  [data-theme="light"] {
+    /*light*/
+    color-scheme: light;
+    --foreground-color: #fff;
+    --secondary-fg-color: #666;
+    --background-color: #0d1117;
+    --secondary-bg-color: #eeeeeebb;
+    --background-opacity-color: #ffffffd3;
+    --theme-color: #927bbb;
+    --theme-color-light: #9b8eee;
+    --navline-width: 0.5rem;
+
+    --primary: #8975dc;
+    --secondary: #959595;
+
+    --theme-green: #8aeb93;
+    --theme-red: #ffa28b;
+
+    --color-panel-bg: rgba(255, 255, 255, 0.2);
+    --color-panel: #fff;
+
+    --color-toc-bg: #ffffff;
+
+    --color-same-bg: #fff;
+    --color-same: #000;
+  }
 }
 
 html.light[data-theme="dark"] {
@@ -30,18 +71,6 @@ html.light[data-theme="dark"] {
 html.dark[data-theme="light"] {
   display: none;
 }
-
-// @media (prefers-color-scheme: dark) {
-//   :root {
-//     --foreground-color: #ddd;
-//     --secondary-fg-color: #aaa;
-//     --background-color: #222;
-//     --secondary-bg-color: #555;
-//     --background-opacity-color: #222222bb;
-//     --theme-color: #fe7d49;
-//     --theme-color-light: #fe7d4930;
-//   }
-// }
 
 html {
   font-size: 13px; // Used as 1rem size.
@@ -145,6 +174,14 @@ h3 {
 a {
   cursor: pointer;
   pointer-events: auto;
+}
+
+.next-breadcrumbs {
+  background-color: var(--color-same-bg);
+
+  &-item {
+    color: var(--color-same);
+  }
 }
 
 .tag {
@@ -288,7 +325,8 @@ a {
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-panel);
+  background: var(--color-panel-bg);
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 1rem;
   border-radius: 0.75rem;
@@ -301,7 +339,7 @@ a {
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  background: #ffffff;
+  background: var(--color-toc-bg);
   color: #000;
   padding: 1rem;
   border-radius: 0.75rem;
@@ -327,7 +365,7 @@ a {
     }
 
     .toc-link::before {
-      background-color: #fff;
+      background-color: var(--color-toc-bg);
       content: " ";
       display: inline-block;
       height: 100%;

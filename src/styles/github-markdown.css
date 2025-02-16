@@ -52,6 +52,9 @@
     --color-danger-emphasis: #da3633;
     --color-done-fg: #a371f7;
     --color-done-emphasis: #8957e5;
+    --color-blockquote: #7c6ce4;
+    --color-code: #ff502c;
+    --color-code-bg: rgba(110, 118, 129, 0.4);
   }
 }
 
@@ -109,6 +112,9 @@
     --color-danger-emphasis: #cf222e;
     --color-done-fg: #8250df;
     --color-done-emphasis: #8250df;
+    --color-blockquote: #7c6ce4;
+    --color-code: #ff502c;
+    --color-code-bg: #fff5f5;
   }
 }
 
@@ -130,6 +136,10 @@
 .markdown-body.transparent,
 .markdown-body.transparent img {
   background-color: transparent;
+  color: inherit;
+}
+
+.markdown-body.transparent code {
   color: inherit;
 }
 
@@ -443,16 +453,17 @@
 }
 
 .markdown-body blockquote {
-  margin: 0;
+  margin: 1em 0;
   padding: 0 1em;
-  color: var(--color-fg-muted);
-  border-left: 0.25em solid var(--color-border-default);
+  color: var(--color-blockquote);
+  border-left: 0.25em solid var(--color-blockquote);
 }
 
 .markdown-body ul,
 .markdown-body ol {
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: 0;
   padding-left: 2em;
 }
 
@@ -547,7 +558,6 @@
 }
 
 .markdown-body p,
-.markdown-body blockquote,
 .markdown-body ul,
 .markdown-body ol,
 .markdown-body dl,
@@ -833,8 +843,10 @@
   margin: 0;
   font-size: 85%;
   white-space: break-spaces;
-  background-color: var(--color-neutral-muted);
+  background-color: var(--color-code-bg);
+  color: var(--color-code);
   border-radius: 6px;
+  border: none;
 }
 
 .markdown-body code br,

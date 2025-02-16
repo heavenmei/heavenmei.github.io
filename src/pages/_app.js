@@ -1,6 +1,7 @@
 import "@/styles/global.scss";
 import "@/styles/github-markdown.css";
 import { NextUIProvider } from "@nextui-org/react";
+
 import Head from "next/head";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
