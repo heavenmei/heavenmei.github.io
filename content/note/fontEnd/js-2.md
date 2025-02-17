@@ -91,7 +91,9 @@ function * generatorFn(){
 ​
 let generatorObject = generatorFn();
 ​
-console.log(generatorObject.next()); //{done:false, value:'foo'} console.log(generatorObject.next()); //{done:false, value:'bar'} console.log(generatorObject.next()); //{done:true, value:'baz'}
+console.log(generatorObject.next()); //{done:false, value:'foo'} 
+console.log(generatorObject.next()); //{done:false, value:'bar'} 
+console.log(generatorObject.next()); //{done:true, value:'baz'}
 
 ```
 
@@ -134,8 +136,6 @@ for (const x of f) {
 // 10
 // 20
 // 30
-
-
 ```
 
 
@@ -163,7 +163,6 @@ const m = new Map({
         yield ['k3', 'v3']
     }
 })
-
 ```
 
 

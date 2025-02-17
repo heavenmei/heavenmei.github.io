@@ -127,7 +127,6 @@ isNaN('sdsd') //true
    - `bota()`：任意值转为 Base64 编码
    - `atob()`:Base64 编码转为原来值
    - 注意：这两个方法不适用非 ASCII 码
-
    ```js
    var string = "hello world";
    bota(string); //aGVsbG8gd29ybGQ=
@@ -215,7 +214,7 @@ isNaN('sdsd') //true
 - 字符串类型
 - symbol 类型
 
-symbol可以接收一个描述，**但symbol 总是不同的值，即使它们有相同的名字。**描述只是一个标签，不影响任何东西。
+symbol可以接收一个描述，**但symbol 总是不同的值，即使它们有相同的名字描述只是一个标签，不影响任何东西。**
 
 ```js
 let id = Symbol()
