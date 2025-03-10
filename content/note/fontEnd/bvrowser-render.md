@@ -1,12 +1,12 @@
 ---
-title: 深入浏览器的渲染
-subtitle:
+title: 浏览器面试 之 渲染流程
+subtitle: 
 layout: post
 date: 2022-08-29
 author: heavenmei
 categories:
   - Note
-description:
+description: 
 tags:
   - Front
 image:

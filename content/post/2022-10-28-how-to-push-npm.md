@@ -1,12 +1,12 @@
 ---
 title: 如何把写好的代码推送到npm
-subtitle:
+subtitle: 
 layout: post
 date: 2022-10-28
 author: heavenmei
 categories:
-  - Note
-description:
+  - Post
+description: 
 tags:
   - Front
 image:
