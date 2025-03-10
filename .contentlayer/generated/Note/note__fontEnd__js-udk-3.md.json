@@ -1,0 +1,26 @@
+{
+  "title": "u don't know js 之 Promise",
+  "tags": [
+    "Front"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2025-03-10T00:00:00.000Z",
+  "body": {
+    "raw": "",
+    "code": "var Component=(()=>{var m=Object.create;var a=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var g=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var j=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),p=(t,e)=>{for(var n in e)a(t,n,{get:e[n],enumerable:!0})},i=(t,e,n,s)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let r of d(e))!f.call(t,r)&&r!==n&&a(t,r,{get:()=>e[r],enumerable:!(s=x(e,r))||s.enumerable});return t};var _=(t,e,n)=>(n=t!=null?m(g(t)):{},i(e||!t||!t.__esModule?a(n,\"default\",{value:t,enumerable:!0}):n,t)),h=t=>i(a({},\"__esModule\",{value:!0}),t);var l=j((y,u)=>{u.exports=_jsx_runtime});var M={};p(M,{default:()=>F,frontmatter:()=>w});var o=_(l()),w={title:\"u don't know js \\u4E4B Promise\",subtitle:null,layout:\"post\",date:new Date(17415648e5),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"Front\"],image:null};function c(t){return(0,o.jsx)(o.Fragment,{})}function D(t={}){let{wrapper:e}=t.components||{};return e?(0,o.jsx)(e,Object.assign({},t,{children:(0,o.jsx)(c,t)})):c(t)}var F=D;return h(M);})();\n;return Component;"
+  },
+  "_id": "note/fontEnd/js-udk-3.md",
+  "_raw": {
+    "sourceFilePath": "note/fontEnd/js-udk-3.md",
+    "sourceFileName": "js-udk-3.md",
+    "sourceFileDir": "note/fontEnd",
+    "contentType": "markdown",
+    "flattenedPath": "note/fontEnd/js-udk-3"
+  },
+  "type": "Note",
+  "parDir": "note/fontEnd",
+  "slug": "/post/js-udk-3",
+  "slugAsParams": "js-udk-3"
+}
