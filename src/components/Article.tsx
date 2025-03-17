@@ -13,11 +13,9 @@ type ArticleProps = {
 
 export default function Article(props: ArticleProps) {
   const { slug, page } = props;
-  console.log("PostPage props ===> ", page);
+  const [showSideBar, setShowSideBar] = React.useState(false);
 
-  if (!page) {
-    return;
-  }
+  console.log("PostPage props ===> ", page);
 
   const lastBread = config.noteList.find((item) => item.id === page.parDir);
 
@@ -35,6 +33,11 @@ export default function Article(props: ArticleProps) {
       <div className="text-sm text-white/50">{formatDate(page.date)}</div>
     </div>
   );
+
+  React.useEffect(() => {
+    const showMenu = document.documentElement.clientWidth >= 1024;
+    setShowSideBar(showMenu);
+  }, []);
 
   return page ? (
     <>
@@ -62,14 +65,14 @@ export default function Article(props: ArticleProps) {
             <Mdx code={page.body.code} />
           </div>
 
-          <div className="hidden lg:block">
-            <MySideBar isAvatar={true} isMenu={true} isTags={true} />
+          <div className="">
+            {showSideBar ? (
+              <MySideBar isAvatar={true} isMenu={true} isTags={true} />
+            ) : (
+              <MenuBar id="article-toc" />
+            )}
           </div>
         </div>
-      </div>
-
-      <div className="block lg:hidden">
-        <MenuBar id="article-toc" />
       </div>
     </>
   ) : (

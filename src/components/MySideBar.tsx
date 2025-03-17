@@ -7,7 +7,7 @@ import {
 } from "react";
 import Image from "next/image";
 // @ts-ignore
-import tocbot from "tocbot";
+// import tocbot from "tocbot";
 import config from "@/configs";
 import MenuBar from "./MenuBar";
 
@@ -32,22 +32,6 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
     setActiveTag,
   } = props;
   const [tags, setTags] = useState({});
-
-  // https://tscanlin.github.io/tocbot/
-  useEffect(() => {
-    tocbot.init({
-      tocSelector: ".js-toc", // 选择toc的包装器
-      contentSelector: ".markdown-body", // 选择内容的包装器
-      headingSelector: "h2, h3, h4", // 选择要显示的标题标签
-      activeLinkClass: "is-active-link",
-      headingsOffset: 80,
-      scrollSmooth: true,
-      scrollSmoothOffset: -80,
-      hasInnerContainers: true,
-    });
-
-    return () => tocbot.destroy();
-  }, []);
 
   // useEffect(() => {
   //   const handleScroll = () => {
