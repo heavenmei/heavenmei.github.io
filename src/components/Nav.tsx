@@ -33,9 +33,9 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav id="navbar" className="navbar">
+    <nav id="navbar" className="navbar lg:px-7 px-2 text-sm lg:text-lg">
       <h3>Heavenmei </h3>
-      <div className="nav-list flex gap-8">
+      <div className="nav-list flex lg:gap-8 gap-2">
         {NavMenu.map((item) => (
           <Link href={item.path} key={item.path} className="nav-item">
             {item.label}
@@ -43,8 +43,8 @@ const Nav = () => {
         ))}
       </div>
 
-      <div className="nav-list flex gap-8">
-        <button>Contact Me</button>
+      <div className="nav-list flex ">
+        {/* <button>Contact Me</button> */}
       </div>
     </nav>
   );

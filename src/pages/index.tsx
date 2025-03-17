@@ -44,7 +44,8 @@ export default function Home() {
       </div>
 
       <div className="container">
-        <Image src={`/icons/firstLine.svg`} alt="" width={437} height={522} />
+        {/* <Image src={`/icons/firstLine.svg`} alt="" width={437} height={522} /> */}
+        <img src={`/icons/firstLine.svg`}></img>
 
         {/* About me */}
         <div className={styles.aboutMe}>
@@ -54,20 +55,14 @@ export default function Home() {
           </div>
           <div className={styles.aboutMe_content}>
             <p className={styles.aboutMe_desc}>{aboutMe}</p>
-            {/* <p className="text-secondary">{aboutMeDesc}</p> */}
             <div className={styles.aboutMe_contact}>
               <a
                 className={styles.aboutMe_top}
                 href="https://github.com/heavenmei"
               >
-                <Image src="/icons/github.svg" width={20} height={20} alt="" />
+                <img src="/icons/github.svg" className="w-6" />
                 <p> heavenmei/README.md</p>
-                <Image
-                  src="/icons/rightArrow.svg"
-                  width={20}
-                  height={20}
-                  alt=""
-                />
+                <img src="/icons/rightArrow.svg" className="w-6" />
               </a>
 
               <button className="rounded">
@@ -76,7 +71,7 @@ export default function Home() {
                   className="contact-icon"
                   target="_blank"
                 >
-                  <Image src="/icons/email.svg" width={20} height={20} alt="" />
+                  <img src="/icons/email.svg" className="w-6" />
                 </a>
               </button>
               <button className="rounded">
@@ -85,17 +80,12 @@ export default function Home() {
                   className="contact-icon"
                   target="_blank"
                 >
-                  <Image
-                    src="/icons/github.svg"
-                    width={20}
-                    height={20}
-                    alt=""
-                  />
+                  <img src="/icons/github.svg" className="w-6" />
                 </a>
               </button>
             </div>
 
-            <div className="README mt-6  markdown-body transparent">
+            <div className="max-md:max-w-xs README mt-6  markdown-body transparent">
               <Markdown rehypePlugins={[rehypeRaw]}>{readme}</Markdown>
             </div>
           </div>
@@ -112,7 +102,7 @@ export default function Home() {
           </div>
           <div className={styles.publication_content}>
             <h1>Publications</h1>
-            <p className="text-2xl font-light font-mono">
+            <p className={styles.publication_desc}>
               <span className="text-[#7EE787]">{publication[0]}</span>&nbsp;
               {publication[1]}
             </p>
@@ -124,10 +114,11 @@ export default function Home() {
               <BranchLine type={BranchLineStyle.GREEN} />
             </div>
             <div className={styles.pubList_content}>
-              <div className="flex flex-col gap-1">
-                <div className="tag text-green mr-auto">{item.tag}</div>
-                <p className="text-green text-xl font-bold">{item.title}</p>
-                <div>
+              <div className="flex flex-col gap-1 overflow-hidden justify-start">
+                <div className="line-clamp-2 text-green text-md lg:text-lg font-bold">
+                  {item.title}
+                </div>
+                <div className="truncate">
                   {item.authors.split(",")?.map((author, index) => {
                     const cmp =
                       author.trim() !== "Haiwen Huang" ? (
@@ -143,16 +134,22 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <div className="text-secondary text-sm">{item.venue}</div>
-                <div className="text-secondary text-sm">{item.desc}</div>
+                <div className="text-secondary text-sm truncate">
+                  <p className="tag text-green mr-auto">{item.tag}</p>
+                  &nbsp;{item.venue}
+                </div>
+                <div className="line-clamp-2 text-secondary text-sm">
+                  {item.desc}
+                </div>
               </div>
-              <Image src={item.img} width={300} height={107} alt="" />
+
+              <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40" />
             </div>
           </div>
         ))}
 
         {/* Project */}
-        <div className={`${styles.project} top-[-4px]`}>
+        <div className={`${styles.publication} top-[-4px]`}>
           <div>
             <SingleLine
               color="linear-gradient(180deg, #2EA043 0%, #EC6547 50.5%, #FFA28B 100%)"
@@ -164,14 +161,15 @@ export default function Home() {
               height={100}
             />
           </div>
-          <div className={styles.project_content}>
+          <div className={`${styles.publication_content} top-[90px]`}>
             <h1>Projects</h1>
-            <p className="text-2xl font-light font-mono ">
+            <p className={styles.publication_desc}>
               <span className="text-[#FFA28B]">{project[0]}</span>&nbsp;
               {project[1]}
             </p>
           </div>
         </div>
+
         {projectList.map((item) => (
           <div className={styles.pubList} key={item.title}>
             <div>
@@ -202,18 +200,21 @@ export default function Home() {
                     );
                   })}
                 </div>
-                <div className="text-secondary text-sm">{item.desc}</div>
+                <div className="line-clamp-2 text-secondary text-sm">
+                  {item.desc}
+                </div>
               </div>
-              <Image src={item.img} width={300} height={107} alt="" />
+
+              <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40" />
             </div>
           </div>
         ))}
 
         {/* Post */}
-        <div className={`${styles.project} top-[-6px]`}>
+        <div className={`${styles.publication} top-[-6px]`}>
           <div>
             <SingleLine
-              color="linear-gradient(180deg, #EC6547 0%, #797EF9 100%);"
+              color="linear-gradient(180deg, #EC6547 0%, #797EF9 100%)"
               height={100}
             />
             <LineIcon name="file" color="#797EF9" />
@@ -222,9 +223,9 @@ export default function Home() {
               height={100}
             />
           </div>
-          <div className={styles.project_content}>
+          <div className={`${styles.publication_content} top-[90px]`}>
             <h1>Posts</h1>
-            <p className="text-2xl font-light font-mono ">
+            <p className={styles.publication_desc}>
               <span className="text-[#ABB4FF]">{project[0]}</span>&nbsp;
               {project[1]}
             </p>

@@ -339,8 +339,172 @@ console.log(Person.prototype.__proto__.__proto__ === null) 		       //true
 `Object.getOwnPropertyNames()`可以获得对象上所有实例属性，无论是否可以枚举。
 
 
-  
-### class 继承
+
+
+### 继承
+
+继承的几种方式：
+- 原型链：new
+- 原型式继承：Object.create()
+- 盗用构造函数：call(this)
+- 组合式继承: new + call(this)
+- 寄生式继承：比原型式继承多了一步增强
+- 寄生式组合继承
+
+
+
+> 原型链：（you dont know书中把这种方式称之为 委托）
+
+所有引用类型都默认指向Object的原型
+
+
+![|500](assets/js-2-2020250311161939.png)
+
+```js
+function SuperType() { 
+ this.property = true; 
+} 
+SuperType.prototype.getSuperValue = function() { 
+ return this.property; 
+}; 
+
+// 继承 SuperType 
+SubType.prototype = new SuperType();
+
+let instance = new SubType();
+```
+
+**确定继承关系方式**
+- `instanceof`
+- `isPrototypeOf()`
+
+
+**缺点**
+
+1. 原型中（父类）包含引用值，会在所有实例共享
+2. 子类型在实例化是无法给父类构造函数传参
+
+
+> 盗用构造函数
+
+在子类构造函数能胡中调用父类构造函数。 相当于初始化所有属性在自己的实例上。
+
+因此，子类无法访问父类方法
+
+```js
+function SuperType() { 
+ this.colors = ["red", "blue", "green"]; 
+}
+
+function SubType() { 
+ // 继承 SuperType 
+ SuperType.call(this); 
+}
+
+let instance = new SubType();
+```
+
+
+> 组合继承
+
+原型链+盗用构造。原型链继承方法，盗用构造函数继承实例属性。
+
+**组合继承弥补了原型链和盗用构造函数的不足，是 JavaScript 中使用最多的继承模式。**
+而且组合继承也保留了 `instanceof` 操作符和 `isPrototypeOf()`方法识别合成对象的能力。
+
+
+但是，构造蛤丝能胡会被调用两次。
+
+```js
+
+function SuperType(name){ 
+ this.name = name; 
+ this.colors = ["red", "blue", "green"]; 
+} 
+SuperType.prototype.sayName = function() { 
+ console.log(this.name); 
+}; 
+function SubType(name, age){ 
+ // 继承属性
+ SuperType.call(this, name); 
+ this.age = age; 
+} 
+// 继承方法
+SubType.prototype = new SuperType();
+```
+
+
+> 原型式继承
+
+即使不自定义类型也可以通过原型实现对象之间的信息共享。本质上， `object()` 是对传入的对象执行了一次**浅复制**。
+
+ECMAScript 5 通过增加 `Object.create()`方法将原型式继承的概念规范化了
+
+`Object.create()`的第二个参数与 `Object.defineProperties()` 的第二个参数一样：每个新增属性都通过各自的描述符来描述。以这种方式添加的属性会遮蔽原型对象上的同名属性。
+
+```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
+
+let person = {
+  name: "Nicholas",
+  friends: ["Shelby", "Court", "Van"]
+};
+
+let anotherPerson = object(person);
+anotherPerson.name = "Greg";
+anotherPerson.friends.push("Rob");
+
+let anotherPerson = Object.create(person);
+anotherPerson.name = "Greg";
+anotherPerson.friends.push("Rob");
+```
+
+
+**优缺点**
+- 相较于原型链，就是省略了构造函数
+- 属性中包含的引用值始终会在相关对象间共享，跟使用原型模式是一样的。
+
+
+> 寄生式继承
+
+与原型式继承比较接近的一种继承方式。思路类似于寄生构造函数和工厂模式：创建一个实现继承的函数，以某种方式增强对象，然后返回这个对象。
+
+**就是比原型式继承多了一步增强**
+
+
+```js
+function object(o) {
+  function F() {}
+  F.prototype = o;
+  return new F();
+}
+
+function createAnother(original) {
+  let clone = object(original); // 通过调用函数创建一个新对象
+  clone.sayHi = function () { // 以某种方式增强这个对象
+    console.log("hi");
+  };
+  return clone; // 返回这个对象
+}
+
+let person = {
+  name: "Nicholas",
+  friends: ["Shelby", "Court", "Van"]
+};
+let anotherPerson = createAnother(person);
+anotherPerson.sayHi(); // "hi"
+```
+
+> 寄生式组合继承
+
+
+
+### class 
 
 ```js
 <script>

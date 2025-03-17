@@ -25,7 +25,7 @@ const NoteDir = () => {
       </div>
 
       <div className="container flex gap-24">
-        <div className="w-full flex-1 ">
+        <div className="w-3/4 flex-1 ">
           <Image
             src={`/icons/firstLineGreen.svg`}
             alt=""
@@ -43,7 +43,7 @@ const NoteDir = () => {
             </div>
             <div className={styles.publication_content}>
               <h1>Notes</h1>
-              <p className="text-2xl font-light font-mono">系列整理</p>
+              <p className={styles.publication_desc}>系列整理</p>
             </div>
           </div>
           {noteList.map((item) => (
@@ -62,12 +62,13 @@ const NoteDir = () => {
                   </div>
                   <div className="text-secondary text-sm">{item.desc}</div>
                 </div>
-                <Image src={item.img} width={200} height={107} alt="" />
+                <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40" />
               </Link>
             </div>
           ))}
         </div>
-        <div className="relative mt-[500px] ">
+
+        <div className="w-1/4 relative mt-[500px] hidden lg:block">
           <MySideBar
             isTags={true}
             activeTag={activeTag}

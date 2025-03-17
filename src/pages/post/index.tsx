@@ -64,12 +64,9 @@ const PostList: FC = () => {
 
       <div className="container flex">
         <div className="w-full flex-1">
-          <Image
+          <img
             src={`/icons/firstLine.svg`}
-            alt=""
-            width={437}
-            height={42}
-            className="relative top-1"
+            className="relative w-[437px] top-1"
           />
 
           {postFiles.map((file: PageType) => (
@@ -119,7 +116,7 @@ const PostList: FC = () => {
             onChange={(page) => setPage(page)}
           />
         </div>
-        <div className="relative mt-[400px] ">
+        <div className="mt-[400px] hidden lg:block">
           <MySideBar
             isTags={true}
             activeTag={activeTag}

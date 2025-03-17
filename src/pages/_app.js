@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         >
-          <Image src="/icons/caretTop.svg" width={30} height={30} alt="" />
+          <img src="/icons/caretTop.svg" className="w-8" />
         </div>
         <Footer />
       </NextUIProvider>

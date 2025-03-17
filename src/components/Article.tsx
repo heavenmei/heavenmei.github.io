@@ -4,6 +4,7 @@ import MySideBar from "@/components/MySideBar";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import { formatDate } from "@/utils";
 import config from "@/configs";
+import MenuBar from "./MenuBar";
 
 type ArticleProps = {
   slug: string;
@@ -60,8 +61,15 @@ export default function Article(props: ArticleProps) {
             {Banner}
             <Mdx code={page.body.code} />
           </div>
-          <MySideBar isAvatar={true} isMenu={true} isTags={true} />
+
+          <div className="hidden lg:block">
+            <MySideBar isAvatar={true} isMenu={true} isTags={true} />
+          </div>
         </div>
+      </div>
+
+      <div className="block lg:hidden">
+        <MenuBar id="article-toc" />
       </div>
     </>
   ) : (

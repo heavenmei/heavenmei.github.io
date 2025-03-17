@@ -9,6 +9,7 @@ import Image from "next/image";
 // @ts-ignore
 import tocbot from "tocbot";
 import config from "@/configs";
+import MenuBar from "./MenuBar";
 
 interface MySideBarProps {
   isAvatar?: boolean;
@@ -48,22 +49,22 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
     return () => tocbot.destroy();
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const barDom = document.querySelector("#rightSideBar") as HTMLElement;
-      if (!barDom) return;
-      const top = document.scrollingElement?.scrollTop ?? 0;
-      if (top > 500) {
-        barDom.className = "rightSideBar rightSideBar-fix";
-      } else {
-        barDom.className = "rightSideBar";
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const barDom = document.querySelector("#rightSideBar") as HTMLElement;
+  //     if (!barDom) return;
+  //     const top = document.scrollingElement?.scrollTop ?? 0;
+  //     if (top > 500) {
+  //       barDom.className = "rightSideBar rightSideBar-fix";
+  //     } else {
+  //       barDom.className = "rightSideBar";
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => window.addEventListener("scroll", handleScroll);
-  }, []);
+  //   return () => window.addEventListener("scroll", handleScroll);
+  // }, []);
 
   useEffect(() => {
     fetch("/tag-data.json")
@@ -80,15 +81,14 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
   // useImperativeHandle(ref, () => ({}));
 
   return (
-    <div className="w-[250px]">
+    <div className="rightSideBar">
       {isAvatar && (
-        <div className="person-side flex flex-col w-full gap-4 mb-4">
+        <div className="person-side flex flex-col w-full gap-4">
           <img
             style={{ width: "100%" }}
             className="rounded-xl"
             src="/avatar.jpg"
           ></img>
-          <div>Haiwen Huang</div>
           <div className="contact-btns flex gap-2">
             <a
               href={`mailto:${config.email}`}
@@ -101,41 +101,35 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
               <Image src="/icons/github.svg" width={20} height={20} alt="" />
             </a>
           </div>
-          <hr />
-          <div>
+          {/* <hr /> */}
+          {/* <div>
             <h5>FEATURED TAGS</h5>
             <div className="tags"></div>
+          </div> */}
+        </div>
+      )}
+
+      {isMenu && <MenuBar id="sideBar-toc" />}
+
+      {isTags && (
+        <div className="tag-side flex flex-col  gap-4">
+          <div className="text-xl mb-2">Blog Tags</div>
+
+          <div className="flex flex-wrap gap-3">
+            {Object.entries(tags).map(([key, value]) => (
+              <a
+                className={`tag ${activeTag === key ? "tag-active" : ""}`}
+                key={key}
+                onClick={() => {
+                  setActiveTag?.(activeTag === key ? undefined : key);
+                }}
+              >
+                {key} ({value as string})
+              </a>
+            ))}
           </div>
         </div>
       )}
-      <div id="rightSideBar" className="rightSideBar">
-        {isMenu && (
-          <div className="toc">
-            <div className="label">In this article</div>
-            <div className="js-toc"></div>
-          </div>
-        )}
-
-        {isTags && (
-          <div className="tag-side flex flex-col  gap-4">
-            <div className="text-xl mb-2">Blog Tags</div>
-
-            <div className="flex flex-wrap gap-3">
-              {Object.entries(tags).map(([key, value]) => (
-                <a
-                  className={`tag ${activeTag === key ? "tag-active" : ""}`}
-                  key={key}
-                  onClick={() => {
-                    setActiveTag?.(activeTag === key ? undefined : key);
-                  }}
-                >
-                  {key} ({value as string})
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 });
