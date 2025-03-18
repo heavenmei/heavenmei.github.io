@@ -118,22 +118,15 @@ export default function Home() {
                 <div className="line-clamp-2 text-green text-md lg:text-lg font-bold">
                   {item.title}
                 </div>
-                <div className="truncate">
-                  {item.authors.split(",")?.map((author, index) => {
-                    const cmp =
-                      author.trim() !== "Haiwen Huang" ? (
-                        <span>{author}</span>
-                      ) : (
-                        <a href="#">{author}</a>
-                      );
-                    return (
-                      <>
-                        {cmp}
-                        {index === item.authors.length - 1 ? "" : ","}
-                      </>
-                    );
-                  })}
-                </div>
+                <div
+                  className="truncate"
+                  dangerouslySetInnerHTML={{
+                    __html: item.authors.replace(
+                      "Haiwen Huang",
+                      `<a href="#">Haiwen Huang</a>`
+                    ),
+                  }}
+                ></div>
                 <div className="text-secondary text-sm truncate">
                   <p className="tag text-green mr-auto">{item.tag}</p>
                   &nbsp;{item.venue}
@@ -184,22 +177,15 @@ export default function Home() {
                 <strong className="text-red text-xl font-bold">
                   {item.title}
                 </strong>
-                <div>
-                  {item.authors.split(",")?.map((author, index) => {
-                    const cmp =
-                      author.trim() !== "Haiwen Huang" ? (
-                        <span>{author}</span>
-                      ) : (
-                        <a href="#">{author}</a>
-                      );
-                    return (
-                      <>
-                        {cmp}
-                        {index === item.authors.length - 1 ? "" : ","}
-                      </>
-                    );
-                  })}
-                </div>
+                <div
+                  className="truncate"
+                  dangerouslySetInnerHTML={{
+                    __html: item.authors.replace(
+                      "Haiwen Huang",
+                      `<a href="#">Haiwen Huang</a>`
+                    ),
+                  }}
+                ></div>
                 <div className="line-clamp-2 text-secondary text-sm">
                   {item.desc}
                 </div>
@@ -240,6 +226,12 @@ export default function Home() {
             />
           </div>
         </div>
+
+        <SingleLine
+          color="linear-gradient(180deg, #ABB4FF 0%, #797EF9 50%, #0D1117 100%)"
+          styles={{ position: "relative", top: "-8px" }}
+          height={100}
+        />
       </div>
     </>
   );

@@ -19,8 +19,8 @@ export type PageType = Post | Note;
 const PostList: FC = () => {
   const router = useRouter();
   const id = router.query.id as string;
+  const page = parseInt(router.query.page as string) || 1;
 
-  const [page, setPage] = useState(1);
   const [postFiles, setPostFiles] = useState<PageType[]>([]);
   const [activeTag, setActiveTag] = useState<string>();
 
@@ -113,7 +113,9 @@ const PostList: FC = () => {
             total={Math.ceil(allFiles.length / PAGE_SIZE)}
             initialPage={page}
             variant="light"
-            onChange={(page) => setPage(page)}
+            onChange={(page) => {
+              router.push(`/post?id=${id}&page=${page}`);
+            }}
           />
         </div>
         <div className="mt-[400px] hidden lg:block">

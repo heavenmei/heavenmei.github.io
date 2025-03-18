@@ -19,11 +19,11 @@ const config = {
     },
     {
       tag: "CCF B",
-      img: "/images/2024_salientime.jpg",
-      title: `SalienTime: User-driven Selection of Salient Time Steps for Large-Scale Geospatial Data Visualization`,
-      venue: `ACM SIGCHI Conference on Human Factors in Computing Systems 2024 (CHI 2024)`,
-      authors: `Juntong Chen, Haiwen Huang, Huayuan Ye, Zhong Peng, Chenhui Li, Changbo Wang`,
-      desc: `Selecting a subset of time steps with user-specified priorities, leveraging structural variation info learned by Autoencoders.`,
+      img: "/images/2025_SUPQA.png",
+      title: `SUPQA: LLM-based Geo-Visualization for Subjective Urban Performance Question-Answering`,
+      venue: `EuroVis2025`,
+      authors: `Haiwen Huang, Juntong Chen, Changbo Wang, Chenhui Li`,
+      desc: `A novel approach for urban performance exploration using natural language as input and interactive geographic visualizations as output,leveraging Large Language Models (LLMs) to effectively interpret user intents and quantify various urban performance measures.`,
     },
   ],
   noteList: [

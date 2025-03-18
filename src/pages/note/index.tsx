@@ -66,6 +66,11 @@ const NoteDir = () => {
               </Link>
             </div>
           ))}
+          <SingleLine
+            color="linear-gradient(180deg, #2EA043 0%, #56D364 50%, #0D1117 100%)"
+            styles={{ position: "relative", top: "-8px" }}
+            height={100}
+          />
         </div>
 
         <div className="w-1/4 relative mt-[500px] hidden lg:block">
