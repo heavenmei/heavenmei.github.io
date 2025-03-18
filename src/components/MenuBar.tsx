@@ -18,6 +18,8 @@ const MenuBar = ({ id }: MenuBarProps) => {
       scrollSmooth: true,
       scrollSmoothOffset: -80,
       hasInnerContainers: true,
+      isCollapsedClass: "is-collapsed",
+      collapsibleClass: "is-collapsible",
     });
 
     return () => tocbot.destroy();
@@ -25,7 +27,6 @@ const MenuBar = ({ id }: MenuBarProps) => {
 
   const showMenu = () => {
     const tocDom = document.querySelector(`#toc_${id}`) as HTMLElement;
-
     if (!tocDom) return;
     tocDom.className = "toc toc-side";
     tocbot.refresh();
@@ -37,8 +38,6 @@ const MenuBar = ({ id }: MenuBarProps) => {
     tocDom.className = "toc";
   };
 
-  
-
   return (
     <div className="menuBar">
       <div className="menuBar_hidden" onClick={showMenu}>
@@ -48,7 +47,7 @@ const MenuBar = ({ id }: MenuBarProps) => {
         <div className="label" onClick={closeMenu}>
           In this article
         </div>
-        <div className="js-toc" id={id}></div>
+        <nav className="js-toc" id={id}></nav>
       </div>
     </div>
   );

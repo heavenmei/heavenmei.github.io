@@ -28,7 +28,7 @@ export default function Article(props: ArticleProps) {
           </span>
         ))}
       </div>
-      <h1>{page.title}</h1>
+      <h1 className="text-center">{page.title}</h1>
       <div className="text-sm text-white/50">{page.subtitle}</div>
       <div className="text-sm text-white/50">{formatDate(page.date)}</div>
     </div>
@@ -59,13 +59,13 @@ export default function Article(props: ArticleProps) {
           <BreadcrumbItem href="#">{page.title}</BreadcrumbItem>
         </Breadcrumbs>
 
-        <div className="flex gap-8">
+        <div className="flex">
           <div className="markdown-body rounded-xl p-6 flex-1 h-full">
             {Banner}
             <Mdx code={page.body.code} />
           </div>
 
-          <div className="">
+          <div className="ml-8">
             {showSideBar ? (
               <MySideBar isAvatar={true} isMenu={true} isTags={true} />
             ) : (

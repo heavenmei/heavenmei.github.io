@@ -55,10 +55,12 @@ const NoteDir = () => {
                 className={styles.pubList_content}
                 href={`/post?id=${item.id}`}
               >
-                <div className="flex flex-col gap-1">
-                  <div className="flex gap-4">
-                    <p className="text-green text-xl font-bold">{item.title}</p>
-                    <p className="tag text-green mr-auto">{item.tag}</p>
+                <div className="flex flex-col gap-1 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green text-xl font-bold">
+                      {item.title}
+                    </span>
+                    <span className="tag text-green">{item.tag}</span>
                   </div>
                   <div className="text-secondary text-sm">{item.desc}</div>
                 </div>
