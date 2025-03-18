@@ -3,6 +3,8 @@
 import note__java__databaseMd from './note__Java__Database.md.json' assert { type: 'json' }
 import note__java__hibernateMd from './note__Java__Hibernate.md.json' assert { type: 'json' }
 import note__java__mySqlMd from './note__Java__MySQL.md.json' assert { type: 'json' }
+import note__games101__games101_01_02LinearAlgebraMd from './note__games101__Games101-01+02-LinearAlgebra.md.json' assert { type: 'json' }
+import note__games101__games101_03_04TransformationMd from './note__games101__Games101-03+04-Transformation.md.json' assert { type: 'json' }
 import note__fontEnd__browserApplyMd from './note__fontEnd__browser-apply.md.json' assert { type: 'json' }
 import note__fontEnd__browserMultiprocessMd from './note__fontEnd__browser-multiprocess.md.json' assert { type: 'json' }
 import note__fontEnd__bvrowserRenderMd from './note__fontEnd__bvrowser-render.md.json' assert { type: 'json' }
@@ -26,7 +28,5 @@ import note__fontEnd__jsUdk_3Md from './note__fontEnd__js-udk-3.md.json' assert 
 import note__fontEnd__reactBaseMd from './note__fontEnd__react-base.md.json' assert { type: 'json' }
 import note__fontEnd__vueBaseMd from './note__fontEnd__vue-base.md.json' assert { type: 'json' }
 import note__fontEnd__webpackViteMd from './note__fontEnd__webpack&Vite.md.json' assert { type: 'json' }
-import note__games101__games101_01_02LinearAlgebraMd from './note__games101__Games101-01+02-LinearAlgebra.md.json' assert { type: 'json' }
-import note__games101__games101_03_04TransformationMd from './note__games101__Games101-03+04-Transformation.md.json' assert { type: 'json' }
 
-export const allNotes = [note__java__databaseMd, note__java__hibernateMd, note__java__mySqlMd, note__fontEnd__browserApplyMd, note__fontEnd__browserMultiprocessMd, note__fontEnd__bvrowserRenderMd, note__fontEnd__cssBaseMd, note__fontEnd__interviewCss_1Md, note__fontEnd__interviewCss_2Md, note__fontEnd__interviewCss_3Md, note__fontEnd__interviewHtmlMd, note__fontEnd__interviewJs_1Md, note__fontEnd__interviewJs_2Md, note__fontEnd__interviewJs_3Md, note__fontEnd__interviewJs_4Md, note__fontEnd__interviewNoteMd, note__fontEnd__inteviewReviewMd, note__fontEnd__js_1Md, note__fontEnd__js_2Md, note__fontEnd__js_3Md, note__fontEnd__jsUdk_1Md, note__fontEnd__jsUdk_2Md, note__fontEnd__jsUdk_3Md, note__fontEnd__reactBaseMd, note__fontEnd__vueBaseMd, note__fontEnd__webpackViteMd, note__games101__games101_01_02LinearAlgebraMd, note__games101__games101_03_04TransformationMd]
+export const allNotes = [note__java__databaseMd, note__java__hibernateMd, note__java__mySqlMd, note__games101__games101_01_02LinearAlgebraMd, note__games101__games101_03_04TransformationMd, note__fontEnd__browserApplyMd, note__fontEnd__browserMultiprocessMd, note__fontEnd__bvrowserRenderMd, note__fontEnd__cssBaseMd, note__fontEnd__interviewCss_1Md, note__fontEnd__interviewCss_2Md, note__fontEnd__interviewCss_3Md, note__fontEnd__interviewHtmlMd, note__fontEnd__interviewJs_1Md, note__fontEnd__interviewJs_2Md, note__fontEnd__interviewJs_3Md, note__fontEnd__interviewJs_4Md, note__fontEnd__interviewNoteMd, note__fontEnd__inteviewReviewMd, note__fontEnd__js_1Md, note__fontEnd__js_2Md, note__fontEnd__js_3Md, note__fontEnd__jsUdk_1Md, note__fontEnd__jsUdk_2Md, note__fontEnd__jsUdk_3Md, note__fontEnd__reactBaseMd, note__fontEnd__vueBaseMd, note__fontEnd__webpackViteMd]

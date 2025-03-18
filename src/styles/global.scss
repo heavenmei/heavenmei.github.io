@@ -48,7 +48,7 @@
     --theme-color-light: #9b8eee;
     --navline-width: 0.5rem;
 
-    --primary: #8975dc;
+    --primary: #cfacfa;
     --secondary: #959595;
 
     --theme-green: #8aeb93;
@@ -96,7 +96,7 @@ body {
   // box-sizing: border-box;
 
   ::selection {
-    background: var(--theme-color);
+    background: var(--primary);
     color: var(--background-color);
     border-radius: 5px;
   }
@@ -252,13 +252,13 @@ a {
   margin: 0 auto;
   padding: 10px 1rem 60px;
 
-  @media (min-width: 1480px) {
-    max-width: 1200px;
-    padding: 50px 1rem;
-  }
-
   @media (min-width: 1024px) {
     max-width: 80%;
+  }
+
+  @media (min-width: 1280px) {
+    max-width: 1200px;
+    padding: 50px 1rem;
   }
 }
 
@@ -344,10 +344,12 @@ a {
     padding: 1rem 0;
     border-radius: 0 0.5rem 0.5rem 0;
     background-color: var(--primary);
+    color: var(--background-color);
 
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(180deg);
+    cursor: pointer;
 
     @media (min-width: 1024px) {
       display: none;
@@ -437,5 +439,7 @@ a {
   .toc-side {
     max-width: 150px;
     padding: 1rem;
+    z-index: 60;
+    border-radius: 0.7rem 0 0 0.7rem;
   }
 }

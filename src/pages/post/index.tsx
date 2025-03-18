@@ -19,10 +19,10 @@ export type PageType = Post | Note;
 const PostList: FC = () => {
   const router = useRouter();
   const id = router.query.id as string;
+  const tag = (router.query.tag as string) || undefined;
   const page = parseInt(router.query.page as string) || 1;
 
   const [postFiles, setPostFiles] = useState<PageType[]>([]);
-  const [activeTag, setActiveTag] = useState<string>();
 
   const allFiles = useMemo(
     () =>
@@ -35,11 +35,11 @@ const PostList: FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const filterFiles = activeTag
-      ? allFiles.filter((file) => file.tags?.includes(activeTag))
+    const filterFiles = tag
+      ? allFiles.filter((file) => file.tags?.includes(tag))
       : allFiles;
     setPostFiles(filterFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-  }, [allFiles, page, activeTag]);
+  }, [allFiles, page, tag]);
 
   return (
     <>
@@ -119,11 +119,7 @@ const PostList: FC = () => {
           />
         </div>
         <div className="mt-[400px] hidden lg:block">
-          <MySideBar
-            isTags={true}
-            activeTag={activeTag}
-            setActiveTag={setActiveTag}
-          />
+          <MySideBar isTags={true} />
         </div>
       </div>
     </>

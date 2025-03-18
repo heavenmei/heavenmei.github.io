@@ -7,6 +7,7 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    // "!./src/components/mdx/**/*.{js,ts,jsx,tsx,mdx}", // 排除markdown文件
   ],
   theme: {
     extend: {
@@ -19,7 +20,7 @@ module.exports = {
         default: {
           foreground: "var(--foreground-color);",
         },
-        primary: "var(--primary)",
+        primary: "var(--theme-color)",
         secondary: "var(--secondary)",
         green: "var(--theme-green)",
         red: "var(--theme-red)",

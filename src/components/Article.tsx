@@ -65,13 +65,13 @@ export default function Article(props: ArticleProps) {
             <Mdx code={page.body.code} />
           </div>
 
-          <div className="ml-8">
-            {showSideBar ? (
+          {showSideBar ? (
+            <div className="ml-8">
               <MySideBar isAvatar={true} isMenu={true} isTags={true} />
-            ) : (
-              <MenuBar id="article-toc" />
-            )}
-          </div>
+            </div>
+          ) : (
+            <MenuBar id="article-toc" />
+          )}
         </div>
       </div>
     </>

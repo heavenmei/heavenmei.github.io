@@ -10,28 +10,34 @@ import Image from "next/image";
 // import tocbot from "tocbot";
 import config from "@/configs";
 import MenuBar from "./MenuBar";
+import { useRouter } from "next/router";
 
 interface MySideBarProps {
   isAvatar?: boolean;
   isTags?: boolean;
   isMenu?: boolean;
-  activeTag?: string;
-  setActiveTag?: (tag?: string) => void;
 }
 
 export type MySideBarRefType = {
   activeTag: string | null;
 };
 
+function buildQueryString(queryParams: any) {
+  const queryString = Object.keys(queryParams)
+    .map((key) => {
+      const value = queryParams[key];
+      return value && `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join("&");
+  return queryString;
+}
+
 const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
-  const {
-    isAvatar = false,
-    isTags = false,
-    isMenu,
-    activeTag,
-    setActiveTag,
-  } = props;
+  const { isAvatar = false, isTags = false, isMenu } = props;
+
   const [tags, setTags] = useState({});
+  const router = useRouter();
+  const activeTag = (router.query.tag as string) || undefined;
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -49,6 +55,12 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
 
   //   return () => window.addEventListener("scroll", handleScroll);
   // }, []);
+
+  const handleTagClick = (tag?: string) => {
+    router.query.tag = tag;
+    const params = buildQueryString(router.query);
+    router.replace(`${router.pathname}?${params}`);
+  };
 
   useEffect(() => {
     fetch("/tag-data.json")
@@ -104,9 +116,9 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
               <a
                 className={`tag ${activeTag === key ? "tag-active" : ""}`}
                 key={key}
-                onClick={() => {
-                  setActiveTag?.(activeTag === key ? undefined : key);
-                }}
+                onClick={() =>
+                  handleTagClick(activeTag === key ? undefined : key)
+                }
               >
                 {key} ({value as string})
               </a>

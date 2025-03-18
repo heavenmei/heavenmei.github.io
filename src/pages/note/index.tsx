@@ -10,8 +10,6 @@ import BranchLine, { BranchLineStyle } from "@/components/lines/BranchLine";
 import LineIcon from "@/components/lines/LineIcon";
 
 const NoteDir = () => {
-  const [activeTag, setActiveTag] = useState<string>();
-
   const { noteList } = config;
 
   return (
@@ -76,11 +74,7 @@ const NoteDir = () => {
         </div>
 
         <div className="w-1/4 relative mt-[500px] hidden lg:block">
-          <MySideBar
-            isTags={true}
-            activeTag={activeTag}
-            setActiveTag={setActiveTag}
-          />
+          <MySideBar isTags={true} />
         </div>
       </div>
     </>

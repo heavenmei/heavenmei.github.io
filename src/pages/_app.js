@@ -1,11 +1,11 @@
 import "@/styles/global.scss";
 import "@/styles/github-markdown.css";
+// import "@/styles/phycat.light.css";
 import { NextUIProvider } from "@nextui-org/react";
 
 import Head from "next/head";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import Image from "next/image";
 
 export default function App({ Component, pageProps }) {
   return (
