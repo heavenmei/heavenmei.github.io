@@ -195,9 +195,6 @@
 
 .markdown-body p {
   margin: 0.5rem 0.5rem;
-  font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light,
-    "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-
   font-size: 1rem;
   word-spacing: 2px;
 }
@@ -210,8 +207,8 @@ h6:after {
   display: inline-block;
   margin-left: 0.2em;
   height: 1.5em;
-  width: 1.2em;
-  vertical-align: top;
+  width: 1.5em;
+  vertical-align: sub;
 }
 
 .markdown-body h3:after {
@@ -288,6 +285,9 @@ h6:after {
   margin: 1rem 0;
   font-size: 1.15rem;
   text-align: left;
+  border-bottom: 2px solid var(--head-title-color);
+  border-radius: 4px;
+  width: fit-content;
 }
 
 .markdown-body h4::before {
@@ -527,6 +527,7 @@ li.md-list-item {
 .markdown-body em {
   font-style: italic;
   padding: 0 3px 0 0;
+  font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 /* 高亮 */
 .markdown-body mark {
@@ -568,10 +569,12 @@ li.md-list-item {
   border-bottom: 1px solid #dedddd;
 }
 /* 若表头为空则不显示表头,用于排列图片的表格 */
-.markdown-body table.table-no-head thead {
+/* .markdown-body table.table-no-head thead {
   display: none;
-}
+} */
+.markdown-body table.table-no-head thead,
 .markdown-body table.table-no-head td,
+.markdown-body table.table-no-head th,
 .markdown-body table.table-no-head tr {
   border: none;
 }

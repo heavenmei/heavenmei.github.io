@@ -7477,6 +7477,11 @@ remark-gfm@^3.0.0:
     micromark-extension-gfm "^2.0.0"
     unified "^10.0.0"
 
+remark-mark-highlight@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/remark-mark-highlight/-/remark-mark-highlight-0.1.1.tgz#49c4c4b3c899a855706dc2ee4fc7464e9adf9930"
+  integrity sha512-ot2AE37OKO2YQTcqyZ8VatEGJV/7CXk/RPJHk2TEVm04pT+JLCnoQb4Yj1vdOv2y4ZK45cDylj19gYVHqHz7Tw==
+
 remark-math@^5.0.0:
   version "5.1.1"
   resolved "https://registry.npmmirror.com/remark-math/-/remark-math-5.1.1.tgz#459e798d978d4ca032e745af0bac81ddcdf94964"

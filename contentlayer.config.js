@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkCodeTitles from "remark-flexible-code-titles";
 import { preProcess, postProcess } from "./lib/copy-code";
 import remarkMath from "remark-math";
+import { remarkMark } from "remark-mark-highlight";
 
 // Rehype packages
 import rehypePrettyCode from "rehype-pretty-code";
@@ -123,6 +124,7 @@ export default makeSource({
         },
       ],
       remarkMath,
+      remarkMark,
     ],
     rehypePlugins: [
       [rehypeKatex, {}],

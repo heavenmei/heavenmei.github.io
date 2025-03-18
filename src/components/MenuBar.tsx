@@ -12,7 +12,7 @@ const MenuBar = ({ id }: MenuBarProps) => {
     tocbot.init({
       tocSelector: `#${id}`, // 选择toc的包装器
       contentSelector: ".markdown-body", // 选择内容的包装器
-      headingSelector: "h2, h3, h4", // 选择要显示的标题标签
+      headingSelector: "h2, h3", // 选择要显示的标题标签
       activeLinkClass: "is-active-link",
       headingsOffset: 80,
       scrollSmooth: true,
