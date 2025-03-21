@@ -527,7 +527,8 @@ li.md-list-item {
 .markdown-body em {
   font-style: italic;
   padding: 0 3px 0 0;
-  font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light, "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-family: Optima-Regular, Optima, PingFangSC-light, PingFangTC-light,
+    "PingFang SC", Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 /* 高亮 */
 .markdown-body mark {
@@ -996,6 +997,13 @@ li.md-list-item {
   color: var(--color-code);
   border-radius: 6px;
   border: none;
+}
+
+.markdown-body h2 code {
+  padding: 0;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
 }
 
 .markdown-body code br,

@@ -12,6 +12,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Heavenmei.io</title>
+        <meta name="author" content="Heavenmei" />
       </Head>
 
       <NextUIProvider>

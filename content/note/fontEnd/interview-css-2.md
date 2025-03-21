@@ -11,13 +11,9 @@ tags:
   - Front
 image:
 ---
+## 1-未知高度元素居中
 
-
-## 1 未知高度元素垂直居中、垂直居中的实现方式有哪些？
-
-**参考答案：**
-
-**1、绝对定位+css3 transform:translate(-50%，-50%)**
+#### 绝对定位+ transform:translate(-50%，-50%)
 
 ```css
 .wrap{
@@ -27,11 +23,11 @@ image:
   position: absolute;
   top:50%;
   left:50%;
-  -webkit-transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%);
 }
 ```
 
-**2、css3 的flex布局**
+#### flex布局
 
 ```css
 .wrap{
@@ -39,176 +35,155 @@ image:
   justify-content:center;
 }
 .child{
-  align-self:center;
+  /* 弹性元素 自身垂直对齐 方式 */
+  align-self: center;
 }
 ```
 
-**3、table布局**
 
-```css
-<div class="wrap">   <div class="child">          <div>sadgsdgasgd</div>   </div></div>.wrap{
-  display:table;
-  text-align:center;
-}
-.child{
-  background:#ccc;
-  display:table-cell;
-  vertical-align:middle;
-}
-.child div{
-    width:300px;
-    height:150px;
-    background:red;
-    margin:0 auto;
-}
-```
-
-## 2 实现图片垂直居中
-
-**参考答案：**
-
-**1. 使用flex实现图片垂直居中**
-
-利用 display: flex;align-items: center 实现垂直居中。flex可能不是实现垂直居中最好的选择，因为IE8,9并不支持它。
-
-html代码：
+#### table布局
 
 ```html
-<div class="flexbox">
-    <img src="1.jpg" alt=""></div>
+<style>
+  .wrap {
+    border: 1px solid black;
+    width: 400px;
+    height: 500px;
+
+    display: table;
+    text-align: center;
+  }
+  .child {
+    background: #ccc;
+    /* 填充整个table */
+    display: table-cell;
+    /* 子元素 垂直居中 */
+    vertical-align: middle;
+  }
+  .child div {
+    width: 300px;
+    height: 150px;
+    background: red;
+    /* 自身水平居中 */
+    margin: 0 auto;
+  }
+</style>
+
+<div class="wrap">
+  <div class="child">
+    <div>sadgsdgasgd</div>
+  </div>
+</div>
 ```
 
-css代码：
 
-```css
-body{ background:#999}
-.flexbox{width: 300px;height: 250px;background:#fff;display: flex;align-items: center}
-.flexbox img{width: 100px;height: 100px;align-items: center;}
-```
-
-**2. 利用Display: table;实现img图片垂直居中**
-
-给最外层的div设置display属性为table;img的父元素div设置display:table-cell,vertical-align: middle;如果你也想实现水平居中，你可以给最外层的div元素添加text-align: center属性
-
-html代码：
-
-```html
-<div class="tablebox">
-    <div id="imgbox">
-        <img src="1.jpg" alt="">
-    </div></div>
-```
-
-css代码：
-
-```css
-.tablebox{width: 300px;height: 250px;background: #fff;display: table}
-#imgbox{display: table-cell;vertical-align: middle;}
-#imgbox img{width: 100px}
-```
-
-**3. 用绝对定位实现垂直居中（推荐-兼容性好）**
-
-1. 给img的父元素添加相对定位属性（position: relative），同时，要给子元素也就是图片img元素添加绝对定位属性（position: absolute）。
-
-2. 将图片元素的top属性设置为50%。
-
-3. 现在我们需要给img元素设置一个负的margin-top值，这个值为你想要实现垂直居中的元素高度的一半，*如果不确定元素的高度，可以不使用margin-top，而是使用transform:translateY(-50%);属性。
-   
-   记住：如果你想要同时实现水平居中，那么你可以用实现垂直居中的一样的技巧来实现。
-   
-   HTML代码：
-   
-   ```html
-   <div class="posdiv">
-   <img src="1.jpg" alt=""></div>
-   ```
-   
-   css代码：
-   
-   ```css
-   body{background: #ccc;}
-   .posdiv{width: 300px;height: 250px;background: #fff;position: relative; margin:0 auto}
-   .posdiv img{width: 100px;position: absolute;top: 50%;margin-top: -50px;}
-   ```
-
-## 3 设置斑马线表格(纯css)
-
-**参考答案：**
+## 2 设置斑马线表格(纯css)
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
- <meta charset="UTF-8">
- <title>斑马线表格</title>
- <style type="text/css">
- *{  margin: 0;  padding: 0;  /*清处浏览器默认设置*/
- } table{  /*表格的外边距和大小*/
-  margin: 10px 0 0 0;  width: 100%;  border-spacing: 0;  border-collapse: collapse;  /*collapse 表格单元格边框合并    border-spacing 表格单元格间距为零  */
- } caption{  font: 30px "楷体";  padding: 5px;  /*表格标题*/
- } td{  width: 32%;  height: 50px;  /*单元格大小*/
- } tbody td{   border: 1px solid;   /*表格主体的边框*/
- } thead{  background-color: #A2A5A7;  /*表格头部*/
- } tr:hover{  background-color: #66D9EF;  cursor: pointer;  /*鼠标悬停在表格上时，表格的背景和鼠标的形状*/
- } table tbody tr:nth-child(even){  background-color: #8F908A;  box-shadow: inset 0 5px rgba(255,255,255,0.5);  /*even为偶数行 odd为奇数行    设置表格的主体部分偶数行的样式    shadow 阴影  inset将外部阴影改为内部阴影  */
- } thead tr th:first-child
- {  /*表头部分th 第一个th左上角设置圆角*/
-  border-radius: 15px 0 0 0; } thead tr td:last-child{  /*最后一个单元格右上角设置圆角*/
-  border-radius: 0 15px 0 0; } </style>
-</head>
-<body>
- <table>
- <caption>斑马线表格</caption>
- <thead>
-  <tr>
-   <th></th>
-   <td></td>
-   <td></td>
-  </tr>
- </thead>
- <tbody>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
-  <tr>
-   <td></td>
-   <td></td>
-   <td></td>
-  </tr>
- </tbody>
-  <tfoot>
-   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
-  </tfoot>
- </table>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>斑马线表格</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0; /*清处浏览器默认设置*/
+      }
+      table {
+        /*表格的外边距和大小*/
+        margin: 10px 0 0 0;
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse; /*collapse 表格单元格边框合并    border-spacing 表格单元格间距为零  */
+      }
+      caption {
+        font: 30px "楷体";
+        padding: 5px; /*表格标题*/
+      }
+      td {
+        width: 32%;
+        height: 50px; /*单元格大小*/
+      }
+      tbody td {
+        border: 1px solid; /*表格主体的边框*/
+      }
+      thead {
+        background-color: #a2a5a7; /*表格头部*/
+      }
+      tr:hover {
+        background-color: #66d9ef;
+        cursor: pointer; /*鼠标悬停在表格上时，表格的背景和鼠标的形状*/
+      }
+      table tbody tr:nth-child(even) {
+        background-color: #8f908a;
+        box-shadow: inset 0 5px rgba(255, 255, 255, 0.5); /*even为偶数行 odd为奇数行    设置表格的主体部分偶数行的样式    shadow 阴影  inset将外部阴影改为内部阴影  */
+      }
+      thead tr th:first-child {
+        /*表头部分th 第一个th左上角设置圆角*/
+        border-radius: 15px 0 0 0;
+      }
+      thead tr td:last-child {
+        /*最后一个单元格右上角设置圆角*/
+        border-radius: 0 15px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <caption>
+        斑马线表格
+      </caption>
+      <thead>
+        <tr>
+          <th></th>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
 </html>
+
 ```
 
 ## 4 文本元素如何居中
@@ -1076,96 +1051,6 @@ window.devicePixelRatio=物理像素 /CSS像素
    
    - 优点：全机型兼容，直接写`1px`不能再方便
    - 缺点：适用于新的项目，老项目可能改动大
-
-## 13 BFC
-
-**参考答案**：
-
-1. **简介**
-   
-   在解释BFC之前，先说一下文档流。我们常说的文档流其实分为**定位流**、**浮动流**、**普通流**三种。而普通流其实就是指BFC中的FC。FC(Formatting Context)，直译过来是格式化上下文，它是页面中的一块渲染区域，有一套渲染规则，决定了其子元素如何布局，以及和其他元素之间的关系和作用。常见的FC有BFC、IFC，还有GFC和FFC。
-   
-   **BFC**(Block Formatting Context)块级格式化上下文，是用于布局块级盒子的一块渲染区域。[MDN上的解释](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FGuide%2FCSS%2FBlock_formatting_context&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)：BFC是Web页面 CSS 视觉渲染的一部分，用于决定块盒子的布局及浮动相互影响范围的一个区域。
-   
-   注意：一个BFC的范围包含创建该上下文元素的所有子元素，但**不包括**创建了新BFC的子元素的内部元素。这从另一方角度说明，一个元素不能同时存在于两个BFC中。因为如果一个元素能够同时处于两个BFC中，那么就意味着这个元素能与两个BFC中的元素发生作用，就违反了BFC的隔离作用。
-
-2. **三种文档流的定位方案**
-   
-   **常规流(Normal flow)**
-   
-   - 在常规流中，盒一个接着一个排列;
-   - 在块级格式化上下文里面， 它们竖着排列；
-   - 在行内格式化上下文里面， 它们横着排列;
-   - 当position为static或relative，并且float为none时会触发常规流；
-   - 对于静态定位(static positioning)，position: static，盒的位置是常规流布局里的位置；
-   - 对于相对定位(relative positioning)，position: relative，盒偏移位置由top、bottom、left、right属性定义。即使有偏移，仍然保留原有的位置，其它常规流不能占用这个位置。
-   
-   **浮动(Floats)**
-   
-   - 左浮动元素尽量靠左、靠上，右浮动同理
-   - 这导致常规流环绕在它的周边，除非设置 clear 属性
-   - 浮动元素不会影响块级元素的布局
-   - 但浮动元素会影响行内元素的布局，让其围绕在自己周围，撑大父级元素，从而间接影响块级元素布局
-   - 最高点不会超过当前行的最高点、它前面的浮动元素的最高点
-   - 不超过它的包含块，除非元素本身已经比包含块更宽
-   - 行内元素出现在左浮动元素的右边和右浮动元素的左边，左浮动元素的左边和右浮动元素的右边是不会摆放浮动元素的
-   
-   **绝对定位(Absolute positioning)**
-   
-   - 绝对定位方案，盒从常规流中被移除，不影响常规流的布局；
-   - 它的定位相对于它的包含块，相关CSS属性：top、bottom、left、right；
-   - 如果元素的属性position为absolute或fixed，它是绝对定位元素；
-   - 对于position: absolute，元素定位将相对于上级元素中最近的一个relative、fixed、absolute，如果没有则相对于body；
-
-3. **BFC触发方式**
-   
-   3.1 根元素，即HTML标签
-   
-   3.2 浮动元素：float值为`left`、`right`
-   
-   3.3 overflow值不为 visible，为 `auto`、`scroll`、`hidden`
-   
-   3.4 display值为 `inline-block`、`table-cell`、`table-caption`、`table`、`inline-table`、`flex`、`inline-flex`、`grid`、`inline-grid`
-   
-   3.5 定位元素：position值为 `absolute`、`fixed`
-   
-   **注意：**display:table也可以生成BFC的原因在于Table会默认生成一个匿名的table-cell，是这个匿名的table-cell生成了BFC。
-
-4. **约束规则**
-   
-   浏览器对BFC区域的约束规则：
-   
-   1. 生成BFC元素的子元素会一个接一个的放置。
-   2. 垂直方向上他们的起点是一个包含块的顶部，两个相邻子元素之间的垂直距离取决于元素的margin特性。在BFC中相邻的块级元素的外边距会折叠(Mastering margin collapsing)
-   3. 生成BFC元素的子元素中，每一个子元素左外边距与包含块的左边界相接触（对于从右到左的格式化，右外边距接触右边界），即使浮动元素也是如此（尽管子元素的内容区域会由于浮动而压缩），除非这个子元素也创建了一个新的BFC（如它自身也是一个浮动元素）。
-   
-   规则解读：
-   
-   1. 内部的Box会在垂直方向上一个接一个的放置
-   2. 内部的Box垂直方向上的距离由margin决定。（完整的说法是：属于同一个BFC的两个相邻Box的margin会发生折叠，不同BFC不会发生折叠。）
-   3. 每个元素的左外边距与包含块的左边界相接触（从左向右），即使浮动元素也是如此。（这说明BFC中子元素不会超出他的包含块，而position为absolute的元素可以超出他的包含块边界）
-   4. BFC的区域不会与float的元素区域重叠
-   5. 计算BFC的高度时，浮动子元素也参与计算
-
-5. **作用**
-   
-   BFC是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面元素，反之亦然。我们可以利用BFC的这个特性来做很多事。
-   
-   5.1 阻止元素被浮动元素覆盖
-   
-   一个正常文档流的block元素可能被一个float元素覆盖，挤占正常文档流，因此可以设置一个元素的float、 display、position值等方式触发BFC，以阻止被浮动盒子覆盖。
-   
-   5.2 可以包含浮动元素
-   
-   通过改变包含浮动子元素的父盒子的属性值，触发BFC，以此来包含子元素的浮动盒子。
-   
-   5.3 阻止因为浏览器因为四舍五入造成的多列布局换行的情况
-   
-   有时候因为多列布局采用小数点位的width导致因为浏览器因为四舍五入造成的换行的情况，可以在最后一 列触发BFC的形式来阻止换行的发生。比如下面栗子的特殊情况
-   
-   5.4 阻止相邻元素的margin合并
-   
-   属于同一个BFC的两个相邻块级子元素的上下margin会发生重叠，(设置writing-mode:tb-rl时，水平 margin会发生重叠)。所以当两个相邻块级子元素分属于不同的BFC时可以阻止margin重叠。 这里给任一个相邻块级盒子的外面包一个div，通过改变此div的属性使两个原盒子分属于两个不同的BFC，以此来阻止margin重叠。
 
 ## 14 移动端适配方案
 
