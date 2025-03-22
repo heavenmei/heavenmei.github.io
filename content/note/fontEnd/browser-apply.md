@@ -1,5 +1,5 @@
 ---
-title: 浏览器面试 之  业务场景
+title: 浏览器 之  业务场景
 subtitle: 
 layout: post
 date: 2023-01-07

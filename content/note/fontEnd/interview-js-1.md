@@ -50,11 +50,11 @@ eg. `Object.assign()`、`...扩展符`、`Array.form()/slice()/map()/concat()/�
 
 ```js
 function shallowCop(obj) {
-let newObj = Array.isArray(obj) ? [] : {};
-for (let item in obj) {
-  newObj[item] = obj[item];
-}
-return newObj;
+  let newObj = Array.isArray(obj) ? [] : {};
+  for (let item in obj) {
+    newObj[item] = obj[item];
+  }
+  return newObj;
 }
 ```
 
@@ -64,18 +64,18 @@ eg.`JSON.parse()/JSON.stringfy`、递归拷贝
 
 ```js
 function deepCopy(obj) {
-return JSON.parse(JSON.stringify(obj));
+  return JSON.parse(JSON.stringify(obj));
 }
 
 function deepCopy(obj) {
-let newObj = Array.isArray() ? [] : {};
-for (let item in obj) {
-  if (obj.hasOwnPropertype(item)) {
-	newObj[item] =
-	  typeof obj[item] === "object" ? deepCopy(obj[item]) : obj[item];
+  let newObj = Array.isArray() ? [] : {};
+  for (let item in obj) {
+    if (obj.hasOwnPropertype(item)) {
+      newObj[item] =
+        typeof obj[item] === "object" ? deepCopy(obj[item]) : obj[item];
+    }
   }
-}
-return newObj;
+  return newObj;
 }
 ```
 
@@ -109,7 +109,7 @@ console.log(b()); // 2
 ![|500](assets/interview-js-1-20250322020624.png)
 
 
-### 6、什么是变量提升？函数提升？
+### 6、变量提升？函数提升？
 
 - 变量提升
 
@@ -239,53 +239,37 @@ console.log(typeof objStr.toString()); // string
 
 - 3、null === undefined 为 false
 
-- 4、undefined: 未定义的值，一个变量的原始值，而非人为操作的结果
-
-  ```
-     null：空值，被人为置为空对象：
-  ```
-
+- 4、undefined: 未定义的值，一个变量的原始值，而非人为操作。null：空值，被人为置为空对象。
 ### 13、为什么 typeof null 是 object？
 
 不同数据类型底层都是用二进制来表示的，二进制前三位为`000`则会被判断为 object，而 null 二进制全是 0，所以被判断成 object
 
-### 14、== 与 === 的区别？
+### 14、== 与 === 的区别？==的隐式转换
 
 - `==`：比较过程会进行隐式转换
 - `===`：值相同，类型相同才会为 true
 
-**==的隐式转换**
 
-1、null == undefined 为 true，且与自身相等，与其他不等
+1. null == undefined 为 true，且与自身相等，与其他不等
+2. bool ->number: 如果有一个操作数是<u>布尔值</u>，则在比较相等性之前先将其转换为数值——false 转换为 0，而 true 转换为 1；
+3. string->number: 如果一个操作数是<u>字符串</u>，另一个操作数是数值，在比较相等性之前先将字符串转换为数值
+4. object->object.toString(): 如果一个操作数是对象，另一个操作数不是，则调用<u>对象的 toString()</u>方法，用得到的基本类型值按照前面的规则进行比较
+5. NaN 不等于任意值，包括自身
+6. ToNumber:
+	- **undefined--NaN**
+	- null -- 0
+	- "" -- 0
+	- [] -- 0
+7. ToString:
+	- null -- "null"
+	- undefined -- "undefined"
+	- true -- "true"
+	- Object 先 valueOf 再 toString
+	- Array.valueOf =自身 Array.toString= 逗号拼接
 
-2、如果有一个操作数是<u>布尔值</u>，则在比较相等性之前先将其转换为数值——false 转换为 0，而 true 转换为 1；
-
-3、如果一个操作数是<u>字符串</u>，另一个操作数是数值，在比较相等性之前先将字符串转换为数值
-
-4、如果一个操作数是对象，另一个操作数不是，则调用<u>对象的 toString()</u>方法，用得到的基本类型值按照前面的规则进行比较
-
-5、NaN 不等于任意值，包括自身
-
-1. ToNumber:
-
-   - undefined--NaN
-   - null -- 0
-   - "" -- 0
-   - [] -- 0
-
-2. ToString:
-
-   - null -- "null"
-   - undefined -- "undefined"
-   - true -- "true"
-   - Object 先 valueOf 再 toString
-   - Array.valueOf =自身 Array.toString= 逗号拼接
-
-3. ToBoolean
-
-   - False: undefined、null、false、0、NaN、""
-
-   - True: 除上、[]、{}
+8. ToBoolean
+	- False: undefined、null、false、0、NaN、""
+	- True: 除上、[]、{}
 
 ```js
 [] == false //true
@@ -304,14 +288,11 @@ Number([Object object]) = NaN
 NaN == false// false
 ```
 
-### 15、JavaScript 的隐式转换规则？
+### 15、JS 的隐式转换规则？
 
-```js
-转string类型：+（字符串连接符）
-转number类型：++/--(自增自减运算符) + - * / %(算术运算符) > < >= <= == != === !== (关系运算符)
-转boolean： !（逻辑非运算符)
-```
-
+- 转string类型：`+`（字符串连接符）
+- 转number类型：`++`/`--`(自增自减运算符) `+ - * / %`(算术运算符) `> < >= <= == != === !== `(关系运算符)
+- 转boolean： `!`（逻辑非运算符)
 ### 16、undefined >= undefined 为什么是 false ？null >= null 为什么是 true？
 
 隐式转换，变成`NaN >= NaN`，`NaN`不等于自身也不大于自身
@@ -327,9 +308,9 @@ NaN == false// false
 
 ### 18、函数声明和函数表达式的区别？
 
-- `函数声明`：享受函数提升
-- `函数表达式`：归类于变量声明，享受变量提升
-- `函数提升优先级 > 变量提升优先级`
+- 函数声明：享受函数提升
+- 函数表达式：归类于变量声明，享受变量提升
+- 函数提升优先级 > 变量提升优先级`
 
 ```js
 console.log(fun); // fun () {}
@@ -340,33 +321,26 @@ function fun() {}
 console.log(fun); // fun (name) {}
 ```
 
-### 19、JavaScript 的事件处理传播机制
+### 19、JS 的事件处理传播机制
 
-- `事件冒泡`：由最具体的元素接收，并往上传播
-- `事件捕获`：由最不具体的元素接收，并往下传播
-- `DOM事件流`：事件捕获 -> 目标阶段 -> 事件冒泡
+事件流：在单击目标元素后，它会先触发目标元素上的 `click` 事件，在一层层往上触发事件，最终到达最顶层的 `window` 对象，这是浏览器默认的事件冒泡行为（IE 9+）。**DOM事件流：事件捕获 -> 目标阶段 -> 事件冒泡**。事件流有两种方式：
+- 事件冒泡：从内到外，事件委托（event delegation）
+- 事件捕获：从外到内
 
-e.stopPropagation: 阻止冒泡
 
-e.preventDefault： 阻止事件默认行为
+`e.stopPropagation`: 阻止冒泡
+
+`e.preventDefault`： 阻止事件默认行为
+
+`e.target` 和 `e.currenttarget`：target 指向被点击的对象，而 currentTarget 指向当前事件活动的对象，通常是事件的祖元素。
+
 
 **绑定点击事件有几种方式？**（3 种）
 
 - `xxx.onclick = function (){}`
 - `<xxx onclick=""></xxx>`
 - `xxx.addEventListener('click', function(){}, false)`
-
-**addEventListener 的第三个参数是干嘛的？**
-
-决定事件是`捕获阶段`执行还是`冒泡阶段`执行
-
-- `true`：捕获
-- `false`：默认，冒泡
-
-**e.target 和 e.currenttarget**
-
-target 指向被点击的对象，而 currentTarget 指向当前事件活动的对象，通常是事件的祖元素。
-
+	- ==addEventListener 的第三个参数决定事件是 捕获阶段 执行还是 冒泡阶段 执行==。true捕获，false冒泡（默认）
 ### 20、Ajax、Axios、Fetch 有啥区别？
 
 - `Ajax`：是对 XMLHttpRequest(XHR)的封装
@@ -375,7 +349,7 @@ target 指向被点击的对象，而 currentTarget 指向当前事件活动的�
 
 ### 21、load、$(document).ready、DOMContentLoaded 的区别？
 
-- `$(document).ready、DOMContentLoaded`：DOM 树构建完毕，但还没有请求静态资源
+- `$(document).ready`、`DOMContentLoaded`：DOM 树构建完毕，但还没有请求静态资源
 - `load`：静态资源请求完毕
 
 ### 22、什么是事件委托？
@@ -443,7 +417,7 @@ function quchong(arr) {
 
 ### 26、NaN 是什么？有什么特点？
 
-- typeof NaN 为 number
+- typeof NaN = number
 - NaN 不等于自身，不大于自身，不小于自身
 - NaN 可以使用`Number.isNaN`判断
 - NaN 是假值，转布尔值为 false

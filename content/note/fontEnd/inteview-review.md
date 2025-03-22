@@ -12,6 +12,7 @@ tags:
 image:
 ---
 
+
 ## 字节 一面 3.31
 
 1. js基本数据类型，判断类型有哪几种方式？
@@ -107,9 +108,7 @@ num = 13//找不到
 
 1、img alt属性
 
-2、html 块级元素 display默认属性 （inline） 默认的inline-block元素有哪些
-
-input、img、select
+2、html 块级元素 display默认属性 （inline） 默认的inline-block元素有哪些? input、img、select
 
 3、position有哪些属性 position为absolute的z-index的最大值（*2147483647* $2^{32} -1$）
 

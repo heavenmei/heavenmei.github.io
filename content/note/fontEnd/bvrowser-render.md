@@ -1,5 +1,5 @@
 ---
-title: 浏览器面试 之 渲染流程
+title: 浏览器 之 渲染流程
 subtitle: 
 layout: post
 date: 2023-01-09

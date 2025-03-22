@@ -11,8 +11,7 @@ tags:
   - Front
 image:
 ---
-
-> 大厂手写题
+## 大厂手写题
 
 ### 1、实现原生 AJAX 封装
 
@@ -1281,7 +1280,7 @@ String.prototype.sx_slice = function (start = 0, end) {
 
 ### 55、substr
 
-```
+```js
 String.prototype.sx_substr = function (start = 0, length) {
     if (length < 0) return ''
 
@@ -1298,7 +1297,7 @@ String.prototype.sx_substr = function (start = 0, length) {
 
 ### 56、substring
 
-```
+```js
 String.prototype.sx_sunstring = function (start = 0, end) {
     start = start < 0 ? this.length + start : start
     end = !end && end !== 0 ? this.length : end

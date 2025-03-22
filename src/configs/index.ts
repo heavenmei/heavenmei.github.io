@@ -29,10 +29,10 @@ const config = {
   noteList: [
     {
       id: "note/fontEnd",
-      tag: "Font-end",
+      tag: "前端三件套",
       img: "/images/javaScript.png",
-      title: "JavaScript 系列",
-      bread: "JavaScript 系列",
+      title: "HTML/CSS/JavaScript",
+      bread: "HTML/CSS/JS",
       desc: ``,
     },
     {
