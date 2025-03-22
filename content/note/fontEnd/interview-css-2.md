@@ -582,7 +582,7 @@ inear-gradient(0deg, #fff, #000)的意思是：渐变的角度从下往上，从
 - 缺点：支持iOS 8+，不支持安卓。后期安卓follow就好了。
 
 ```css
-border:0.5px solid #E5E5E5
+border: 0.5px solid #E5E5E5;
 ```
    
 可能你会问为什么在3倍屏下，不是0.3333px 这样的？经过测试，在Chrome上模拟iPhone 8Plus，发现小于0.46px的时候是显示不出来。
@@ -617,7 +617,7 @@ box-shadow: 0  -1px 1px -1px #e5e5e5,   //上边线
 
    
 ```css
-/*    1条border */
+/* 1条border */
 .setOnePx{
 	position: relative;
 	
@@ -744,125 +744,86 @@ box-shadow: 0  -1px 1px -1px #e5e5e5,   //上边线
 
 适配思路：设计稿（750*1334） ---> 开发 ---> 适配不同的手机屏幕，使其显得合理
 
-原则
-
-8. 开发时方便，写代码时设置的值要和标注的 160px 相关
-9. 方案要适配大多数手机屏幕，并且无 BUG
-10. 用户体验要好，页面看着没有不适感
-
-思路
-
-11. 写页面时，按照设计稿写固定宽度，最后再统一缩放处理，在不同手机上都能用
-12. 按照设计稿的标准开发页面，在手机上部分内容根据屏幕宽度等比缩放，部分内容按需要变化，需要缩放的元素使用 rem, vw 相对单位，不需要缩放的使用 px
-13. 固定尺寸+弹性布局，不需要缩放
+- 固定宽度，最后再viewport统一缩放处理，在不同手机上都能用
+- 需要缩放的元素使用 rem, vw 相对单位，不需要缩放的使用 px
+- 固定尺寸+弹性布局，不需要缩放
 
 #### viewport 适配
 
-根据设计稿标准（750px 宽度）开发页面，写完后页面及元素自动缩小，适配 375 宽度的屏幕
+根据设计稿标准（750px 宽度）开发页面，写完后页面及元素自动缩小，适配 375 宽度的屏幕，在 head 里设置viewport。
 
-在 head 里设置如下代码
+缺点就是边线问题，不同尺寸下，边线的粗细是不一样的（等比缩放后），全部元素都是等比缩放，实际显示效果可能不太好。
 
 ```html
 <meta name="viewport" content="width=750,initial-scale=0.5">
 ```
-
-initial-scale = 屏幕的宽度 / 设计稿的宽度
-
-为了适配其他屏幕，需要动态的设置 initial-scale 的值
+为了适配其他屏幕，需要动态的设置 initial-scale 的值。`initial-scale = 屏幕的宽度 / 设计稿的宽度`
 
 ```html
 <head>
   <script>
-    const WIDTH = 750
-    const mobileAdapter = () => {      let scale = screen.width / WIDTH      let content = `width=${WIDTH}, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`
-      let meta = document.querySelector('meta[name=viewport]')      if (!meta) {        meta = document.createElement('meta')        meta.setAttribute('name', 'viewport')        document.head.appendChild(meta)      }      meta.setAttribute('content',content)    }    mobileAdapter()    window.onorientationchange = mobileAdapter //屏幕翻转时再次执行
+      const WIDTH = 750;
+      const mobileAdapter = () => {
+        let scale = screen.width / WIDTH;
+        let content = `width=${WIDTH}, initial-scale=${scale}, maximum-scale=${scale}, minimum-scale=${scale}`;
+        let meta = document.querySelector("meta[name=viewport]");
+        if (!meta) {
+          meta = document.createElement("meta");
+          meta.setAttribute("name", "viewport");
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute("content", content);
+      };
+
+      mobileAdapter();
+
+      window.onorientationchange = mobileAdapter; //屏幕翻转时再次执行
+    </script>
+</head>
+```
+
+
+#### vw / rem适配（部分等比缩放）
+
+对于需要等比缩放的元素，CSS使用转换后的单位。对于不需要缩放的元素，比如边框阴影，使用固定单位px。
+
+假设设计稿尺寸为750px，设计稿的元素标注是基于此宽度标注，对设计稿的标注进行转换，比如页面元素字体标注的大小是40px：
+- px->vw： (100/750)*40 vw。`vw` 是视口宽度的百分比，1vw 等于视口宽度的 1%。
+- px->rem：根据不同屏幕宽度，设置 html 的 font-size 值。视口宽度为viewportWidth，则$fontSize=viewportWidth / 750​$。这样，设计稿中的 1px 在移动端开发中就对应 1rem。假设 html 的 font size = 1px 的话，就可以写 28 rem 了，更方便了，但是浏览器对字体大小有限制，设为 1px 的话，在浏览器中是失效的，会以 12px（或者其他值） 做一个计算 , 就会得到一个很夸张的结果，所以可以把 html 写的大一些。
+
+
+
+关于换算，为了开发方便，利用自定义属性，CSS变量，注意此时，meta 里就不要去设置缩放了。
+
+```html
+<head>
+  <meta
+	name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"
+  />
+  <script>
+	const WIDTH = 750;
+	//:root { --width: 0.133333 } 1像素等于多少 vw
+	document.documentElement.style.setProperty("--width", 100 / WIDTH);
+
+	// 1像素等于多少 rem，假设根节点fontSize 100px
+	document.documentElement.style.fontSize = (100 * screen.width / WIDTH) + 'px';
   </script>
+
+  <style>
+	header {
+	  font-size: .28rem;
+	}
+	div {
+	  font-size: calc(28vw * var(--width));
+	}
+  </style>
 </head>
+
 ```
 
-缺点就是边线问题，不同尺寸下，边线的粗细是不一样的（等比缩放后），全部元素都是等比缩放，实际显示效果可能不太好
 
-#### vw 适配（部分等比缩放）
-
-14. 开发者拿到设计稿（假设设计稿尺寸为750px，设计稿的元素标注是基于此宽度标注）
-15. 开始开发，对设计稿的标注进行转换，把px换成vw。比如页面元素字体标注的大小是32px，换成vw为 (100/750)*32 vw
-16. 对于需要等比缩放的元素，CSS使用转换后的单位
-17. 对于不需要缩放的元素，比如边框阴影，使用固定单位px
-
-关于换算，为了开发方便，利用自定义属性，CSS变量
-
-```html
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <script>
-    const WIDTH = 750
-    //:root { --width: 0.133333 } 1像素等于多少 vw
-    document.documentElement.style.setProperty('--width', (100 / WIDTH))   </script>
-</head>
-```
-
-注意此时，meta 里就不要去设置缩放了
-
-业务代码里就可以写
-
-```css
-header {
-  font-size: calc(28vw * var(--width))
-}
-```
-
-实现了按需缩放
-
-#### rem
-1. 开发者拿到设计稿（假设设计稿尺寸为750px，设计稿的元素标是基于此宽度标注）
-2. 开始开发，对设计稿的标注进行转换
-3. 对于需要等比缩放的元素，CSS使用转换后的单位
-4. 对于不需要缩放的元素，比如边框阴影，使用固定单位px
-
-假设设计稿的某个字体大小是 40px, 手机屏幕上的字体大小应为 420/750*40 = 22.4px (体验好)，换算成 rem（相对于 html 根节点，假设 html 的 font-size = 100px,）则这个字体大小为 0.224 rem
-
-写样式时，对应的字体设置为 0.224 rem 即可，其他元素尺寸也做换算...
-
-但是有问题
-
-举个 ，设计稿的标注 是40px，写页面时还得去做计算，很麻烦（全部都要计算）
-
-能不能规定一下，看到 40px ,就应该写 40/100 = 0.4 rem,这样看到就知道写多少了（不用计算），此时的 html 的 font-size 就不能是 100px 了，应该为 (420*100)/750 = 56px，100为我们要规定的那个参数
-
-根据不同屏幕宽度，设置 html 的 font-size 值
-
-```html
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
-  <script>
-    const WIDTH = 750 //设计稿尺寸
-    const setView = () => {      document.documentElement.style.fontSize = (100 * screen.width / WIDTH) + 'px'
-    }    window.onorientationchange = setView    setView()  </script>
-</head>
-```
-
-对于需要等比缩放的元素，CSS使用转换后的单位
-
-```css
-header {
-  font-size: .28rem;
-}
-```
-
-对于不需要缩放的元素，比如边框阴影，使用固定单位px
-
-```css
-header > span.active {
-  color: #fff;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-}
-```
-
-假设 html 的 font size = 1px 的话，就可以写 28 rem 了，更方便了，但是浏览器对字体大小有限制，设为 1px 的话，在浏览器中是失效的，会以 12px（或者其他值） 做一个计算 , 就会得到一个很夸张的结果，所以可以把 html 写的大一些
-
-使用 sass 库时
-
-JS 处理还是一样的，但看着好看些
+使用 sass 库时，JS 处理还是一样的，但看着好看些
 
 ```css
 @function px2rem($px) {
@@ -876,45 +837,24 @@ header {
 
 以上的三种适配方案，都是等比缩放，放到 ipad 上时（设计稿以手机屏幕设计的），页面元素会很大很丑，有些场景下，并不需要页面整体缩放（viewport 自动处理的也很好了），所以有时只需要合理的布局即可。
 
-#### 弹性盒适配（合理布局）
-
-```html
-<meta name="viewport" content="width=device-width">
-```
-
-使用 flex 布局
+#### flex 布局
 
 ```css
-section {
-  display: flex;
-}
+<meta name="viewport" content="width=device-width">
+<style>
+	section {
+	  display: flex;
+	}
+</style>
 ```
-
-总结一下，什么样的页面需要做适配（等比缩放）呢
-
-- 页面中的布局是栅格化的
-
-换了屏幕后，到底有多宽多高很难去做设置，整体的都需要改变，所以需要整体的缩放
-
-- 头屏大图，宽度自适应，高度固定的话，对于不同的屏幕，形状就会发生改变（放到ipad上就变成长条了），宽度变化后，高度也要保持等比例变化
-
-以上所有的适配都是宽度的适配，但是在某些场景下，也会出现高度的适配
-
-比如大屏，需要适配很多的电视尺寸，要求撑满屏幕，不能有滚动条，此时若换个屏幕
-
-此时需要考虑小元素用 vh, 宽和高都用 vh 去表示，中间的大块去自适应，这就做到了大屏的适配，屏幕变小了，整体变小了（体验更好），中间这块撑满了屏幕
-
 
 
 ## 11-css 切换主题
-
-
 
 ### 主题层
 
 这应该是实现主题功能的一种最常用的手段了。首先，我们的站点会有一个最初的基础样式（或者叫默认样式）；然后通过添加一些后续的额外的CSS来覆盖与重新定义部分样式。
 
-具体实现
 
 首先，我们引入基础的样式 `components.*` 文件
 
@@ -933,9 +873,7 @@ section {
 }
 ```
 
-然后，假设我们的某个主题的样式文件存放于 `theme.*` 文件：
-
-对应于 `components.tabs`，`theme.tabs` 文件内容如下
+然后，假设我们的某个主题的样式文件存放于 `theme.*` 文件，对应于 `components.tabs`，`theme.tabs` 文件内容如下
 
 ```css
 .tab {
@@ -979,11 +917,8 @@ section {
 
 该方式可以实现基于条件选择不同的主题皮肤，并允许用户在客户端随时切换主题。非常适合需要客户端样式切换功能，或者需要对站点某一部分（区域）进行独立样式设置的场景。
 
-具体实现
-
-还是类似上一节中 Tab 的这个例子，我们可以将 Tab 部分的 (S)CSS 改为如下形式：
-
 ```css
+/* SCSS */
 .tab {
     background-color: gray;
 
@@ -997,43 +932,13 @@ section {
 }
 ```
 
-这里我们把`.t-red`与`.t-blue`称为 Tab 元素的上下文环境（context）。Tab 元素会根据 context 的不同展示出不同的样式。
-
-最后我们给`body`元素加上这个开关
+这里我们把`.t-red`与`.t-blue`称为 Tab 元素的上下文环境（context）。Tab 元素会根据 context 的不同展示出不同的样式。最后我们给`body`元素加上这个开关
 
 ```html
 <body class="t-red">
     <ul class="tabs">...</ul>
 </body>
 ```
-
-此时 Tab 的颜色为红色。
-
-当我们将`t-red`改为`t-blue`时，Tab 就变为了蓝色主题。
-
-进一步的，我们可以创建一些 (S)CSS 的 util class（工具类）来专门控制一些 CSS 属性，帮助我们更好地控制主题。例如我们使用如下的`.u-color-current`类来控制不同主题下的字体颜色
-
-```css
-.u-color-current {
-    .t-red & {
-        color: red;
-    }
-
-    .t-blue & {
-        color: blue;
-    }
-}
-```
-
-这样，当我们在不同主题上下文环境下使用`.u-color-current`时，就可以控制元素展示出不同主题的字体颜色
-
-```html
-<body class="t-red">
-    <h1 class="page-title u-color-current">...</h1>
-</body>
-```
-
-上面这段代码会控制`<h1>`元素字体颜色为红色主题时的颜色。
 
 优点
 
@@ -1054,11 +959,7 @@ section {
 
 它一般会结合使用一些 CSS 预处理器，可以对不同的 UI 元素进行主题分离，并且向客户端直接提供主题样式下最终的 CSS。
 
-具体实现
-
-我们还是以 Sass 为例：
-
-首先会有一份 Sass 的配置文件，例如`settings.config.scss`，在这份配置中定义当前的主题值以及一些其他变量
+以 Sass 为例，首先会有一份 Sass 的配置文件，例如`settings.config.scss`，在这份配置中定义当前的主题值以及一些其他变量
 
 ```css
 $theme: red;
@@ -1079,14 +980,12 @@ $theme: red;
 }
 ```
 
-这时，我们在其之前引入相应的配置文件后
+这时，我们在其之前引入相应的配置文件后，Tab 组件就会呈现出红色主题。
 
 ```css
 @import "settings.config";
 @import "components.tabs";
 ```
-
-Tab 组件就会呈现出红色主题。
 
 当然，我们也可以把我们的`settings.config.scss`做的更健壮与易扩展一些
 
@@ -1096,7 +995,7 @@ $config: (
     env: dev,
 )
 
-// 从$config中获取相应的配置变量
+/* 从$config中获取相应的配置变量 */
 @function config($key) {
     @return map-get($config, $key);
 }
@@ -1139,7 +1038,6 @@ $config: (
 
 当你经常需要为客户端提供完全的定制化主题，并且经常希望更新或添加主题时，这种模式会是一个不错的选择。
 
-具体实现
 
 在方式三中，我们在一个独立的配置文件中设置了一些“环境”变量，来标示当前所处的主题。而在方式四中，我们会更进一步，抽取出一个专门的 palette 文件，用于存放不同主题的变量信息。
 
@@ -1184,27 +1082,22 @@ $color-tabs-background: $color-red;
 
 这种模式一般会提供一个个性化配置与管理界面，让用户能自己定义页面的展示样式。
 
-“用户定制化”在社交媒体产品、SaaS 平台或者是 Brandable Software 中最为常见。
-
-具体实现
-
-要实现定制化，可以结合方式二中提到的 util class。
-
 首先，页面中支持自定义的元素会被预先添加 util class，例如 Tab 元素中的`u-user-color-background`
 
 ```html
 <ul class="tabs u-user-color-background">...</ul>
 ```
 
-此时，`u-user-color-background`还并未定义任何样式。而当用户输入了一个背景色时，我们会创建一个``标签，并将 hex 值注入其中
+此时，`u-user-color-background`还并未定义任何样式。而当用户输入了一个背景色时，我们会创建一个标签，并将 hex 值注入其中，这时用户就得到了一个红色的 Tab。
 
 ```html
 <style id="my-custom">
-    .u-user-color-background {        background-color: #00ffff;    }
+    .u-user-color-background {        
+	  background-color: #00ffff;    
+	}
 </style>
 ```
 
-这时用户就得到了一个红色的 Tab。
 
 优点
 

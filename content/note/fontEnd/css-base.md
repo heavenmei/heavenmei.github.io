@@ -437,6 +437,23 @@ h1{
 | break-word | 在任意两个字符间换行。                     |
 | suppress   | 压缩元素中的换行。浏览器只在行中没有其他有效换行点时进行换行。 |
 
+### 文本省略
+
+单行文本
+```css
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+```
+
+多行文本
+```css
+overflow: hidden;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: <number>;
+```
+
 
 ### 字体相关样式
 

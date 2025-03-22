@@ -44,40 +44,40 @@ console.log(Number.MIN_SAFE_INTEGER);
 
 ### 3、深拷贝与浅拷贝的区别？
 
-- 浅拷贝：只拷贝第一层，深层的依然是引用，改变深层会影响原对象
+浅拷贝：只拷贝第一层，深层的依然是引用，改变深层会影响原对象
 
-  eg. `Object.assign()`、`...扩展符`、`Array.form()/slice()/map()/concat()/解构`
+eg. `Object.assign()`、`...扩展符`、`Array.form()/slice()/map()/concat()/解构`
 
-  ```js
-  function shallowCop(obj) {
-    let newObj = Array.isArray(obj) ? [] : {};
-    for (let item in obj) {
-      newObj[item] = obj[item];
-    }
-    return newObj;
+```js
+function shallowCop(obj) {
+let newObj = Array.isArray(obj) ? [] : {};
+for (let item in obj) {
+  newObj[item] = obj[item];
+}
+return newObj;
+}
+```
+
+深拷贝：每一层都拷贝了，改变数据不会影响原对象
+
+eg.`JSON.parse()/JSON.stringfy`、递归拷贝
+
+```js
+function deepCopy(obj) {
+return JSON.parse(JSON.stringify(obj));
+}
+
+function deepCopy(obj) {
+let newObj = Array.isArray() ? [] : {};
+for (let item in obj) {
+  if (obj.hasOwnPropertype(item)) {
+	newObj[item] =
+	  typeof obj[item] === "object" ? deepCopy(obj[item]) : obj[item];
   }
-  ```
-
-- 深拷贝：每一层都拷贝了，改变数据不会影响原对象
-
-  eg.`JSON.parse()/JSON.stringfy`、递归拷贝
-
-  ```js
-  function deepCopy(obj) {
-    return JSON.parse(JSON.stringify(obj));
-  }
-
-  function deepCopy(obj) {
-    let newObj = Array.isArray() ? [] : {};
-    for (let item in obj) {
-      if (obj.hasOwnPropertype(item)) {
-        newObj[item] =
-          typeof obj[item] === "object" ? deepCopy(obj[item]) : obj[item];
-      }
-    }
-    return newObj;
-  }
-  ```
+}
+return newObj;
+}
+```
 
 ### 4、闭包是什么？
 
@@ -86,7 +86,7 @@ console.log(Number.MIN_SAFE_INTEGER);
 - 优点：使外部能访问内部，延长内部变量寿命
 - 缺点：滥用闭包造成内存泄漏
 
-闭包的例子
+回调函数都是闭包
 
 ```js
 function a() {
@@ -106,7 +106,8 @@ console.log(b()); // 2
 
 原型链是一条引用的链，实例的隐式原型指向构造函数的显式原型，可以使用`A instanceof B`来判断 B 是否在 A 的原型链上。
 
-![图片](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdiaAnHVuen1mzn2l1cX8JOxucibhm8P0oVhpPAWdjyibXiaEUalbtWoPbf5YJh7ykQFWOXo8BoMHNOMjw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![|500](assets/interview-js-1-20250322020624.png)
+
 
 ### 6、什么是变量提升？函数提升？
 
