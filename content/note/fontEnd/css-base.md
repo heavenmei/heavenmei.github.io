@@ -912,7 +912,7 @@ flex(弹性盒、伸缩盒)是 CSS 中的又一种布局手段，它主要用来
 - `flex：none | [ flex-grow ] || [ flex-shrink ] || [ flex-basis ]`
 - `flex-grow`：弹性元素的增长系数
 - `flex-shrink`：弹性元素的缩减系数
-- `flex-basis`：弹性元素在主轴上的长度， "auto"、"inherit"、"12px"。如果主轴是 横向的 则 该值指定的就是元素的宽度，如果主轴是 纵向的 则 该值指定的是就是元素的高度
+- `flex-basis`：弹性元素在主轴上的长度， "auto"、"inherit"、"12px"。如果主轴是 横向的 则 该值指定的就是==元素的宽度==，如果主轴是 纵向的 则 该值指定的是就是元素的高度
 
 `margin: auto`：==获取弹性容器中剩余的空间==
 

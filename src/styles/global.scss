@@ -342,14 +342,13 @@ a {
     position: fixed;
     top: 50%;
     right: 0;
-    width: 20px;
-    padding: 1rem 0;
+    width: 30px;
+    padding: 1rem 0.5rem;
     border-radius: 0 0.5rem 0.5rem 0;
     background-color: var(--primary);
     color: var(--background-color);
 
     writing-mode: vertical-rl;
-    text-orientation: mixed;
     transform: rotate(180deg);
     cursor: pointer;
 
