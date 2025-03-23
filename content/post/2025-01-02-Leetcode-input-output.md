@@ -1,5 +1,5 @@
 ---
-title: JS 刷题输入输出模板
+title: JS 刷题ACM模式 输入输出模板
 subtitle: 
 layout: post
 date: 2025-01-02
