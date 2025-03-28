@@ -327,7 +327,7 @@ console.log(fun); // fun (name) {}
 - 事件冒泡：从内到外，事件委托（event delegation）
 - 事件捕获：从外到内
 
-
+![|300](assets/interview-js-1-20250326083747.png)
 `e.stopPropagation`: 阻止冒泡
 
 `e.preventDefault`： 阻止事件默认行为

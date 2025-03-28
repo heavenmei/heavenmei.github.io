@@ -315,6 +315,11 @@ export default to
 
 [7关！setTimeout+Promise+Async输出顺序？你能过几关！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483940%26idx%3D1%26sn%3D7a97101836c2b697a270bd84707d441f%26chksm%3Dce4617b5f9319ea3e65092ef4a8b977c85cb0c589f89f49cf626df961de0900c2510297f0af9%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
+
+**JS的执行机制就可以看做是一个主线程加上一个任务队列(task queue)**。同步任务就是放在主线程上执行的任务，异步任务是放在任务队列中的任务。所有的同步任务在主线程上执行，形成一个执行栈;异步任务有了运行结果就会在任务队列中放置一个事件；脚本运行时先依次运行执行栈，然后会从任务队列里提取事件，运行任务队列中的任务，这个过程是不断重复的，所以又叫做事件循环(Event loop)。
+
+
+
 ### 21、Object.defineProperty(target, key, options)，options可传什么参数？
 
 - `value`：给target[key]设置初始值
@@ -531,7 +536,7 @@ console.log(a == 1 && a == 2 && a == 3) // true
 
 MUL表示数的简单乘法。在这种技术中，将一个值作为参数传递给一个函数，而该函数将返回另一个函数，将第二个值传递给该函数，然后重复继续。例如:x*y*z可以表示为
 
-```
+```js
 const mul = x => y => z => x * y * z
 
 console.log(mul(1)(2)(3)) // 6
@@ -577,9 +582,6 @@ function getItemById(arr, id) {
 - 1、使用 `location.href`：window.location.href =“[https://www.onlineinterviewquestions.com/”](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fwww.onlineinterviewquestions.com%2F%25E2%2580%259D&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN))
 - 2、使用 `location.replace`：window.location.replace(" [https://www.onlineinterviewquestions.com/;"](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fwww.onlineinterviewquestions.com%2F%3B%22&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN))
 
-### 40、实现一遍常用的JS原生方法？
-
-后面单独出一篇文章
 
 ### 41、鼠标事件有哪些？
 
@@ -653,7 +655,17 @@ function getItemById(arr, id) {
 
 ### 47、target 和 currentTarget的区别？
 
-[e.target 和 e.currentTarget 的区别？你到底知不知道？](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247485676%26idx%3D1%26sn%3D457d5c900d9c4ce20a7685c57669f626%26chksm%3Dce461d7df931946bae794365fb0e011a531b7ab86c067ace580ea5a6bc3cb0b20fc7ffde08c3%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+`addEventListener('click', function(){}, true/false)`。
+
+第三个参数：
+- false：默认，代表冒泡时绑定
+- true：代表捕获时绑定
+
+区别：
+- `e.target`：**触发**事件的元素，被点击的对象（不变）
+- `e.currentTarget`：**绑定**事件的元素，当前事件活动的对象，通常是事件的祖元素（变）
+
+
 
 ### 48、arguments对象
 

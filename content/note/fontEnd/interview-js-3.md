@@ -999,7 +999,7 @@ Array.prototype.sx_splice = function (start, length, ...values) {
 
 ### 39、entries
 
-```
+```js
 Object.prototype.sx_entries = function (obj) {
     const res = []
     for (let key in obj) {
@@ -1011,7 +1011,7 @@ Object.prototype.sx_entries = function (obj) {
 
 ### 40、fromEntries
 
-```
+```js
 Object.prototype.sx_fromEntries = function (arr) {
     const obj = {}
     for (let item of arr) {
@@ -1024,7 +1024,7 @@ Object.prototype.sx_fromEntries = function (arr) {
 
 ### 41、keys
 
-```
+```js
 Object.prototype.sx_keys = function (obj) {
     const res = []
     for (let key in obj) {
@@ -1036,7 +1036,7 @@ Object.prototype.sx_keys = function (obj) {
 
 ### 42、values
 
-```
+```js
 Object.prototype.sx_values = function (obj) {
     const res = []
     for (let key in obj) {
@@ -1048,7 +1048,7 @@ Object.prototype.sx_values = function (obj) {
 
 ### 43、instanceOf
 
-```
+```js
 const instanceOf = function (parent, children) {
     const fp = parent.prototype
     let cp = children.__proto__
@@ -1064,7 +1064,7 @@ const instanceOf = function (parent, children) {
 
 ### 44、is
 
-```
+```js
 Object.prototype.sx_is = function (x, y) {
     if (x === y) {
         // 防止 +0 和 -0
@@ -1078,7 +1078,7 @@ Object.prototype.sx_is = function (x, y) {
 
 ### 45、assign
 
-```
+```js
 Object.prototype.sx_assign = function (target, ...args) {
     if (target === null || target === undefined) {
         throw new TypeError('Cannot convert undefined or null to object')
@@ -1144,7 +1144,7 @@ Promise.sx_race = (promises) => {
 
 ### 48、allSettled
 
-```
+```js
 Promise.sx_allSettled = (promises) => {
     return new Promise((resolve) => {
         const result = []
@@ -1173,7 +1173,7 @@ Promise.sx_allSettled = (promises) => {
 
 ### 49、any
 
-```
+```js
 Promise.sx_any = (promises) => {
     return new Promise((resolve, reject) => {
         let count = 0
@@ -1194,7 +1194,7 @@ Promise.sx_any = (promises) => {
 
 ### 50、finally
 
-```
+```js
 Promise.prototype.sx_finally = function (fn) {
   return this.then((res) => {
     fn()
@@ -1263,7 +1263,7 @@ Function.prototype.sx_bind = function (obj, ...args) {
 
 ### 54、slice
 
-```
+```js
 String.prototype.sx_slice = function (start = 0, end) {
     start = start < 0 ? this.length + start : start
     end = !end && end !== 0 ? this.length : end
