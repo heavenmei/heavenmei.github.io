@@ -35,8 +35,6 @@ image:
 
 `scrollTop+clientHeight > offsetTop`
 
-![](https://a1j6nbrw76.feishu.cn/space/api/box/stream/download/asynccode/?code=ODdiOWUzZTViYTllY2JhMmM4ZTlmMWJlYjc3MmJiM2Ffb0daQnJUUjdkQ29ZMHcwYmhBeDdtSk5LY25FS3ROdm5fVG9rZW46Ym94Y240TkZtdHdKa1ljdFpxdjdhVHpQeFZkXzE3MzcyNjY1MTQ6MTczNzI3MDExNF9WNA)
-
 ```JavaScript
 //性能损耗，不建议使用，但若浏览器不兼容Observer则需使用
 document.addEventListener("DOMContentLoaded", function() {

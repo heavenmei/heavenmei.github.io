@@ -1,0 +1,26 @@
+{
+  "title": "前端 性能优化专项",
+  "tags": [
+    "Front"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2025-03-26T00:00:00.000Z",
+  "body": {
+    "raw": "> 老生长谈的话题了\n\n",
+    "code": "var Component=(()=>{var m=Object.create;var c=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var d=Object.getPrototypeOf,j=Object.prototype.hasOwnProperty;var b=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),_=(t,e)=>{for(var n in e)c(t,n,{get:e[n],enumerable:!0})},a=(t,e,n,r)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let s of p(e))!j.call(t,s)&&s!==n&&c(t,s,{get:()=>e[s],enumerable:!(r=x(e,s))||r.enumerable});return t};var f=(t,e,n)=>(n=t!=null?m(d(t)):{},a(e||!t||!t.__esModule?c(n,\"default\",{value:t,enumerable:!0}):n,t)),g=t=>a(c({},\"__esModule\",{value:!0}),t);var l=b((w,i)=>{i.exports=_jsx_runtime});var D={};_(D,{default:()=>q,frontmatter:()=>h});var o=f(l()),h={title:\"\\u524D\\u7AEF \\u6027\\u80FD\\u4F18\\u5316\\u4E13\\u9879\",subtitle:null,layout:\"post\",date:new Date(17429472e5),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"Front\"],image:null};function u(t){let e=Object.assign({blockquote:\"blockquote\",p:\"p\"},t.components);return(0,o.jsxs)(e.blockquote,{children:[`\n`,(0,o.jsx)(e.p,{children:\"\\u8001\\u751F\\u957F\\u8C08\\u7684\\u8BDD\\u9898\\u4E86\"}),`\n`]})}function k(t={}){let{wrapper:e}=t.components||{};return e?(0,o.jsx)(e,Object.assign({},t,{children:(0,o.jsx)(u,t)})):u(t)}var q=k;return g(D);})();\n;return Component;"
+  },
+  "_id": "post/2025-03-26-font-performance.md",
+  "_raw": {
+    "sourceFilePath": "post/2025-03-26-font-performance.md",
+    "sourceFileName": "2025-03-26-font-performance.md",
+    "sourceFileDir": "post",
+    "contentType": "markdown",
+    "flattenedPath": "post/2025-03-26-font-performance"
+  },
+  "type": "Post",
+  "parDir": "post",
+  "slug": "/post/2025-03-26-font-performance",
+  "slugAsParams": "2025-03-26-font-performance"
+}
