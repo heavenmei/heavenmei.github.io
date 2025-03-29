@@ -2,7 +2,7 @@
 title: u don't know js 之 作用域与闭包
 subtitle: 
 layout: post
-date: 2025-02-17
+date: 2024-02-17
 author: heavenmei
 categories:
   - Note

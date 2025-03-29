@@ -2,6 +2,7 @@ import * as React from "react";
 import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import type { MDXComponents } from "mdx/types";
+import { PhotoView } from "react-photo-view";
 
 import { cn } from "@/utils";
 import { Callout } from "@/components/mdx/Callout";
@@ -177,11 +178,19 @@ const components: MDXComponents = {
         props.width = altWidth;
       }
       return (
-        <Image
-          className={cn("rounded-sm border mx-auto", className)}
-          {...props}
-        />
+        <PhotoView src={props.src} width={200} height={props.height}>
+          <img
+            className={cn("rounded-sm border mx-auto", className)}
+            {...props}
+          />
+        </PhotoView>
       );
+      // return (
+      //   <Image
+      //     className={cn("rounded-sm border mx-auto", className)}
+      //     {...props}
+      //   />
+      // );
     }
     return <img className={cn("rounded-sm border", className)} {...props} />;
   },

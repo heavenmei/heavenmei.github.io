@@ -2,7 +2,7 @@
 title: 浏览器 之 渲染流程
 subtitle: 
 layout: post
-date: 2023-01-09
+date: 2024-10-09
 author: heavenmei
 categories:
   - Note
@@ -11,18 +11,48 @@ tags:
   - Front
 image:
 ---
+## 浏览器渲染进程
+
+渲染进程主要包括的线程：
+
+- **GUI渲染线程**：GUI 渲染线程负责渲染浏览器界面，解析 HTML，CSS，构建 DOM 树和 RenderObject 树，布局和绘制等。当界面需要重绘（Repaint）或由于某种操作引发回流（Reflow）时，该线程就会执行。
+- **JavaScript引擎线程:** JavaScript 引擎线程主要负责解析 JavaScript 脚本并运行相关代码。 JavaScript 引擎在一个Tab页（Renderer 进程）中无论什么时候都只有一个 JavaScript 线程在运行 JavaScript 程序。需要提起一点就是，==GUI线程与JavaScript引擎线程是互斥的，这也是就是为什么JavaScript操作时间过长，会造成页面渲染不连贯，导致页面出现阻塞的原理==。
+- **事件触发线程**：当一个事件被触发时该线程会把事件添加到待处理队列的队尾，等待 JavaScript 引擎的处理。 通常**JavaScript引擎是单线程的**，所以这些事件都会排队等待JS执行。
+- 定时器触发器： 我们日常使用的setInterval 和 setTimeout 就在该线程中，原因可能就是：由于JS引擎是单线程的，如果处于阻塞线程状态就会影响记时的准确，所以需要通过单独的线程来记时并触发响应的事件这样子更为合理。
+- Http请求线程： 在 XMLHttpRequest 在连接后是通过浏览器新开一个线程请求，这个线程就Http请求线程，它 将检测到状态变更时，如果设置有回调函数，异步线程就产生状态变更事件放到 JavaScript 引擎的处理队列中等待处理。
+
+
 
 ## 浏览器渲染流程
 
 ![img](https://img.alicdn.com/tps/TB1eabOLpXXXXX3XFXXXXXXXXXX-1093-167.jpg_720x720.jpg#alt=)
 
-- 构建 DOM 树：浏览器将 HTML 解析成树形结构的 DOM 树，一般来说，这个过程发生在页面初次加载，或页面 JavaScript 修改了节点结构的时候。
-- 构建渲染树：浏览器将 CSS 解析成树形结构的 CSSOM 树，再和 DOM 树合并成渲染树。计算样式，这个过程是根据 CSS 选择器，对每个 DOM 元素匹配对应的 CSS 样式。这一步结束之后，就确定了每个 DOM 元素上该应用什么 CSS 样式规则
-- 布局（Layout）：浏览器根据渲染树所体现的节点、各个节点的 CSS 定义以及它们的从属关系，计算出每个节点在屏幕中的位置。Web 页面中元素的布局是相对的，在页面元素位置、大小发生变化，往往会导致其他节点联动，需要重新计算布局，这时候的布局过程一般被称为**回流（Reflow**）。
-- 绘制（Paint）：遍历渲染树，调用渲染器的  `paint()`  方法在屏幕上绘制出节点内容，本质上是一个像素填充的过程。这个过程也出现于回流或一些不影响布局的 CSS 修改引起的屏幕局部重画，这时候它被称为**重绘（Repaint）**。实际上，<u>绘制过程是在多个层上完成的，这些层我们称为渲染层（RenderLayer）</u>。
-- 渲染层合成（Composite）：<u>多个绘制后的渲染层按照恰当的重叠顺序进行合并，而后生成位图，最终通过显卡展示到屏幕上。</u>
+- **构建 DOM 树**：浏览器将 HTML 解析成树形结构的 DOM 树，一般来说，这个过程发生在页面初次加载，或页面 JavaScript 修改了节点结构的时候。
+- **构建渲染树**：浏览器将 CSS 解析成树形结构的 CSSOM 树，再和 DOM 树合并成渲染树。计算样式，这个过程是根据 CSS 选择器，对每个 DOM 元素匹配对应的 CSS 样式。这一步结束之后，就确定了每个 DOM 元素上该应用什么 CSS 样式规则
+- **布局（Layout）**：浏览器根据渲染树所体现的节点、各个节点的 CSS 定义以及它们的从属关系，计算出每个节点在屏幕中的位置。Web 页面中元素的布局是相对的，在页面元素位置、大小发生变化，往往会导致其他节点联动，需要重新计算布局，这时候的布局过程一般被称为**回流（Reflow**）。
+- **绘制（Paint）**：遍历渲染树，调用渲染器的  `paint()`  方法在屏幕上绘制出节点内容，本质上是一个像素填充的过程。这个过程也出现于回流或一些不影响布局的 CSS 修改引起的屏幕局部重画，这时候它被称为**重绘（Repaint）**。实际上，==绘制过程是在多个层上完成的，这些层我们称为渲染层（RenderLayer）==。
+- **渲染层合成（Composite）**：多个绘制后的渲染层按照恰当的重叠顺序进行合并，而后生成位图，最终通过显卡展示到屏幕上。
 
 ![](assets/bvrowser-render-20250118032712.png)
+
+
+### 构建DOM Tree
+
+浏览器构建 DOM 树时，这个过程占用了**主线程**。
+
+当解析器发现非阻塞资源，例如一张图片，浏览器会请求这些资源并且继续解析。当遇到一个 CSS 文件时，解析也可以继续进行。
+
+==但是对于 `<script> `标签（特别是没有 async 或者 defer 属性的）会阻塞渲染并停止 HTML 的解析==，完成后才会从暂停的地方重新开始。也就是说，如果你想首屏渲染的越快，就越不应该在首屏就加载 JS 文件。并且 CSS 也会影响 JS 的执行，只有当解析完样式表才会执行 JS，所以也可以认为这种情况下，CSS 也会暂停构建 DOM。
+
+> 这也是就为什么 script标签要放到最后
+
+
+#### Load 和 DOMContentLoaded 区别
+
+- Load 事件触发代表页面中的 DOM，CSS，JS，图片已经全部加载完毕。
+- DOMContentLoaded 事件触发代表初始的 HTML 被完全加载和解析，不需要等待 CSS，JS，图片加载。
+
+
 
 ### 分层
 
@@ -347,16 +377,18 @@ JavaScript 脚本由于可能会修改 DOM，因此会阻塞 DOM 的构建，这
 
 <u>浏览器将从 CPU 绘制它，然后将生成的图像发送到 GPU，GPU 将其显示在屏幕上</u>。我们看到了 GPU 确实很强势，但是我们最好不要把所有东西一股脑儿抛给 GPU ，问题在于 GPU 并没有无限制处理性能，而且一旦资源用完的话，性能就会开始下降了（即使 CPU 并没有完全占用）。事实上他们有自己的职责，各司其职，各尽其才，才能发挥出更大的作用。
 
-## 参考文献
+## Reference
 
-> [浏览器层合成](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6844903966573068301%23heading-9&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
->
-> [无线性能优化：Composite](https://security.feishu.cn/link/safety?target=https%3A%2F%2Ffed.taobao.org%2Fblog%2F2016%2F04%2F26%2Fperformance-composite%2F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
->
-> [详谈合成层](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6844903502678867981%23heading-0&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
->
-> [CSS GPU Animation](https://security.feishu.cn/link/safety?target=https%3A%2F%2Flink.juejin.cn%2F%3Ftarget%3Dhttps%253A%252F%252Fwww.smashingmagazine.com%252F2016%252F12%252Fgpu-animation-doing-it-right%252F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
->
-> [浏览器的工作原理](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6847902222349500430&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
->
-> [06 | 渲染流程（下）：HTML、CSS 和 JavaScript，是如何变成页面的？-极客时间](https://time.geekbang.org/column/article/118826)
+ [浏览器层合成](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6844903966573068301%23heading-9&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+ [无线性能优化：Composite](https://security.feishu.cn/link/safety?target=https%3A%2F%2Ffed.taobao.org%2Fblog%2F2016%2F04%2F26%2Fperformance-composite%2F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+ [详谈合成层](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6844903502678867981%23heading-0&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+ [CSS GPU Animation](https://security.feishu.cn/link/safety?target=https%3A%2F%2Flink.juejin.cn%2F%3Ftarget%3Dhttps%253A%252F%252Fwww.smashingmagazine.com%252F2016%252F12%252Fgpu-animation-doing-it-right%252F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+ [浏览器的工作原理](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fjuejin.cn%2Fpost%2F6847902222349500430&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+ 
+ [06 | 渲染流程（下）：HTML、CSS 和 JavaScript，是如何变成页面的？-极客时间](https://time.geekbang.org/column/article/118826)
+
+https://developer.mozilla.org/zh-CN/docs/Web/Performance/Guides/How_browsers_work

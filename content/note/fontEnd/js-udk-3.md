@@ -2,7 +2,7 @@
 title: u don't know js 之 异步 Promise
 subtitle: 
 layout: post
-date: 2025-03-10
+date: 2024-02-20
 author: heavenmei
 categories:
   - Note

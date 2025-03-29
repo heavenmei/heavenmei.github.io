@@ -215,8 +215,3 @@ document.addEventListener("DOMContentLoaded", function() {
 - iv）开启浏览器XSS防御：Http Only cookie，禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。
 - v）验证码
 
-
-
-### 缓存策略
-
-![](assets/browser-apply-20250119023524.png)

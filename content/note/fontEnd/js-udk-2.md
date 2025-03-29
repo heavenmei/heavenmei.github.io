@@ -2,7 +2,7 @@
 title: u don't know js 之 this & 对象
 subtitle: 
 layout: post
-date: 2025-02-18
+date: 2024-02-18
 author: heavenmei
 categories:
   - Note
