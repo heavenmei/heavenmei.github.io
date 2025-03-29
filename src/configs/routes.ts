@@ -21,7 +21,7 @@ export const routes = [
     path: "/project",
     name: "project",
     label: "PROJECTS",
-    navShow: true,
+    navShow: false,
   },
   {
     path: "/archive",

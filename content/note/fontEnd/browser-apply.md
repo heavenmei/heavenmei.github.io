@@ -2,7 +2,7 @@
 title: 浏览器 之  业务场景
 subtitle: 
 layout: post
-date: 2023-01-07
+date: 2024-10-30
 author: heavenmei
 categories:
   - Note
@@ -22,7 +22,7 @@ image:
 
 一张图片就是一个`<img>`标签，浏览器是否发起请求图片是根据`<img>`的src属性，所以实现懒加载的关键就是，在图片没有进入可视区域时，先不给`<img>`的src赋值，这样浏览器就不会发送请求了，等到图片进入可视区域再给src赋值。
 
-```JavaScript
+```js
 <img class="lazy" src="placeholder-image.jpg" data-src="image-to-lazy-load-1x.jpg" data-srcset="image-to-lazy-load-2x.jpg 2x, image-to-lazy-load-1x.jpg 1x" alt="I'm an image!">
 ```
 
@@ -35,7 +35,7 @@ image:
 
 `scrollTop+clientHeight > offsetTop`
 
-```JavaScript
+```js
 //性能损耗，不建议使用，但若浏览器不兼容Observer则需使用
 document.addEventListener("DOMContentLoaded", function() {
   let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 > 方法二：利用intersectionObserver
 
-```JavaScript
+```js
 document.addEventListener("DOMContentLoaded", function() {
     var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
     
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 相比较而言，CSS加载图片比较容易控制。当文档对象模型、CSS对象模型和渲染树被构造完成后，开始请求外部资源之前，浏览器会检测CSS规则是怎么应用到DOM上的。**如果浏览器检测到CSS引用的外部资源并没有应用到已存在的DOM节点上，浏览器就不会请求这些资源。** 这个行为可用于延迟CSS图片资源的加载，思路是通过JavaScript检测到元素处于视窗中时，加一个class类名，这个class就引用了外部图片资源。 这可以实现图片按需加载而不是一次性全部加载。
 
-```HTML
+```html
  <div class="lazy-background">
   <h1>Here's a hero heading to get your attention!</h1>
   <p>Here's hero copy to convince you to buy a thing!</p>
@@ -154,32 +154,6 @@ document.addEventListener("DOMContentLoaded", function() {
 ```
 
     
-
-### 重排重绘
-重排(Reflow)：当渲染树的一部分必须更新并且节点的尺寸发生了变化，浏览器会使渲染树中受到影响的部分失效，并重新构造渲染树。
-重绘(Repaint)：是在一个元素的外观被改变所触发的浏览器行为，浏览器会根据元素的新属性重新绘制，使元素呈现新的外观。比如改变某个元素的背景色、文字颜色、边框颜色等等
-1. 区别：重绘不一定需要重排（比如颜色的改变），重排必然导致重绘（比如改变网页位置）
-2. 引发重排
-  - 添加、删除可见的dom
-  - 元素的位置改变
-  - 元素的尺寸改变(外边距、内边距、边框厚度、宽高、等几何属性)
-  - 页面渲染初始化
-  -  浏览器窗口尺寸改变
-  -  获取某些属性。当获取一些属性时，浏览器为取得正确的值也会触发重排,它会导致队列刷新，这些属性包括：offsetTop、offsetLeft、 offsetWidth、offsetHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、clientTop、clientLeft、clientWidth、clientHeight、getComputedStyle() (currentStyle in IE)。所以，在多次使用这些值时应进行缓存。
-
-
-> 优化：
-
-
-浏览器自己的优化：
-  - 浏览器会维护1个队列，把所有会引起重排，重绘的操作放入这个队列，等队列中的操作到一定数量或者到了一定时间间隔，浏览器就会flush队列，进行一批处理，这样多次重排，重绘变成一次重排重绘
-
-减少 reflow/repaint： 
-  - 不要一条一条地修改 DOM 的样式。可以先定义好 css 的 class，然后修改 DOM className。
-  - 不要把 DOM 结点的属性值放在一个循环里当成循环里的变量。 
-  - 为动画的 HTML 元件使用 fixed 或 absoult 的 position，那么修改他们的 CSS 是不会 reflow 的。 
-  - 千万不要使用 table 布局。因为可能很小的一个小改动会造成整个 table 的重新布局。(table及其内部元素除外，它可能需要多次计算才能确定好其在渲染树中节点的属性，通常要花3倍于同等元素的时间。这也是为什么我们要避免使用table做布局的一个原因。)
-  - 不要在布局信息改变的时候做查询（会导致渲染队列强制刷新）
 
 
 

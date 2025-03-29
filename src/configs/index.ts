@@ -74,6 +74,20 @@ const config = {
       desc: `利用WebGL技术，实现了艺术流体可视化。`,
     },
     {
+      tag: "Web",
+      img: "/images/AISpanish.png",
+      title: "AI西语学习小程序",
+      authors: `Haiwen Huang`,
+      desc: `微信小程序搜索 "智能西语助手"`,
+    },
+    {
+      tag: "Web",
+      img: "/images/AIGenerate.png",
+      title: "AI智能问答平台",
+      authors: `Haiwen Huang`,
+      desc: `http://106.14.61.143:8889`,
+    },
+    {
       tag: "Paper",
       img: "/images/explanationVis.png",
       title: "提升用户信任度的机器学习解释框架",

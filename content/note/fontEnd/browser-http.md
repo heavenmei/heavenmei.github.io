@@ -221,3 +221,194 @@ HTTPS = HTTP + SSL/TLS （CA数字证书保证服务器身份可信）
 | 服务对象    | 1 V 1                   | 1V1 or 1Vn or nVn                            |
 | 场景      | FTP 文件传输； HTTP / HTTPS； | 包总量较少的通信，如 `DNS` 、`SNMP` 等；视频、音频等多媒体通信；广播通信； |
 
+## SSE
+
+HTTP 协议无法做到**服务器主动推送信息**。要想做到除了 WebSocket，还有一种方法即Server-Sent Events。SSE就是服务器向客户端声明，接下来要发送的是流信息（streaming）。SSE是基于HTTP 协议的。
+- WebSocket 是全双工通道，可以双向通信，WebSocket 是一个独立协议。
+- SSE 是单向通道，只能服务器向浏览器发送，基于HTTP 协议的。
+
+
+[Server-Sent Events 教程](https://www.ruanyifeng.com/blog/2017/05/server-sent_events.html)
+
+SSE 协议就是正常的Http请求，更改请起头相关配置即可
+```js
+Content-Type: text/event-stream,utf-8
+Cache-Control: no-cache
+Connection: keep-alive
+```
+
+
+文本流格式
+
+```js
+event: foo\n   // 自定义事件，名称 foo，触发客户端的foo监听事件
+data: a foo event\n\n // 内容 
+// 每个message之间用\n\n分隔
+event: foo\n   // 自定义事件，名称 foo，触发客户端的foo监听事件
+data: a foo event\n\n // 内容 
+```
+
+#### fetch实现
+
+Fetch 能够处理流式响应，即服务器可以分块发送数据，而不是一次性发送整个文件。
+```js
+fetch('http://localhost:3000')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.body;
+  })
+  .then(res => {
+    const stream = res.getReader();
+
+    const read = async () => {
+	    const result = await stream?.read();
+	    if (result?.done) {
+	      doneCallback?.();
+	    } else {
+		  const chunk = new TextDecoder().decode(value);
+		  processCallback(result?.value);
+	      await read(); // 递归 读取下一个数据块
+	    }
+	};
+	await read();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+```
+
+
+
+
+
+
+
+
+## 跨域
+### 同源策略
+
+- 同源是指域名，协议，端口相同
+- 浏览器限制，而不是服务端限制
+- 发送的是XHR（XMLHttpRequest）请求，可以使用 a 标签（模拟xhr请求）和 img 标签（模拟json请求）做对比（控制台只报了一个跨域异常）
+
+
+### JSONP
+
+JSONP（JSON with Padding）是JSON的一种补充使用方式，
+
+以 `<script>` 、`<img>` 等标签进行跨域请求，该标签不受同源策略影响，因为请求的是JS脚本，用JS包了一层。 URL 中携带一个`callback`参数，参数值为一个客户端定义的回调函数名称
+```html
+<script src="http://www.baidu.com/json/?callback=handleResponse" type="text/javascript"/>
+```
+
+**缺点**：
+- 支持 GET 方法请求，不管 AJAX 中实际的请求方法是不是 GET
+- 服务端还需要修改代码
+- 发送的不是 XHR 请求，无法使用 XHR 对象（但这也是为什么可以解决跨域问题的根本）
+- 只能接收 JSON 格式的数据
+
+
+### CORS
+
+CORS 全称是"跨域资源共享"（Cross-origin resource sharing）
+
+服务端响应头添加`Access-Control-Allow-Origin` 字段以后,数据包发送给浏览器后，浏览器就会根据这里配置的白名单 “放行” 允许白名单的服务器对应的网页来用 ajax 跨域访问 。
+
+```text
+Access-Control-Allow-Origin             允许请求的域
+Access-Control-Allow-Methods            允许请求的方法
+Access-Control-Allow-Headers            预检请求后，告知发送请求需要有的头部
+Access-Control-Allow-Credentials        表示是否允许发送cookie，默认false；
+Access-Control-Max-Age                  本次预检的有效期，单位：秒；
+
+```
+
+
+### Nginx 反向代理
+
+跨域是浏览器限制的，服务器请求服务器不受浏览器同源策略限制。
+
+```nginx
+server {
+    listen       81;
+    server_name  www.domain1.com;
+
+	location / {
+		root html;
+		index index.html
+	}
+
+    location /api {
+        proxy_pass   http://127.0.0.1:8080;  #反向代理
+    }
+}
+```
+
+
+
+### Nodejs 中间件代理跨域
+
+原理大致与nginx相同，都是通过启一个代理服务器，实现数据的转发。
+
+`webpack.config.js`
+
+```js
+module.exports = {
+    entry: {},
+    module: {},
+    ...
+    devServer: {
+        historyApiFallback: true,
+        proxy: [{
+            context: '/login',
+            target: 'http://www.domain2.com:8080',  // 代理跨域目标接口
+            changeOrigin: true,
+            secure: false,  // 当代理某些https服务报错时用
+            cookieDomainRewrite: 'www.domain1.com'  // 可以为false，表示不修改
+        }],
+        noInfo: true
+    }
+}
+```
+
+
+
+### WebSocket
+WebSocket 是一种基于 TCP 协议的双向通信协议，它提供了一种浏览器和服务器之间实时、低延迟、高效率的全双工通信方式，同时允许跨域通讯。
+
+在 JS 创建了 WebSocket 之后，会有一个 HTTP 请求发送到浏览器以发起连接。取得服务器响应后，建立的连接会使用 HTTP 升级从 HTTP 协议交换为 WebSocket 协议
+
+```js
+var socket = new WebSockt('ws://www.baidu.com');
+//http->ws; https->wss
+socket.send('hello WebSockt');
+socket.onmessage = function(event){
+    var data = event.data;
+}
+
+```
+
+### PostMessage
+
+H5新增特性，用于两个不同窗口之间的安全跨域通信。基本原理是在一个窗口中发送消息，在另一个窗口中监听消息并进行处理，从而完成跨域通信。
+
+
+```js
+// 发信息
+var targetWindow = window.parent; // 获取目标窗口
+var message = 'Hello, parent window!';
+var targetOrigin = 'http://parent.window.com'; // 指定接收消息的窗口的源
+targetWindow.postMessage(message, targetOrigin); // 发送消息postMessage(data,origin)
+
+
+// 监听信息
+window.addEventListener('message', function(event) {
+  var message = event.data; // 获取消息内容
+  var origin = event.origin; // 获取消息来源
+  if (origin === 'http://child.window.com') { // 判断消息来源
+    console.log('Received message from child window:', message);
+  }
+});
+```
