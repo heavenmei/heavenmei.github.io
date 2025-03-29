@@ -1,0 +1,26 @@
+{
+  "title": "Monorepo",
+  "tags": [
+    "Front"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2025-03-29T00:00:00.000Z",
+  "body": {
+    "raw": "![](assets/2025-03-26-monorepo-20250329055914.png)\n\n\n",
+    "code": "var Component=(()=>{var c=Object.create;var r=Object.defineProperty;var l=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var u=Object.getPrototypeOf,E=Object.prototype.hasOwnProperty;var w=(t,A)=>()=>(A||t((A={exports:{}}).exports,A),A.exports),d=(t,A)=>{for(var e in A)r(t,e,{get:A[e],enumerable:!0})},a=(t,A,e,s)=>{if(A&&typeof A==\"object\"||typeof A==\"function\")for(let n of p(A))!E.call(t,n)&&n!==e&&r(t,n,{get:()=>A[n],enumerable:!(s=l(A,n))||s.enumerable});return t};var h=(t,A,e)=>(e=t!=null?c(u(t)):{},a(A||!t||!t.__esModule?r(e,\"default\",{value:t,enumerable:!0}):e,t)),x=t=>a(r({},\"__esModule\",{value:!0}),t);var g=w((B,i)=>{i.exports=_jsx_runtime});var M={};d(M,{default:()=>C,frontmatter:()=>D});var o=h(g()),D={title:\"Monorepo\",subtitle:null,layout:\"post\",date:new Date(17432064e5),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"Front\"],image:null};function m(t){let A=Object.assign({p:\"p\",img:\"img\"},t.components);return(0,o.jsx)(A.p,{children:(0,o.jsx)(A.img,{src:\"/post/assets/2025-03-26-monorepo-20250329055914.png\",alt:\"\",width:\"2674\",height:\"1466\",blurDataURL:\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAMAAACEE47CAAAAD1BMVEX39/fr7e3v8vHm5eXc6OV5Rmq2AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAH0lEQVR4nB3GsQ0AAAgDIFr9/2YTmYCkpTHTrXwSfBwDDwAtVrERxQAAAABJRU5ErkJggg==\"})})}function f(t={}){let{wrapper:A}=t.components||{};return A?(0,o.jsx)(A,Object.assign({},t,{children:(0,o.jsx)(m,t)})):m(t)}var C=f;return x(M);})();\n;return Component;"
+  },
+  "_id": "post/2025-03-29-monorepo.md",
+  "_raw": {
+    "sourceFilePath": "post/2025-03-29-monorepo.md",
+    "sourceFileName": "2025-03-29-monorepo.md",
+    "sourceFileDir": "post",
+    "contentType": "markdown",
+    "flattenedPath": "post/2025-03-29-monorepo"
+  },
+  "type": "Post",
+  "parDir": "post",
+  "slug": "/post/2025-03-29-monorepo",
+  "slugAsParams": "2025-03-29-monorepo"
+}

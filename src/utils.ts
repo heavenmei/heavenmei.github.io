@@ -12,3 +12,14 @@ export function formatDate(
 ) {
   return dayjs(date).format(format);
 }
+
+
+export function buildQueryString(queryParams: any) {
+  const queryString = Object.keys(queryParams)
+    .map((key) => {
+      const value = queryParams[key];
+      return value && `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join("&");
+  return queryString;
+}

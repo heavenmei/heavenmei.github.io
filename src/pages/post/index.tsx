@@ -6,7 +6,7 @@ import { Pagination } from "@nextui-org/react";
 import { allDocuments, Post, Note } from "contentlayer/generated";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
-import { formatDate } from "@/utils";
+import { formatDate, buildQueryString } from "@/utils";
 import config from "@/configs";
 import MySideBar from "@/components/MySideBar";
 import SingleLine from "@/components/lines/SingleLine";
@@ -23,14 +23,15 @@ const PostList: FC = () => {
   const page = parseInt(router.query.page as string) || 1;
 
   const [postFiles, setPostFiles] = useState<PageType[]>([]);
+  const [total, setTotal] = useState<number>(0);
 
-  const allFiles = useMemo(
-    () =>
-      allDocuments
-        .filter((item) => (id ? item.parDir === id : true))
-        .sort((a, b) => dayjs(b.date).diff(dayjs(a.date))),
-    [id]
-  );
+  const allFiles = useMemo(() => {
+    const allF = allDocuments
+      .filter((item) => (id ? item.parDir === id : true))
+      .sort((a, b) => dayjs(b.date).diff(dayjs(a.date)));
+    setTotal(allF.length);
+    return allF;
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -38,6 +39,8 @@ const PostList: FC = () => {
     const filterFiles = tag
       ? allFiles.filter((file) => file.tags?.includes(tag))
       : allFiles;
+
+    setTotal(filterFiles.length);
     setPostFiles(filterFiles.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
   }, [allFiles, page, tag]);
 
@@ -110,11 +113,14 @@ const PostList: FC = () => {
             }}
             isCompact
             showControls
-            total={Math.ceil(allFiles.length / PAGE_SIZE)}
+            total={Math.ceil(total / PAGE_SIZE)}
             initialPage={page}
             variant="light"
             onChange={(page) => {
-              router.push(`/post?id=${id}&page=${page}`);
+              router.query.page = page.toString();
+              if (id) router.query.id = id;
+              const params = buildQueryString(router.query);
+              router.push(`/post?${params}`);
             }}
           />
         </div>

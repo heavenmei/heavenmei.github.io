@@ -338,7 +338,3 @@ Garfish 路由系统仅支持主应用的 `history` 路由模式，原因是 has
     
 - 需要承载子应用部署
     
-
-![](https://a1j6nbrw76.feishu.cn/space/api/box/stream/download/asynccode/?code=OTIxYWRmYThlNWM3MDgxZDRkY2RjYTQ2OWY0NDExNGNfZmR5Y3BiZjFUNlpwdjZ2NEN5Z3RwWGM4VFdHT0hUbVVfVG9rZW46Ym94Y24ybGVPQkZIZFFEZXVUVEx3MExRaHhoXzE3MzcyNjk1MTM6MTczNzI3MzExM19WNA)
-
-![](https://a1j6nbrw76.feishu.cn/space/api/box/stream/download/asynccode/?code=YjA5NDY5YTNiNzEyYjExMDUxNTc4ZWRhNmRmNmIzYjRfWDIzUnNUa3AyOXd0aGhVU3pING45NzdQMkc5S2g1eUVfVG9rZW46Ym94Y25IS1R5bHdvYTF3TWFXZjc5OFkwekJmXzE3MzcyNjk1MTM6MTczNzI3MzExM19WNA)

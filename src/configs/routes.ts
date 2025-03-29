@@ -6,7 +6,7 @@ export const routes = [
     navShow: true,
   },
   {
-    path: "/post?id=post",
+    path: "/post",
     name: "post",
     label: "POST",
     navShow: true,

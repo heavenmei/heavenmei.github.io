@@ -11,7 +11,7 @@ import Image from "next/image";
 import config from "@/configs";
 import MenuBar from "./MenuBar";
 import { useRouter } from "next/router";
-
+import { buildQueryString } from "../utils";
 interface MySideBarProps {
   isAvatar?: boolean;
   isTags?: boolean;
@@ -21,16 +21,6 @@ interface MySideBarProps {
 export type MySideBarRefType = {
   activeTag: string | null;
 };
-
-function buildQueryString(queryParams: any) {
-  const queryString = Object.keys(queryParams)
-    .map((key) => {
-      const value = queryParams[key];
-      return value && `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-    })
-    .join("&");
-  return queryString;
-}
 
 const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
   const { isAvatar = false, isTags = false, isMenu } = props;
@@ -58,6 +48,7 @@ const MySideBar = forwardRef<MySideBarRefType, MySideBarProps>((props, ref) => {
 
   const handleTagClick = (tag?: string) => {
     router.query.tag = tag;
+    router.query.page = "1";
     const params = buildQueryString(router.query);
     router.replace(`${router.pathname}?${params}`);
   };

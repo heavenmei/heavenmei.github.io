@@ -20,7 +20,7 @@ JS引擎不是独立运行的，他是运行在宿主环境中 （通常是Web�
 
 **tick**： 循环每一轮称为 tick
 
-**任务队列**：Promise的异步特性。它是挂在事件循环队列每个tick之后的一个队列。在事件循环的每个tick中，可能出现的 异步动作 不会 导致一个完整的新事件添加，而是会在当前tick的任务队列末尾添加一个任务 （==微任务==）
+**任务队列**：存放待执行的任务。任务可以是同步任务或异步任务。它是挂在事件循环队列每个tick之后的一个队列。在事件循环的每个tick中，可能出现的 异步动作 不会 导致一个完整的新事件添加，而是会在当前tick的任务队列末尾添加一个任务 （==微任务==）
 
 [7关！setTimeout+Promise+Async输出顺序？你能过几关！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483940%26idx%3D1%26sn%3D7a97101836c2b697a270bd84707d441f%26chksm%3Dce4617b5f9319ea3e65092ef4a8b977c85cb0c589f89f49cf626df961de0900c2510297f0af9%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
