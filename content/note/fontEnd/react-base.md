@@ -54,9 +54,10 @@ map、filter 遍历数组，将数组的每一项变成一个 JSX 元素。 key 
 
 ## 组件
 
-**3 种定义方式**
+3 种定义方式
 
-- JavaScript Function: 一个 React 组件就是一个函数
+####  Function Component
+一个 React 组件就是一个函数
 
   ```jsx
   function Article(){
@@ -66,7 +67,9 @@ map、filter 遍历数组，将数组的每一项变成一个 JSX 元素。 key 
   }
   ```
 
-- ES6 class:面向对象风格
+
+#### Class
+ES6 class:面向对象风格
 
   ```jsx
   class Article extends React.Component {
@@ -83,23 +86,11 @@ map、filter 遍历数组，将数组的每一项变成一个 JSX 元素。 key 
 
   1. 语法差异：constuctor，render 函数，bind 等等…
   2. hooks 的方法在 Class 组件中均有另一套对应的实现
-  3. <u>
-       function 组件每次渲染都会有独立 props/state ,而 class 组件总是会通过 this
-       拿到最新的 props/state
-     </u>
-  4. class 创建组件，函数成员不会自动绑定 this，需要[手动绑定](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/preview_tpl3/?tpl_id=md&version=0&mount_point=explorer&updatePreviewTplSeed=1&sl=1&source=explorer#bind)
+  3. ==function 组件每次渲染都会有独立 props/state ,而 class 组件总是会通过 this 拿到最新的 props/state==
+  4. class 创建组件，函数成员不会自动绑定 this，需要手动绑定
 
-- React.createClass: 已废弃
 
-  ```jsx
-  const Article = React.createClass({
-    render() {
-      return <div></div>;
-    },
-  });
-  ```
-
-**高阶组件**
+#### 高阶组件
 
 高阶函数：接受值或返回值是函数的函数
 
@@ -123,7 +114,9 @@ const Container = (WrappedComponent) =>{
         render(){
             let newProps = {status:'ok'}
             return <WrappedComponent {...this.props} {...newProps} />
-        }    }}
+        }    
+	}
+}
 ```
 
 ## State
@@ -131,62 +124,56 @@ const Container = (WrappedComponent) =>{
 state 是组件内部的状态，React 把组件看成是一个状态机（State Machines）。
 
 - **不要直接修改 state**。直接修改 state 可以给组件的 state 重新赋值，但无法触发组件的 re-render。
-- **state 的更新可能是异步的**。
-- **调用 steState，React 会把提供的对象合并到当前的 State 中（浅拷贝）**
+- state 的更新可能是**异步**的。
+- 调用 setState，React 会把提供的对象合并到当前的 State 中（**浅拷贝**）
 
 ### 渲染和提交
 
-React 主要分两个阶段执行工作：render 和 commit，当触发更新的时候，react 先进行 render 阶段再进行 commit
+React 主要分两个阶段执行工作：当触发更新的时候，React 先进行 **render** 阶段再进行 commit **阶段**。在不同的阶段会触发不同的 hooks（Function 组件），或者调用不同的生命周期函数（Class 组件）
 
-阶段。在不同的阶段会触发不同的 hooks（Function 组件），或者调用不同的生命周期函数（Class 组件）
+![|500](assets/react-base-20250329085140.png)
 
-![image-20220424101251453](https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204241012423.png)
+![|500](assets/react-base-20250329085157.png)
 
-)
+**React 在一个渲染的事件处理程序中保持 state 固定（快照）**。状态变量的值在渲染中永远不会改变，即使它的事件处理程序的代码是**异步**的。可以理解成 Trigger 阶段确定了订单，就不会变更。
 
-![image-20220424110205496](https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204241102296.png)
+```jsx
+const [number, setNumber] = useState(0);
 
-- **React 在一个渲染的事件处理程序中保持 state“固定（快照）”**
 
-  状态变量的值在渲染中永远不会改变，即使它的事件处理程序的代码是<u>异步</u>的。可以理解成 Trigger 阶段确定了订单，就不会变更。
+//期望 +3 其实只+1
+const handelClick = ()=>{
+	//number是0,下一次渲染时更改number为1
+	setNumber(number + 1);
+	setNumber(number + 1);
+	setNumber(number + 1);
+}
 
-  ```jsx
-  const [number, setNumber] = useState(0);
-  <button onClick={() => {
-          setNumber(number + 1);//setNumber(number + 1):number是0,下一次渲染时更改number为1
-          setNumber(number + 1);//setNumber(number + 1):number是0,下一次渲染时更改number为1
-          setNumber(number + 1);//setNumber(number + 1):number是0,下一次渲染时更改number为1
-          //setNumber(n => n + 1); +3
-      }}>+3</button>
-  //其实只+1,
+const handelClick = ()=>{
+	setNumber(number + 1);
+	setTimeout(() => {
+	  alert(number);//0
+	}, 3000);
+}
 
-  <button onClick={() => {
-          setNumber(number + 5);
-          setTimeout(() => {
-              alert(number);//0
-          }, 3000);
-      }}>+5</button>
-  ```
 
-- **系列状态更新排队执行**（异步）
+<button onClick={handelClick}>{number}</button>
+```
 
-  set 状态变量实际上就是点单状态（连续点单）。React 会等到事件处理程序中的所有代码都运行后，才会 re-render 进入下一次渲染流程。下一步 Trigger 触发。
+**系列状态更新排队执行（异步）**。setState 实际上就是点单状态（连续点单）。React 会等到事件处理程序中的所有代码都运行后，才会 re-render 进入下一次渲染流程。下一步 Trigger 触发。
+![|300](assets/react-base-20250329085225.png)
 
-  ![https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204241019663.png](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fgitee.com%2Fheavenmei%2FLearningNotes%2Fraw%2Fmaster%2Fimg%2F202204241019663.png&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+ **state 只在 re-render 后触发更新** 。 在 re-render 时先计算 state 的更新系列（Trigger），再渲染 DOM 节点（Render），最后呈现（Commit）
+![](assets/react-base-20250329085237.png)
 
-- **state 只在 re-render 后触发更新**  在 re-render 时先计算 state 的更新系列（Trigger），再渲染 DOM 节点（Render），最后呈现（Commit）
-
-  ![image-20220424095200807](https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204240952282.png)
 
 ### 更新对象
 
-**State 保存的状态必须只读，配合 set 改变，不能直接改变你在 React 状态下持有的对象**
+State 保存的状态必须**只读**，配合 setState 改变，不能直接改变持有的对象
 
-> 这里仿佛和 Vue2 里面响应式原理的缺陷差不多，直接更改数组和对象是无法让数据变成响应式触发 re-render 的。
->
-> [Immer](https://security.feishu.cn/link/safety?target=https%3A%2F%2Freactjs.bootcss.com%2Flearn%2Fupdating-objects-in-state%23write-concise-update-logic-with-immer&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)，它 提供的`draft`是一种特殊类型的对象，称为 Proxy。和 Vue3 的响应式改进差不多。可以用来在 React 中避免嵌套太深导致的重复代码
+这里仿佛和 Vue2 里面响应式原理的缺陷差不多，==直接更改数组和对象是无法让数据变成响应式触发 re-render 的==。
 
-创建一个新对象并将其传递给状态设置函数 ，将现有数据复制到其中。
+ [Immer](https://security.feishu.cn/link/safety?target=https%3A%2F%2Freactjs.bootcss.com%2Flearn%2Fupdating-objects-in-state%23write-concise-update-logic-with-immer&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)，它提供的`draft`是一种特殊类型的对象，称为 Proxy。和 Vue3 的响应式改进差不多。可以用来在 React 中避免嵌套太深导致的重复代码。
 
 ```jsx
 const [person, setPerson] = useState({
@@ -202,10 +189,6 @@ setPerson({
   ...person, // Copy the old fields  浅拷贝
   firstName: e.target.value, // But override this one
 });
-//React会把提供的对象合并到当前的State中（浅拷贝）
-setPerson({
-  firstName: e.target.value, // But override this one
-});
 
 //嵌套用法
 setPerson({
@@ -219,9 +202,7 @@ setPerson({
 
 ### 更新数组
 
-避免使用：`arr[0] = 'bird'`，`push()`and `pop()`。
-
-应该：将一个新数组传递给您的状态设置函数。
+避免使用：`arr[0] = 'bird'`，`push()`and `pop()`。应该：将一个新数组传递给您的状态设置函数。
 
 |      | 避免（改变数组）            | 喜欢（返回一个新数组）                                                                                                                                                                                                                               |
 | ---- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -232,6 +213,7 @@ setPerson({
 
 ```jsx
 const [artists, setArtists] = useState([]);
+
 setArtists([
   { id: nextId++, name: name },
   ...artists, // Put old items at the end
@@ -240,17 +222,17 @@ setArtists([
 setArtists(artists.filter((a) => a.id !== artist.id));
 ```
 
-==注意==
 
-即使复制一个数组，也不能直接改变其中(浅拷贝)，可以使用`map`没有突变的更新版本替换旧项目
+注意⚠️：即使复制一个数组，也不能直接改变其中(浅拷贝)，可以使用`map`没有突变的更新版本替换旧项目
 
 ```js
-//哒咩
+// ❌
 const myNextList = [...myList];
 const artwork = myNextList.find(a => a.id === artworkId);
 artwork.seen = nextSeen; // Problem: mutates an existing item
 setMyList(myNextList);
-//应该
+
+// ✅
 setMyList(myList.map(artwork => {
   if (artwork.id === artworkId) {
     // Create a *new* object with changes
@@ -264,83 +246,66 @@ setMyList(myList.map(artwork => {
 
 ## Hook
 
-React 16.8 的新增特性。Hooks 是一系列特殊的函数，可以让你“钩入” React 的特性，即在函数组件中也可以使用 state 及其他 React 特性，不必定义 Class 组件。例如 useState、useContext
+React 16.8 的新增特性。Hooks 是一系列特殊的函数，可以让你“钩入” React 的特性，即在函数组件中也可以使用 state 及其他 React 特性，不必定义 Class 组件。例如 useState、useContext。
 
-### Hook 规则
+[React函数组件和类组件的差异](https://zhuanlan.zhihu.com/p/62767474)
 
-1. 只在最顶层使用 Hook
+#### Hook 统一认识
 
-   **不要在循环，条件或嵌套函数中调用 Hook，**  确保总是在你的 React 函数的最顶层以及任何 return 之前调用他们。遵守这条规则，就能确保 hooks 在每一次渲染中都按照同样的顺序被调用，这让 React 能够在多次的 useState 和 useEffect 调用之间保持 hooks 状态的正确
+1. 每一次渲染都有它自己的 Props && state
+2. 每一次渲染都有它自己的事件处理函数
+3. 每一次渲染都有它自己的 Effects
+4. 每一次渲染都由它自己的...所有
+5. 同步，而非生命周期
 
-2. 只在 React 函数中调用 Hook
+#### Hook 规则
 
-   **不要在普通的 JavaScript 函数中调用 Hook。**你可以：
-
-   - ✅ 在 React 的函数组件中调用 Hook
-   - ✅ 在自定义 Hook 中调用其他 Hook
+1. **只在最顶层和return 之前使用 Hook。不要在循环，条件或嵌套函数中调用 Hook**。 遵守这条规则，就能确保 hooks 在每一次渲染中都按照同样的顺序被调用，这让 React 能够在多次的 useState 和 useEffect 调用之间保持 hooks 状态的正确。
+2. 只在 React 函数中调用 Hook。**不要在普通的 JavaScript 函数中调用 Hook** 你可以：
+	-  ✅ 在 React 的函数组件中调用 Hook
+	- ✅ 在自定义 Hook 中调用其他 Hook
 
 ### useReducer
 
-减速器是处理状态的另一种方式。随着该组件的增长，散布在其中的状态逻辑数量也在增长。为了降低这种复杂性并将所有逻辑保存在一个易于访问的位置，您可以将该状态逻辑移动到组件外部的单个函数中
+减速器是处理状态的另一种方式（多useState）。将所有状态逻辑保存在一个易于访问的位置，移动到组件外部的单个函数中（store）。
 
-您可以通过三个步骤从迁移`useState`到：`useReducer`
 
-1. 从设置状态转移到调度动作。传递给的对象
-
-   ```js
-   function handleDeleteTask(taskId) {
-     dispatch(
-       // "action" object:
-       {
-         type: "deleted",
-         id: taskId,
-       }
-     );
-   }
-   ```
-
-2. 写一个 reducer 函数。
-
-   ```js
-   function tasksReducer(tasks, action) {
-     //(当前状态, 对象声明)
-     switch (action.type) {
-       case "added": {
-         return [
-           ...tasks,
-           {
-             //返回下一个状态
-             id: action.id,
-             text: action.text,
-             done: false,
-           },
-         ];
-       }
-       case "deleted": {
-         return tasks.filter((t) => t.id !== action.id);
-       }
-       default: {
-         throw Error("Unknown action: " + action.type);
-       }
-     }
-   }
-   ```
-
-3. 使用组件中的减速器。
-
-   ```js
-   import { useReducer } from "react";
-   //替换useState
-   const [tasks, dispatch] = useReducer(tasksReducer, initialTasks); //(减速器功能、初始状态)
-   //返回有状态的值、分派函数（将用户操作“分派”到reducer）
-   ```
-
-> 规定
-
+**规定**
 - 按照惯例，通常给 dispatch 一个 type 描述发生了什么的字符串，并在其他字段中传递任何附加信息。
 - 约定在 reducer 中使用 switch 代替 if/else
 
 **[useReducer+Context](https://security.feishu.cn/link/safety?target=https%3A%2F%2Freactjs.bootcss.com%2Flearn%2Fscaling-up-with-reducer-and-context&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)**：实现深层传递，不局限于父子显示传递
+
+```js
+const initialState = { name: '张三', age: 20 };
+
+function reducer(state, action) {
+    switch(action.type) {
+        case 'addAge':
+            return { ...state, age: state.age + 1 };
+        case ...
+        default:
+            return state;
+    }
+}
+
+function App() {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    // 惰性初始化
+    // const [state, dispatch] = useReducer(reducer, initialState, (init) => init);
+	function handleClick(taskId) {
+		dispatch({ type: 'addAge' } );
+	}
+    return (
+        <div>
+            <p>{state.name}今年{state.age}</p>
+            <button onClick={handleClick}>年龄加一</button>
+        </div>
+    );
+}
+```
+
+
 
 ### useEffect
 
@@ -348,9 +313,10 @@ React 16.8 的新增特性。Hooks 是一系列特殊的函数，可以让你“
 
 与  `componentDidMount`  或  `componentDidUpdate`  不同，使用  `useEffect`  调度的 effect 不会阻塞浏览器更新屏幕，这让你的应用看起来响应更快。大多数情况下，effect **不需要同步地执行**。
 
-当你调用  `useEffect`  时，就是在告诉 React 在完成对 DOM 的更改后运行你的“副作用”函数。默认情况下，它在第一次渲染之后和每次更新之后都会执行.不用再去考虑“挂载”还是“更新”.
+当你调用  `useEffect`  时，就是在==告诉 React 在完成对 DOM 的更改后运行你的“副作用”函数==。默认情况下，它在第一次渲染之后和每次更新之后都会执行.不用再去考虑“挂载”还是“更新”.
 
-- 通过函数的返回值清理副作用， React 会在组件卸载的时候执行清除操作。
+
+`return`清理副作用， React 会在组件卸载的时候执行清除操作。
 
 ```js
 useEffect(() => {
@@ -361,7 +327,7 @@ useEffect(() => {
 });
 ```
 
-- 利用第二个参数，控制 useEffect 入参函数的执行，当依赖变化的时候 useEffect 入参函数才会执行，
+利用第二个参数添加依赖，当依赖变化的时候 useEffect 入参函数才会执行，
 
 ```js
 useEffect(() => {
@@ -369,37 +335,67 @@ useEffect(() => {
 }, [count]); // 仅在 count 更改时更新
 ```
 
-### useRef
 
-> 用于缓存数据
+#### ❌错误使用--async
 
-ref 的改变不会重新触发 render，保存不用于渲染的值。你不会经常需要它们。
-
-`useRef`  返回一个可变的 ref 对象，其  `.current`  属性被初始化为传入的参数。返回的 ref 对象在组件的整个生命周期内持续存在。
+每个async函数都会默认返回一个隐式的promise。但是，useEffect不应该返回任何内容。
 
 ```js
-//返回
-{
-  current: 0; // The value you passed to useRef
-}
-//Example
-//组件不会随着每个增量重新渲染。与 state 一样，refs 在重新渲染之间由 React 保留。
-//但是，设置state会重新渲染组件。更改redf不会！
-import { useRef } from "react";
-
-export default function Counter() {
-  let ref = useRef(0);
-
-  function handleClick() {
-    ref.current = ref.current + 1;
-    alert("You clicked " + ref.current + " times!");
-  }
-
-  return <button onClick={handleClick}>Click me! </button>;
-}
+ useEffect(async () => {
+     const result = await axios(
+         'http://localhost/api/v1/search?query=redux',
+     );
+     setData(result.data);
+ }, []);
 ```
 
-**手写 useRef**
+控制台会报Warning
+
+> Warning: useEffect function must return a cleanup function or nothing. Promises and useEffect(async () => …) are not supported, but you can call an async function inside an effect
+
+
+✅正确使用
+
+```js
+useEffect(() => {
+   const fetchData = async () => {
+       const result = await axios(
+           'http://localhost/api/v1/search?query=redux',
+       );
+       setData(result.data);
+   };
+   fetchData();
+}, []);
+
+```
+
+### useRef
+
+useRef 用于缓存数据, ==当需要存放一个数据，需要无论在哪里都取到最新状态时使用==。
+ref 的改变**不会触发 re-render**，保存不用于渲染的值。你不会经常需要它们。
+
+- useRef 的返回值可以被useEffect等依赖忽略掉，current上值的更改也不会通知组件render
+- useRef 的值**存在于整个组件存在周期**
+- useRef 的值存储于 ref.current 上
+
+```js
+// 存储常量
+let ref = useRef(0);
+
+function handleClick() {
+	ref.current = ref.current + 1;
+	alert("You clicked " + ref.current + " times!");
+}
+
+<button onClick={handleClick}>Click me! </button>;
+
+
+// 引用元素
+const domRef = useRef(null);
+<div ref={domRef}></div>
+```
+
+#### 手写 useRef
 
 ```js
 function useRef(initialValue) {
@@ -408,65 +404,44 @@ function useRef(initialValue) {
 }
 ```
 
-**refs 和 state 的区别**
+#### refs 和 state 的区别
 
-| redfs                                     | state                                                                                                                                                                                                                                                   |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 返回`{ current: initialValue }`             | 返回[value, setValue]                                                                                                                                                                                                                                   |
-| 更改时不会触发重新渲染。                  | 更改时触发重新渲染。                                                                                                                                                                                                                                    |
-| 可变的—可在渲染过程之外修改 current       | “不可变”—您必须使用 setState 以排队重新渲染。                                                                                                                                                                                                           |
-| 您不应该在渲染期间读取（或写入）current。 | 您可以随时读取状态。但是，每个渲染都有自己的状态[快照](https://security.feishu.cn/link/safety?target=https%3A%2F%2Freactjs.bootcss.com%2Flearn%2Fstate-as-a-snapshot&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)，不会改变。 |
+| redfs                         | state                            |
+| ----------------------------- | -------------------------------- |
+| 返回`{ current: initialValue }` | 返回[value, setValue]              |
+| 更改时不会触发重新渲染。                  | 更改时触发重新渲染。                       |
+| 可变的—可在渲染过程之外修改 current        | “不可变”—您必须使用 setState 以排队重新渲染。    |
+| 您不应该在渲染期间读取（或写入）current。      | 您可以随时读取状态。但是，每个渲染都有自己的状态快照，不会改变。 |
 
-> 用于获取 DOM 元素
+#### forwardRef 转发 ref 到dom子组件
 
-由 React 管理的 DOM 元素——例如，聚焦一个节点、滚动到它，或者测量它的大小和位置。
+默认情况下 React 不允许组件访问其他组件的 DOM 节点，连自己的孩子都不行。用`forwardRef`让一个组件可以指定它把它的引用“转发”给它的一个孩子.
 
-```js
-import { useRef } from 'react';
-
-export default function Form() {
-   //声明一个ref
-  const inputRef = useRef(null);
-
-  function handleClick() {
-    inputRef.current.focus();
-  }
-
-  return (
-    <>
-      //React将 <input>的 DOM 节点放入inputRef.current.
-      <input ref={inputRef} />
-      <button onClick={handleClick}>
-        Focus the input
-      </button>
-    </>
-  );
-}
-```
-
-使用 forwardRef 实现 转发 dom ref 到子组件。
-
-默认情况下 React 不允许组件访问其他组件的 DOM 节点，连自己的孩子都不行。用`forwardRef`让一个组件可以指定它把它的引用“转发”给它的一个孩子
+`useImperativeHandle` 暴露子组件方法
 
 ```js
 import { forwardRef, useRef } from "react";
 
-//forwardRef声明，这使它选择inputRef从上面接收ref作为第二个参数，该参数是在props之后声明的。
+// 子组件
 const MyInput = forwardRef((props, ref) => {
+  const handleCancel = ()=>{}
+  // 暴露子组件方法
+  useImperativeHandle(ref, () => ({ handleCancel, }));
+
   return <input {...props} ref={ref} />;
 });
 
+// 父组件
 export default function Form() {
   const inputRef = useRef(null);
 
   function handleClick() {
-    inputRef.current.focus();
+	// ref.current 将直接指向 DOM 元素实例。
+    inputRef.current.handleCancel();
   }
 
   return (
     <>
-      //告诉 React 将对应的 DOM 节点放入inputRef.current.
-      但是，由MyInput组件决定是否选择加入 - 默认情况下，它不会。
       <MyInput ref={inputRef} />
       <button onClick={handleClick}>Focus the input</button>
     </>
@@ -474,27 +449,39 @@ export default function Form() {
 }
 ```
 
-### useMemo
+### useCallback & useMemo
 
-数据缓存，依赖变化时，工厂函数会重新执行
+- useMemo: 数据缓存，依赖变化时，工厂函数会重新执行
+- useCallback:  函数缓存，依赖变化时，缓存的函数会更新
+
+`useCallback(fn, deps)`  相当于  `useMemo(() => fn, deps)`。
 
 ```js
+// 缓存数据
 const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
-```
 
-### useCallback
-
-```js
+// 缓存函数
 const memoizedCallback = useCallback(() => {
   doSomething(a, b);
 }, [a, b]);
 ```
 
-数据缓存，依赖变化时，缓存的函数会更新。
 
-把内联回调函数及依赖项数组作为参数传入  `useCallback`，它将返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新。当你把回调函数传递给经过优化的并使用引用相等性去避免非必要渲染（例如  `shouldComponentUpdate`）的子组件时，它将非常有用。
 
-`useCallback(fn, deps)`  相当于  `useMemo(() => fn, deps)`。
+
+
+#### 为什么需要useCallback？
+react中的性能优化。在hooks诞生之前，如果组件包含内部state，我们都是基于class的形式来创建组件。当时我们也知道，react中，性能的优化点在于：
+- 调用`setState`，就会触发组件的重新渲染，无论前后的state是否不同
+- ==父组件更新，子组件也会自动的更新==
+
+
+基于上面的两点，我们通常的解决方案是：
+- 使用`immutable`进行比较，在不相等的时候调用setState；
+- 在`shouldComponentUpdate`中判断前后的props和state，如果没有变化，则返回false来阻止更新。
+
+在hooks出来之后，我们能够使用function的形式来创建包含内部state的组件。但是，使用function的形式，失去了上面的`shouldComponentUpdate`，我们无法通过判断前后状态来决定是否更新。而且，在函数组件中，react不再区分mount和update两个状态，这意味着函数组件的每一次调用都会执行其内部的所有逻辑，那么会带来较大的性能损耗。**因此useMemo 和useCallback就是解决性能问题的杀手锏**。
+
 
 ### 自定义 Hooks
 
@@ -502,9 +489,7 @@ const memoizedCallback = useCallback(() => {
 
 ### flushSync 同步刷新
 
-在 React 中，状态更新是异步的，导致一个问题，数据还未更新就继续执行。
-
-要解决这个问题，你可以强制 React 同步更新（“刷新”）DOM。
+在 React 中，状态更新是异步的，导致一个问题，数据还未更新就继续执行。要解决这个问题，你可以强制 React 同步更新（“刷新”）DOM。
 
 ```js
 import { flushSync } from "react-dom";
@@ -565,10 +550,9 @@ const Sub = (props) => {
 export default Sub;
 ```
 
-> 为什么要用 bind()?
+#### 为什么要用 bind()?
 
-
-*如果传递一个函数名给一个变量，之后通过函数名()的方式进行调用，在方法内部如果使用this 则 this 的指向会丢失。*
+如果传递一个函数名给一个变量，之后通过函数名()的方式进行调用，在方法内部如果使用this 则 this 的指向会丢失。
 
 如果使用 node 环境执行 js 文件则输出 node 相关信息，如嵌入到 html 中则 this
 指向 window 对象
@@ -587,7 +571,7 @@ func();
 
 React 中的 bind 同上方原理一致,在 JSX 中传递的事件不是一个字符串，而是一个函数（如:onClick={this.handleClick}），此时 onClick 即是中间变量，所以处理函数中的 this 指向会丢失。
 
-> react 组件内点击事件的 this 的 3 种指向方法
+#### react 组件内点击事件的 this 的 3 种指向方法
 
 1. 调用函数时**bind**(this)，，this 指向当前实例化对象。 `onClick={this.handleClick1.bind( this )}`
 2. 声明函数时使用**箭头函数**，并在调用时直接使用 this.变量名即可。 `handleClick3 =()=>{console.log( this )}`
@@ -630,7 +614,7 @@ function ThemeShow(props){
     )}
 ```
 
-> Class 形式
+#### Class 形式
 
 父组件 App.js
 
@@ -800,18 +784,20 @@ export default class Boo extends Component {
 }
 ```
 
-### Redux（[全局](https://internal-api-drive-stream.feishu.cn/space/api/box/stream/download/preview_tpl3/?tpl_id=md&version=0&mount_point=explorer&updatePreviewTplSeed=1&sl=1&source=explorer#redux)）
+### Redux（全局）
+
+
 
 ## 生命周期
 
-你可以使用此[生命周期图谱](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fprojects.wojtekmaj.pl%2Freact-lifecycle-methods-diagram%2F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)作为速查表
+你可以使用此[生命周期图谱](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)作为速查表
 
 **Function 组件**
 
-![https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204241521250.png](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fgitee.com%2Fheavenmei%2FLearningNotes%2Fraw%2Fmaster%2Fimg%2F202204241521250.png&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+![|500](assets/react-base-20250329085632.png)
 
 **Class 组件**
 
-![image-20220424152418167](https://gitee.com/heavenmei/LearningNotes/raw/master/img/202204241524903.png)
+![|500](assets/react-base-20250329085510.png)
 
-**生命周期对应**
+

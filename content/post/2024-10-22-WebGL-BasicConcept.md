@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Graphic
+  - CG
 url: 
 image:
 ---

@@ -53,7 +53,11 @@ export default function Article(props: ArticleProps) {
           }}
         >
           <BreadcrumbItem href="/">Home</BreadcrumbItem>
-          <BreadcrumbItem href={`/post?id=${lastBread?.id}`}>
+          <BreadcrumbItem
+            href={`/post${
+              lastBread?.id == "post" ? "" : "?id=" + lastBread?.id
+            }`}
+          >
             {lastBread?.bread}
           </BreadcrumbItem>
           <BreadcrumbItem href="#">{page.title}</BreadcrumbItem>

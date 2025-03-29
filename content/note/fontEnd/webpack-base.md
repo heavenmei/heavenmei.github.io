@@ -1,12 +1,12 @@
 ---
-title: webpack & Vite
-subtitle:
+title: webpack
+subtitle: 
 layout: post
 date: 2022-11-01
 author: heavenmei
 categories:
   - Note
-description:
+description: 
 tags:
   - Front
 image:
@@ -820,5 +820,3 @@ webpack 在运行的生命周期中会广播出许多事件，Plugin 可以监�
 - 生成：以新的 AST 为基础生成代码
 
 想了解如何一步一步实现一个编译器的同学可以移步 Babel 官网曾经推荐的开源项目  [the-super-tiny-compiler](https://security.feishu.cn/link/safety?target=https%3A%2F%2Flink.juejin.cn%3Ftarget%3Dhttps%253A%252F%252Fgithub.com%252Fjamiebuilds%252Fthe-super-tiny-compiler&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
-
-# Vite
