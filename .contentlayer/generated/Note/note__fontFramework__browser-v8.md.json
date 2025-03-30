@@ -1,0 +1,26 @@
+{
+  "title": "浏览器 之 V8引擎",
+  "tags": [
+    "Web"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2024-10-19T00:00:00.000Z",
+  "body": {
+    "raw": "## AST 抽象语法树\n\n抽象语法树 (Abstract Syntax Tree)，简称 AST\n\n\n- [AST explorer 在线生成词法 (✅ 推荐)](https://link.juejin.cn/?target=https%3A%2F%2Fastexplorer.net%2F \"https://astexplorer.net/\")\n- [AST Parser produces syntax tree 词法scanner分析工具](https://link.juejin.cn/?target=https%3A%2F%2Fesprima.org%2Fdemo%2Fparse.html \"https://esprima.org/demo/parse.html\")\n\n## V8 引擎\nV8引擎是由 Google 开发的开源JavaScript 引擎，是 JavaScript **虚拟机**的一种\n\n\n![](assets/bvrowser-v8-20250328095757.png)",
+    "code": "var Component=(()=>{var h=Object.create;var s=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var d=Object.getOwnPropertyNames;var m=Object.getPrototypeOf,g=Object.prototype.hasOwnProperty;var u=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),x=(t,e)=>{for(var r in e)s(t,r,{get:e[r],enumerable:!0})},l=(t,e,r,i)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let a of d(e))!g.call(t,a)&&a!==r&&s(t,a,{get:()=>e[a],enumerable:!(i=p(e,a))||i.enumerable});return t};var E=(t,e,r)=>(r=t!=null?h(m(t)):{},l(e||!t||!t.__esModule?s(r,\"default\",{value:t,enumerable:!0}):r,t)),F=t=>l(s({},\"__esModule\",{value:!0}),t);var o=u((T,A)=>{A.exports=_jsx_runtime});var C={};x(C,{default:()=>N,frontmatter:()=>f});var n=E(o()),f={title:\"\\u6D4F\\u89C8\\u5668 \\u4E4B V8\\u5F15\\u64CE\",subtitle:null,layout:\"post\",date:new Date(1729296e6),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"Web\"],image:null};function c(t){let e=Object.assign({h2:\"h2\",a:\"a\",span:\"span\",p:\"p\",ul:\"ul\",li:\"li\",strong:\"strong\",img:\"img\"},t.components);return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsxs)(e.h2,{id:\"ast-\\u62BD\\u8C61\\u8BED\\u6CD5\\u6811\",children:[(0,n.jsx)(e.a,{className:\"header-anchor\",href:\"#ast-\\u62BD\\u8C61\\u8BED\\u6CD5\\u6811\",children:(0,n.jsx)(e.span,{className:\"icon icon-link\"})}),\"AST \\u62BD\\u8C61\\u8BED\\u6CD5\\u6811\"]}),`\n`,(0,n.jsx)(e.p,{children:\"\\u62BD\\u8C61\\u8BED\\u6CD5\\u6811 (Abstract Syntax Tree)\\uFF0C\\u7B80\\u79F0 AST\"}),`\n`,(0,n.jsxs)(e.ul,{children:[`\n`,(0,n.jsx)(e.li,{children:(0,n.jsx)(e.a,{href:\"https://link.juejin.cn/?target=https%3A%2F%2Fastexplorer.net%2F\",title:\"https://astexplorer.net/\",children:\"AST explorer \\u5728\\u7EBF\\u751F\\u6210\\u8BCD\\u6CD5 (\\u2705 \\u63A8\\u8350)\"})}),`\n`,(0,n.jsx)(e.li,{children:(0,n.jsx)(e.a,{href:\"https://link.juejin.cn/?target=https%3A%2F%2Fesprima.org%2Fdemo%2Fparse.html\",title:\"https://esprima.org/demo/parse.html\",children:\"AST Parser produces syntax tree \\u8BCD\\u6CD5scanner\\u5206\\u6790\\u5DE5\\u5177\"})}),`\n`]}),`\n`,(0,n.jsxs)(e.h2,{id:\"v8-\\u5F15\\u64CE\",children:[(0,n.jsx)(e.a,{className:\"header-anchor\",href:\"#v8-\\u5F15\\u64CE\",children:(0,n.jsx)(e.span,{className:\"icon icon-link\"})}),\"V8 \\u5F15\\u64CE\"]}),`\n`,(0,n.jsxs)(e.p,{children:[\"V8\\u5F15\\u64CE\\u662F\\u7531 Google \\u5F00\\u53D1\\u7684\\u5F00\\u6E90JavaScript \\u5F15\\u64CE\\uFF0C\\u662F JavaScript\\xA0\",(0,n.jsx)(e.strong,{children:\"\\u865A\\u62DF\\u673A\"}),\"\\u7684\\u4E00\\u79CD\"]}),`\n`,(0,n.jsx)(e.p,{children:(0,n.jsx)(e.img,{src:\"/note/fontFramework/assets/bvrowser-v8-20250328095757.png\",alt:\"\",width:\"732\",height:\"376\",blurDataURL:\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAMAAACEE47CAAAAElBMVEVNi/NGh/RclfVUkPNNi+pVi+QzaXEyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIUlEQVR4nBXBgQ0AMAzCsATo/y9Ps2kTrvINxOQuFEE3HgQaADiXL32+AAAAAElFTkSuQmCC\"})})]})}function j(t={}){let{wrapper:e}=t.components||{};return e?(0,n.jsx)(e,Object.assign({},t,{children:(0,n.jsx)(c,t)})):c(t)}var N=j;return F(C);})();\n;return Component;"
+  },
+  "_id": "note/fontFramework/browser-v8.md",
+  "_raw": {
+    "sourceFilePath": "note/fontFramework/browser-v8.md",
+    "sourceFileName": "browser-v8.md",
+    "sourceFileDir": "note/fontFramework",
+    "contentType": "markdown",
+    "flattenedPath": "note/fontFramework/browser-v8"
+  },
+  "type": "Note",
+  "parDir": "note/fontFramework",
+  "slug": "/post/browser-v8",
+  "slugAsParams": "browser-v8"
+}

@@ -8,7 +8,7 @@ categories:
   - Note
 description: 
 tags:
-  - Front
+  - JS
 image:
 ---
 ## this

@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Front
+  - Web
 image:
 ---
 微信小程序真机调试会有包体积限制，单包不能超过2MB，查了一下依赖，大部分是npm构建的依赖。好在微信自己提供的分包的能力

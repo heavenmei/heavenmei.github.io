@@ -28,8 +28,16 @@ const config = {
   ],
   noteList: [
     {
+      id: "note/fontFramework",
+      tag: "前端架构",
+      img: "/images/fontFramework.png",
+      title: "FontFramework",
+      bread: "FontFramework",
+      desc: ``,
+    },
+    {
       id: "note/fontEnd",
-      tag: "前端三件套",
+      tag: "前端入门",
       img: "/images/javaScript.png",
       title: "HTML/CSS/JavaScript",
       bread: "HTML/CSS/JS",

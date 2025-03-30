@@ -8,7 +8,7 @@ categories:
   - Post
 description: 编写markdown文件，利用前端技术栈搭建静态网站，部署GitHub Page
 tags:
-  - Front
+  - Web
 image:
 ---
 

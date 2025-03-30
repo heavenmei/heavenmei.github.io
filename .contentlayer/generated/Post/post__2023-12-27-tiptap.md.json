@@ -1,11 +1,14 @@
 {
   "title": "tiptap接入富文本编辑器",
+  "tags": [
+    "Web"
+  ],
   "author": "heavenmei",
   "url": "/2023-12-27-tiptap",
   "date": "2023-12-27T00:00:00.000Z",
   "body": {
     "raw": "",
-    "code": "var Component=(()=>{var p=Object.create;var o=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var f=Object.getOwnPropertyNames;var _=Object.getPrototypeOf,d=Object.prototype.hasOwnProperty;var g=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),j=(t,e)=>{for(var n in e)o(t,n,{get:e[n],enumerable:!0})},s=(t,e,n,i)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let a of f(e))!d.call(t,a)&&a!==n&&o(t,a,{get:()=>e[a],enumerable:!(i=x(e,a))||i.enumerable});return t};var l=(t,e,n)=>(n=t!=null?p(_(t)):{},s(e||!t||!t.__esModule?o(n,\"default\",{value:t,enumerable:!0}):n,t)),h=t=>s(o({},\"__esModule\",{value:!0}),t);var u=g((X,c)=>{c.exports=_jsx_runtime});var C={};j(C,{default:()=>w,frontmatter:()=>D});var r=l(u()),D={title:\"tiptap\\u63A5\\u5165\\u5BCC\\u6587\\u672C\\u7F16\\u8F91\\u5668\",date:new Date(17036352e5),author:\"heavenmei\",categories:[\"Post\"],url:\"/2023-12-27-tiptap\"};function m(t){return(0,r.jsx)(r.Fragment,{})}function M(t={}){let{wrapper:e}=t.components||{};return e?(0,r.jsx)(e,Object.assign({},t,{children:(0,r.jsx)(m,t)})):m(t)}var w=M;return h(C);})();\n;return Component;"
+    "code": "var Component=(()=>{var p=Object.create;var o=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var f=Object.getOwnPropertyNames;var g=Object.getPrototypeOf,_=Object.prototype.hasOwnProperty;var d=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),j=(t,e)=>{for(var n in e)o(t,n,{get:e[n],enumerable:!0})},i=(t,e,n,s)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let a of f(e))!_.call(t,a)&&a!==n&&o(t,a,{get:()=>e[a],enumerable:!(s=x(e,a))||s.enumerable});return t};var l=(t,e,n)=>(n=t!=null?p(g(t)):{},i(e||!t||!t.__esModule?o(n,\"default\",{value:t,enumerable:!0}):n,t)),h=t=>i(o({},\"__esModule\",{value:!0}),t);var u=d((F,c)=>{c.exports=_jsx_runtime});var w={};j(w,{default:()=>b,frontmatter:()=>D});var r=l(u()),D={title:\"tiptap\\u63A5\\u5165\\u5BCC\\u6587\\u672C\\u7F16\\u8F91\\u5668\",date:new Date(17036352e5),author:\"heavenmei\",categories:[\"Post\"],url:\"/2023-12-27-tiptap\",tags:[\"Web\"]};function m(t){return(0,r.jsx)(r.Fragment,{})}function M(t={}){let{wrapper:e}=t.components||{};return e?(0,r.jsx)(e,Object.assign({},t,{children:(0,r.jsx)(m,t)})):m(t)}var b=M;return h(w);})();\n;return Component;"
   },
   "_id": "post/2023-12-27-tiptap.md",
   "_raw": {

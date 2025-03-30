@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Front
+  - Web
 url: /2023-11-26-react+ts
 image:
 ---

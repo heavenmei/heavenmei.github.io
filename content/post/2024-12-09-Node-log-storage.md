@@ -8,7 +8,7 @@ categories:
   - Post
 description: 
 tags:
-  - Front
+  - Web
 image:
 ---
 > 无论是在开发调试还是线上回溯，我们都会依赖日志 ​

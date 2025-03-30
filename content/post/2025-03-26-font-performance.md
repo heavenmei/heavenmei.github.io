@@ -8,12 +8,14 @@ categories:
   - Note
 description: 
 tags:
-  - Front
+  - Web
 image:
 ---
 > 老生长谈的话题了
 > 
 > [前端性能优化](https://fe-perf.web.bytedance.net/#/network/index?varsion=1)([gitHub](https://code.byted.org/ife/performance-engineering))
+> 
+> [被删的前端游乐场](https://godbasin.github.io/front-end-playground/front-end-basic/)
 
 
 ## 浏览器请求加载
