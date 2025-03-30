@@ -387,6 +387,9 @@ a {
       font-size: 1.2rem;
       display: flex;
       cursor: pointer;
+      .rightArrow {
+        display: none;
+      }
     }
 
     .js-toc {
@@ -446,10 +449,18 @@ a {
   .toc-side {
     max-width: 150px;
     max-height: 60%;
-    overflow: auto;
-    scrollbar-width: none;
     padding: 1rem;
     z-index: 60;
     border-radius: 0.7rem 0 0 0.7rem;
+
+    .rightArrow {
+      display: inline-block !important;
+      filter: brightness(0);
+    }
+
+    .js-toc {
+      overflow: auto;
+      scrollbar-width: none;
+    }
   }
 }

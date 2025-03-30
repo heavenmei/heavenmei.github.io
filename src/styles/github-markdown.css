@@ -49,7 +49,6 @@
     --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
     --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
     --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
-    --color-fg-default: #e6edf3;
     --color-fg-muted: #848d97;
     --color-fg-subtle: #6e7681;
     --color-canvas-default: #0d1117;
@@ -73,23 +72,21 @@
 
     /* 主题颜色 */
     --head-title-color: #cfacfa; /* 标题主色 */
-    --head-title-h2-background: linear-gradient(
-      to right,
-      #e2d0f8,
-      #beaafd
-    ); /* 二级标题主色，因为二级标题是背景色的，所以单独设置 */
+    /* 二级标题主色，因为二级标题是背景色的，所以单独设置 */
+    --head-title-h2-background: linear-gradient(to right, #e2d0f8, #beaafd);
 
     --element-color: #cfa8ff; /* 元素主色 */
     --element-color-deep: #a962ff; /* 元素深色 */
     --element-color-shallow: #dcc1fd; /* 元素浅色 */
-    --element-color-so-shallow: #cfa8ff5c; /* 元素很浅色 */
+    --element-color-so-shallow: #cfa8ff; /* 元素很浅色 */
     --element-color-soo-shallow: #cfa8ff10; /* 元素非常浅色 */
+
+    --color-fg-default: #e6edf3; /* 文字颜色 */
 
     --element-color-linecode: #2c1f3c; /* 行内代码文字色 */
     --element-color-linecode-background: #cfa8ff5c; /* 行内代码背景色 */
 
     /* 程序本体UI */
-
     --appui-color: #546f99; /* 程序UI主题色 */
     --appui-color-icon: #374966; /* 程序UI图标颜色 */
     --appui-color-text: #374966; /* 程序UI文字色 */
@@ -131,7 +128,6 @@
     --color-prettylights-syntax-brackethighlighter-angle: #57606a;
     --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
     --color-prettylights-syntax-constant-other-reference-link: #0a3069;
-    --color-fg-default: #1f2328;
     --color-fg-muted: #656d76;
     --color-fg-subtle: #6e7781;
     --color-canvas-default: #ffffff;
@@ -155,11 +151,8 @@
 
     /* 主题颜色 */
     --head-title-color: #cfacfa; /* 标题主色 */
-    --head-title-h2-background: linear-gradient(
-      to right,
-      #e2d0f8,
-      #beaafd
-    ); /* 二级标题主色，因为二级标题是背景色的，所以单独设置 */
+    /* 二级标题主色，因为二级标题是背景色的，所以单独设置 */
+    --head-title-h2-background: linear-gradient(to right, #e2d0f8, #beaafd);
 
     --element-color: #cfa8ff; /* 元素主色 */
     --element-color-deep: #a962ff; /* 元素深色 */
@@ -167,11 +160,12 @@
     --element-color-so-shallow: #cfa8ff5c; /* 元素很浅色 */
     --element-color-soo-shallow: #cfa8ff10; /* 元素非常浅色 */
 
+    --color-fg-default: #1f2328;
+
     --element-color-linecode: #2c1f3c; /* 行内代码文字色 */
     --element-color-linecode-background: #cfa8ff5c; /* 行内代码背景色 */
 
     /* 程序本体UI */
-
     --appui-color: #546f99; /* 程序UI主题色 */
     --appui-color-icon: #374966; /* 程序UI图标颜色 */
     --appui-color-text: #374966; /* 程序UI文字色 */
@@ -246,6 +240,7 @@ h6:after {
   margin: 1rem 0;
   padding: 1px 12.5px;
   border-radius: 4px;
+  color: #000;
   background: var(--head-title-h2-background);
   background-size: 200% 100%;
   background-position: 0% 0%;
@@ -336,7 +331,7 @@ h6:after {
 
 /* 列表 */
 ::marker {
-  color: #626161;
+  color: #868686;
 }
 
 li.md-list-item {
@@ -477,7 +472,6 @@ li.md-list-item {
 
 /* 超链接 */
 .markdown-body a {
-  color: #000;
   display: inline-block;
 }
 
@@ -499,13 +493,18 @@ li.md-list-item {
 }
 
 .markdown-body p a::before {
-  content: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath  d='M477.934459 330.486594A50.844091 50.844091 0 0 1 406.752731 258.796425L512 152.532274a254.220457 254.220457 0 0 1 359.467726 359.467726L762.66137 618.772592a50.844091 50.844091 0 1 1-71.690168-71.690169l106.772591-106.772592a152.532274 152.532274 0 0 0-215.578947-215.578947z m70.164846 361.501489A50.844091 50.844091 0 1 1 619.789474 762.66137l-107.281033 107.281033A254.220457 254.220457 0 0 1 152.532274 512L259.813307 406.752731a50.844091 50.844091 0 1 1 72.19861 69.656405l-107.789474 107.281033a152.532274 152.532274 0 0 0 215.578947 215.578947z m-126.601788-16.77855a50.844091 50.844091 0 1 1-71.690168-71.690169l251.678252-251.678252a50.844091 50.844091 0 0 1 71.690169 71.690169z'/%3E%3C/svg%3E");
-  color: #f68800;
+  content: " ";
   display: inline-block;
   width: 1em;
   height: 1em;
   margin-right: 0.2em;
   vertical-align: sub;
+  /* 使用蒙版 让svg 填充颜色 */
+  background-color: var(--color-fg-default);
+  /* -webkit-mask: url("/icons/links.svg") no-repeat 50% 50%; */
+  mask: url("/icons/links.svg") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
 }
 
 .markdown-body a.toc-inner:hover {
@@ -562,7 +561,6 @@ li.md-list-item {
 .markdown-body table tr th,
 .markdown-body table tr td {
   font-size: 0.9rem;
-  color: #000;
 }
 
 .markdown-body table thead {
@@ -1324,6 +1322,7 @@ li.md-list-item {
 }
 .markdown-body.transparent h2 {
   background: none;
+  color: inherit;
 }
 
 .markdown-body.transparent a::before {

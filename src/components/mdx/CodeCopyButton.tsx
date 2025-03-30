@@ -22,7 +22,7 @@ const CodeCopyButton = ({ text }: { text: string; isTitle?: boolean }) => {
           onClick={copy}
           aria-label="Copy code"
           type="button"
-          className="ease flex h-6 w-6 items-center justify-center rounded-md p-1 transition-all duration-200 absolute right-3 top-3 z-50 opacity-0  group-hover:opacity-100"
+          className="ease flex h-6 w-6 items-center justify-center rounded-md p-1 transition-all duration-200 absolute right-3 top-3 z-1 opacity-0  group-hover:opacity-100"
         >
           {isCopied ? (
             <svg

@@ -1208,10 +1208,28 @@ Promise.prototype.sx_finally = function (fn) {
 
 ## 函数
 
-### 51、call
+### 51、call 多参
 
 ```js
-Function.prototype.sx_call = function (obj, ...args) {
+Function.prototype.my_call = function (obj, ...args) {
+  obj = obj || window;
+  const fn = Symbol();
+  obj[fn] = this;
+  // obj = {
+  //   fn: foo,
+  // };
+  const res = obj[fn](...args);
+  // 释放内存
+  delete obj[fn];
+  return res;
+};
+foo.call(obj); //返回执行结果
+```
+
+### 52、apply 单参
+
+```js
+Function.prototype.my_apply = function (obj, args) {
   obj = obj || window;
   const fn = Symbol();
   obj[fn] = this;
@@ -1221,41 +1239,21 @@ Function.prototype.sx_call = function (obj, ...args) {
 };
 ```
 
-### 52、apply
+### 53、bind 多参返回fn
 
 ```js
-Function.prototype.sx_apply = function (obj, args) {
+Function.prototype.my_bind = function (obj, ...args) {
   obj = obj || window;
-  const fn = Symbol();
-  obj[fn] = this;
-  const res = obj[fn](...args);
-  delete obj[fn];
-  return res;
-};
-```
-
-### 53、bind
-
-```js
-Function.prototype.sx_bind = function (obj, ...args) {
-  obj = obj || window;
-  const fn = Symbol();
-  obj[fn] = this;
   const _this = this;
 
-  const res = function (...innerArgs) {
-    console.log(this, _this);
-    if (this instanceof _this) {
-      this[fn] = _this;
-      this[fn](...[...args, ...innerArgs]);
-      delete this[fn];
+  return function F(...innerArgs) {
+    // 判断是否为构造函数 new
+    if (this instanceof F) {
+	    return new _this(...args,...innerArg);
     } else {
-      obj[fn](...[...args, ...innerArgs]);
-      delete obj[fn];
+	    return _this.apply(obj, args.contact(innArgs);
     }
   };
-  res.prototype = Object.create(this.prototype);
-  return res;
 };
 ```
 

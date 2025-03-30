@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 // @ts-ignore
 import tocbot from "tocbot";
-
 interface MenuBarProps {
   id?: string;
 }
@@ -46,6 +45,7 @@ const MenuBar = ({ id }: MenuBarProps) => {
       <div className="toc" id={`toc_${id}`}>
         <div className="label" onClick={closeMenu}>
           In this article
+          <img src="/icons/rightArrow.svg" className="rightArrow w-6" />
         </div>
         <nav className="js-toc" id={id}></nav>
       </div>

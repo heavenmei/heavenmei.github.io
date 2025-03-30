@@ -62,7 +62,7 @@ const NoteDir = () => {
                   </div>
                   <div className="text-secondary text-sm">{item.desc}</div>
                 </div>
-                <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40" />
+                <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40 max-h-[200px]" />
               </Link>
             </div>
           ))}

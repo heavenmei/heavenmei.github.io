@@ -136,7 +136,10 @@ export default function Home() {
                 </div>
               </div>
 
-              <img src={item.img} className="mt-2 lg:mt-0 lg:ml-2 lg:h-40" />
+              <img
+                src={item.img}
+                className="mt-2 lg:mt-0 lg:ml-2 lg:h-40 max-w-sm"
+              />
             </div>
           </div>
         ))}
