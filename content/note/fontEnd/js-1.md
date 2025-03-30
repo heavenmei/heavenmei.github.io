@@ -230,14 +230,16 @@ id1.description // id
 ```
 
 
-symbol 有两个主要的使用场景：
 
-1. “隐藏” 对象属性。
-    如果我们想要向“属于”另一个脚本或者库的对象添加一个属性，我们可以创建一个 symbol 并使用它作为属性的键。symbol 属性不会出现在 `for..in` 中，因此它不会意外地被与其他属性一起处理。并且，它不会被直接访问，因为另一个脚本没有我们的 symbol。因此，该属性将受到保护，防止被意外使用或重写。
+#### Symbol的应用场景？
 
-    因此我们可以使用 symbol 属性“秘密地”将一些东西隐藏到我们需要的对象中，但其他地方看不到它。
+- 使用Symbol充当属性名
+- 使用Symbol充当变量
+- 使用Symbol实现私有属性
+- JavaScript 使用了许多系统 symbol，这些 symbol 可以作为 `Symbol.*` 访问。我们可以使用它们来改变一些内建行为。例如，我们使用 `Symbol.iterator` 来进行 [迭代](https://zh.javascript.info/iterable) 操作，使用 `Symbol.toPrimitive` 来设置 [对象原始值的转换](https://zh.javascript.info/object-toprimitive) 等等。
+- “隐藏” 对象属性。如果我们想要向“属于”另一个脚本或者库的对象添加一个属性，我们可以创建一个 symbol 并使用它作为属性的键。symbol 属性不会出现在 `for..in` 中，因此它不会意外地被与其他属性一起处理。并且，它不会被直接访问，因为另一个脚本没有我们的 symbol。因此，该属性将受到保护，防止被意外使用或重写。因此我们可以使用 symbol 属性“秘密地”将一些东西隐藏到我们需要的对象中，但其他地方看不到它。
+
 ```js
- 
 let user = { // 属于另一个代码
   name: "John"
 };
@@ -248,7 +250,7 @@ user[id] = 1;
 
 alert( user[id] ); // 我们可以使用 symbol 作为键来访问数据
 ```
-2. JavaScript 使用了许多系统 symbol，这些 symbol 可以作为 `Symbol.*` 访问。我们可以使用它们来改变一些内建行为。例如，我们使用 `Symbol.iterator` 来进行 [迭代](https://zh.javascript.info/iterable) 操作，使用 `Symbol.toPrimitive` 来设置 [对象原始值的转换](https://zh.javascript.info/object-toprimitive) 等等。
+
 
 ### Object 
 
@@ -429,7 +431,7 @@ jQuery 中就是使用的该方法：jQuery.name，简便写法：**$()**
 
 作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。
 
-> 作用域链
+#### 作用域链
 
 一般情况下，变量取值到 创建 这个变量 的函数的作用域中取值
 
@@ -579,7 +581,7 @@ now.toGMTString();
 
 ### RegExp (todo)
 
-正则表达式
+正则表达式: [有了这25个正则表达式，代码效率提高80%](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247483954%26idx%3D1%26sn%3D18489d9cbcd0562a017094058bc91610%26chksm%3Dce4617a3f9319eb59a7e64703f87098382aa952f9d86f45b05c2ce47b0f248776276f453bdd4%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
 ### Global
 

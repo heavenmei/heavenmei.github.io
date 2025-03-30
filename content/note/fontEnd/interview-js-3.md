@@ -71,6 +71,11 @@ var myNewAjax = function (url) {
 
 ### 2、实现 new 过程
 
+- 1、创建一个空对象
+- 2、继承构造函数的原型
+- 3、this指向obj，并调用构造函数
+- 4、返回对象
+
 ```js
 function myNew(fn, ...args) {
   const obj = {};
@@ -106,6 +111,11 @@ const shuffle = (arr) => {
 ```
 
 ### 4、防抖函数
+
+| 操作  | 描述                             | 场景                                                                       |
+| --- | ------------------------------ | ------------------------------------------------------------------------ |
+| 防抖  | 频繁触发但是只触发**最后一次**<br />期间清空定时器 | 1、电脑息屏时间，每动一次电脑又重新计算时间<br /> 2、input框变化频繁触发事件可加防抖 <br />3、频繁点击按钮提交表单可加防抖 |
+| 节流  | 频繁触发但是只出发**第一次**<br />期间多次触发不管 | 1、滚动频繁请求列表可加节流 <br />2、游戏里长按鼠标，但是动作都是每隔一段时间做一次                           |
 
 ```js
 function debounce(fn, delay) {
@@ -247,7 +257,9 @@ console.log(a(2)(3)); // 1 + 2 + 3=6
 
 ### 11、LRU 算法
 
-![](https://mmbiz.qpic.cn/mmbiz_png/TZL4BdZpLdhZtq6QIIcbqvEExAwZM0OvXV9pxQQX9iaIDegK2J9xAwcZNz4B3kls1yOj5hchzgjegTwhxM3V4lw/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+最近最少使用算法（Least Recently Use），广泛的应用于缓存机制中。当缓存使用的空间达到上限后，就需要从已有的数据中淘汰一部分以维持缓存的可用性，而淘汰数据的选择就是通过LRU算法完成的。
+
+[146. LRU 缓存](https://leetcode.cn/problems/lru-cache/)
 
 ```js
 class LRUCache {
@@ -812,6 +824,25 @@ Array.prototype.sx_forEach = (cb) => {
     cb && cb(this[i], i, this);
   }
 };
+```
+
+#### forEach如何跳出循环？
+throw-catch
+
+```js
+function getItemById(arr, id) {
+  var item = null;
+  try {
+    arr.forEach(function (curItem, i) {
+      console.log(i)
+      if (curItem.id == id) {
+        item = curItem;
+        throw Error();
+      }
+    })
+  } catch (e) {}
+  return item;
+}
 ```
 
 ### 27、map

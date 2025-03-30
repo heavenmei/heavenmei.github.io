@@ -13,7 +13,6 @@ export function formatDate(
   return dayjs(date).format(format);
 }
 
-
 export function buildQueryString(queryParams: any) {
   const queryString = Object.keys(queryParams)
     .map((key) => {

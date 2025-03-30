@@ -40,6 +40,7 @@ console.log(Number.MAX_SAFE_INTEGER);
 // 9007199254740991
 console.log(Number.MIN_SAFE_INTEGER);
 // -9007199254740991
+Number.Inifity
 ```
 
 ### 3、深拷贝与浅拷贝的区别？
@@ -334,7 +335,9 @@ console.log(fun); // fun (name) {}
 
 `e.preventDefault`： 阻止事件默认行为
 
-`e.target` 和 `e.currenttarget`：target 指向被点击的对象，而 currentTarget 指向当前事件活动的对象，通常是事件的祖元素。
+
+- `e.target`：**触发**事件的元素，被点击的对象（不变）
+- `e.currentTarget`：**绑定**事件的元素，当前事件活动的对象，通常是事件的祖元素（变）
 
 
 **绑定点击事件有几种方式？**（3 种）
@@ -597,7 +600,7 @@ console.log(cat instanceof Cat); // true
 
 缺点：
 
-- 1、<mark>**调用了两次父类构造函数**，生成了两份实例（子类实例将子类原型上的那份屏蔽了）</mark>
+- 1、**调用了两次父类构造函数**，生成了两份实例（子类实例将子类原型上的那份屏蔽了）
 
 #### 6、寄生组合继承
 
@@ -737,25 +740,25 @@ console.log(obj.fn()); // undefined
 
 ### 40、数组的常用方法有哪些？
 
-| 方法    | 作用                           | 是否影响原数组 |
-| ------- | ------------------------------ | -------------- |
-| push    | 在数组后添加元素，返回长度     | ✅             |
-| pop     | 删除数组最后一项，返回被删项   | ✅             |
-| shift   | 删除数组第一项，返回被删项     | ✅             |
-| unshift | 数组开头添加元素，返回长度     | ✅             |
-| reserve | 反转数组，返回数组             | ✅             |
-| sort    | 排序数组，返回数组             | ✅             |
-| splice  | 截取数组，返回被截取部分       | ✅             |
-| join    | 将数组变字符串，返回字符串     | ❌             |
-| concat  | 连接数组                       | ❌             |
-| map     | 相同规则处理数组项，返回新数组 | ❌             |
-| forEach | 遍历数组                       | ❌             |
-| filter  | 过滤数组项，返回符合条件的数组 | ❌             |
-| every   | 每一项符合规则才返回 true      | ❌             |
-| some    | 只要有一项符合规则就返回 true  | ❌             |
-| reduce  | 接受上一个 return 和数组下一项 | ❌             |
-| flat    | 数组扁平化                     | ❌             |
-| slice   | 截取数组，返回被截取区间       | ❌             |
+| 方法      | 作用                  | 是否影响原数组 |
+| ------- | ------------------- | ------- |
+| push    | 在数组后添加元素，返回长度       | ✅       |
+| pop     | 删除数组最后一项，返回被删项      | ✅       |
+| shift   | 删除数组第一项，返回被删项       | ✅       |
+| unshift | 数组开头添加元素，返回长度       | ✅       |
+| reserve | 反转数组，返回数组           | ✅       |
+| sort    | 排序数组，返回数组           | ✅       |
+| splice  | 截取数组，返回被截取部分        | ✅       |
+| join    | 将数组变字符串，返回字符串       | ❌       |
+| concat  | 连接数组                | ❌       |
+| map     | 相同规则处理数组项，返回新数组     | ❌       |
+| forEach | 遍历数组                | ❌       |
+| filter  | 过滤数组项，返回符合条件的数组     | ❌       |
+| every   | 每一项符合规则才返回 true     | ❌       |
+| some    | 只要有一项符合规则就返回 true   | ❌       |
+| reduce  | 接受上一个 return 和数组下一项 | ❌       |
+| flat    | 数组扁平化               | ❌       |
+| slice   | 截取数组，返回被截取区间        | ❌       |
 
 ### 41、Math 的常用方法有哪些？
 
@@ -793,48 +796,56 @@ console.log(n);
 // YYYY-MM-DDTHH:mm:ss.sssZ
 ```
 
-### 46、如何在 JS 中编码和解码 URL
+### 46、encodeURI & encodeURIComponent 
 
-- 编码：encodeURI()
-- 解码：decodeURI()
-
-### 47、什么是 BOM？有哪些 api？
-
-BOM 就是`browser object model`，`浏览器对象模型`
-
-| api                | 作用                 | 代表方法或属性                                                                                                                                                                                                                                                                                                                           |
-| ------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| window.history     | 操纵浏览器的记录     | history.back() history.go(-1)                                                                                                                                                                                                                                                                                                            |
-| window.innerHeight | 获取浏览器窗口的高度 |                                                                                                                                                                                                                                                                                                                                          |
-| window.innerWidth  | 获取浏览器窗口的宽度 |                                                                                                                                                                                                                                                                                                                                          |
-| window.location    | 操作刷新按钮和地址栏 | location.host：获取域名和端口 <br />location.hostname：获取主机名<br />location.port：获取端口号<br /> location.pathname：获取 url 的路径<br /> location.search：获取?开始的部分<br /> location.href：获取整个 url <br />location.hash：获取#开始的部分 <br />location.origin：获取当前域名<br /> location.navigator：获取当前浏览器信息 |
-
-### 48、BOM 和 DOM 的关系
-
-**BOM**全称 Browser Object Model，即浏览器对象模型，主要处理浏览器窗口和框架。
-
-DOM 全称 Document Object Model，即文档对象模型，是 HTML 和 XML 的应用程序接口（API），遵循 W3C 的标准，所有浏览器公共遵守的标准。
-
-JS 是通过访问**BOM**（Browser Object Model）对象来访问、控制、修改客户端(浏览器)，由于**BOM**的 window 包含了 document，window 对象的属性和方法是直接可以使用而且被感知的，因此可以直接使用 window 对象的 document 属性，通过 document 属性就可以访问、检索、修改 XHTML 文档内容与结构。因为 document 对象又是 DOM 的根节点。
-
-可以说，BOM 包含了 DOM(对象)，浏览器提供出来给予访问的是 BOM 对象，从 BOM 对象再访问到 DOM 对象，从而 js 可以操作浏览器以及浏览器读取到的文档。
-
-### 49、JS 中的 substr()和 substring()函数有什么区别
-
-substr() 函数的形式为`substr(startIndex,length)`。它从 startIndex 返回子字符串并返回'length'个字符数。
-
+- `encodeURI()` / `decodeURI()`：用于对完整 URL 进行编码
+- `encodeURIComponent()` / `decodeURIComponent()`：用于编码 URI 部分，例如查询字符串
+- `new URLSearchParams('?name=John&age=30')` ：string —> obj
 ```js
-var s = "hello";
-s.substr(1, 4) == "ello"; // true
+encodeURI('https://example.com/path to a document.pdf')
+// 空格 -> %20
+// 'https://example.com/path%20to%20a%20document.pdf'
+
+
+`http://example.com/?search=${encodeURIComponent('encode & decode param')}`
+// & -> %26
+// 'http://example.com/?search=encode%20%26%20decode%20param'
 ```
 
-substring() 函数的形式为`substring(startIndex,endIndex)`。它返回从 startIndex 到 endIndex - 1 的子字符串。
+### 47、arguments对象
 
 ```js
-var s = "hello";
-s.substring(1, 4) == "ell"; // true
+function fn1 () {
+  console.log(arguments)
+}
+
+fn1(1, 2, 3)
+// [Arguments] { '0': 1, '1': 2, '2': 3 }
+
+
+const fn2 = () => {
+  console.log(arguments)
+}
+fn2(1, 2, 3)
+// arguments is not defined
 ```
 
-### 50、解释一下 "use strict" ?
+### 48、监听ajax上传进度
 
-“use strict”是 Es5 中引入的 js 指令。使用“use strict”指令的目的是强制执行严格模式下的代码。在严格模式下，咱们不能在不声明变量的情况下使用变量。早期版本的 js 忽略了“use strict”。
+```js
+//【上传进度调用方法实现】
+xhr.upload.onprogress = progressFunction
+```
+
+### 49、['1', '2', '3'].map(parseInt)
+
+- parseInt('1', 0) //0为十进制
+- parseInt('2', 1) //没有一进制
+- parseInt('3', 2) // 二进制没有3
+
+```js
+[1, NaN, NaN]
+```
+
+将数组index作为第二个参数，parseInt第二参数指定转换进制
+

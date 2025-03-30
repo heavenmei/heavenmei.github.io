@@ -1,5 +1,5 @@
 ---
-title: Webpack 热更新 HMR
+title: webpack 热更新 HMR
 subtitle: 
 layout: post
 date: 2022-11-03
@@ -50,6 +50,9 @@ module.exports = {
 10. HotModulePlugin 将会对新旧模块进行对比，决定是否更新模块，在决定更新模块后，检查模块之间的依赖关系，更新模块的同时更新模块间的依赖引用。
 11. 当 HMR 失败后，回退到 live reload 操作，浏览器刷新
 ## Fast Refresh
+
+
+
 
 
 

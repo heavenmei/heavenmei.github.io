@@ -44,4 +44,33 @@ JS引擎不是独立运行的，他是运行在宿主环境中 （通常是Web�
 Promise可以解决控制反转问题。任何具有 `then`方法的对象和函数就是Promise。
 - 链式流
 
+#### async/await
 
+是`generator + Promise`的语法糖，主要的作用是**用同步方式执行异步操作**，`await`只能在`async函数`中使用，`async函数`执行会返回一个`Promise`，值由函数的return值所决定
+
+
+#### async/await如何检测报错？
+
+```js
+/** 
+* @param { Promise } 传进去的请求函数 
+* @param { Object= } errorExt - 拓展错误对象 
+* @return { Promise } 返回一个Promise 
+*/
+export function to(
+  promise,  errorExt
+) {
+  return promise
+    .then(data => [null, data])
+    .catch(err => {
+      if (errorExt) {
+        const parsedError = Object.assign({}, err, errorExt)
+        return [parsedError, undefined]
+      }
+
+      return [err, undefined]
+    })
+}
+
+export default to
+```

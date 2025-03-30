@@ -22,13 +22,13 @@ Soc 原则：关注点分离原则 Vue 的核心库只关注视图层，方便�
 
 HTML（结构）：超文本标记语言（Hyper Text Markup Language），决定网页的结构和内容 CSS（表现）：层叠样式表（Cascading Style Sheets），设定网页的表现样式。 JavaScript（行为）：是一种弱类型脚本语言，其源码不需经过编译，而是由浏览器解释运行，用于控制网页的行为
 
-#### 1.4、表现层（CSS）
-
-> 什么是 CSS 预处理器
+#### 1.4、表现层 CSS 预处理器
 
 用一种专门的编程语言，进行 Web 页面样式设计，再通过编译器转化为正常的 CSS 文件，以供项目使用。
 
-**SASS**：基于 Ruby ，通过服务端处理，功能强大。解析效率高。需要学习 Ruby 语言，上手难度高于 LESS。 **LESS**：基于 NodeJS，通过客户端处理，使用简单。功能比 SASS 简单，解析效率也低于 SASS，但在实际开发中足够了，所以如果我们后台人员如果需要的话，建议使用 LESS。
+**SASS**：基于 Ruby ，通过服务端处理，功能强大。解析效率高。需要学习 Ruby 语言，上手难度高于 LESS。
+
+**LESS**：基于 NodeJS，通过客户端处理，使用简单。功能比 SASS 简单，解析效率也低于 SASS，但在实际开发中足够了，所以如果我们后台人员如果需要的话，建议使用 LESS。
 
 #### 1.5、行为层（JavaScript）
 
@@ -42,15 +42,16 @@ TypeScript 是一种由微软开发的自由和开源的编程语言。它是 Ja
 
 > JavaScript 框架
 
-**JQuery**：大家熟知的 JavaScript 库，优点就是简化了 DOM 操作，缺点就是 DOM 操作太频繁，影响前端性能；在前端眼里使用它仅仅是为了兼容 IE6，7，8； **Angular**：Google 收购的前端框架，由一群 Java 程序员开发，其特点是将后台的MVC 模式搬到了前端并增加了模块化开发的理念，与微软合作，采用了 TypeScript 语法开发；对后台程序员友好，对前端程序员不太友好；最大的缺点是版本迭代不合理（如 1 代–>2 代，除了名字，基本就是两个东西；截止发表博客时已推出了 Angular6） **React**：Facebook 出品，一款高性能的 JS 前端框架；特点是提出了新概念 【虚拟 DOM】用于减少真实 DOM 操作，在内存中模拟 DOM 操作，有效的提升了前端渲染效率；缺点是使用复杂，因为需要额外学习一门【JSX】语言； **Vue**：一款渐进式 JavaScript 框架，所谓渐进式就是逐步实现新特性的意思，如实现模块化开发、路由、状态管理等新特性。其特点是综合了 Angular（模块化）和 React(虚拟 DOM) 的优点； **Axios**：前端通信框架；因为 Vue 的边界很明确，就是为了处理 DOM，所以并不具备通信能力，此时就需要额外使用一个通信框架与服务器交互；当然也可以直接选择使用 jQuery 提供的 AJAX 通信功能；
+**JQuery**：大家熟知的 JavaScript 库，优点就是简化了 DOM 操作，缺点就是 DOM 操作太频繁，影响前端性能；在前端眼里使用它仅仅是为了兼容 IE6，7，8；
 
-> UI 框架
+**Angular**：Google 收购的前端框架，由一群 Java 程序员开发，其特点是将后台的MVC 模式搬到了前端并增加了模块化开发的理念，与微软合作，采用了 TypeScript 语法开发；对后台程序员友好，对前端程序员不太友好；最大的缺点是版本迭代不合理（如 1 代–>2 代，除了名字，基本就是两个东西；截止发表博客时已推出了 Angular6） 
 
-Ant-Design：阿里巴巴出品，基于 React 的 UI 框架 ElementUI、iview、ice：饿了么出品，基于 Vue 的 UI 框架 BootStrap：Teitter 推出的一个用于前端开发的开源工具包 AmazeUI：又叫“妹子 UI”，一款 HTML5 跨屏前端框架
+**React**：Facebook 出品，一款高性能的 JS 前端框架；特点是提出了新概念 【虚拟 DOM】用于减少真实 DOM 操作，在内存中模拟 DOM 操作，有效的提升了前端渲染效率；缺点是使用复杂，因为需要额外学习一门【JSX】语言； 
 
-> JavaScript 构建工具
+**Vue**：一款渐进式 JavaScript 框架，所谓渐进式就是逐步实现新特性的意思，如实现模块化开发、路由、状态管理等新特性。其特点是综合了 Angular（模块化）和 React(虚拟 DOM) 的优点；
 
-Babel：JS 编译工具，主要用于浏览器不支持的 ES 新特性，比如用于编译 TypeScript WebPack：模块打包器，主要作用就是打包、压缩、合并及按序加载
+**Axios**：前端通信框架；因为 Vue 的边界很明确，就是为了处理 DOM，所以并不具备通信能力，此时就需要额外使用一个通信框架与服务器交互；当然也可以直接选择使用 jQuery 提供的 AJAX 通信功能；
+
 
 ### 前端发展史
 
@@ -65,48 +66,20 @@ Babel：JS 编译工具，主要用于浏览器不支持的 ES 新特性，比�
 
 **微信小程序**
 
-详见微信官网，这里就是介绍一个方便微信小程序 UI 开发的框架：WeUI
 
 #### 2.2、后端技术
 
 前端人员为了方便开发也需要掌握一定的后端技术但我们 Java 后台人员知道后台知识体系极其庞大复杂，所以为了方便前端人员开发后台应用，就出现了 Node JS 这样的技术。`Node JS`的作者已经声称放弃 Node JS(说是架构做的不好再加上笨重的 node modules，可能让作者不爽了吧)开始开发全新架构的`Deno` 既然是后台技术，那肯定也需要框架和项目管理工具， Node JS 框架及项目管理工具如下：
 
 - Express：Node JS 框架
-    
 - Koa：Express 简化版
-    
-- NPM：项目综合管理工具，类似于 Maven
-    
-- YARN：NPM 的替代方案，类似于 Maven 和 Gradle 的关系
-    
+- npm：项目综合管理工具，类似于 Maven
+- yarn：NPM 的替代方案，类似于 Maven 和 Gradle 的关系
+- pnpm：更强大的包管理器
+
 
 #### 2.3、主流前端框架
 
-**Vue.js**
-
-**iView**
-
-iview 是一个强大的基于 Vue 的 UI 库， 有很多实用的基础组件比 element ui 的组件更丰富， 主要服务于 PC 界面的中后台产品。使用单文件的 Vue 组件化开发模式基于 npm+webpack+babel 开发， 支持 ES 2015 高质量、功能丰富友好的 API， 自由 iview-admin 备注：属于前端主流框架，选型时可考虑使用，主要特点是移动端支持较多
-
-**Element UI**
-
-Element 是饿了么前端开源维护的 Vue UI 组件库， 组件齐全， 基本涵盖后台所需的所有组件，文档讲解详细， 例子也很丰富。主要用于开发 PC 端的页面， 是一个质量比较高的 Vue UI 组件库。 [vue-element-admin](https://panjiachen.github.io/vue-element-admin-site/zh/) 备注：属于前端主流框架，选型时可考虑使用，主要特点是桌面端支持较多
-
-**ICE**
-
-飞冰是阿里巴巴团队基于 React/Angular/Vue 的中后台应用解决方案， 在阿里巴巴内部， 已经有 270 多个来自几乎所有 BU 的项目在使用。飞冰包含了一条从设计端到开发端的完整链路，帮助用户快速搭建属于自己的中后台应用。 备注：主要组件还是以 React 为主， 截止 2019 年 02 月 17 日更新博客前对 Vue 的支持还不太完善，目前尚处于观望阶段
-
-**VantUI**
-
-Vant UI 是有赞前端团队基于有赞统一的规范实现的 Vue 组件库， 提供了-整套 UI 基础组件和业务组件。通过 Vant， 可以快速搭建出风格统一的页面，提升开发效率。
-
-**AtUI**
-
-at-ui 是一款基于 Vue 2.x 的前端 UI 组件库， 主要用于快速开发 PC 网站产品。它提供了一套 n pm+web pack+babel 前端开发工作流程， CSS 样式独立， 即使采用不同的框架实现都能保持统一的 UI 风格。
-
-**Cube Ul**
-
-cube-ui 是滴滴团队开发的基于 Vue js 实现的精致移动端组件库。支持按需引入和后编译， 轻量灵活；扩展性强，可以方便地基于现有组件实现二次开发。
 
 > 混合开发
 
@@ -134,12 +107,10 @@ WeUI 是一套同微信原生视觉体验一致的基础样式库， 由微信�
 
 为了降低开发的复杂度， 以后端为出发点， 比如：Struts、Spring MVC 等框架的使用， 就是后端的 MVC 时代； 以 SpringMVC 流程为例：
 
-![在这里插入图片描述](https://gitee.com/heavenmei/java-study/raw/master/img/20210908110330.png)
-
 - 发起请求到前端控制器(`Dispatcher Servle`)
-    
+
 - 前端控制器请求`HandlerMapping`查找`Handler`，可以根据`xml`配置、注解进行查找
-    
+
 - 处理器映射器`HandlerMapping`向前端控制器返回`Handler`
     
 - 前端控制器调用处理器适配器去执行`Handler`
@@ -180,11 +151,7 @@ WeUI 是一套同微信原生视觉体验一致的基础样式库， 由微信�
 
 时间回到 2005 年`AJAX`(Asynchronous JavaScript And XML， 异步`JavaScript`和`XML`，老技术新用法)被正式提出并开始使用`CDN`作为静态资源存储， 于是出现了 JavaScript 王者归来的`SPA`(Single Page Application) 单页面应用时代。
 
-![](https://gitee.com/heavenmei/java-study/raw/master/img/20210908144807.png)
-
-**优点** 这种模式下， **前后端的分工非常清晰， 前后端的关键协作点是 AJAX 接口。**看起来是如此美妙， 但回过头来看看的话， 这与 JSP 时代区别不大。复杂度从服务端的 JSP 里移到了浏览器的 JavaScript，浏览器端变得很复杂。类似 Spring MVC， 这个时代开始出现浏览器端的分层架构：
-
-![](https://gitee.com/heavenmei/java-study/raw/master/img/20210908144939.png)
+**优点** ：这种模式下， 前后端的分工非常清晰， 前后端的关键协作点是 AJAX 接口。看起来是如此美妙， 但回过头来看看的话， 这与 JSP 时代区别不大。复杂度从服务端的 JSP 里移到了浏览器的 JavaScript，浏览器端变得很复杂。类似 Spring MVC， 这个时代开始出现浏览器端的分层架构：
 
 **缺点**
 
@@ -196,8 +163,6 @@ WeUI 是一套同微信原生视觉体验一致的基础样式库， 由微信�
 此处的 MV*模式如下：
 
 `MVC`(同步通信为主) ：Model、View、Controller `MVP`(异步通信为主) ：Model、View、Presenter `MVVM`(异步通信为主)：Model、View、View Model 为了降低前端开发复杂度，涌现了大量的前端框架，比如：`Angular` `JS`、`React`、`Vue.js`、`Ember J`S 等， 这些框架总的原则是先按类型分层， 比如 Templates、Controllers、Models， 然后再在层内做切分，如下图：
-
-![在这里插入图片描述](https://gitee.com/heavenmei/java-study/raw/master/img/20210908145207.png)
 
 **优点**
 
@@ -215,9 +180,6 @@ WeUI 是一套同微信原生视觉体验一致的基础样式库， 由微信�
 #### 3.4、Node JS 带来的全栈时代
 
 前端为主的 MV*模式解决了很多很多问题， 但如上所述， 依旧存在不少不足之处。随着 Node JS 的兴起， JavaScript 开始有能力运行在服务端。这意味着可以有一种新的研发模式：
-
-![](https://gitee.com/heavenmei/java-study/raw/master/img/20210908145454.png)
-
 在这种研发模式下，前后端的职责很清晰。对前端来说，两个 UI 层各司其职：
 
 - Front-end Ul layer 处理浏览器层的展现逻辑。通过 CSS 渲染样式， 通过 JavaScript 添加交互功能， HTML 的生成也可以放在这层， 具体看应用场景。

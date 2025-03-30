@@ -34,7 +34,9 @@ MVVM（**Model-View-ViewModel**）是一种软件设计模式，MVVM 的核心�
 
 
 
+## 响应式原理
 
+![](assets/vue-base-20250330105224.png)
 
 
 ## computed 计算属性

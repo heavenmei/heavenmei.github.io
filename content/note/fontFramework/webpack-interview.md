@@ -57,13 +57,11 @@ function webpack(options) {
 ...
 ```
 
-
-
 #### 编译构建
 初始化完成后会调用`Compiler`的`run`来真正启动webpack编译构建流程，主要流程如下：
 
 - `compile` 开始编译,主要是构建一个==`Compilation`对象，该对象是编译阶段的主要执行者==，主要会依次下述流程：执行模块创建、依赖收集、分块、打包等主要任务的对象。
-- `make` 从入口点分析模块及其依赖的模块，创建这些模块对象
+- `make` 从入口点分析模块及其依赖的模块，webpack 会递归的构建一个 **依赖关系图**，这个依赖图包含着应用程序中所需的每个模块。
 - `build-module` 完成模块编译，这里主要调用配置的`loaders`，将我们的模块转成标准的`JS`模块，输出**AST抽象语法树**
 
 
@@ -335,11 +333,21 @@ HMR 的核心就是客户端从服务端拉去更新后的文件，准确的说�
 
 细节请参考[Webpack HMR 原理解析](https://security.feishu.cn/link/safety?target=https%3A%2F%2Flink.juejin.cn%3Ftarget%3Dhttps%253A%252F%252Fzhuanlan.zhihu.com%252Fp%252F30669007&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
+### Tree-Shaking
+
+Tree-Shaking （树摇）是一种**基于 ES Module** 规范的 Dead Code Elimination 技术，它会在运行过程中静态分析模块之间的导入导出，**删除未使用的JS模块**，以此实现打包产物的优化。
+
+Tree Shaking 在 Rollup 中率先实现，Webpack 自 2.0 版本开始接入。
 
 
+>你可以将应用程序想象成一棵树。绿色表示实际用到的源码和库，是树上活的树叶。灰色表示未引用代码，是秋天树上枯萎的树叶。为了除去死去的树叶，你必须摇动（shake）这棵树，使它们落下。
 
-
-
+#### 原理
+1. 先**标记**出模块导出值中哪些没有被用过。标记过程大致可划分为三个步骤：
+	1. `Make` 阶段，收集模块导出变量并记录到模块**依赖关系图 ModuleGraph** 变量中
+	2. `Seal` 阶段，遍历 ModuleGraph 标记模块导出变量有没有被使用。(**标记未使用**)
+	3. 生成产物时，若变量没有被其它模块使用则删除对应的导出语句
+2. 使用 Terser 删掉这些没被用到的导出语句。
 
 
 
