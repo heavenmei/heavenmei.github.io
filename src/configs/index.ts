@@ -30,7 +30,7 @@ const config = {
     {
       id: "note/fontFramework",
       tag: "前端架构",
-      img: "/images/fontFramework.png",
+      img: "/images/React-vue.png",
       title: "FontFramework",
       bread: "FontFramework",
       desc: ``,
@@ -38,8 +38,8 @@ const config = {
     {
       id: "note/fontEnd",
       tag: "前端入门",
-      img: "/images/javaScript.png",
-      title: "HTML/CSS/JavaScript",
+      img: "/images/HTML-CSS-JS.png",
+      title: "HTML/CSS/JS",
       bread: "HTML/CSS/JS",
       desc: ``,
     },
