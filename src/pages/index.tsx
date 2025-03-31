@@ -180,7 +180,7 @@ export default function Home() {
                 <strong className="text-red text-xl font-bold">
                   {item.title}
                 </strong>
-                <div
+                {/* <div
                   className="truncate"
                   dangerouslySetInnerHTML={{
                     __html: item.authors.replace(
@@ -188,7 +188,7 @@ export default function Home() {
                       `<a href="#">Haiwen Huang</a>`
                     ),
                   }}
-                ></div>
+                ></div> */}
                 <div className="line-clamp-2 text-secondary text-sm">
                   {item.desc}
                 </div>
