@@ -792,3 +792,10 @@ Vue 入门：
 - https://www.bilibili.com/video/BV1VE411877C?spm_id_from=333.999.0.0
 
 axios 请求： https://www.bilibili.com/video/BV12J41157k8?spm_id_from=333.999.0.0
+
+
+
+[web前端面试 - 面试官系列](https://vue3js.cn/interview/)
+
+
+[被删的前端游乐场](https://godbasin.github.io/front-end-playground/)
