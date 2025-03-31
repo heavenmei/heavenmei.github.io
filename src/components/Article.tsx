@@ -37,6 +37,7 @@ export default function Article(props: ArticleProps) {
   React.useEffect(() => {
     const showMenu = document.documentElement.clientWidth >= 1024;
     setShowSideBar(showMenu);
+    document.title = page.title;
   }, []);
 
   return page ? (
