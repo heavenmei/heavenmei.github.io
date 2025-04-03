@@ -460,7 +460,11 @@ a {
 
     .js-toc {
       overflow: auto;
-      scrollbar-width: none;
+      scrollbar-width: thin;
+      direction: rtl; // 滚动条放左侧
+      & > .toc-list {
+        direction: ltr; //内容变回正常
+      }
     }
   }
 }

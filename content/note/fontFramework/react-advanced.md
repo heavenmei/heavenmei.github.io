@@ -12,6 +12,57 @@ tags:
 image:
 ---
 
+## React 渲染
+
+更新流程：
+- **trigger**：两种情况触发更新，==初次渲染、state改变==；标记需要更改的组件，解析JSX代码.
+- **render**： ==计算渲染更改==, 生成新的 虚拟DOM，使用differ算法生成更新的DOM操作
+- **commit**：把更改==提交到 DOM== 上， 生成真实DOM，然后交给浏览器渲染引擎
+![|500](assets/react-base-20250329085140.png)
+
+
+![|500](assets/react-base-20250329085510.png)
+
+
+#### render
+
+通过调用 `createRoot` 方法并传入目标 DOM 节点，然后用你的组件调用 `render` 函数完成的；这个过程是**递归**的。
+- **初次渲染时,** React 会调用根组件，将VNode 转化为 `Fiber`树（构造新）
+- **重渲染时,** React 会调用内部状态更新触发了渲染的函数组件。因为，`Fiber` 树已经存在于内存中了，所以 只需计算出 `Fiber` 树中的各个节点的差异
+```js
+const root = createRoot(document.getElementById('root'))
+root.render(<Image />);
+```
+
+
+
+#### commit
+
+根据 `render` 阶段的计算结果，执行更新操作，这个过程是**同步**执行的。
+- **初次渲染**，React 会使用 `appendChild()` DOM API 将其创建的所有 DOM 节点放在屏幕上。
+- **重渲染**，React 将应用最少的必要操作（在渲染时计算！），以使得 DOM 与最新的渲染输出相互匹配。
+
+**React 仅在渲染之间存在差异时才会更改 DOM 节点。**
+
+然后就会走 浏览器渲染 流程。[# 浏览器 之 渲染流程](https://heavenmei.github.io/post/browser-render)
+
+
+### useEffect和useLayoutEffect触发时机
+
+
+|      |  useEffect   |             useLayoutEffect              |
+| ---- | :----------: | :--------------------------------------: |
+| 触发时机 |  浏览器完成渲染之后   | 浏览器把内容真正渲染到界面之前<br/>等价于ComponentDidMount |
+| 阻塞   | ❌（==异步执行==）  |           ✅（==同步执行==）会阻塞浏览器绘制            |
+| 顺序   |      后       |                    先                     |
+|      | 无法获取到最新dom元素 |                    可以                    |
+
+
+
+
+
+
+
 
 ## 虚拟 DOM
 
@@ -48,8 +99,8 @@ var element={
 
 react之所以可以快速更新dom，在于react可以对比虚拟dom，找到差异后，只更新改变的部分。diff算法有很多，比如$DFS算法 O(n^3)  > cito.js  > kivi.jsO(n^2)$。通三个假设优化到$O(n)$。 [react diff 算法详解](https://blog.csdn.net/qdmoment/article/details/88798916)
 
-1. 两个不同类型的元素会产生不同的树
-2. 对于同一层级的一组子元素，他们可以通过唯一 ID 进行区分
+2. 两个不同类型的元素会产生不同的树
+3. 对于同一层级的一组子元素，他们可以通过唯一 ID 进行区分
 
 #### tree diff
 **同层比较，如果节点不存在直接删除创建**。这样只需要对 DOM 树进行一次遍历，就可以完成整个树的比较。复杂度变为$O(n)$。因此不建议进行 DOM 节点跨层级的操作
@@ -101,8 +152,8 @@ PS：副作用：指函数除了返回一个值之外，造成的其他影响，
 
 ####  Fiber 机制无法解决的问题
 
-1. 生命周期内大量的计算任务：由于 Reac Fiber 是以 Fiber 节点作为最小单元，无法在生命周期内对任务进行差分，这些计算任务在执行中途不能被中断
-2. 大量真实 DOM 操作：这部分任务在 Commit 阶段被同步执行，无法中断。过大的 DOM 操作压力只能由浏览器承担。
+4. 生命周期内大量的计算任务：由于 Reac Fiber 是以 Fiber 节点作为最小单元，无法在生命周期内对任务进行差分，这些计算任务在执行中途不能被中断
+5. 大量真实 DOM 操作：这部分任务在 Commit 阶段被同步执行，无法中断。过大的 DOM 操作压力只能由浏览器承担。
 
 ==总的来说，React Fiber 通过将任务切片，以及采用合适的任务调度机制，解决了高优先级任务被阻塞的问题，使应用展示更加流畅==。
 
@@ -118,22 +169,22 @@ PS：副作用：指函数除了返回一个值之外，造成的其他影响，
 
 流程：
 
-1. 在 View 创建 Action
-2. View 发出用户的 Action（动作）即视图层发出的消息（比如mouseClick）
-3. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。
-4. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新
-5. View 收到通知，更新页面
+6. 在 View 创建 Action
+7. View 发出用户的 Action（动作）即视图层发出的消息（比如mouseClick）
+8. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。
+9. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新
+10. View 收到通知，更新页面
 
 
 ### Redux 介绍
 
 三大特性：
 
-1. 单一数据源：全局变量 store
+11. 单一数据源：全局变量 store
 
-2. state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
+12. state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
 
-3. 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
+13. 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
 
 #### Action
 
@@ -339,8 +390,15 @@ export default VisibleTodoList;
 > 只使用 Redux 流程：component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
 #### react-redux 流程
-
 1. Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
 2. connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
 
 > react-redux 流程：component --> actionCreator(data) --> reducer --> component
+
+
+
+## Reference
+
+[React渲染（Render）全过程解析](https://juejin.cn/post/7259253595141095479)
+
+

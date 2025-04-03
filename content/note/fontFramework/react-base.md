@@ -57,7 +57,7 @@ map、filter 遍历数组，将数组的每一项变成一个 JSX 元素。 key 
 3 种定义方式
 
 ####  Function Component
-一个 React 组件就是一个函数
+一个 React 组件就是一个函数。无状态组件，通过hooks实现。 **目的是解决 React 的状态共享以及组件生命周期管理混乱的问题**
 
   ```jsx
   function Article(){
@@ -82,12 +82,13 @@ ES6 class:面向对象风格
   }
   ```
 
-  和 Function 组件区别
+### Class 和 Function 组件区别
 
   1. 语法差异：constuctor，render 函数，bind 等等…
   2. hooks 的方法在 Class 组件中均有另一套对应的实现
-  3. ==function 组件每次渲染都会有独立 props/state ,而 class 组件总是会通过 this 拿到最新的 props/state==
+  3. ==function 组件每次渲染都会有独立 props/state ,而 class 组件通过 this 捕获最新的 props/state==
   4. class 创建组件，函数成员不会自动绑定 this，需要手动绑定
+  5. 
 
 
 #### 高阶组件

@@ -13,7 +13,48 @@ image:
 ---
 ## 大厂手写题
 
-### 1、实现原生 AJAX 封装
+
+### 1、防抖函数
+
+| 操作  | 描述                             | 场景                                                                       |
+| --- | ------------------------------ | ------------------------------------------------------------------------ |
+| 防抖  | 频繁触发但是只触发**最后一次**<br />期间清空定时器 | 1、电脑息屏时间，每动一次电脑又重新计算时间<br /> 2、input框变化频繁触发事件可加防抖 <br />3、频繁点击按钮提交表单可加防抖 |
+| 节流  | 频繁触发但是只出发**第一次**<br />期间多次触发不管 | 1、滚动频繁请求列表可加节流 <br />2、游戏里长按鼠标，但是动作都是每隔一段时间做一次                           |
+
+```js
+function debounce(fn, delay) {
+  let task = null;
+  return function () {
+    if (task) {
+      clearTimeout();
+      task = null;
+    }
+    task = setTimeout(() => {
+      fn.apply(this, arguments);
+    }, delay);
+  };
+}
+```
+
+### 2、节流函数
+
+```js
+function throttle(fn, delay) {
+  let task = null;
+  return function () {
+    if (!task) {
+      task = setTimeout(() => {
+        task = null;
+        fn.apply(this, arguments);
+      }, delay);
+    }
+  };
+}
+```
+
+
+
+### 3、实现原生 AJAX 封装
 
 ```js
 const ajax = {
@@ -69,7 +110,7 @@ var myNewAjax = function (url) {
 };
 ```
 
-### 2、实现 new 过程
+### 4、实现 new 过程
 
 - 1、创建一个空对象
 - 2、继承构造函数的原型
@@ -88,7 +129,7 @@ function myNew(fn, ...args) {
 }
 ```
 
-### 3、打乱一个数组
+### 5、打乱一个数组
 
 ```js
 // 方法1
@@ -108,44 +149,6 @@ const shuffle = (arr) => {
     ]);
   }
 };
-```
-
-### 4、防抖函数
-
-| 操作  | 描述                             | 场景                                                                       |
-| --- | ------------------------------ | ------------------------------------------------------------------------ |
-| 防抖  | 频繁触发但是只触发**最后一次**<br />期间清空定时器 | 1、电脑息屏时间，每动一次电脑又重新计算时间<br /> 2、input框变化频繁触发事件可加防抖 <br />3、频繁点击按钮提交表单可加防抖 |
-| 节流  | 频繁触发但是只出发**第一次**<br />期间多次触发不管 | 1、滚动频繁请求列表可加节流 <br />2、游戏里长按鼠标，但是动作都是每隔一段时间做一次                           |
-
-```js
-function debounce(fn, delay) {
-  let task = null;
-  return function () {
-    if (task) {
-      clearTimeout();
-      task = null;
-    }
-    task = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, delay);
-  };
-}
-```
-
-### 5、节流函数
-
-```js
-function throttle(fn, delay) {
-  let task = null;
-  return function () {
-    if (!task) {
-      task = setTimeout(() => {
-        task = null;
-        fn.apply(this, arguments);
-      }, delay);
-    }
-  };
-}
 ```
 
 ### 6、数组去重

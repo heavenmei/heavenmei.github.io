@@ -849,3 +849,8 @@ xhr.upload.onprogress = progressFunction
 
 将数组index作为第二个参数，parseInt第二参数指定转换进制
 
+
+
+### 50、箭头函数和普通函数的区别
+
+

@@ -223,14 +223,14 @@ HTTPS = HTTP + SSL/TLS （CA数字证书保证服务器身份可信）
 
 ## SSE
 
-HTTP 协议无法做到**服务器主动推送信息**。要想做到除了 WebSocket，还有一种方法即Server-Sent Events。SSE就是服务器向客户端声明，接下来要发送的是流信息（streaming）。SSE是基于HTTP 协议的。
-- WebSocket 是全双工通道，可以双向通信，WebSocket 是一个独立协议。
-- SSE 是单向通道，只能服务器向浏览器发送，基于HTTP 协议的。
+HTTP 协议无法做到**服务器主动推送信息**。要想做到除了 `WebSocket`，还有一种方法即Server-Sent Events。SSE就是服务器向客户端声明，接下来要发送的是流信息（streaming）。SSE是基于HTTP 协议的。
+- WebSocket 是全双工通道，可以**双向通信**，WebSocket 是一个独立协议。
+- SSE 是**单向通道**，只能服务器向浏览器发送，基于HTTP 协议的。
 
 
 [Server-Sent Events 教程](https://www.ruanyifeng.com/blog/2017/05/server-sent_events.html)
 
-SSE 协议就是正常的Http请求，更改请起头相关配置即可
+SSE 协议就是正常的Http请求，==服务端更改==请起头相关配置即可
 ```js
 Content-Type: text/event-stream,utf-8
 Cache-Control: no-cache
@@ -246,11 +246,44 @@ data: a foo event\n\n // 内容
 // 每个message之间用\n\n分隔
 event: foo\n   // 自定义事件，名称 foo，触发客户端的foo监听事件
 data: a foo event\n\n // 内容 
+
 ```
+
+
+
+#### EventSource
+
+EventSource是浏览器已经帮你封装好所需的meesage、open、error等事件，通过标准去使用即可，但**只能是get请求**。如果需要其他请求类型，比如POST，我们也可以自己封装fetch。
+
+- onmessage：默认服务器发送的数据会在这里被监听到，也可以在服务器端通过定义“event: xxx”使用xxx监听
+- open：在成功建立连接后触发，断连后自动重连后也会触发
+- error：出现错误后触发
+- close：用于关闭连接
+```js
+ function createSSE(url) {
+	const eventSource = new EventSource(url);
+	
+	eventSource.onmessage = function (event) {
+	  const data = JSON.parse(event?.data || "{}");
+	  if (data.type === "close") {
+		eventSource.close();
+	  } else {
+		const root = document.getElementById("root");
+		root.innerText += data.msg;
+	  }
+	};
+
+	return eventSource;
+  }
+  const sse = createSSE("http://localhost:3000/sse");
+```
+
 
 #### fetch实现
 
-Fetch 能够处理流式响应，即服务器可以分块发送数据，而不是一次性发送整个文件。
+SSE本质是字节流的传输，**fetch中处理对应的字节流信息**，同样可以实现EventSource的功能。
+
+
 ```js
 fetch('http://localhost:3000')
   .then(response => {
@@ -281,6 +314,7 @@ fetch('http://localhost:3000')
 
 
 
+#### 异常处理
 
 
 
@@ -412,3 +446,62 @@ window.addEventListener('message', function(event) {
   }
 });
 ```
+
+
+
+
+
+
+## 网站安全
+
+前端常见安全问题的7个方面：
+1. iframe
+2. opener
+3. CSRF（跨站请求伪造）
+4. XSS（跨站脚本攻击）
+5. ClickJacking（点击劫持）
+6. HSTS（HTTP严格传输安全）
+7. CND劫持
+
+
+#### XSS（跨站脚本攻击）
+
+通过将恶意得Script代码注入到Web页面中，当用户浏览该页之时，嵌入其中Web里面的Script代码会被执行，从而达到恶意攻击用户的目的
+
+`<script>alert(document.cookie)</script>`
+
+**XSS防御总结**：
+1. 对数据进行Html Encode 处理
+2. CSP HTTP Header，即 Content-Security-Policy、X-XSS-Protection
+	  - 增加攻击难度，配置CSP(本质是建立白名单，由浏览器进行拦截)
+	  - Content-Security-Policy: default-src 'self'-所有内容均来自站点的同一个源（不包括其子域名）
+	  - Content-Security-Policy: default-src 'self' *.trusted.com-允许内容来自信任的域名及其子域名 (域名不必须与CSP设置所在的域名相同)
+	  - Content-Security-Policy: default-src https://yideng.com-该服务器仅允许通过HTTPS方式并仅从yideng.com域名来访问文档
+3. 表单数据规定值的类型：比如一些常见的数字、URL、电话号码、邮箱地址等等做校验判断
+4. 开启浏览器XSS防御：**Http Only cookie**，禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。
+5. 过滤JavaScript 事件的标签。例如 "onclick=", "onfocus" 等等。
+
+#### CSRF（跨站请求伪造）
+
+攻击者**诱导受害者进入第三方网站**，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证（cookie），绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的。
+6. 用户登录a.com，并保留了登录凭证（Cookie）。
+7. 攻击者引诱受害者访问了b.com。
+8. b.com 向 a.com 发送了一个请求：a.com/act=xx。浏览器会默认携带a.com的Cookie。
+9. a.com接收到请求后，对请求进行验证，并确认是用户的凭证，误以为是用户自己发送的请求。
+10. a.com以用户的名义执行了act=xx。攻击完成，攻击者在受害者不知情的情况下，冒充受害者，让a.com执行了自己定义的操作。
+
+**防御**
+- 通过referer、token、Cookie 的 SameSite 属性来检测用户提交。
+- 尽量不要在页面的链接中暴露用户隐私信息。
+- 对于用户修改删除等操作最好都使用post操作 。
+- 避免全站通用的cookie，严格设置cookie的域。
+
+
+[前端安全系列之二：如何防止CSRF攻击](https://juejin.im/post/5bc009996fb9a05d0a055192)
+
+
+
+
+
+
+

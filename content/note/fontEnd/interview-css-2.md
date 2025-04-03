@@ -455,7 +455,111 @@ background-color包括盒子模型中的content+padding
 
 
 
-## 7- 三栏布局(平均分布)
+## 7- 双栏 / 三栏布局
+
+### 双栏布局
+
+一个定宽栏 + 一个自适应的栏
+#### float
+- `float：left`： 左浮左边栏
+- ` margin-left`: 右边模块 撑出内容块做内容展示
+- `overflow: hidden`：为父级元素添加BFC，防止下方元素飞到上方内容
+```html
+<style>
+    .box{
+        overflow: hidden; /* 添加BFC*/
+    }
+    .left {
+        float: left;
+        width: 200px;
+        background-color: gray;
+        height: 400px;
+    }
+    .right {
+        margin-left: 210px;
+        background-color: lightgray;
+        height: 200px;
+    }
+</style>
+<div class="box">
+    <div class="left">左边</div>
+    <div class="right">右边</div>
+</div>
+```
+#### flex:1
+```css
+.box{
+	display: flex;
+}
+.left {
+	width: 100px;
+}
+.right {
+	flex: 1;
+}
+```
+
+
+### 三栏布局
+方法：
+- 两边 float / absolute，中间 margin
+- display: table 实现
+- flex实现 （中间flex：1）
+- grid网格布局
+
+#### 两边 float / absolute，中间 margin
+```html
+<style>
+  .wrap {
+    background: #eee;
+    overflow: hidden;   /* 生成BFC，计算高度时考虑浮动的元素 */
+    position: relative;  /* 绝对定位 定位父元素 */
+  }
+  .left,
+  .right {
+    height: 200px;
+    width: 200px;
+  }
+
+  .left {
+    background: coral;
+    /* 方法 1 */
+    float: left;
+
+    /* 方法 2 */
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .right {
+    background: lightblue;
+    /* 方法 1 */
+    float: right;
+
+    /* 方法 2 */
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .middle {
+    margin: 0 220px;
+    height: 200px;
+    background: lightpink;
+  }
+</style>
+<div class="wrap">
+  <div class="left">左侧</div>
+  <div class="right">右侧</div>
+  <div class="middle">中间</div>
+</div>
+
+
+```
+
+
+
+### 三栏布局（平均分布）
+
 
 ```html
 <style>
@@ -1113,3 +1217,46 @@ $color-tabs-background: $color-red;
 - 失去部分 CSS 的浏览器缓存能力
 
 
+## 12-滚动条放左侧
+
+[MDN scrollbar-width](https://developer.mozilla.org/zh-CN/docs/Web/CSS/scrollbar-width)
+
+#### direction:rtl
+正常情况下滚动条都是在页面的右侧显示
+
+让滚动的父元素使用`direction:rtl`（或与主方向相反的方向），并让滚动元素的内部切换回正常值。
+
+[MDN direction](https://developer.mozilla.org/zh-CN/docs/Web/CSS/direction)
+
+
+```css
+.scroll-wrap {
+	overflow: scroll;
+	scrollbar-width: thin;  /* 滚动条变窄 */
+	direction: rtl; /* 滚动条放左侧 */
+
+	.content{
+		direction: ltr; /* 内容变回正常 */
+	}
+}
+```
+
+
+
+#### 旋转角度
+
+将父对象旋转180度，然后将子对象再向后旋转180度，使其再次垂直
+
+```css
+.scroll-wrap {
+	overflow: scroll;
+	scrollbar-width: thin;  /* 滚动条变窄 */
+	transform: rotate(180deg);
+
+	.content{
+		transform: rotate(-180deg);
+	}
+}
+
+
+```

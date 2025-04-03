@@ -12,7 +12,7 @@ tags:
 image:
 ---
 
-### Tips
+### async & defer
 
 `<script>`
 - 区分大小写 （驼峰）
@@ -23,6 +23,17 @@ image:
 //defer 推迟执行脚本
 <script defer src="..."></script>
 ```
+
+
+`defer`属性告诉浏览器不要等待脚本，浏览器会继续处理 HTML，构建 DOM。该脚本“在后台”加载，然后在 **DOM 完全构建完成后再运行**。
+
+
+`async`属性意味着该脚本是完全独立的，async 脚本在后台加载完就**立即运行**
+- 浏览器不会阻止async脚本
+- 其他脚本也不会等待async脚本，async脚本也不会等待其他脚本
+- `DOMContentLoaded`和async脚本不会互相等待
+    - `DOMContentLoaded`可能在async脚本执行之前触发（如果async脚本在页面解析完成后完成加载）
+    - 或在async脚本执行之后触发（如果async脚本很快加载完成或在 HTTP 缓存中）
 
 
 
