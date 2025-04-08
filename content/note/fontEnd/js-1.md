@@ -71,9 +71,10 @@ Boolean(null) //false
 
 
 ### Number
-- 最值：`Number.MIN_VALUE` ,`Number.MAX_VALUE`
+- 最值：`Number.MIN_VALUE` ,`Number.MAX_VALUE`（$2^{53}-1$）
 - 数值转换：`Number()`用于任何数据类型、`parseInt()`和`parseFloat()`字符串是否包含数值模式
 - `toFix(小数位数)`：返回包含指定小数位数的数值字符串。四舍五入
+- 64位双精度浮点数:  64位存储（1位符号 + 11位指数 + 52位尾数）
 
 ```js
 1.123e3 - //科学计数法

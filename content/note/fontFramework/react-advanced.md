@@ -169,22 +169,20 @@ PS：副作用：指函数除了返回一个值之外，造成的其他影响，
 
 流程：
 
-6. 在 View 创建 Action
-7. View 发出用户的 Action（动作）即视图层发出的消息（比如mouseClick）
-8. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。
-9. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新
-10. View 收到通知，更新页面
+1. 在 View 创建 Action
+2. View 发出用户的 Action（动作）即视图层发出的消息（比如mouseClick）
+3. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。
+4. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新
+5. View 收到通知，更新页面
 
 
 ### Redux 介绍
 
 三大特性：
 
-11. 单一数据源：全局变量 store
-
-12. state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
-
-13. 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
+- 单一数据源：全局变量 store
+- state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。 
+- 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
 
 #### Action
 
@@ -340,7 +338,7 @@ render(
 ```
 
 #### connect
-（高阶组件）连接 React 组件和 Redux Store，当前组件可以通过 prop 获取应用中的 state 和 Action。四个参数
+（高阶组件）==连接 React 组件和 Redux Store，当前组件可以通过 prop 获取应用中的 state 和 Action==。四个参数
 
 - `mapStateToProps()`:指定如何把当前 Redux store state 映射到展示组件的 props 中
 - `mapDispatchToProps()`：接收 dispatch()方法并返回期望注入到展示组件的 props 中的回调方法。
@@ -380,18 +378,94 @@ const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList); 
 export default VisibleTodoList;
 ```
 
+
+
+### Zustand
+
+> [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) 是一个轻量级、简洁且强大的 React 状态管理库，与其他流行的状态管理库（如 Redux、MobX 等）相比，Zustand 的 API 更加简洁明了，学习成本较低，且无需引入繁琐的中间件和配置。
+>
+> 教程：[codthing.github.io/react/zusta…](https://link.juejin.cn/?target=https%3A%2F%2Fcodthing.github.io%2Freact%2Fzustand%2Fzustand-base%2F%23%25E4%25B8%2580%25E5%25AE%2589%25E8%25A3%2585 "https://codthing.github.io/react/zustand/zustand-base/#%E4%B8%80%E5%AE%89%E8%A3%85")
+
+
+`src/store/useStore.ts`
+```js
+import { create } from "zustand";
+
+type GlobalStore = {
+  bears: number;
+
+  increasePopulation: (payload: boolean) => void;
+  removeAllBears: (payload: any) => void;
+  updateBears: (payload: number) => void;
+};
+
+export const useStore = create<GlobalStore>((set) => ({
+  bears: 0,
+  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+  removeAllBears: () => set({ bears: 0 }),
+  updateBears: (newBears) => set({ bears: newBears }),
+}));
+
+```
+
+
+`main.tsx`
+```js
+import { useStore } from "./store/useStore";
+
+function App() {
+  const bears = useStore((state) => state.bears);
+
+  return (
+    <>
+      <h1>{bears} around here...</h1>
+    </>
+  );
+}
+
+```
+
+
+#### Zustand 如何实现精准更新到订阅组件
+```bash
+store 更新 → 执行所有选择器 → 对比新旧选择结果 → 值变化则通知对应组件
+            (state.count)    (oldCount vs newCount)
+```
+
+使用`useStore` 时Zustand 内部会：
+
+1. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
+
+2. **状态对比**：每次 store 更新时，Zustand 会：
+
+    - 用选择器函数从新状态中提取值（如 `newValue = selector(newState)`）
+
+    - 用相同的选择器从旧状态中提取值（如 `oldValue = selector(oldState)`）
+
+    - **严格相等比较`===`** 这两个值
+3. **决定更新**：只有当 `newValue !== oldValue` 时，才会触发组件重新渲染
+
+
+
+#### 与Redux区别
+Zustand 的优势在于：
+1. **无依赖注入**：不需要 `Provider` 包裹，store 是**单例全局可访问**
+2. **更细粒度**：每个 `useStore` 调用独立订阅，不像 Redux 的 `connect` 会订阅整个 state
+3. **零样板代码**：不需要定义 action types/reducers
+
+
 ### 总结
 
 #### 总体流程
 
-1. 首先调用`store.dispatch(action)`，同时用`getState`获取当前的状态树 state 并注册`subscribe(listener)`监听 state 变化
-2. 再调用`combineReducers`并将获取的 state 和 action 传入。combineReducers 会将传入的 state 和 action 传给所有 reducer，并根据 action 的 type 返回新的 state，触发 state 树的更新，我们调用 subscribe 监听到 state 发生变化后用 getState 获取新的 state 数据。
+4. 首先调用`store.dispatch(action)`，同时用`getState`获取当前的状态树 state 并注册`subscribe(listener)`监听 state 变化
+5. 再调用`combineReducers`并将获取的 state 和 action 传入。combineReducers 会将传入的 state 和 action 传给所有 reducer，并根据 action 的 type 返回新的 state，触发 state 树的更新，我们调用 subscribe 监听到 state 发生变化后用 getState 获取新的 state 数据。
 
 > 只使用 Redux 流程：component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
 #### react-redux 流程
-1. Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
-2. connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
+6. Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
+7. connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
 
 > react-redux 流程：component --> actionCreator(data) --> reducer --> component
 

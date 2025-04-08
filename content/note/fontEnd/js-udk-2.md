@@ -254,7 +254,7 @@ b2.speak();
 
 ### ES6的class
 
-- class不是向JavaScript引入了一种新的“类”机制，而是现有`[[prototype]]`委托机制的一种语法糖。
+- class不是向JavaScript引入了一种新的“类”机制，而是现有`[[prototype]]`委托机制的一种**语法糖**。
 - class并不会像传统面向类的语言一样在声明时静态复制所有行为，如果修改或者替换了父“类”中的一个方法，子“类”的所有实例都会受到影响。
 
 
@@ -265,4 +265,39 @@ b2.speak();
     - class字面语法不能声明属性，只能声明方法，可以帮你避免犯错；
     - 可以通过`extends`很自然的扩展对象（子）类型，甚至是内置的对象（子）类型。
 
+#### 继承
 
+ES5 的继承，实质是先创造一个独立的子类的实例对象，然后再将父类的方法添加到这个对象上面，即“**实例在前，继承在后**”
+
+```js
+function SuperType() { 
+ this.colors = ["red", "blue", "green"]; 
+}
+
+function SubType() { 
+ // 继承 SuperType 
+ SuperType.call(this); 
+}
+
+let instance = new SubType();
+```
+
+
+ES6 的继承机制完全不同，实质是**先将父类实例对象的属性和方法，加到this上面（所以必须先调用super方法），然后再用子类的构造函数修改this**，即“继承在前，实例在后”
+
+`super`在这里表示父类的构造函数，用来新建一个父类的实例对象。既可以当作函数使用，也可以当作对象使用。
+
+```js
+class Point { /* ... */ }
+
+class ColorPoint extends Point {
+  constructor(x, y, color) {
+    super(x, y); // 调用父类的constructor(x, y)
+    this.color = color;
+  }
+
+  toString() {
+    return this.color + ' ' + super.toString(); // 调用父类的toString()
+  }
+}
+```

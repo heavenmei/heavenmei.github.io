@@ -498,7 +498,6 @@ console.log(a == 1 && a == 2 && a == 3); // true
 
 题目描述：
 
-```js
 JS 实现一个带并发限制的异步调度器 Scheduler，保证同时运行的任务最多有两个
 
 addTask(1000,"1");
@@ -514,47 +513,54 @@ addTask(400,"4");
 800ms时，3任务执行完毕，输出3，任务4开始执行
 1000ms时，1任务执行完毕，输出1，此时只剩下4任务在执行
 1200ms时，4任务执行完毕，输出4
-```
 
-实现：
 
 ```js
 class Scheduler {
   constructor(limit) {
     this.limit = limit;
+    this.running = 0;
     this.queue = [];
-    this.count = 0;
-  }
-  add(time, str) {
-    const request = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log(str);
-          resolve();
-        }, time);
-      });
-    };
-    this.queue.push(request);
-  }
-  taskStart() {
-    for (let i = 0; i < this.limit; i++) {
-      this.request();
-    }
   }
 
-  request() {
-    if (!this.queue.length || this.count > this.limit) {
+  addTask(duration, id) {
+    const task = () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log(id);
+          resolve();
+        }, duration);
+      });
+    };
+
+    this.queue.push(task);
+
+    this.schedule();
+  }
+
+  schedule() {
+    if (this.queue.length === 0 || this.running >= this.limit) {
       return;
     }
-    this.count++;
-    this.queue
-      .shift()()
-      .then(() => {
-        this.count--;
-        this.request();
-      });
+
+    this.running++;
+    const task = this.queue.shift();
+
+    task().then(() => {
+      this.running--;
+      this.schedule();
+    });
   }
 }
+
+const scheduler = new Scheduler(2);
+
+scheduler.addTask(1000, "1");
+scheduler.addTask(500, "2");
+scheduler.addTask(300, "3");
+scheduler.addTask(400, "4");
+
+
 ```
 
 ### 20、lazyMan 函数

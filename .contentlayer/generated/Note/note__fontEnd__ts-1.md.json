@@ -1,0 +1,26 @@
+{
+  "title": "TS",
+  "tags": [
+    "JS"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2025-04-03T00:00:00.000Z",
+  "body": {
+    "raw": "\n\n### interface 接口和类型别名（Type Alias）的区别\n\n",
+    "code": "var Component=(()=>{var h=Object.create;var i=Object.defineProperty;var m=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var d=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var x=(e,t)=>()=>(t||e((t={exports:{}}).exports,t),t.exports),j=(e,t)=>{for(var n in t)i(e,n,{get:t[n],enumerable:!0})},c=(e,t,n,o)=>{if(t&&typeof t==\"object\"||typeof t==\"function\")for(let s of p(t))!f.call(e,s)&&s!==n&&i(e,s,{get:()=>t[s],enumerable:!(o=m(t,s))||o.enumerable});return e};var _=(e,t,n)=>(n=e!=null?h(d(e)):{},c(t||!e||!e.__esModule?i(n,\"default\",{value:e,enumerable:!0}):n,e)),g=e=>c(i({},\"__esModule\",{value:!0}),e);var l=x((w,r)=>{r.exports=_jsx_runtime});var M={};j(M,{default:()=>D,frontmatter:()=>y});var a=_(l()),y={title:\"TS\",subtitle:null,layout:\"post\",date:new Date(17436384e5),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"JS\"],image:null};function u(e){let t=Object.assign({h3:\"h3\",a:\"a\",span:\"span\"},e.components);return(0,a.jsxs)(t.h3,{id:\"interface-\\u63A5\\u53E3\\u548C\\u7C7B\\u578B\\u522B\\u540Dtype-alias\\u7684\\u533A\\u522B\",children:[(0,a.jsx)(t.a,{className:\"header-anchor\",href:\"#interface-\\u63A5\\u53E3\\u548C\\u7C7B\\u578B\\u522B\\u540Dtype-alias\\u7684\\u533A\\u522B\",children:(0,a.jsx)(t.span,{className:\"icon icon-link\"})}),\"interface \\u63A5\\u53E3\\u548C\\u7C7B\\u578B\\u522B\\u540D\\uFF08Type Alias\\uFF09\\u7684\\u533A\\u522B\"]})}function b(e={}){let{wrapper:t}=e.components||{};return t?(0,a.jsx)(t,Object.assign({},e,{children:(0,a.jsx)(u,e)})):u(e)}var D=b;return g(M);})();\n;return Component;"
+  },
+  "_id": "note/fontEnd/ts-1.md",
+  "_raw": {
+    "sourceFilePath": "note/fontEnd/ts-1.md",
+    "sourceFileName": "ts-1.md",
+    "sourceFileDir": "note/fontEnd",
+    "contentType": "markdown",
+    "flattenedPath": "note/fontEnd/ts-1"
+  },
+  "type": "Note",
+  "parDir": "note/fontEnd",
+  "slug": "/post/ts-1",
+  "slugAsParams": "ts-1"
+}

@@ -21,12 +21,16 @@ export default function Home() {
   const [readme, setReadme] = useState<string>("");
 
   const getGithubReadme = useCallback(async () => {
-    const res = await fetch(
-      "https://raw.githubusercontent.com/heavenmei/heavenmei/master/README.md"
-    );
+    try {
+      const res = await fetch(
+        "https://raw.githubusercontent.com/heavenmei/heavenmei/master/README.md"
+      );
 
-    const text = await res.text();
-    setReadme(text);
+      const text = await res.text();
+      setReadme(text);
+    } catch (e) {
+      console.error("Failed to fetch README.md", e);
+    }
   }, []);
 
   useEffect(() => {
