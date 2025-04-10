@@ -13,193 +13,133 @@ image:
 ---
 
 
-### undeclared & undefined 
+### 闭包
 
-- undefined：声明了变量，但是没有赋值
-- undecalared：报错，没有声明变量就直接使用
+闭包是一个函数，是一个能让外部访问到函数内部的函数
 
-```js
-var a; //undefined
-b;    // b is not defined
-```
+- 优点：使外部能访问内部，延长内部变量寿命
+- 缺点：滥用闭包造成内存泄漏
 
-###  let & const & var
-
-- `var`存在变量提升，可重复声明同一变量，声明的变量均可改
-- `let`没有变量提升，不可重复声明同一变量，声明的变量均可改
-- `const`没有变量提升，不可重复声明同一变量，声明的基本数据类型不可改，引用类型可改属性，不可只声明变量而不赋值
-
-#### 暂时性死区问题
+使用场景：
+- 回调函数都是闭包
+- 闭包可以用来实现函数节流和防抖，优化性能。
+- 使用闭包处理异步请求
 
 ```js
-var a = 100;
+function a() {
+  let num = 0;
 
-if(1){
-    a = 10;
-    // 在当前块作用域中存在a使用let/const声明的情况下
-    // 给a赋值10时，只会在当前作用域找变量a
-    // 而a还未声明，Error:Cannot access 'a' before initialization
-    let a = 1;
+  // 这是个闭包
+  return function () {
+    return ++num;
+  };
 }
+const b = a();
+console.log(b()); // 1
+console.log(b()); // 2
 ```
 
+### 原型链
 
-#### var+setTimeout 输出
+原型链是一条引用的链，实例的隐式原型指向构造函数的显式原型，可以使用`A instanceof B`来判断 B 是否在 A 的原型链上。
 
+![|500](assets/interview-js-1-20250322020624.png)
+
+
+### JS 的事件处理传播机制
+
+事件流：在单击目标元素后，它会先触发目标元素上的 `click` 事件，在一层层往上触发事件，最终到达最顶层的 `window` 对象，这是浏览器默认的事件冒泡行为（IE 9+）。**DOM事件流：事件捕获 -> 目标阶段 -> 事件冒泡**。事件流有两种方式：
+- 事件冒泡：从内到外，事件委托（event delegation）
+- 事件捕获：从外到内
+
+![|300](assets/interview-js-1-20250326083747.png)
+`e.stopPropagation`: 阻止冒泡
+
+`e.preventDefault`： 阻止事件默认行为
+
+
+- `e.target`：**触发**事件的元素，被点击的对象（不变）
+- `e.currentTarget`：**绑定**事件的元素，当前事件活动的对象，通常是事件的祖元素（变）
+
+
+**绑定点击事件有几种方式？**（3 种）
+
+- `xxx.onclick = function (){}`
+- `<xxx onclick=""></xxx>`
+- `xxx.addEventListener('click', function(){}, false)`
+	- ==addEventListener 的第三个参数决定事件是 捕获阶段 执行还是 冒泡阶段 执行==。true捕获，false冒泡（默认）
+
+
+
+### this 指向的四种情况？
+
+- new 操作符
 
 ```js
-for(var i = 0; i < 3; i++){
-  setTimeout(function(){
-      console.log(i);   
-  },0); 
+function Person(name) {
+  this.name = name;
+  console.log(this);
+}
+// this指向当前person实例对象
+const person = new Person("Sunshine_Lin");
+```
+
+- 显示绑定 call、apply、bind 改变 this
+
+```js
+const obj1 = {
+  name: "林三心",
+  sayName: function () {
+    console.log(this.name);
+  },
 };
-```
-
-答案：3，3，3
-
-解决方法
-
-```js
-for(let i = 0; i < 3; i++){
-  setTimeout(function(){
-      console.log(i);   
-  },0); 
+const obj2 = {
+  name: "Sunshin_Lin",
 };
-// 0 1 2
-for (var i = 0; i < 3; i++) {
-  (function(i) {
-    setTimeout(function () {
-      console.log(i);
-    }, 0, i)
-  })(i)
+// 改变sayName的this指向obj2
+obj1.sayName.call(obj2); // Sunshin_Lin
+// 改变sayName的this指向obj2
+obj1.sayName.apply(obj2); // Sunshin_Lin
+// 改变sayName的this指向obj2
+const fn = obj1.sayName.bind(obj2);
+fn(); // Sunshin_Lin
+```
+
+- 隐式绑定 (对象调用)
+
+```js
+const target = {
+  fn: function () {
+    console.log(this);
+  },
 };
-// 0 1 2
+target.fn(); // target
+
+// 这种就是改变了this了
+const fn = target.fn;
+fn(); // 浏览器window，node里global
 ```
 
-
-### DOM
-
-#### 获取DOM元素
-
-| 方法                                     | 描述               |
-| -------------------------------------- | ---------------- |
-| document.getElementById(id)            | 通过id获取dom        |
-| document.getElementsByTagName(tagName) | 通过标签名获取dom       |
-| document.getElementsByClassName(class) | 通过class获取dom     |
-| document.getElementsByName(name)       | 通过标签的属性name获取dom |
-| document.querySelector(选择器)            | 通过选择器获取dom       |
-| document.querySelectorAll(选择器)         | 通过选择器获取dom       |
-
-#### 操作DOM元素
-
-| 方法                     | 描述                                                               |
-| ---------------------- | ---------------------------------------------------------------- |
-| createElement          | 创建一个标签节点                                                         |
-| createTextNode         | 创建一个文本节点                                                         |
-| cloneNode(deep)        | 复制一个节点，连同属性与值都复制，deep为true时，<br />连同后代节点一起复制，不传或者传false，则只复制当前节点 |
-| createDocumentFragment | 创建一个文档碎片节点                                                       |
-| appendChild            | 追加子元素                                                            |
-| insertBefore           | 将元素插入前面                                                          |
-| removeChild            | 删除子元素                                                            |
-| replaceChild           | 替换子元素                                                            |
-| getAttribute           | 获取节点的属性                                                          |
-| createAttribute        | 创建属性                                                             |
-| setAttribute           | 设置节点属性                                                           |
-| romoveAttribute        | 删除节点属性                                                           |
-| element.attributes     | 将属性生成类数组对象                                                       |
-
-#### DOM的类型
+- 默认绑定
 
 ```js
-元素节点              Node.ELEMENT_NODE(1)
-属性节点              Node.ATTRIBUTE_NODE(2)
-文本节点              Node.TEXT_NODE(3)
-CDATA节点             Node.CDATA_SECTION_NODE(4)
-实体引用名称节点       Node.ENTRY_REFERENCE_NODE(5)
-实体名称节点          Node.ENTITY_NODE(6)
-处理指令节点          Node.PROCESSING_INSTRUCTION_NODE(7)
-注释节点              Node.COMMENT_NODE(8)
-文档节点              Node.DOCUMENT_NODE(9)
-文档类型节点          Node.DOCUMENT_TYPE_NODE(10)
-文档片段节点          Node.DOCUMENT_FRAGMENT_NODE(11)
-DTD声明节点            Node.NOTATION_NODE(12)
+function fn() {
+  console.log(this);
+}
+fn(); // 浏览器window，node里global
 ```
 
-
-
-####  DocumentFragment 文档碎片
-一个容器，用于暂时存放创建的dom元素，使用`document.createDocumentFragment()`创建
-
-将需要添加的大量元素 先添加到文档碎片 中，再将文档碎片添加到需要插入的位置，**大大减少dom操作，提高性能** 
+- 箭头函数 （指向父作用域 function）
 
 ```js
-var oFragmeng = document.createDocumentFragment(); 
-for(var i=0;i<10000;i++)
-{ 
-
-    var op = document.createElement("span"); 
-
-    var oText = document.createTextNode(i); 
-
-    op.appendChild(oText); 
-
-    //先附加在文档碎片中
-
-    oFragmeng.appendChild(op);  
-
-} 
-//最后一次性添加到document中
-document.body.appendChild(oFragmeng); 
+const obj = {
+  name: "林三心",
+  fn: () => {
+    console.log(this.name);
+  },
+};
+console.log(obj.fn()); // undefined
 ```
-
-
-### BOM
-
-BOM 就是`browser object model`，`浏览器对象模型`
-
-| api                | 作用                 | 代表方法或属性                                                                                                                                                                                                                                                                                                                           |
-| ------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| window.history     | 操纵浏览器的记录     | history.back() history.go(-1)                                                                                                                                                                                                                                                                                                            |
-| window.innerHeight | 获取浏览器窗口的高度 |                                                                                                                                                                                                                                                                                                                                          |
-| window.innerWidth  | 获取浏览器窗口的宽度 |                                                                                                                                                                                                                                                                                                                                          |
-| window.location    | 操作刷新按钮和地址栏 | location.host：获取域名和端口 <br />location.hostname：获取主机名<br />location.port：获取端口号<br /> location.pathname：获取 url 的路径<br /> location.search：获取?开始的部分<br /> location.href：获取整个 url <br />location.hash：获取#开始的部分 <br />location.origin：获取当前域名<br /> location.navigator：获取当前浏览器信息 |
-
-#### BOM 和 DOM 的关系
-
-**BOM**全称 Browser Object Model，即浏览器对象模型，主要处理浏览器窗口和框架。
-
-DOM 全称 Document Object Model，即文档对象模型，是 HTML 和 XML 的应用程序接口（API），遵循 W3C 的标准，所有浏览器公共遵守的标准。
-
-JS 是通过访问**BOM**（Browser Object Model）对象来访问、控制、修改客户端(浏览器)，由于**BOM**的 window 包含了 document，window 对象的属性和方法是直接可以使用而且被感知的，因此可以直接使用 window 对象的 document 属性，通过 document 属性就可以访问、检索、修改 XHTML 文档内容与结构。因为 document 对象又是 DOM 的根节点。
-
-可以说，==BOM 包含了 DOM(对象)==，浏览器提供出来给予访问的是 BOM 对象，从 BOM 对象再访问到 DOM 对象，从而 js 可以操作浏览器以及浏览器读取到的文档。
-
-
-
-
-
-### 数组操作
-#### splice & slice 
-
-| 方法     | 参数                                    |             |
-| ------ | ------------------------------------- | ----------- |
-| splice | splice(start, num, item1, item2, ...) | 源数组操作       |
-| slice  | slice(start, end)                     | 返回new array |
-
-#### substr & substring
-
-| 方法        | 参数                   |
-| --------- | -------------------- |
-| substr    | substr(start,length) |
-| substring | substring(start,end) |
-
-#### includes 比 indexOf好在哪？
-
-| 方法       | 检测`NaN` | 特点                             |
-| -------- | ------- | ------------------------------ |
-| includes | 可以✅     | 内部使用了`Number.isNaN`对`NaN`进行了匹配 |
-| indexOf  | 不能❌     |                                |
-
 
 ### JS延迟加载 async & defer
 
@@ -211,7 +151,7 @@ JS 是通过访问**BOM**（Browser Object Model）对象来访问、控制、�
 
 #### async & defer
 
-`defer`属性告诉浏览器不要等待脚本，浏览器会继续处理 HTML，构建 DOM。该脚本“在后台”加载，然后在 **DOM 完全构建完成后再运行**。
+`defer`属性告诉浏览器不要等待脚本，浏览器会继续处理 HTML，构建 DOM。该脚本“在后台”加载，然后在 **DOM 完全构建完成后再运行**。 按它们在文档中**出现的顺序执行**
 
 
 `async`属性意味着该脚本是完全独立的，async 脚本在后台加载完就**立即运行**
@@ -220,8 +160,6 @@ JS 是通过访问**BOM**（Browser Object Model）对象来访问、控制、�
 - `DOMContentLoaded`和async脚本不会互相等待
     - `DOMContentLoaded`可能在async脚本执行之前触发（如果async脚本在页面解析完成后完成加载）
     - 或在async脚本执行之后触发（如果async脚本很快加载完成或在 HTTP 缓存中）
-
-
 
 
 ### 宏任务 & 微任务 & EventLoop & TaskQueue
@@ -250,6 +188,267 @@ JS 是通过访问**BOM**（Browser Object Model）对象来访问、控制、�
 
 
 **JS的执行机制就可以看做是一个主线程加上一个任务队列(task queue)**。同步任务就是放在主线程上执行的任务，异步任务是放在任务队列中的任务。所有的同步任务在主线程上执行，形成一个执行栈;异步任务有了运行结果就会在任务队列中放置一个事件；脚本运行时先依次运行执行栈，然后会从任务队列里提取事件，运行任务队列中的任务，这个过程是不断重复的，所以又叫做事件循环(Event loop)。
+
+
+### JS模块化开发 & CommonJs & Es Module
+
+在模块化没有出现之前，所有js文件都是script导入的，这就意味着 作用域都是顶层的，造成**变量污染**
+
+
+JS模块化：`<script type="module"/>`让每个文件都是独立的作用域。**一个文件就是一个模块，有自己的作用域，只向外暴露特定的变量和函数**
+
+发展从最初的**CommonJS** ，到后来的**AMD**和**CMD**，再到今天的**ES6模块**化方案。
+
+#### CommonJs & Es Module 
+
+| 模块化   | CommonJs                 | Es Module                              |
+| ----- | ------------------------ | -------------------------------------- |
+| 语法    | module.exports / exports | exports / export default               |
+| 导出    | 拷贝输出，所以可更改               | 导出引用值，const 所以只读                       |
+| 导入    | require                  | import                                 |
+| 导入值读写 | 可读可写                     | 只读                                     |
+| 代码发生在 | 运行时 （动态导入）               | 编译时（静态）<br/>只能声明在该文件的最顶部，<br/>不能动态加载语句 |
+| 加载方式  | **同步**                   | **异步**                                 |
+| 场景    | 服务端                      | 客户端                                    |
+
+[常用的ES6-ES12的语法](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247484979%26idx%3D1%26sn%3Dff9fd50664a1f75a770f7e396c72fd2e%26chksm%3Dce4613a2f9319ab4fb841798cc2fb2d17719545645a592b88f276731a3426773b3f86ee4aade%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+
+#### 为什么Commonjs不适用于浏览器
+
+==CommonJS的 `require` 语法是同步的==，当我们使用`require` 加载一个模块的时候，必须要等这个模块加载完后，才会执行后面的代码。
+
+**在服务端，模块文件都存放在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载。**
+
+所以才有了后面的**AMD**和**CMD**模块化方案，它们都是异步加载的，比较适合在浏览器端使用。
+
+因此，浏览器端的模块，不能采用"同步加载"（synchronous），只能采用"异步加载"（asynchronous）。这就是AMD规范诞生的背景。
+
+
+#### AMD & CMD
+
+都是异步加载
+
+| 模块化 | 代表应用       | 特点                                         |
+| --- | ---------- | ------------------------------------------ |
+| AMD | require.js | 1、AMD的api默认一个当多个用<br/>2、依赖前置，异步执行          |
+| CMD | sea.js     | 1、CMD的api严格区分，推崇职责单一 <br/>2、依赖就近，按需加载，同步执行 |
+
+#### mjs
+`.mjs` 是 ECMAScript 模块（ES Modules，简称 ESM）的文件扩展名。与传统的 `.js` 文件相比，`.mjs` 文件具有以下特点：
+
+- **模块系统不同**：`.js` 文件在 Node.js 中默认使用 CommonJS 模块系统，而 `.mjs` 文件使用 ES6 模块系统。
+
+- **加载方式不同**：ES 模块是异步加载的，适合浏览器环境，代码在编译时解析，支持静态分析；CommonJS 模块是同步加载的，适合服务器端，代码在运行时解析。
+
+- **作用域不同**：两者模块作用域都是私有的，但 ES 模块支持导出多个绑定（named exports）。
+
+- **严格模式**：`.mjs` 文件默认为严格模式，变量声明必须先进行，不能使用未定义的变量，并且禁止使用 `eval` 和 `arguments`。
+
+- **动态导入**：`.mjs` 文件支持动态导入，可以在运行时按需加载模块。
+
+
+
+### JavaScript 继承方式有几种？
+
+前置工作
+
+```js
+// 定义一个动物类
+function Animal(name) {
+  // 属性
+  this.name = name || "Animal";
+  // 实例方法
+  this.sleep = function () {
+    console.log(this.name + "正在睡觉！");
+  };
+}
+// 原型方法
+Animal.prototype.eat = function (food) {
+  console.log(this.name + "正在吃：" + food);
+};
+```
+
+#### 1、原型链继承
+
+核心：将父类的实例作为子类的原型
+
+```js
+function Cat() {}
+Cat.prototype = new Animal();
+Cat.prototype.name = "cat";
+
+var cat = new Cat();
+console.log(cat.name); // cat
+cat.eat("fish"); // cat正在吃：fish
+cat.sleep(); // cat正在睡觉！
+console.log(cat instanceof Animal); //true
+console.log(cat instanceof Cat); //true
+```
+
+优点：
+
+- 1、非常纯粹的继承关系，实例是子类的实例，也是父类的实例
+- 2、父类新增原型方法/属性，子类都能访问到
+- 3、简单，易于实现
+
+缺点：
+
+- 1、要想为子类新增属性和方法，必须要在`new Animal()`这样的语句之后执行，不能放构造器中
+- 2、**来自原型对象的所有属性被所有实例共享**
+- 3、创建子实例时，无法向父类构造函数传参
+- 4、不支持多继承
+
+#### 2、构造继承
+
+核心：使用父类的构造器来增强子类实例，等于是复制父类的实例属性给子类（没用到原型）
+
+```js
+function Cat(name) {
+  Animal.call(this);
+  this.name = name || "Tom";
+}
+
+var cat = new Cat();
+console.log(cat.name); // Tom
+cat.sleep(); // Tom正在睡觉！
+console.log(cat instanceof Animal); // false
+console.log(cat instanceof Cat); // true
+```
+
+优点：
+
+- 1、解决了`原型链继承`中，子类实例共享父类引用属性的问题
+- 2、创建子类实例时，可以向父类传递参数
+- 3、可以实现多继承(call 多个父类对象)
+
+缺点：
+
+- 1、实例并不是父类的实例，知识子类的实例
+- 2、**只能继承父类的实例属性和方法，不能继承原型属性/方法**
+- 3、无法实现函数复用，每个子类都有父类实例函数的副本，影响性能
+
+#### 3、寄生式继承
+
+核心：为父类实例添加新特性，作为子类实例返回
+
+```js
+function Cat(name) {
+  var instance = new Animal();
+  instance.name = name || "Tom";
+  return instance;
+}
+
+var cat = new Cat();
+console.log(cat.name); // Tom
+cat.sleep(); // Tom正在睡觉！
+console.log(cat instanceof Animal); // true
+console.log(cat instanceof Cat); // false
+```
+
+优点：
+
+- 1、不限制调用方式，不管是`new 子类()`还是`子类()`，返回的对象具有相同效果
+
+缺点：
+
+- 1、实例是父类的实例，不是子类的实例
+- 2、不支持多继承
+
+#### 4、拷贝继承
+
+核心：就一个一个拷贝
+
+```js
+function Cat(name) {
+  var animal = new Animal();
+  for (var p in animal) {
+    Cat.prototype[p] = animal[p];
+  }
+  this.name = name || "Tom";
+}
+
+var cat = new Cat();
+console.log(cat.name); // Tom
+cat.sleep(); // Tom正在睡觉！
+console.log(cat instanceof Animal); // false
+console.log(cat instanceof Cat); // true
+```
+
+优点：
+
+- 1、支持多继承
+
+缺点：
+
+- 1、效率低，内存占用高（因为要拷贝父类的属性）
+- 2、无法获取父类不可枚举方法（不可枚举方法，不能使用 for in 访问到）
+
+#### 5、组合继承
+
+核心：通过父类构造，继承父类的属性并保留传参的优点，然后通过将父类实例作为子类原型，实现函数复用
+
+```js
+function Cat(name) {
+  Animal.call(this);
+  this.name = name || "Tom";
+}
+Cat.prototype = new Animal();
+
+Cat.prototype.constructor = Cat;
+
+var cat = new Cat();
+console.log(cat.name); // Tom
+cat.sleep(); // Tom正在睡觉！
+console.log(cat instanceof Animal); // true
+console.log(cat instanceof Cat); // true
+```
+
+优点：
+
+- 1、弥补了`构造继承`的缺陷，可以继承实例属性/方法，也可继承原型属性/方法
+- 2、既是子类的实例，也是父类的实例
+- 3、不存在引用属性共享问题
+- 4、可传参
+- 5、函数可复用
+
+缺点：
+
+- 1、**调用了两次父类构造函数**，生成了两份实例（子类实例将子类原型上的那份屏蔽了）
+
+#### 6、寄生组合继承
+
+核心：通过寄生方式，砍掉父类的实例属性，这样，在调用两次父类的构造时，就不会初始化两次实例方法/属性，避免`继承组合`的缺点
+
+```js
+function Cat(name) {
+  Animal.call(this);
+  this.name = name || "Tom";
+}
+// 创建一个没有实例方法的类
+var Super = function () {};
+Super.prototype = Animal.prototype;
+//将实例作为子类的原型
+Cat.prototype = new Super();
+
+// Test Code
+var cat = new Cat();
+console.log(cat.name); // Tom
+cat.sleep(); // Tom正在睡觉！
+console.log(cat instanceof Animal); // true
+console.log(cat instanceof Cat); //true
+```
+
+优点：
+
+- 1、堪称完美
+
+缺点：
+
+- 1、实现复杂
+
+
+
+
 
 ### 各种函数
 #### 高阶函数
@@ -388,139 +587,4 @@ const mul = x => y => z => x * y * z
 
 console.log(mul(1)(2)(3)) // 6
 ```
-
-### JS模块化开发 & CommonJs & Es Module
-
-在模块化没有出现之前，所有js文件都是script导入的，这就意味着 作用域都是顶层的，造成**变量污染**
-
-
-JS模块化：`<script type="module"/>`让每个文件都是独立的作用域。**一个文件就是一个模块，有自己的作用域，只向外暴露特定的变量和函数**
-
-发展从最初的**CommonJS** ，到后来的**AMD**和**CMD**，再到今天的**ES6模块**化方案。
-
-#### CommonJs & Es Module 
-
-| 模块化   | CommonJs                 | Es Module                              |
-| ----- | ------------------------ | -------------------------------------- |
-| 语法    | module.exports / exports | exports / export default               |
-| 导出    | 拷贝输出，所以可更改               | 导出引用值，const 所以只读                       |
-| 导入    | require                  | import                                 |
-| 导入值读写 | 可读可写                     | 只读                                     |
-| 代码发生在 | 运行时 （动态导入）               | 编译时（静态）<br/>只能声明在该文件的最顶部，<br/>不能动态加载语句 |
-| 加载方式  | **同步**                   | **异步**                                 |
-| 场景    | 服务端                      | 客户端                                    |
-
-[常用的ES6-ES12的语法](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247484979%26idx%3D1%26sn%3Dff9fd50664a1f75a770f7e396c72fd2e%26chksm%3Dce4613a2f9319ab4fb841798cc2fb2d17719545645a592b88f276731a3426773b3f86ee4aade%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
-
-#### 为什么Commonjs不适用于浏览器
-
-==CommonJS的 `require` 语法是同步的==，当我们使用`require` 加载一个模块的时候，必须要等这个模块加载完后，才会执行后面的代码。
-
-**在服务端，模块文件都存放在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载。**
-
-所以才有了后面的**AMD**和**CMD**模块化方案，它们都是异步加载的，比较适合在浏览器端使用。
-
-因此，浏览器端的模块，不能采用"同步加载"（synchronous），只能采用"异步加载"（asynchronous）。这就是AMD规范诞生的背景。
-
-
-#### AMD & CMD
-
-都是异步加载
-
-| 模块化 | 代表应用       | 特点                                         |
-| --- | ---------- | ------------------------------------------ |
-| AMD | require.js | 1、AMD的api默认一个当多个用<br/>2、依赖前置，异步执行          |
-| CMD | sea.js     | 1、CMD的api严格区分，推崇职责单一 <br/>2、依赖就近，按需加载，同步执行 |
-
-#### mjs
-`.mjs` 是 ECMAScript 模块（ES Modules，简称 ESM）的文件扩展名。与传统的 `.js` 文件相比，`.mjs` 文件具有以下特点：
-
-- **模块系统不同**：`.js` 文件在 Node.js 中默认使用 CommonJS 模块系统，而 `.mjs` 文件使用 ES6 模块系统。
-
-- **加载方式不同**：ES 模块是异步加载的，适合浏览器环境，代码在编译时解析，支持静态分析；CommonJS 模块是同步加载的，适合服务器端，代码在运行时解析。
-
-- **作用域不同**：两者模块作用域都是私有的，但 ES 模块支持导出多个绑定（named exports）。
-
-- **严格模式**：`.mjs` 文件默认为严格模式，变量声明必须先进行，不能使用未定义的变量，并且禁止使用 `eval` 和 `arguments`。
-
-- **动态导入**：`.mjs` 文件支持动态导入，可以在运行时按需加载模块。
-
-
-### 页面重定向
-
--  `location.href`：window.location.href =""
--  `location.replace`：window.location.replace(" ")
-
-
-### 鼠标/ 键盘事件
-#### 鼠标事件有哪些？
-
-| 事件         | 说明                      |
-| ---------- | ----------------------- |
-| click      | 单机鼠标左键触发                |
-| dbclick    | 双击鼠标左键触发                |
-| mousedown  | 单机鼠标任意一个按键都触发           |
-| mouseout   | 鼠标指针位于某个元素上且将要移出元素边界时触发 |
-| mouseover  | 鼠标指针出某个元素到另一个元素上时触发     |
-| mouseup    | 松开任意鼠标按键时触发             |
-| mousemove  | 鼠标在某个元素上时持续发生           |
-| mouseenter | 鼠标进入某个元素边界时触发           |
-| mouseleave | 鼠标离开某个元素边界时触发           |
-
-#### 键盘事件有哪些？
-
-> 注明：`event`对象上的`keyCode`属性，是按下的按键的`ASCLL值`，通过这个值可辨别是按下哪个按键。`ASCLL`表在此ASCII码一览表，ASCII码对照表
-
-| 事件         | 说明                            |
-| ---------- | ----------------------------- |
-| onkeydown  | 某个键盘按键被按下时触发                  |
-| onkeyup    | 某个键盘按键被松开时触发                  |
-| onkeypress | 某个按键被按下时触发，不监听功能键，如ctrl，shift |
-#### JS中鼠标事件的各个坐标？
-
-| 属性      | 说明                                                     | 兼容性              |
-| ------- | ------------------------------------------------------ | ---------------- |
-| offsetX | 以当前的目标元素左上角为原点，定位x轴坐标                                  | 除Mozilla外都兼容     |
-| offsetY | 以当前的目标元素左上角为原点，定位y轴坐标                                  | 除Mozilla外都兼容     |
-| clientX | 以浏览器可视窗口左上角为原点，定位x轴坐标                                  | 都兼容              |
-| clientY | 以浏览器可视窗口左上角为原点，定位y轴坐标                                  | 都兼容              |
-| pageX   | 以doument对象左上角为原点，定位x轴坐标                                | 除IE外都兼容          |
-| pageY   | 以doument对象左上角为原点，定位y轴坐标                                | 除IE外都兼容          |
-| screenX | 以计算机屏幕左上顶角为原点，定位x轴坐标(多屏幕会影响)                           | 全兼容              |
-| screenY | 以计算机屏幕左上顶角为原点，定位y轴坐标                                   | 全兼容              |
-| layerX  | 最近的绝对定位的父元素（如果没有，则为 document 对象）<br />左上顶角为元素，定位 x 轴坐标 | Mozilla 和 Safari |
-| layerY  | 最近的绝对定位的父元素（如果没有，则为 document 对象）<br />左上顶角为元素，定位 y 轴坐标 | Mozilla 和 Safari |
-
-
-### JS的各个尺寸
-#### 元素视图尺寸？
-
-| 属性           | 说明                                         |
-| ------------ | ------------------------------------------ |
-| offsetLeft   | 获取当前元素到定位父节点的left方向的距离                     |
-| offsetTop    | 获取当前元素到定位父节点的top方向的距离                      |
-| offsetWidth  | 获取当前元素 width + 左右padding + 左右border-width  |
-| offsetHeight | 获取当前元素 height + 上下padding + 上下border-width |
-| clientWidth  | 获取当前元素 width + 左右padding                   |
-| clientHeight | 获取当前元素 height + 上下padding                  |
-| scrollWidth  | 当前元素内容真实的宽度，内容不超出盒子宽度时为盒子的clientWidth      |
-| scrollHeight | 当前元素内容真实的高度，内容不超出盒子高度时为盒子的clientHeight     |
-
-#### Window视图尺寸？
-
-| 属性          | 说明                                       |
-| ----------- | ---------------------------------------- |
-| innerWidth  | innerWidth 浏览器窗口可视区宽度（不包括浏览器控制台、菜单栏、工具栏） |
-| innerHeight | innerWidth 浏览器窗口可视区高度（不包括浏览器控制台、菜单栏、工具栏） |
-
-#### Document文档视图尺寸？
-
-| 属性                                    | 说明                                      |
-| ------------------------------------- | --------------------------------------- |
-| document.documentElement.clientWidth  | 浏览器窗口可视区宽度<br />（不包括浏览器控制台、菜单栏、工具栏、滚动条） |
-| document.documentElement.clientHeight | 浏览器窗口可视区高度<br />（不包括浏览器控制台、菜单栏、工具栏、滚动条） |
-| document.documentElement.offsetHeight | 获取整个文档的高度（包含body的margin）                |
-| document.body.offsetHeight            | 获取整个文档的高度（不包含body的margin）               |
-| document.documentElement.scrollTop    | 返回文档的滚动top方向的距离（当窗口发生滚动时值改变）            |
-| document.documentElement.scrollLeft   | 返回文档的滚动left方向的距离（当窗口发生滚动时值改变）           |
 

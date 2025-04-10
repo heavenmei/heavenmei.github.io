@@ -1,5 +1,5 @@
 ---
-title: CSS面试 之 布局篇 (二)
+title: CSS 之 布局篇 (二)
 subtitle: 
 layout: post
 date: 2022-09-02
@@ -1257,6 +1257,50 @@ $color-tabs-background: $color-red;
 		transform: rotate(-180deg);
 	}
 }
-
-
 ```
+
+
+
+## 13-修改SVG颜色
+ [修改svg图标颜色方法](https://www.cnblogs.com/mengff/p/17490650.html "发布于 2023-06-19 11:09")
+#### fill=currentColor
+ `fill='currentColor'` 或 css 修改fill。 **仅对内联svg有效**，对background中svg无效。
+
+
+#### mask
+但是在伪元素或者backgound中，这fill不生效。因为：
+
+1. 样式不允许跨文档级联
+2. 当使用  （或 `content` ，或任何引用 svg 的 css 图像属性）时，出于安全考虑，浏览器不会公开 svg 文档
+
+解决方案：使用 **SVG 蒙版** 和背景颜色的变通方法。并没有修改 SVG DOM 本身，只是在更改背景颜色。
+
+ [在 :before 或 :after CSS 中更改 SVG 填充颜色](https://segmentfault.com/q/1010000042997976)
+
+```css
+a::before {
+  content: url("/icons/links.svg");
+  color: #f68800; /* 不生效 */
+}
+
+
+/* 使用蒙版 让svg 填充颜色 */
+a::before {
+  content: " ";
+  background-color: #f68800;
+  mask: url("/icons/links.svg") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+```
+
+
+#### filter 纯黑白
+```css
+.icon{
+	filter: brightness(0); /* 纯黑 */
+	filter: brightness(100); /* 纯白 */
+}
+```
+
+

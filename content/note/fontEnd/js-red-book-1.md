@@ -86,11 +86,19 @@ NaN===NaN //false
 
 Number.isNaN('sdsds') // false
 isNaN('sdsd') //true
+
+console.log(Number.MAX_SAFE_INTEGER);
+// 9007199254740991
+console.log(Number.MIN_SAFE_INTEGER);
+// -9007199254740991
+Number.Inifity
+
 ```
 
 
 - `isNaN`：除了判断 NaN 为 true 外，还会把不能转成数字判断为 true，例如'dasd'
 - `Number.isNaN`：只会判断 NaN 为 true
+
 
 
 ### String 

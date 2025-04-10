@@ -53,62 +53,119 @@ function throttle(fn, delay) {
 ```
 
 
+### 3、深拷贝 & 浅拷贝
 
-### 3、实现原生 AJAX 封装
+浅拷贝：只拷贝第一层，深层的依然是引用，改变深层会影响原对象
+
+eg. `Object.assign()`、`...扩展符`、`Array.form()/slice()/map()/concat()/解构`
 
 ```js
-const ajax = {
-  get(url, fn) {
-    // 创建 xhr 对象
-    const xhr = new XMLHttpRequest();
-    // method:要是用的HTTP方法，url：请求的主体，async(可选)：false为同步，true为异步，默认为同步
-    xhr.open("GET", url, true);
-    // 只要 readyState 属性发生变化，就会调用相应的处理函数。
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          // 从服务器端返回文本。
-          fn(xhr.responseText);
-        }
-      }
-    };
-    xhr.send();
-  },
-  post(url, fn, data) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          // 从服务器端返回文本。
-          fn(xhr.responseText);
-        }
-      }
-    };
-    xhr.send(data);
-  },
+function shallowCop(obj) {
+  let newObj = Array.isArray(obj) ? [] : {};
+  for (let item in obj) {
+    newObj[item] = obj[item];
+  }
+  return newObj;
+}
+```
+
+深拷贝：每一层都拷贝了，改变数据不会影响原对象
+
+eg.`JSON.parse()/JSON.stringfy`、递归拷贝
+
+```js
+function deepCopy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function deepCopy(obj) {
+  if(obj === null || typeof obj !== 'object'){
+      return obj;
+  }
+	
+  let newObj = Array.isArray() ? [] : {};
+  
+  for (let item in obj) {
+    if (obj.hasOwnPropertype(item)) {
+      newObj[item] = deepCopy(obj[item]);
+    }
+  }
+  return newObj;
+}
+```
+
+全面版
+```js
+const tagMap = {
+  mapTag: "[object Map]",
+  setTag: "[object Set]",
+  arrayTag: "[object Array]",
+  objectTag: "[object Object]",
+  symbolTag: "[object Symbol]",
+  regexpTag: "[object RegExp]",
+};
+
+const checkType = (target) => {
+  return Object.prototype.toString.call(target);
+};
+
+const checkTemp = (target) => {
+  const c = target.constructor;
+  return new c();
+};
+
+const cloneSymbol = (target) => {
+  return Object(Symbol.prototype.valueOf.call(target));
+};
+
+const cloneReg = (target) => {
+  const reFlags = /\w*$/;
+  const result = new target.constructor(target.source, reFlags.exec(target));
+  result.lastIndex = target.lastIndex;
+  return result;
+};
+
+const deepClone = (target, map = new Map()) => {
+  const type = checkType(target);
+
+  if (!Object.values(tagMap).includes(type)) {
+    return target;
+  }
+
+  if (type === tagMap.symbolTag) {
+    return cloneSymbol(target);
+  }
+  if (type === tagMap.regexpTag) {
+    return cloneReg(target);
+  }
+
+  const temp = checkTemp(target);
+
+  if (map.get(target)) {
+    return map.get(target);
+  }
+
+  map.set(target, temp);
+
+  if (type === tagMap.setTag) {
+    target.forEach((value) => {
+      temp.add(deepClone(value, map));
+    });
+  }
+
+  if (type === tagMap.mapTag) {
+    target.forEach((value, key) => {
+      temp.set(key, deepClone(value, map));
+    });
+  }
+
+  for (const key in target) {
+    temp[key] = deepClone(target[key], map);
+  }
+  return temp;
 };
 ```
 
-```js
-//原生Ajax封装成Promise
-var myNewAjax = function (url) {
-  return new Promise(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("get", url);
-    xhr.send(data);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        resolve(json);
-      } else if (xhr.readyState === 4 && xhr.status !== 200) {
-        reject("error");
-      }
-    };
-  });
-};
-```
 
 ### 4、实现 new 过程
 
@@ -129,7 +186,65 @@ function myNew(fn, ...args) {
 }
 ```
 
-### 5、打乱一个数组
+
+### 5、发布订阅模式
+
+实现 on、off、emit、once。提示 cache 二维数组
+
+```js
+class EventEmitter {
+  constructor() {
+    this.cache = [];
+  }
+
+  on(name, fn) {
+    const tasks = this.cache[name];
+    if (tasks) {
+      tasks.push(fn);
+    } else {
+      this.cache[name] = [fn];
+    }
+  }
+
+  off(name, fn) {
+    if (!name) {
+      this.cache = [];
+      return;
+    }
+    const tasks = this.cache[name];
+    if (tasks) {
+      if (!fn) {
+        this.cache[name] = [];
+      }
+      const index = tasks.findIndex((item) => item === fn);
+      if (index >= 0) {
+        tasks.splice(index, 1);
+      }
+    }
+  }
+
+  emit(name, ...args) {
+    // 复制一份。防止回调里继续on，导致死循环
+    const tasks = this.cache[name].slice();
+    if (tasks) {
+      for (let task of tasks) {
+        task(...args);
+      }
+    }
+  }
+
+  once(name, cb) {
+    const fn = (...args) => {
+      cb(...args);
+      this.off(name, fn);
+    };
+    this.on(name, fn);
+  }
+}
+```
+
+
+### 6、打乱一个数组
 
 ```js
 // 方法1
@@ -151,7 +266,7 @@ const shuffle = (arr) => {
 };
 ```
 
-### 6、数组去重
+### 7、数组去重
 
 ```js
 // 方法1
@@ -288,64 +403,9 @@ class LRUCache {
     }
     this.cache.set(key, value);
     if (this.cache.size > this.size) {
+	  // 按插入顺序排列
       this.cache.delete(this.cache.keys().next().value);
     }
-  }
-}
-```
-
-### 12、发布订阅模式
-
-实现 on、off、emit、once。提示 cache 二维数组
-
-```js
-class EventEmitter {
-  constructor() {
-    this.cache = [];
-  }
-
-  on(name, fn) {
-    const tasks = this.cache[name];
-    if (tasks) {
-      tasks.push(fn);
-    } else {
-      this.cache[name] = [fn];
-    }
-  }
-
-  off(name, fn) {
-    if (!name) {
-      this.cache = [];
-      return;
-    }
-    const tasks = this.cache[name];
-    if (tasks) {
-      if (!fn) {
-        this.cache[name] = [];
-      }
-      const index = tasks.findIndex((item) => item === fn);
-      if (index >= 0) {
-        tasks.splice(index, 1);
-      }
-    }
-  }
-
-  emit(name, ...args) {
-    // 复制一份。防止回调里继续on，导致死循环
-    const tasks = this.cache[name].slice();
-    if (tasks) {
-      for (let task of tasks) {
-        task(...args);
-      }
-    }
-  }
-
-  once(name, cb) {
-    const fn = (...args) => {
-      cb(...args);
-      this.off(name, fn);
-    };
-    this.on(name, fn);
   }
 }
 ```
@@ -494,75 +554,6 @@ Object.defineProperty(window, "a", {
 console.log(a == 1 && a == 2 && a == 3); // true
 ```
 
-### 19、Promise 并发器
-
-题目描述：
-
-JS 实现一个带并发限制的异步调度器 Scheduler，保证同时运行的任务最多有两个
-
-addTask(1000,"1");
-addTask(500,"2");
-addTask(300,"3");
-addTask(400,"4");
-的输出顺序是：2 3 1 4
-
-整个的完整执行流程：
-
-一开始1、2两个任务开始执行
-500ms时，2任务执行完毕，输出2，任务3开始执行
-800ms时，3任务执行完毕，输出3，任务4开始执行
-1000ms时，1任务执行完毕，输出1，此时只剩下4任务在执行
-1200ms时，4任务执行完毕，输出4
-
-
-```js
-class Scheduler {
-  constructor(limit) {
-    this.limit = limit;
-    this.running = 0;
-    this.queue = [];
-  }
-
-  addTask(duration, id) {
-    const task = () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          console.log(id);
-          resolve();
-        }, duration);
-      });
-    };
-
-    this.queue.push(task);
-
-    this.schedule();
-  }
-
-  schedule() {
-    if (this.queue.length === 0 || this.running >= this.limit) {
-      return;
-    }
-
-    this.running++;
-    const task = this.queue.shift();
-
-    task().then(() => {
-      this.running--;
-      this.schedule();
-    });
-  }
-}
-
-const scheduler = new Scheduler(2);
-
-scheduler.addTask(1000, "1");
-scheduler.addTask(500, "2");
-scheduler.addTask(300, "3");
-scheduler.addTask(400, "4");
-
-
-```
-
 ### 20、lazyMan 函数
 
 要求：
@@ -674,99 +665,60 @@ function add(...args1) {
 }
 ```
 
-### 22、深拷贝
-递归 简单版
-```js
-function deepCopy(obj){
-	if(obj === null || typeof obj !== 'object'){
-		return obj;
-	}
-	let newobj;
-	if(Array.isArray(obj)){
-		newobj=[];
-		for(let i=0;i<obj.length;i++){
-			newobj[i]=deepCopy(newobj[i])
-		}
-	}else{
-		newobj={};
-		for(let key in obj){
-			newobj[key]=deepCopy(obj[key])
-		}
-	}
-	return newobj;
-}
 
+### 22、实现原生 AJAX 封装
+
+```js
+const ajax = {
+  get(url, fn) {
+    // 创建 xhr 对象
+    const xhr = new XMLHttpRequest();
+    // method:要是用的HTTP方法，url：请求的主体，async(可选)：false为同步，true为异步，默认为同步
+    xhr.open("GET", url, true);
+    // 只要 readyState 属性发生变化，就会调用相应的处理函数。
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // 从服务器端返回文本。
+          fn(xhr.responseText);
+        }
+      }
+    };
+    xhr.send();
+  },
+  post(url, fn, data) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // 从服务器端返回文本。
+          fn(xhr.responseText);
+        }
+      }
+    };
+    xhr.send(data);
+  },
+};
 ```
 
-全面版
 ```js
-const tagMap = {
-  mapTag: "[object Map]",
-  setTag: "[object Set]",
-  arrayTag: "[object Array]",
-  objectTag: "[object Object]",
-  symbolTag: "[object Symbol]",
-  regexpTag: "[object RegExp]",
-};
-
-const checkType = (target) => {
-  return Object.prototype.toString.call(target);
-};
-
-const checkTemp = (target) => {
-  const c = target.constructor;
-  return new c();
-};
-
-const cloneSymbol = (target) => {
-  return Object(Symbol.prototype.valueOf.call(target));
-};
-
-const cloneReg = (target) => {
-  const reFlags = /\w*$/;
-  const result = new target.constructor(target.source, reFlags.exec(target));
-  result.lastIndex = target.lastIndex;
-  return result;
-};
-
-const deepClone = (target, map = new Map()) => {
-  const type = checkType(target);
-
-  if (!Object.values(tagMap).includes(type)) {
-    return target;
-  }
-
-  if (type === tagMap.symbolTag) {
-    return cloneSymbol(target);
-  }
-  if (type === tagMap.regexpTag) {
-    return cloneReg(target);
-  }
-
-  const temp = checkTemp(target);
-
-  if (map.get(target)) {
-    return map.get(target);
-  }
-
-  map.set(target, temp);
-
-  if (type === tagMap.setTag) {
-    target.forEach((value) => {
-      temp.add(deepClone(value, map));
-    });
-  }
-
-  if (type === tagMap.mapTag) {
-    target.forEach((value, key) => {
-      temp.set(key, deepClone(value, map));
-    });
-  }
-
-  for (const key in target) {
-    temp[key] = deepClone(target[key], map);
-  }
-  return temp;
+//原生Ajax封装成Promise
+var myNewAjax = function (url) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url);
+    xhr.send(data);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        resolve(json);
+      } else if (xhr.readyState === 4 && xhr.status !== 200) {
+        reject("error");
+      }
+    };
+  });
 };
 ```
 
@@ -807,7 +759,12 @@ const computedTotal = () => {
 })();
 ```
 
-### 24、实现 async/await
+## Promise 方法
+
+
+[三心的手写 Promise 原理，最通俗易懂的版本！](https://mp.weixin.qq.com/s?__biz=Mzg2NjY2NTcyNg==&mid=2247484956&idx=1&sn=daad0f4436573d8dbc06470e9d3daf9c&chksm=ce46138df9319a9bffb3ed4ba98910174a0313f20dca9251e530bc1ee2e60fa85a0d381c3f98&scene=21#wechat_redirect)
+
+### async/await
 
 ```js
 const toAsync = (fn) => {
@@ -842,9 +799,225 @@ const toAsync = (fn) => {
 };
 ```
 
-### 25、Promise
 
-[三心的手写 Promise 原理，最通俗易懂的版本！](https://security.feishu.cn/link/safety?target=http%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzg2NjY2NTcyNg%3D%3D%26mid%3D2247484956%26idx%3D1%26sn%3Ddaad0f4436573d8dbc06470e9d3daf9c%26chksm%3Dce46138df9319a9bffb3ed4ba98910174a0313f20dca9251e530bc1ee2e60fa85a0d381c3f98%26scene%3D21%23wechat_redirect&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
+### all （全对）
+
+```js
+Promise.sx_all = (promises) => {
+  return new Promise((resolve, reject) => {
+    const result = [];
+    let count = 0;
+    for (let i = 0; i < promises.length; i++) {
+      const promise = Promise.resolve(promises[i]);
+      promise
+        .then((res) => {
+          result[i] = res;
+          count++;
+          if (count === promises.length) {
+            resolve(result);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
+  });
+};
+```
+
+### race （竞争）
+
+```js
+Promise.sx_race = (promises) => {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < promises.length; i++) {
+      const promise = Promise.resolve(promises[i]);
+      promise
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    }
+  });
+};
+```
+
+### allSettled （不论对错）
+
+```js
+Promise.sx_allSettled = (promises) => {
+    return new Promise((resolve) => {
+        const result = []
+        let count = 0
+        const addData = (status, value, i) => {
+            result[i] = {
+                status,
+                value
+            }
+            count++
+            if (count === promises.length) {
+                resolve(result)
+            }
+        }
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                addData('fulfilled', res, i)
+            }).catch(err => {
+                addData('rejected', err, i)
+            })
+        }
+    })
+}
+```
+
+### any （任一对）
+
+```js
+Promise.sx_any = (promises) => {
+    return new Promise((resolve, reject) => {
+        let count = 0
+        for (let i = 0; i < promises.length; i++) {
+            const promise = Promise.resolve(promises[i])
+            promise.then(res => {
+                resolve(res)
+            }).catch(err => {
+                count++
+                if (count === promises.length) {
+                    reject('全错！！！')
+                }
+            })
+        }
+    })
+}
+```
+
+### finally
+
+```js
+Promise.prototype.sx_finally = function (fn) {
+  return this.then((res) => {
+    fn()
+    return res
+  }).catch((err) => {
+    fn()
+    return err
+  })
+}
+```
+
+
+
+### Promise 并发器
+
+JS 实现一个带并发限制的异步调度器 Scheduler，保证同时运行的任务最多有两个
+
+addTask(1000,"1");
+addTask(500,"2");
+addTask(300,"3");
+addTask(400,"4");
+的输出顺序是：2 3 1 4
+
+```js
+class Scheduler {
+  constructor(limit) {
+    this.limit = limit;
+    this.running = 0;
+    this.queue = [];
+  }
+
+  addTask(duration, id) {
+    const task = () => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          console.log(id);
+          resolve();
+        }, duration);
+      });
+    };
+
+    this.queue.push(task);
+
+    this.schedule();
+  }
+
+  schedule() {
+    if (this.queue.length === 0 || this.running >= this.limit) {
+      return;
+    }
+
+    this.running++;
+    const task = this.queue.shift();
+
+    task().then(() => {
+      this.running--;
+      this.schedule();
+    });
+  }
+}
+
+const scheduler = new Scheduler(2);
+
+scheduler.addTask(1000, "1");
+scheduler.addTask(500, "2");
+scheduler.addTask(300, "3");
+scheduler.addTask(400, "4");
+```
+
+## 函数
+
+### call 多参
+
+```js
+Function.prototype.my_call = function (obj, ...args) {
+  obj = obj || window;
+  const fn = Symbol();
+  obj[fn] = this;
+  // obj = {
+  //   fn: foo,
+  // };
+  const res = obj[fn](...args);
+  // 释放内存
+  delete obj[fn];
+  return res;
+};
+foo.call(obj); //返回执行结果
+```
+
+### apply 单参
+
+```js
+Function.prototype.my_apply = function (obj, args) {
+  obj = obj || window;
+  const fn = Symbol();
+  obj[fn] = this;
+  const res = obj[fn](...args);
+  delete obj[fn];
+  return res;
+};
+```
+
+### bind 多参返回fn
+
+```js
+Function.prototype.my_bind = function (obj, ...args) {
+  obj = obj || window;
+  const _this = this;
+
+  return function F(...innerArgs) {
+    // 判断是否为构造函数 new
+    if (this instanceof F) {
+	    return new _this(...args,...innerArg);
+    } else {
+	    return _this.apply(obj, args.contact(innArgs);
+    }
+  };
+};
+```
+
+
 
 ## 数组方法
 
@@ -929,6 +1102,8 @@ Array.prototype.sx_some = function (cb) {
 ### 31、reduce
 
 ```js
+//array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+
 Array.prototype.sx_reduce = function (cb, ...args) {
   let pre,
     start = 0;
@@ -1158,166 +1333,6 @@ Object.prototype.sx_assign = function (target, ...args) {
 }
 ```
 
-## Promise 方法
-
-### 46、all
-
-```js
-Promise.sx_all = (promises) => {
-  return new Promise((resolve, reject) => {
-    const result = [];
-    let count = 0;
-    for (let i = 0; i < promises.length; i++) {
-      const promise = Promise.resolve(promises[i]);
-      promise
-        .then((res) => {
-          result[i] = res;
-          count++;
-          if (count === promises.length) {
-            resolve(result);
-          }
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    }
-  });
-};
-```
-
-### 47、race
-
-```js
-Promise.sx_race = (promises) => {
-  return new Promise((resolve, reject) => {
-    for (let i = 0; i < promises.length; i++) {
-      const promise = Promise.resolve(promises[i]);
-      promise
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    }
-  });
-};
-```
-
-### 48、allSettled
-
-```js
-Promise.sx_allSettled = (promises) => {
-    return new Promise((resolve) => {
-        const result = []
-        let count = 0
-        const addData = (status, value, i) => {
-            result[i] = {
-                status,
-                value
-            }
-            count++
-            if (count === promises.length) {
-                resolve(result)
-            }
-        }
-        for (let i = 0; i < promises.length; i++) {
-            const promise = Promise.resolve(promises[i])
-            promise.then(res => {
-                addData('fulfilled', res, i)
-            }).catch(err => {
-                addData('rejected', err, i)
-            })
-        }
-    })
-}
-```
-
-### 49、any
-
-```js
-Promise.sx_any = (promises) => {
-    return new Promise((resolve, reject) => {
-        let count = 0
-        for (let i = 0; i < promises.length; i++) {
-            const promise = Promise.resolve(promises[i])
-            promise.then(res => {
-                resolve(res)
-            }).catch(err => {
-                count++
-                if (count === promises.length) {
-                    reject('全错！！！')
-                }
-            })
-        }
-    })
-}
-```
-
-### 50、finally
-
-```js
-Promise.prototype.sx_finally = function (fn) {
-  return this.then((res) => {
-    fn()
-    return res
-  }).catch((err) => {
-    fn()
-    return err
-  })
-}
-```
-
-## 函数
-
-### 51、call 多参
-
-```js
-Function.prototype.my_call = function (obj, ...args) {
-  obj = obj || window;
-  const fn = Symbol();
-  obj[fn] = this;
-  // obj = {
-  //   fn: foo,
-  // };
-  const res = obj[fn](...args);
-  // 释放内存
-  delete obj[fn];
-  return res;
-};
-foo.call(obj); //返回执行结果
-```
-
-### 52、apply 单参
-
-```js
-Function.prototype.my_apply = function (obj, args) {
-  obj = obj || window;
-  const fn = Symbol();
-  obj[fn] = this;
-  const res = obj[fn](...args);
-  delete obj[fn];
-  return res;
-};
-```
-
-### 53、bind 多参返回fn
-
-```js
-Function.prototype.my_bind = function (obj, ...args) {
-  obj = obj || window;
-  const _this = this;
-
-  return function F(...innerArgs) {
-    // 判断是否为构造函数 new
-    if (this instanceof F) {
-	    return new _this(...args,...innerArg);
-    } else {
-	    return _this.apply(obj, args.contact(innArgs);
-    }
-  };
-};
-```
 
 ## 字符串
 
@@ -1372,7 +1387,7 @@ String.prototype.sx_sunstring = function (start = 0, end) {
 }
 ```
 
-### 57、 解析URL
+### 解析URL
 
 使用 `new URL` 解析
 ```js
