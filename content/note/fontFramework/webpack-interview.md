@@ -70,6 +70,7 @@ function webpack(options) {
 - `emit` 把各个chunk输出到结果文件
 
 
+
 ### 详谈 Loader
 #### Loader (解析)
 
@@ -146,7 +147,7 @@ module.exports = function(source) {
 更多 Loader 请参考[官网](https://security.feishu.cn/link/safety?target=https%3A%2F%2Flink.juejin.cn%3Ftarget%3Dhttps%253A%252F%252Fwebpack.docschina.org%252Floaders%252F&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
 
-#### ### 如何保证各个 loader 按照预想方式工作？
+#### 如何保证各个 loader 按照预想方式工作？
 
 在实际工程中，配置文件上百行乃是常事，如何保证各个 loader 按照预想方式工作？
 
@@ -335,21 +336,24 @@ HMR 的核心就是客户端从服务端拉去更新后的文件，准确的说�
 
 ### Tree-Shaking
 
-Tree-Shaking （树摇）是一种**基于 ES Module** 规范的 Dead Code Elimination 技术，它会在运行过程中静态分析模块之间的导入导出，**删除未使用的JS模块**，以此实现打包产物的优化。
+Tree-Shaking （树摇）是一种**基于 ES Module** 规范的 Dead Code Elimination 技术，它会在运行过程中==静态分析==模块之间的导入导出，**删除未使用的JS模块**，以此实现打包产物的优化。
+
+- 静态分析工具（如 Babel、ESLint 等）可以解析代码的抽象语法树（AST），从而识别出未使用的变量、函数和模块。
 
 Tree Shaking 在 Rollup 中率先实现，Webpack 自 2.0 版本开始接入。
 
 
 >你可以将应用程序想象成一棵树。绿色表示实际用到的源码和库，是树上活的树叶。灰色表示未引用代码，是秋天树上枯萎的树叶。为了除去死去的树叶，你必须摇动（shake）这棵树，使它们落下。
 
+ 
 #### 原理
-1. 先**标记**出模块导出值中哪些没有被用过。标记过程大致可划分为三个步骤：
-	1. `Make` 阶段，收集模块导出变量并记录到模块**依赖关系图 ModuleGraph** 变量中
-	2. `Seal` 阶段，遍历 ModuleGraph 标记模块导出变量有没有被使用。(**标记未使用**)
-	3. 生成产物时，若变量没有被其它模块使用则删除对应的导出语句
-2. 使用 Terser 删掉这些没被用到的导出语句。
+1. **解析代码**： `Make` 阶段，webpack首先会解析项目重点的代码，生成**AST**，通过AST收集模块中`import`和`export` 语句，并记录到模块**依赖关系图 ModuleGraph** 变量中
+2. **标记未使用**：`Seal` 阶段，遍历 ModuleGraph 标记模块导出变量有没有被使用。
+3. **移除未使用的代码**：生成产物时，若变量没有被其它模块使用则使用 Terser 删除对应的导出语句
 
-
+#### CommonJS 不支持 Tree-shaking
+- ESM 使用 `import` 和 `export` 语法，这些语法是**静态**的，即在代码运行之前就可以确定模块的依赖关系。这使得构建工具（如 Webpack、Rollup）能够通过**静态分析**来识别未使用的代码，并在构建过程中将其移除。
+- CommonJS 使用 `require` 和 `module.exports`，这些语法是**动态**的，即模块的加载和解析是在运行时进行的。由于这种动态性，构建工具无法在编译时确定哪些代码是未使用的，因此 ==CommonJS 不支持 Tree-shaking==。
 
 ### 对 bundle 体积进行监控和分析方法
 

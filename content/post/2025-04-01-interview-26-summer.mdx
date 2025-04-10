@@ -2,7 +2,7 @@
 title: 26届 前端 暑期实习 面经
 subtitle: 
 layout: post
-date: 2025-03-31
+date: 2025-04-09
 author: heavenmei
 categories:
   - Note
@@ -62,22 +62,99 @@ image:
 - 手撕：Promise 并发器
 - 算法：滑动窗口
 
-
+> 面的稀烂
 
 ## 飞猪 电话面 （04-01）
 - 流式输出
 - node有哪些性能指标 （不了解）
-- 
+- node事件循环机制，常见的宏任务微任务
+- React Hooks为了解决什么问题？有了解React19吗？
+- React Diff/ Fiber？
+- JS 原型对象
+- JS常见的数值类型？如何判断数值类型？
+- 内存泄漏，常见的场景
+- 垃圾回收机制
+- JS本地存储
+- Webpack的构建流程？Vite
+- CSS 常见的单位？px pt em rem区别
+- 网络层？HTTPS安全问题是如何保障的？ SSL/TSL
+- Web常见的安全攻击？防御？
 
-
+> 很快，20分钟，但是没有后续
 
 
 ## 美团一面（04-02）
 
-- 一直在拷打图形学相关的知识，我说了才切换
-- 
+- 一直在拷打图形学相关的知识，（SVG，Camera，Three.js，WebGL）
+- React手撕组件，倒计时秒杀组件
+- React实现自定义防抖Hook
+- useEffect & useLayoutEffect
+- React渲染流程
+- 项目最有挑战的事件，实习收获最大的
 
+
+> 面完感觉寄了，神奇的过了
 
 
 ## 腾讯 二面 （04-03）
-- 
+- css background 有哪些设置？
+- 如何设置背景图片随着页面滚动？设置裁剪路径
+- flex布局，如何设置垂直居中
+- 对数组遍历的方式有哪些？对象的遍历
+- JS 模块化规范。ES Module / CommonJS？ 要想使用mjs扩展名该怎么设置 （不太了解）
+- 从base64编码的图像如何获取到它的宽高 （创建Image，onload或者canvas，首先加载图片在获取宽高）
+- 前端上传图片后如何本地预览？（FilerReader+`<input type="file" accept="image/*">` 或者 `URL.createObjectURL`）
+- 登录态的鉴权，如何实现？ （前后端约定好响应数据设置code）
+- TS Pick 和 Omit 区别？ 泛型的使用场景
+- AI 流式输出，SSE的格式？异常情况（多换行）
+- Markdown 内容解析完，如何解析自定义格式？（mdx？）
+- 手撕 滚动列表？ 
+
+> 这个面试官很好，会给足够多的提示
+
+
+## 携程一面（04-07）
+- 拷打项目，微信小程序
+- 项目登录鉴权逻辑
+- React 和Vue 渲染方式及各自的生命周期
+- useCallback和useMemo的区别及其使用场景？
+- 高阶组件，常见的高阶组件（母鸡）
+- 如何监听曝光检测？（Observers）
+- 如何实现一个全局/应用级别的发布订阅，及时响应？（）
+- super是做什么的？如何在子类中调用父类的方法？如何保留父类方法的基础上，在子类上添加自己的方法？
+- 静态方法和实例方法
+- 如何监听和拦截这个类里面的访问（getter/setter）
+- ES6是否支持私有属性？ （本身不支持，可以用Symbol实现）
+- 响应式布局？rem和em
+- webpack打包原理，结合打包产物分析？chunk和module的关系
+- tree-shaking原理
+```js
+// module A
+export const x = 'a'
+export default ModuleA;
+
+// main 是否能够拿到ModuleA
+import * from moduleA；
+```
+
+
+## 美团 二面（04-08）
+- 业务拷打
+- 微前端 garfish/ monorepo
+- yarn 和 pnpm区别
+- 实习期间有什么难的事情？
+- JS事件循环机制， Promise题目
+- 算法，合并重叠数组
+- 手写form组件
+
+## 饿了么 一面（04-10）
+
+
+
+## 蚂蚁 一面（04-10）
+
+
+
+## 字节 广告业务 一面（04-10）
+
+

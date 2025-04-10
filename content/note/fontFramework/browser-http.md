@@ -111,12 +111,19 @@ Content-Length: 122
 
 #### 强缓存
 
-强缓存是利用http头中的Expires和Cache-Control两个字段来控制的。
-- HTTP1.0 提供`Expires`，值为一个绝对时间表示缓存新鲜日期
-- HTTP1.1 增加了`Cache-Control:max-age=`，值为以秒为单位的最大新鲜时间
+强缓存是利用http头中的Expires和Cache-Control两个字段来控制的。 ==`Cache-Control` 的优先级高于 `Expires`==。
+
 
 强缓存中，当请求再次发出时，浏览器会根据其中的Expires和Cache-Control判断目标资源是否“命中”强缓存，如果命中则直接从缓存中获取资源，不会再与服务端发生通信。命中强缓存的情况下，返回的HTTP状态码为200。
 
+|   特性    |        `Expires`        |                `Cache-Control`                |
+| :-----: | :---------------------: | :-------------------------------------------: |
+| HTTP 版本 |      **HTTP/1.0**       |                 **HTTP/1.1**                  |
+|  时间表示   |    **绝对时间（具体日期和时间）**    |       **相对时间**（如 `max-age` 表示缓存有效期的秒数）        |
+| 客户端时间依赖 | 是，依赖客户端的系统时间，可能导致缓存判断错误 |                否，基于请求时间计算，更可靠                 |
+|   灵活性   |     低，只能指定一个固定的过期时间     | 高，支持多种指令（如 `max-age`、`no-cache`、`no-store` 等） |
+|  推荐使用   | 不推荐，仅用于兼容 HTTP/1.0 的客户端 |               推荐，是 HTTP/1.1 的标准               |
+|   优先级   |          **低**          |                     **高**                     |
 
 
 
@@ -358,6 +365,42 @@ Access-Control-Allow-Credentials        表示是否允许发送cookie，默认f
 Access-Control-Max-Age                  本次预检的有效期，单位：秒；
 
 ```
+
+
+
+#### 预检请求
+
+预检请求（Preflight Request）是浏览器在发送**非简单跨域请求**（CORS）前，通过**OPTIONS 方法**提前询问服务器，**用于确认目标服务器是否允许后续的实际请求**。
+
+- 简单请求 （**不预检**）
+	- 方法为 GET/POST； Content-Type 为简单类型； 无自定义头部
+	- `POST /api/data` + `Content-Type: application/x-www-form-urlencoded`
+- 非简单请求（**触发预检**）
+	- 不满足上述任一条件
+	- `PUT /api/data` + `Content-Type: application/json` + `X-Token: xxx`
+
+
+
+**流程**：
+
+浏览器发起`OPTIONS` 预检请求
+```bash
+OPTIONS /resource HTTP/1.1  
+Origin: https://web.example.com  
+Access-Control-Request-Method: PUT  
+Access-Control-Request-Headers: X-Custom-Header
+```
+
+服务器响应
+```bash
+HTTP/1.1 200 OK  
+Access-Control-Allow-Origin: https://web.example.com   # 允许的源 
+Access-Control-Allow-Methods: GET, POST, PUT     # 允许的方法
+Access-Control-Allow-Headers: X-Custom-Header, Content-Type # 允许的头部
+Access-Control-Max-Age: 86400  # 预检结果的缓存时间
+```
+
+若服务器验证通过，浏览器发送实际请求；否则终止请求并报错（如`No 'Access-Control-Allow-Origin'`）
 
 
 ### Nginx 反向代理

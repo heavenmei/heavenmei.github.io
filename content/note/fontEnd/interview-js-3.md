@@ -675,7 +675,30 @@ function add(...args1) {
 ```
 
 ### 22、深拷贝
+递归 简单版
+```js
+function deepCopy(obj){
+	if(obj === null || typeof obj !== 'object'){
+		return obj;
+	}
+	let newobj;
+	if(Array.isArray(obj)){
+		newobj=[];
+		for(let i=0;i<obj.length;i++){
+			newobj[i]=deepCopy(newobj[i])
+		}
+	}else{
+		newobj={};
+		for(let key in obj){
+			newobj[key]=deepCopy(obj[key])
+		}
+	}
+	return newobj;
+}
 
+```
+
+全面版
 ```js
 const tagMap = {
   mapTag: "[object Map]",
@@ -835,8 +858,7 @@ Array.prototype.sx_forEach = (cb) => {
 };
 ```
 
-#### forEach如何跳出循环？
-throw-catch
+forEach如何跳出循环？ throw-catch
 
 ```js
 function getItemById(arr, id) {
@@ -1348,4 +1370,59 @@ String.prototype.sx_sunstring = function (start = 0, end) {
 
     return str
 }
+```
+
+### 57、 解析URL
+
+使用 `new URL` 解析
+```js
+const url = new URL('https://example.com/path/to/resource?param1=value1&param2=value2#hash');
+
+url = {
+	protocol, // 输出: https:
+	hostname, // 输出: example.com
+	port, // 输出: (空字符串，因为没有指定端口)
+	pathname, // 输出: /path/to/resource
+	search, // 输出: ?param1=value1&param2=value2
+	hash // 输出: #hash
+}
+// 获取查询参数
+console.log(url.searchParams.get('param1')); // 输出: value1
+```
+
+使用 `URLSearchParams` 解析查询字符串
+```js
+const queryString = 'param1=value1&param2=value2';
+const searchParams = new URLSearchParams(queryString);
+
+// 获取单个参数
+console.log(searchParams.get('param1')); // 输出: value1
+```
+
+手撕
+```js
+const urlString = 'https://example.com/path/to/resource?param1=value1&param2=value2#hash';
+
+// 从后往前解析
+function parseURL(url) {
+  const [urlWithoutHash, hash] = url.split('#');
+  const [urlWithoutQuery, query] = urlWithoutHash.split('?');
+  const [protocol, hostWithPort] = urlWithoutQuery.split('//');
+  const [host, port] = hostWithPort.split(':');
+  const pathname = urlWithoutQuery.replace(/https?:\/\//, '');
+
+  const searchParams = new URLSearchParams(query);
+
+  return {
+    protocol,
+    host,
+    port: port || (protocol === 'https:' ? '443' : '80'),
+    pathname,
+    search: query,
+    hash: `#${hash}`,
+    searchParams: Object.fromEntries(searchParams)
+  };
+}
+
+const parsedURL = parseURL(urlString);
 ```

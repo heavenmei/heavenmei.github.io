@@ -151,7 +151,8 @@ module.exports = {
   //在优化里面配置
   optimization: {
     splitChunks: {
-      chunks: "all",
+      chunks: "all", // 对所有 chunk 进行分割
+
     },
   },
 };
@@ -160,6 +161,18 @@ module.exports = {
 //another.bundle.js
 //loash.js 公共的依赖模块
 ```
+
+#### Chunk 和 Module 的关系
+
+1. **Module（模块）**：
+    - 模块是代码的基本单元，可以是一个 JavaScript 文件、CSS 文件或其他资源。
+    - 模块通过 `import` 或 `require` 语法相互依赖。
+2. **Chunk（块）**：
+    - Chunk 是一个或多个模块的集合，最终被打包成一个或多个文件。
+    - Webpack 会根据配置将模块分配到不同的 chunk 中，每个 chunk 生成一个或多个文件。
+
+==Webpack 默认会将所有入口点（entry points）及其依赖的模块打包到一个单独的 chunk 中==。例如，如果你有多个入口点，每个入口点及其依赖的模块会被打包到一个单独的文件中。
+
 
 ## 环境配置
 
