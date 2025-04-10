@@ -474,15 +474,15 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 		visibility:hidden;      /*content有内容，将元素隐藏*/
 		clear:both;  
 	}
-
+	
 	/* 方法二：设置空字符，则不需要隐藏content */
 	.clearfix::after{
 		content:"\200B";   /* content:'\0200'; 也可以 */
 		display:block;
 		height:0;
 		clear:both;
-   }
-
+	}
+	
 	/* 方法三：使用before和after双伪元素清除浮动（推荐）完全符合闭合浮动思想 */
 	.clearfix:before, .clearfix:after {
 		content: ""; 
@@ -492,6 +492,8 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 		clear: both;
 	}
 	```
+
+
 
 ## 定位 position
 

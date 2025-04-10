@@ -4,17 +4,15 @@ import note__java__databaseMd from './note__Java__Database.md.json' assert { typ
 import note__java__hibernateMd from './note__Java__Hibernate.md.json' assert { type: 'json' }
 import note__java__mySqlMd from './note__Java__MySQL.md.json' assert { type: 'json' }
 import note__fontEnd__cssBaseMd from './note__fontEnd__css-base.md.json' assert { type: 'json' }
+import note__fontEnd__cssLayoutMd from './note__fontEnd__css-layout.md.json' assert { type: 'json' }
 import note__fontEnd__htmlBaseMd from './note__fontEnd__html-base.md.json' assert { type: 'json' }
-import note__fontEnd__interviewCss_1Md from './note__fontEnd__interview-css-1.md.json' assert { type: 'json' }
-import note__fontEnd__interviewCss_2Md from './note__fontEnd__interview-css-2.md.json' assert { type: 'json' }
 import note__fontEnd__interviewJs_1Md from './note__fontEnd__interview-js-1.md.json' assert { type: 'json' }
 import note__fontEnd__interviewJs_2Md from './note__fontEnd__interview-js-2.md.json' assert { type: 'json' }
 import note__fontEnd__interviewJs_3Md from './note__fontEnd__interview-js-3.md.json' assert { type: 'json' }
 import note__fontEnd__interviewNoteMd from './note__fontEnd__interview-note.md.json' assert { type: 'json' }
-import note__fontEnd__inteviewReviewMd from './note__fontEnd__inteview-review.md.json' assert { type: 'json' }
-import note__fontEnd__js_1Md from './note__fontEnd__js-1.md.json' assert { type: 'json' }
-import note__fontEnd__js_2Md from './note__fontEnd__js-2.md.json' assert { type: 'json' }
-import note__fontEnd__js_3Md from './note__fontEnd__js-3.md.json' assert { type: 'json' }
+import note__fontEnd__jsRedBook_1Md from './note__fontEnd__js-red-book-1.md.json' assert { type: 'json' }
+import note__fontEnd__jsRedBook_2Md from './note__fontEnd__js-red-book-2.md.json' assert { type: 'json' }
+import note__fontEnd__jsRedBook_3Md from './note__fontEnd__js-red-book-3.md.json' assert { type: 'json' }
 import note__fontEnd__jsUdk_1Md from './note__fontEnd__js-udk-1.md.json' assert { type: 'json' }
 import note__fontEnd__jsUdk_2Md from './note__fontEnd__js-udk-2.md.json' assert { type: 'json' }
 import note__fontEnd__jsUdk_3Md from './note__fontEnd__js-udk-3.md.json' assert { type: 'json' }
@@ -35,4 +33,4 @@ import note__fontFramework__webpackOtherToolsMd from './note__fontFramework__web
 import note__games101__games101_01_02LinearAlgebraMd from './note__games101__Games101-01+02-LinearAlgebra.md.json' assert { type: 'json' }
 import note__games101__games101_03_04TransformationMd from './note__games101__Games101-03+04-Transformation.md.json' assert { type: 'json' }
 
-export const allNotes = [note__java__databaseMd, note__java__hibernateMd, note__java__mySqlMd, note__fontEnd__cssBaseMd, note__fontEnd__htmlBaseMd, note__fontEnd__interviewCss_1Md, note__fontEnd__interviewCss_2Md, note__fontEnd__interviewJs_1Md, note__fontEnd__interviewJs_2Md, note__fontEnd__interviewJs_3Md, note__fontEnd__interviewNoteMd, note__fontEnd__inteviewReviewMd, note__fontEnd__js_1Md, note__fontEnd__js_2Md, note__fontEnd__js_3Md, note__fontEnd__jsUdk_1Md, note__fontEnd__jsUdk_2Md, note__fontEnd__jsUdk_3Md, note__fontEnd__ts_1Md, note__fontFramework__2025_03_25FromUrlRenderMd, note__fontFramework__browserHttpMd, note__fontFramework__browserMultiprocessMd, note__fontFramework__browserRenderMd, note__fontFramework__browserV8Md, note__fontFramework__reactAdvancedMd, note__fontFramework__reactBaseMd, note__fontFramework__vueAdvancedMd, note__fontFramework__vueBaseMd, note__fontFramework__webpackHmrMd, note__fontFramework__webpackBaseMd, note__fontFramework__webpackInterviewMd, note__fontFramework__webpackOtherToolsMd, note__games101__games101_01_02LinearAlgebraMd, note__games101__games101_03_04TransformationMd]
+export const allNotes = [note__java__databaseMd, note__java__hibernateMd, note__java__mySqlMd, note__fontEnd__cssBaseMd, note__fontEnd__cssLayoutMd, note__fontEnd__htmlBaseMd, note__fontEnd__interviewJs_1Md, note__fontEnd__interviewJs_2Md, note__fontEnd__interviewJs_3Md, note__fontEnd__interviewNoteMd, note__fontEnd__jsRedBook_1Md, note__fontEnd__jsRedBook_2Md, note__fontEnd__jsRedBook_3Md, note__fontEnd__jsUdk_1Md, note__fontEnd__jsUdk_2Md, note__fontEnd__jsUdk_3Md, note__fontEnd__ts_1Md, note__fontFramework__2025_03_25FromUrlRenderMd, note__fontFramework__browserHttpMd, note__fontFramework__browserMultiprocessMd, note__fontFramework__browserRenderMd, note__fontFramework__browserV8Md, note__fontFramework__reactAdvancedMd, note__fontFramework__reactBaseMd, note__fontFramework__vueAdvancedMd, note__fontFramework__vueBaseMd, note__fontFramework__webpackHmrMd, note__fontFramework__webpackBaseMd, note__fontFramework__webpackInterviewMd, note__fontFramework__webpackOtherToolsMd, note__games101__games101_01_02LinearAlgebraMd, note__games101__games101_03_04TransformationMd]
