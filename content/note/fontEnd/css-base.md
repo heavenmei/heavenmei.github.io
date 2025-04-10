@@ -277,7 +277,7 @@ margin: 0 auto;
 - scroll 生成两个滚动条，通过滚动条来查看完整的内容
 - auto 根据需要生成滚动条
 - 
-## BFC
+## BFC / block
 
 ### 行内元素 VS. 块级元素
 
@@ -368,20 +368,20 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 
 
 #### 触发 BFC
-8. 根元素，即 HTML 元素（最大的一个 `BFC`）​ 
-9. 浮动元素：float 除 none 以外的值。
-10. 绝对定位元素：position (absolute、fixed)。
-11. display 为 行内块（inline-block）、表格单元（table、table-cell、table-caption）、弹性和（flex、inline-flex）
-12. overflow 除了 visible 以外的值 (hidden、auto、scroll)。
+1. 根元素，即 HTML 元素（最大的一个 `BFC`）​ 
+2. 浮动元素：float 除 none 以外的值。
+3. 绝对定位元素：position (absolute、fixed)。
+4. display 为 行内块（inline-block）、表格单元（table、table-cell、table-caption）、弹性和（flex、inline-flex）
+5. overflow 除了 visible 以外的值 (hidden、auto、scroll)。
 
 #### 使用场景
 
 [遇到哪些问题需要用到 BFC](https://security.feishu.cn/link/safety?target=https%3A%2F%2Fblog.csdn.net%2Fsinat_36422236%2Farticle%2Fdetails%2F88763187%3Fops_request_misc%3D%25257B%252522request%25255Fid%252522%25253A%252522164482927316780261938625%252522%25252C%252522scm%252522%25253A%25252220140713.130102334..%252522%25257D%26request_id%3D164482927316780261938625%26biz_id%3D0%26utm_medium%3Ddistribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-88763187.first_rank_v2_pc_rank_v29%26utm_term%3Dbfc%26spm%3D1018.2226.3001.4187&scene=ccm&logParams=%7B%22location%22%3A%22ccm_drive%22%7D&lang=zh-CN)
 
-13. **利用 BFC 避免 margin 重叠**。属于同一个BFC的两个相邻块级子元素的上下margin会发生重叠，(设置writing-mode:tb-rl时，水平 margin会发生重叠)。所以当两个相邻块级子元素分属于不同的BFC时可以阻止margin重叠。 这里给任一个相邻块级盒子的外面包一个div，通过改变此div的属性使两个原盒子分属于两个不同的BFC，以此来阻止margin重叠。
-14. **自适应两栏布局**。阻止因为浏览器因为四舍五入造成的多列布局换行的情况。有时候因为多列布局采用小数点位的width导致因为浏览器因为四舍五入造成的换行的情况，可以在最后一 列触发BFC的形式来阻止换行的发生。比如下面栗子的特殊情况
-15. **高度塌陷（BFC、clear、clearfix）可以包含浮动元素**。通过改变包含浮动子元素的父盒子的属性值，触发BFC，以此来包含子元素的浮动盒子。
-16. **阻止元素被浮动元素覆盖**。一个正常文档流的block元素可能被一个float元素覆盖，挤占正常文档流，因此可以设置一个元素的float、 display、position值等方式触发BFC，以阻止被浮动盒子覆盖。
+1. **利用 BFC 避免 margin 重叠**。属于同一个BFC的两个相邻块级子元素的上下margin会发生重叠，(设置writing-mode:tb-rl时，水平 margin会发生重叠)。所以当两个相邻块级子元素分属于不同的BFC时可以阻止margin重叠。 这里给任一个相邻块级盒子的外面包一个div，通过改变此div的属性使两个原盒子分属于两个不同的BFC，以此来阻止margin重叠。
+2. **自适应两栏布局**。阻止因为浏览器因为四舍五入造成的多列布局换行的情况。有时候因为多列布局采用小数点位的width导致因为浏览器因为四舍五入造成的换行的情况，可以在最后一 列触发BFC的形式来阻止换行的发生。比如下面栗子的特殊情况
+3. **高度塌陷（BFC、clear、clearfix）可以包含浮动元素**。通过改变包含浮动子元素的父盒子的属性值，触发BFC，以此来包含子元素的浮动盒子。
+4. **阻止元素被浮动元素覆盖**。一个正常文档流的block元素可能被一个float元素覆盖，挤占正常文档流，因此可以设置一个元素的float、 display、position值等方式触发BFC，以阻止被浮动盒子覆盖。
 
 
 
@@ -389,9 +389,9 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 
 **IFC: 行内格式化上下文**​
 
-1. 内部的 `Box` 会在水平方向，从含块的顶部开始一个接着一个地放置
-2. 这些 `Box` 之间的水平方向的 `margin`，`border` 和`padding` 都有效
-3. `Box` 垂直对齐方式：以它们的底部、顶部对齐，或以它们里面的文本的基线（`baseline`）对齐（默认， 文本与图片对其），例：`line-heigth` 与 `vertical-align`
+- 内部的 `Box` 会在水平方向，从含块的顶部开始一个接着一个地放置
+- 这些 `Box` 之间的水平方向的 `margin`，`border` 和`padding` 都有效
+- `Box` 垂直对齐方式：以它们的底部、顶部对齐，或以它们里面的文本的基线（`baseline`）对齐（默认， 文本与图片对其），例：`line-heigth` 与 `vertical-align`
 
 ![img|400](https://static.nowcoder.com/images/activity/2021jxy/front/images/v2-802af4d163388892cec633645d00b58a_1440w.png)
 
@@ -408,12 +408,12 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 
 #### 浮动的特点
 
-1. 浮动元素会完全**脱离文档流**，不再占据文档流中的位置
-2. 设置浮动以后元素会向父元素的左侧或右侧移动
-3. 浮动元素默认**不会从父元素中移出**
-4. 浮动元素向左或向右移动时，**不会超过它前边的其他浮动元素**
-5. **如果浮动元素的上边是一个没有浮动的块元素，则浮动元素无法上移
-6. 浮动元素不会超过它上边的浮动的兄弟元素，最多最多就是和它一样高
+2. 浮动元素会完全**脱离文档流**，不再占据文档流中的位置
+3. 设置浮动以后元素会向父元素的左侧或右侧移动
+4. 浮动元素默认**不会从父元素中移出**
+5. 浮动元素向左或向右移动时，**不会超过它前边的其他浮动元素**
+6. **如果浮动元素的上边是一个没有浮动的块元素，则浮动元素无法上移
+7. 浮动元素不会超过它上边的浮动的兄弟元素，最多最多就是和它一样高
 
 ==简单总结： 浮动的主要作用就是让页面中的元素可以水平排列，通过浮动可以制作一些水平方向的布局==
 
@@ -441,9 +441,9 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 本质就是浮动`float`导致的，因此只需要清楚浮动。其实叫做闭合浮动更合适，因为是把浮动的元素圈起来，让父元素闭合出口和入口不让他们出来影响其他的元素。 
 
 
-7. 最简单，直接，粗暴的方法就是**盒子大小写死**，给每个盒子设定固定的width和height，直到合适为止，这样的好处是简单方便，兼容性好，适合只改动少量内容不涉及盒子排布的版面。缺点是非自适应，浏览器的窗口大小直接影响用户体验。
-8. **给外部的父盒子也添加浮动**，让其也脱离标准文档流，这种方法方便，但是对页面的布局不是很友好，不易维护。
-9. **给父元素添加`overflow`属性，触发BFC**。但是因为本身overflow的本质是溢出隐藏的效果，所以有的时候也会有一些问题存在，比如内容增多的时候不会自动换行导致内容被隐藏掉，无法显示出要溢出的元素。
+8. 最简单，直接，粗暴的方法就是**盒子大小写死**，给每个盒子设定固定的width和height，直到合适为止，这样的好处是简单方便，兼容性好，适合只改动少量内容不涉及盒子排布的版面。缺点是非自适应，浏览器的窗口大小直接影响用户体验。
+9. **给外部的父盒子也添加浮动**，让其也脱离标准文档流，这种方法方便，但是对页面的布局不是很友好，不易维护。
+10. **给父元素添加`overflow`属性，触发BFC**。但是因为本身overflow的本质是溢出隐藏的效果，所以有的时候也会有一些问题存在，比如内容增多的时候不会自动换行导致内容被隐藏掉，无法显示出要溢出的元素。
 	```css
 	.father {
 		overflow: auto;  
@@ -451,16 +451,16 @@ BFC(Block Formatting Context) 是一个 CSS 中的一个隐含的属性，可以
 	}
 	```
 
-10. 给父盒子添加`border`
-11. 给父盒子设置`padding-top`
-12. **在浮动元素的末尾添加一个空的标签**。这是W3C推荐的做法，虽然比较简单，但是添加了无意义的标 签，结构化比较差，所以不推荐使用。
+11. 给父盒子添加`border`
+12. 给父盒子设置`padding-top`
+13. **在浮动元素的末尾添加一个空的标签**。这是W3C推荐的做法，虽然比较简单，但是添加了无意义的标 签，结构化比较差，所以不推荐使用。
 	```html
 	<div style="clear:both"></div>
 	<!--也可以使用br等别的块级元素来清除浮动-->
 	<br style="clear:both" />    
 	```
 
-13. **用`::after`伪元素清除浮动（最常用）**。在父元素中加一个盒子伪元素设置clear属性，再隐藏它。这其实是对空盒子方案的改进，一种纯CSS的解决方案，不用引入冗余元素。*这也是bootstrap框架采用的清除浮动的方法*。这是一种纯CSS的解决浮动造成盒子塌陷方法，没有引入任何冗余元素，推荐使用此方法来解决CSS盒子塌陷。
+14. **用`::after`伪元素清除浮动（最常用）**。在父元素中加一个盒子伪元素设置clear属性，再隐藏它。这其实是对空盒子方案的改进，一种纯CSS的解决方案，不用引入冗余元素。*这也是bootstrap框架采用的清除浮动的方法*。这是一种纯CSS的解决浮动造成盒子塌陷方法，没有引入任何冗余元素，推荐使用此方法来解决CSS盒子塌陷。
 	- 但是这个方法IE6，7不识别，要进行兼容，使用zoom:1触发 hasLayout来清除浮动
 	```css
 	.clearfix {
@@ -664,9 +664,9 @@ display: -webkit-box;
 
 - 通过**伪元素**来设置图标字体
 
-14. 找到要设置图标的元素通过 before 或 after 选中
-15. 在 content 中设置字体的编码
-16. 设置字体的样式
+15. 找到要设置图标的元素通过 before 或 after 选中
+16. 在 content 中设置字体的编码
+17. 设置字体的样式
 
 ```css
 li::before {
@@ -1290,27 +1290,27 @@ css的继承：就是给父级设置一些属性，子级继承了父级的该�
 
 #### 无继承性的属性
 
-1. display：规定元素应该生成的框的类型
-2. 文本属性：vertical-align、text-decoration、text-shadow、white-space、unicode-bidi（设置文本的方向）
-3. 盒子模型的属性：width、height、margin 、margin-top、margin-right、margin-bottom、margin-left、border、 border-style、border-top-style、border-right-style、border-bottom-style、border-left-style、border-width、border-top-width、border-right-right、border-bottom-width、border-left-width、border-color、border-top-color、border-right-color、border-bottom-color、border-left-color、border-top、border-right、border-bottom、border-left、padding、padding-top、padding-right、padding-bottom、padding-left
-4. 背景属性：background、background-color、background-image、background-repeat、background-position、background-attachment
-5. 定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
-6. 生成内容属性：content、counter-reset、counter-increment
-7. 轮廓样式属性：outline-style、outline-width、outline-color、outline
-8. 页面样式属性：size、page-break-before、page-break-after
-9. 声音样式属性：pause-before、pause-after、pause、cue-before、cue-after、cue、play-during
+18. display：规定元素应该生成的框的类型
+19. 文本属性：vertical-align、text-decoration、text-shadow、white-space、unicode-bidi（设置文本的方向）
+20. 盒子模型的属性：width、height、margin 、margin-top、margin-right、margin-bottom、margin-left、border、 border-style、border-top-style、border-right-style、border-bottom-style、border-left-style、border-width、border-top-width、border-right-right、border-bottom-width、border-left-width、border-color、border-top-color、border-right-color、border-bottom-color、border-left-color、border-top、border-right、border-bottom、border-left、padding、padding-top、padding-right、padding-bottom、padding-left
+21. 背景属性：background、background-color、background-image、background-repeat、background-position、background-attachment
+22. 定位属性：float、clear、position、top、right、bottom、left、min-width、min-height、max-width、max-height、overflow、clip、z-index
+23. 生成内容属性：content、counter-reset、counter-increment
+24. 轮廓样式属性：outline-style、outline-width、outline-color、outline
+25. 页面样式属性：size、page-break-before、page-break-after
+26. 声音样式属性：pause-before、pause-after、pause、cue-before、cue-after、cue、play-during
 
 #### 有继承性的属性
 
-10. 字体系列属性：font、font-family、font-weight、font-size、font-style、font-variant（设置小型大写字母的字体）、font-stretch（伸缩变形）、font-size-adjust
-11. 文本系列属性：text-indent、text-align、line-height、word-spacing、letter-spacing、text-transform（大小写）、direction（书写方向）、color
-12. 元素可见性：visibility
-13. 表格布局属性：caption-side、border-collapse、border-spacing、empty-cells、table-layout
-14. 列表布局属性：list-style-type、list-style-image、list-style-position、list-style
-15. 生成内容属性：quotes
-16. 光标属性：cursor
-17. 页面样式属性：page、page-break-inside、windows、orphans
-18. 声音样式属性：speak、speak-punctuation、speak-numeral、speak-header、speech-rate、volume、voice-family、 pitch、pitch-range、stress、richness、、azimuth、elevation
+27. 字体系列属性：font、font-family、font-weight、font-size、font-style、font-variant（设置小型大写字母的字体）、font-stretch（伸缩变形）、font-size-adjust
+28. 文本系列属性：text-indent、text-align、line-height、word-spacing、letter-spacing、text-transform（大小写）、direction（书写方向）、color
+29. 元素可见性：visibility
+30. 表格布局属性：caption-side、border-collapse、border-spacing、empty-cells、table-layout
+31. 列表布局属性：list-style-type、list-style-image、list-style-position、list-style
+32. 生成内容属性：quotes
+33. 光标属性：cursor
+34. 页面样式属性：page、page-break-inside、windows、orphans
+35. 声音样式属性：speak、speak-punctuation、speak-numeral、speak-header、speech-rate、volume、voice-family、 pitch、pitch-range、stress、richness、、azimuth、elevation
 
 #### 所有元素可以继承的属性
 - 元素可见性：visibility

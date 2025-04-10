@@ -88,26 +88,16 @@ ES6 class:面向对象风格
   2. hooks 的方法在 Class 组件中均有另一套对应的实现
   3. ==function 组件每次渲染都会有独立 props/state ,而 class 组件通过 this 捕获最新的 props/state==
   4. class 创建组件，函数成员不会自动绑定 this，需要手动绑定
-  5. 
+  
 
 
-#### 高阶组件
+#### 高阶组件（HOC）
 
-高阶函数：接受值或返回值是函数的函数
+ **React 中用于复用组件逻辑的高级技术**，本质是一个 **函数**，接收一个组件作为参数，并返回一个 **增强后的新组件**。
+- **输入**：一个组件（如 `WrappedComponent`）。
+- **输出**：一个新的增强组件（如 `EnhancedComponent`）。
+- **作用**：在不修改原组件代码的情况下，扩展其功能（如添加 props、状态、生命周期等）
 
-```js
-const add = (x) => (y) => x + y;
-add(1)(2);
-
-//Babel 转换后
-var add = function add(x) {
-  return function (y) {
-    return x + y;
-  };
-};
-```
-
-高阶组件：接受值和返回值都是组件的函数。主要用于属性代理，控制组件的属性和状态，以及渲染劫持（为组件添加同意的样式或布局）
 
 ```jsx
 const Container = (WrappedComponent) =>{
@@ -120,6 +110,26 @@ const Container = (WrappedComponent) =>{
 }
 ```
 
+**常见的HOC**：
+- Redux 的 `connect`
+- React Router 的 `withRouter`
+
+
+
+
+**高阶函数**：接受值或返回值是函数的函数
+
+```js
+const add = (x) => (y) => x + y;
+add(1)(2);
+
+//Babel 转换后
+var add = function add(x) {
+  return function (y) {
+    return x + y;
+  };
+};
+```
 ## State
 
 state 是组件内部的状态，React 把组件看成是一个状态机（State Machines）。
@@ -486,7 +496,38 @@ react中的性能优化。在hooks诞生之前，如果组件包含内部state�
 
 ### 自定义 Hooks
 
-通过原生 hooks 的组装，实现逻辑的抽象复用，自定义 hooks 也统一用 useXXX 命名
+自定义 Hook 就是一个普通的 JavaScript 函数，内部可以调用 React 的内置 Hooks（如 `useState`、`useEffect` 等）。
+-  **必须以 `use` 开头**（如 `useSomething`），这样 React 才能识别它是 Hook。
+- **可以调用其他 Hooks**（如 `useState`、`useEffect`）。
+- **不能在条件语句或循环中使用 Hooks**（必须顶层调用）。
+- **可以返回任意值**（对象、数组、函数等）。
+
+
+```js
+import { useState } from 'react';
+
+// 自定义 Hook：计数器
+function useCounter(initialValue = 0, step = 1) {
+  const [count, setCount] = useState(initialValue);
+
+  const increment = () => setCount(count + step);
+  const decrement = () => setCount(count - step);
+  const reset = () => setCount(initialValue);
+
+  return { count, increment, decrement, reset };
+}
+
+// 使用示例
+function Counter() {
+  const { count, increment, decrement, reset } = useCounter(0, 2);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+    </div>
+  );
+}
+```
 
 ### flushSync 同步刷新
 
@@ -574,9 +615,9 @@ React 中的 bind 同上方原理一致,在 JSX 中传递的事件不是一个�
 
 #### react 组件内点击事件的 this 的 3 种指向方法
 
-1. 调用函数时**bind**(this)，，this 指向当前实例化对象。 `onClick={this.handleClick1.bind( this )}`
-2. 声明函数时使用**箭头函数**，并在调用时直接使用 this.变量名即可。 `handleClick3 =()=>{console.log( this )}`
-3. 通过在构造函数**constructor**内使用 bind 对函数内的 this 重定向  `this.handleClick2 = this.handleClick2.bind(this)`  不建议在 render()中 bind，因为它会在每次 render()方法执行时绑定类方法，肯定对于性能有影响。而直接在 constructor 中 bind, 则 bind 只会在组件实例化初时运行一次。
+4. 调用函数时**bind**(this)，，this 指向当前实例化对象。 `onClick={this.handleClick1.bind( this )}`
+5. 声明函数时使用**箭头函数**，并在调用时直接使用 this.变量名即可。 `handleClick3 =()=>{console.log( this )}`
+6. 通过在构造函数**constructor**内使用 bind 对函数内的 this 重定向  `this.handleClick2 = this.handleClick2.bind(this)`  不建议在 render()中 bind，因为它会在每次 render()方法执行时绑定类方法，肯定对于性能有影响。而直接在 constructor 中 bind, 则 bind 只会在组件实例化初时运行一次。
 
 ### useContext（祖先后代）
 

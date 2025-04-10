@@ -462,7 +462,7 @@ background-color包括盒子模型中的content+padding
 一个定宽栏 + 一个自适应的栏
 #### float
 - `float：left`： 左浮左边栏
-- ` margin-left`: 右边模块 撑出内容块做内容展示
+- `margin-left`: 右边模块 撑出内容块做内容展示
 - `overflow: hidden`：为父级元素添加BFC，防止下方元素飞到上方内容
 ```html
 <style>

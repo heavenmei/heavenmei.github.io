@@ -28,6 +28,26 @@ image:
 |     |                                                          |                                                                        |
 
 
+## vue2 & vue3
+
+响应式原理基本相同，知识 vue3 使用Proxy实现的
+
+|                  | **Vue2**                   | **Vue3**                      |
+| ---------------- | -------------------------- | ----------------------------- |
+| **发布时间**         | 2016年                      | 2020年9月                       |
+| **核心架构**         | Options API 为主             | Composition API + Options API |
+| **响应式原理**        | 基于 `Object.defineProperty` | 基于 `Proxy`                    |
+| **性能**           | 较慢（虚拟DOM全量对比）              | 更快（静态标记、树结构优化等）               |
+| **代码组织**         | 按选项（data、methods等）分组       | 按逻辑功能组织（Composition API）      |
+| **TypeScript支持** | 支持较弱                       | 原生支持良好                        |
+| **Fragment组件**   | 不支持（必须单根节点）                | 支持多根节点（Fragment）              |
+| **生命周期**         | `beforeCreate`/`created` 等 | 改名（如 `setup` 替代部分钩子）          |
+| **全局API**        | `Vue.prototype` 扩展         | `createApp` 隔离实例              |
+| **Teleport组件**   | 无                          | 新增（传送门功能）                     |
+| **Suspense组件**   | 无                          | 新增（异步组件加载状态处理）                |
+| **打包体积**         | 较大                         | 更小（Tree-shaking优化）            |
+| **自定义渲染器**       | 有限支持                       | 更灵活（如自定义原生渲染）                 |
+
 ## Vue 生命周期
 ![|500](assets/vue-base-20250329112022.png)
 
@@ -42,6 +62,3 @@ image:
 
 
 
-#### vue2和vue3的区别
-
-响应式原理基本相同，知识 vue3 使用Proxy实现的
