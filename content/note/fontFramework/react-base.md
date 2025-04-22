@@ -491,7 +491,7 @@ react中的性能优化。在hooks诞生之前，如果组件包含内部state�
 - 使用`immutable`进行比较，在不相等的时候调用setState；
 - 在`shouldComponentUpdate`中判断前后的props和state，如果没有变化，则返回false来阻止更新。
 
-在hooks出来之后，我们能够使用function的形式来创建包含内部state的组件。但是，使用function的形式，失去了上面的`shouldComponentUpdate`，我们无法通过判断前后状态来决定是否更新。而且，在函数组件中，react不再区分mount和update两个状态，这意味着函数组件的每一次调用都会执行其内部的所有逻辑，那么会带来较大的性能损耗。**因此useMemo 和useCallback就是解决性能问题的杀手锏**。
+在hooks出来之后，我们能够使用function的形式来创建包含内部state的组件。但是，**使用function的形式，失去了上面的`shouldComponentUpdate`，我们无法通过判断前后状态来决定是否更新**。而且，在函数组件中，react不再区分mount和update两个状态，==这意味着函数组件的每一次调用都会执行其内部的所有逻辑，那么会带来较大的性能损耗==。因此useMemo 和useCallback就是解决性能问题的杀手锏。
 
 
 ### 自定义 Hooks

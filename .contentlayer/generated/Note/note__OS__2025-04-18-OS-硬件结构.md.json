@@ -1,0 +1,26 @@
+{
+  "title": "OS-硬件结构",
+  "tags": [
+    "Web"
+  ],
+  "author": "heavenmei",
+  "subtitle": null,
+  "description": null,
+  "date": "2025-04-18T00:00:00.000Z",
+  "body": {
+    "raw": "",
+    "code": "var Component=(()=>{var m=Object.create;var a=Object.defineProperty;var x=Object.getOwnPropertyDescriptor;var g=Object.getOwnPropertyNames;var d=Object.getPrototypeOf,f=Object.prototype.hasOwnProperty;var p=(t,e)=>()=>(e||t((e={exports:{}}).exports,e),e.exports),_=(t,e)=>{for(var n in e)a(t,n,{get:e[n],enumerable:!0})},i=(t,e,n,s)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let r of g(e))!f.call(t,r)&&r!==n&&a(t,r,{get:()=>e[r],enumerable:!(s=x(e,r))||s.enumerable});return t};var j=(t,e,n)=>(n=t!=null?m(d(t)):{},i(e||!t||!t.__esModule?a(n,\"default\",{value:t,enumerable:!0}):n,t)),b=t=>i(a({},\"__esModule\",{value:!0}),t);var l=p((C,u)=>{u.exports=_jsx_runtime});var w={};_(w,{default:()=>M,frontmatter:()=>h});var o=j(l()),h={title:\"OS-\\u786C\\u4EF6\\u7ED3\\u6784\",subtitle:null,layout:\"post\",date:new Date(17449344e5),author:\"heavenmei\",categories:[\"Note\"],description:null,tags:[\"Web\"],image:null};function c(t){return(0,o.jsx)(o.Fragment,{})}function D(t={}){let{wrapper:e}=t.components||{};return e?(0,o.jsx)(e,Object.assign({},t,{children:(0,o.jsx)(c,t)})):c(t)}var M=D;return b(w);})();\n;return Component;"
+  },
+  "_id": "note/OS/2025-04-18-OS-硬件结构.md",
+  "_raw": {
+    "sourceFilePath": "note/OS/2025-04-18-OS-硬件结构.md",
+    "sourceFileName": "2025-04-18-OS-硬件结构.md",
+    "sourceFileDir": "note/OS",
+    "contentType": "markdown",
+    "flattenedPath": "note/OS/2025-04-18-OS-硬件结构"
+  },
+  "type": "Note",
+  "parDir": "note/OS",
+  "slug": "/post/2025-04-18-OS-硬件结构",
+  "slugAsParams": "2025-04-18-OS-硬件结构"
+}

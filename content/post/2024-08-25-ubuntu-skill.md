@@ -8,8 +8,6 @@ categories:
   - Post
 ---
 
-> ecnu13: `ssh haiwen@172.23.137.29`
-
 ## 基本命令
 
 rm [-rf] dirName
@@ -17,8 +15,6 @@ rm [-rf] dirName
 参数：-r 将目录及以下之档案亦逐一删除，-f 强行删除，不需询问。
 
 ## 科学上网
-
-科学上网：`source <(curl -s 172.23.148.93/s/ecnuproxy.sh)`
 
 关闭代理：`unset http_proxy https_proxy all_proxy`
 

@@ -108,7 +108,17 @@ Content-Length: 122
 
 ![|500](assets/browser-apply-20250119023524.png)
 
-
+```mermaid
+graph TD
+    A[请求资源] --> B{是否有缓存?}
+    B -->|否| C[向服务器请求]
+    B -->|是| D{检查Cache-Control}
+    D -->|max-age未过期| E[使用缓存]
+    D -->|已过期| F[发送验证请求]
+    F --> G{服务器返回304?}
+    G -->|是| H[更新缓存时间,使用缓存]
+    G -->|否| I[使用新资源,更新缓存]
+```
 #### 强缓存
 
 强缓存是利用http头中的Expires和Cache-Control两个字段来控制的。 ==`Cache-Control` 的优先级高于 `Expires`==。
