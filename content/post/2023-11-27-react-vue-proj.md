@@ -355,41 +355,6 @@ npm create vite@latest
 "mock": "cross-env PORT=9000 MODE=mock nuxt dev ",
 ```
 
-
-
-
-## 手脚架
-### CRA/CRACO
-
-[cra](https://create-react-app.dev/)= Create React App。基于webpack和Babel， webpack配置太多。
-
-[craco](https://craco.js.org/docs/getting-started/)= Create React App Configuration Overide。基于cra之上的一个hacky层，用于定制它的配置,allows you to get all of the benefits of Create React App without ejecting
-
-1. `npx create-react-app my-app`
-2. `npm i -D @craco/craco` or `npm i -D @craco/types`(ts)
-3. create configuaration file `craco.config.js`
-4. update `package.json`
-    ```json
-    "scripts": {
-    -  "start": "react-scripts start"
-    +  "start": "craco start"
-    -  "build": "react-scripts build"
-    +  "build": "craco build"
-    -  "test": "react-scripts test"
-    +  "test": "craco test"
-    }
-    ```
-
-
-
-### Next.js
-
-Next.js 是一个基于 React 的**服务端渲染框架**，它提供了约定式路由、多种渲染方式、静态导出等功能。
-
-
-
-## vite 配置
-
 ### Sass
 
 ```bash
@@ -511,6 +476,35 @@ VITE_REDIRECT_INDEX = "/index"
 const baseUrl = import.meta.env.VITE_APP_API_PREFIX;
 ```
 
+
+
+## 手脚架
+### CRA/CRACO
+
+[cra](https://create-react-app.dev/)= Create React App。基于webpack和Babel， webpack配置太多。
+
+[craco](https://craco.js.org/docs/getting-started/)= Create React App Configuration Overide。基于cra之上的一个hacky层，用于定制它的配置,allows you to get all of the benefits of Create React App without ejecting
+
+1. `npx create-react-app my-app`
+2. `npm i -D @craco/craco` or `npm i -D @craco/types`(ts)
+3. create configuaration file `craco.config.js`
+4. update `package.json`
+    ```json
+    "scripts": {
+    -  "start": "react-scripts start"
+    +  "start": "craco start"
+    -  "build": "react-scripts build"
+    +  "build": "craco build"
+    -  "test": "react-scripts test"
+    +  "test": "craco test"
+    }
+    ```
+
+
+
+### Next.js
+
+Next.js 是一个基于 React 的**服务端渲染框架**，它提供了约定式路由、多种渲染方式、静态导出等功能。
 
 
 

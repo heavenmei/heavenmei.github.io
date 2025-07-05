@@ -322,11 +322,67 @@ tmux kill-server
 
 **判断 cuda 是否可用：** `python -c "import torch; print(torch.cuda.is_available())"`
 
-tip： 
-- 内存使用： `free -m`
-- cpu 使用：`top`
+### 磁盘
+```shell
+# 查看整体磁盘使用情况
+df -h
+# 查看当前目录的磁盘占用
+du -sh *
+# 查看指定目录的磁盘占用
+du -sh /path/to/directory
+
+# 查看内存占用情况
+top
 
 
+#内存使用
+free -m
+```
+
+## Ngnix
+
+配置文件存储在 `/etc/nginx`
+
+```bash
+# 更新apt-get源
+sudo apt-get update
+# 安装, 安装后将自动开启nginx服务，打开浏览器输入ip即可查看初始页面
+sudo apt-get install nginx
+
+# 查看安装版本 
+nginx -v
+
+# systemctl命令
+# 查看状态
+sudo systemctl status nginx
+# 启动
+sudo systemctl start nginx
+# 停止
+sudo systemctl stop nginx
+# 重启
+sudo systemctl restart nginx
+
+# 检查配置是否正确
+nginx -t
+
+```
+
+配置文件内容 `nginx.conf`， **在conf.d中添加`xx.conf`**
+
+
+
+## py 导出requirements
+
+```bash
+# 包含所有已安装包及其精确版本的文件
+pip freeze > requirements.txt
+# 只导出项目依赖
+pip install pipreqs
+pipreqs /path/to/project --encoding=utf8 --force
+
+
+pip install -r requirements.txt
+```
 
 
 ## 一键配置脚本
