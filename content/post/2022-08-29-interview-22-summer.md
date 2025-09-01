@@ -8,7 +8,7 @@ categories:
   - Note
 description: 
 tags:
-  - JS
+  - 八股
 image:
 ---
 

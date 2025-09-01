@@ -476,38 +476,37 @@ store 更新 → 执行所有选择器 → 对比新旧选择结果 → 值变�
 
 使用`useStore` 时Zustand 内部会：
 
-4. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
+1. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
 
-5. **状态对比**：每次 store 更新时，Zustand 会：
+2. **状态对比**：每次 store 更新时，Zustand 会：
 
     - 用选择器函数从新状态中提取值（如 `newValue = selector(newState)`）
 
     - 用相同的选择器从旧状态中提取值（如 `oldValue = selector(oldState)`）
 
     - **严格相等比较`===`** 这两个值
-6. **决定更新**：只有当 `newValue !== oldValue` 时，才会触发组件重新渲染
+3. **决定更新**：只有当 `newValue !== oldValue` 时，才会触发组件重新渲染
 
 
 
 #### 与Redux区别
 Zustand 的优势在于：
-7. **无依赖注入**：不需要 `Provider` 包裹，store 是**单例全局可访问**
-8. **更细粒度**：每个 `useStore` 调用独立订阅，不像 Redux 的 `connect` 会订阅整个 state
-9. **零样板代码**：不需要定义 action types/reducers
+-  **无依赖注入**：不需要 `Provider` 包裹，store 是**单例全局可访问**
+- **更细粒度**：每个 `useStore` 调用独立订阅，不像 Redux 的 `connect` 会订阅整个 state
+- **零样板代码**：不需要定义 action types/reducers
 
 
 ### 总结
 
 #### 总体流程
-
-10. 首先调用`store.dispatch(action)`，同时用`getState`获取当前的状态树 state 并注册`subscribe(listener)`监听 state 变化
-11. 再调用`combineReducers`并将获取的 state 和 action 传入。combineReducers 会将传入的 state 和 action 传给所有 reducer，并根据 action 的 type 返回新的 state，触发 state 树的更新，我们调用 subscribe 监听到 state 发生变化后用 getState 获取新的 state 数据。
+- 首先调用`store.dispatch(action)`，同时用`getState`获取当前的状态树 state 并注册`subscribe(listener)`监听 state 变化
+- 再调用`combineReducers`并将获取的 state 和 action 传入。combineReducers 会将传入的 state 和 action 传给所有 reducer，并根据 action 的 type 返回新的 state，触发 state 树的更新，我们调用 subscribe 监听到 state 发生变化后用 getState 获取新的 state 数据。
 
 > 只使用 Redux 流程：component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
 #### react-redux 流程
-12. Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
-13. connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
+- Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
+- connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
 
 > react-redux 流程：component --> actionCreator(data) --> reducer --> component
 

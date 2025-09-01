@@ -22,17 +22,37 @@ image:
 | 节流  | 频繁触发但是只出发**第一次**<br />期间多次触发不管 | 1、滚动频繁请求列表可加节流 <br />2、游戏里长按鼠标，但是动作都是每隔一段时间做一次                           |
 
 ```js
-function debounce(fn, delay) {
-  let task = null;
-  return function () {
-    if (task) {
-      clearTimeout();
-      task = null;
+function debounce(func, delay = 50) {
+    let timer = null
+    return function (...params) {
+        timer && clearTimeout(timer)
+        timer = setTimeout(() => func.apply(this, params), delay)
     }
-    task = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, delay);
-  };
+}
+
+//防抖(合并版)
+function debounce_merge(fn,wait = 500,isImmediate = false){
+  var timerId = null;
+  var flag = true;
+  return function(){
+    var context = this
+    var args = arguments
+    clearTimeout(timerId);
+
+    if(isImmediate){
+        if(flag){
+            fn.apply(context,args)
+            flag = false
+        }
+        timerId = setTimeout(function(){
+            flag = true
+        },wait)
+    }else{
+        timerId = setTimeout(function(){
+            fn.apply(context,args)
+        },wait)
+    }
+  }
 }
 ```
 
