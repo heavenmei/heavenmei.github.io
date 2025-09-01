@@ -16,6 +16,7 @@
     --background-opacity-color: #ffffffd3;
     --theme-color: #927bbb;
     --theme-color-light: #9b8eee;
+    --selection-color: #dcc1fd; /* 元素浅色 */
     --navline-width: 0.5rem;
 
     --primary: #8975dc;
@@ -46,6 +47,7 @@
     --background-opacity-color: #ffffffd3;
     --theme-color: #927bbb;
     --theme-color-light: #9b8eee;
+    --selection-color: #dcc1fd; /* 元素浅色 */
     --navline-width: 0.5rem;
 
     --primary: #cfacfa;
@@ -98,7 +100,7 @@ body {
   // box-sizing: border-box;
 
   ::selection {
-    background: var(--primary);
+    background: var(--selection-color);
     color: var(--background-color);
     border-radius: 5px;
   }

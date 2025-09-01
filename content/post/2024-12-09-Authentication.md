@@ -9,11 +9,13 @@ categories:
 description: 
 tags:
   - 八股
-image:
+url:
 ---
 
 > 认证：Authentication，验证当前用户的身份
+> 
 > 授权：Authorization， 用户授予第三方应用访问该用户某些资源的权限
+> 
 > 凭证：Credentials，实现认证和授权的前提是需要一种证书来标记访问者的身份
 
 
@@ -34,10 +36,9 @@ Cookie 是服务器端发送给客户端的一段特殊信息，这些信息以�
 
 有了 Cookie 和 Session 之后，我们就可以进行登录认证了
 
-> 流程
+#### 流程
 
-![](assets/2024-12-09-Authentication-20250119020803.png)
-
+![](assets/2024-12-09-Authentication-20250901051805.png)
 
 
 1. 用户访问页面，并输入密码登录。
@@ -48,18 +49,17 @@ Cookie 是服务器端发送给客户端的一段特殊信息，这些信息以�
 6. 一旦用户注销应用程序，会话将在客户端和服务器端都被销毁
 
 
-> Cookie + Session 存在的问题
+#### Cookie + Session 存在的问题
 
 虽然我们使用 Cookie + Session 的方式完成了登录验证，但仍然存在一些问题：
 
-- 由于服务器端需要对接大量的客户端，也就需要存放大量的 SessionId，这样会导致服务器压力过大。
+- 由于服务器端需要对接大量的客户端，也就需要==存放大量的 SessionId==，这样会导致服务器压力过大。
 - 如果服务器端是一个集群，为了同步登录态，需要将 SessionId 同步到每一台机器上，无形中增加了服务器端维护成本。
-- 由于 SessionId 存放在 Cookie 中，所以无法避免 CSRF 攻击。
+- 由于 SessionId 存放在 Cookie 中，所以==无法避免 CSRF 攻击==。
 
 ## Token 登录
 Token 是服务端生成的一串字符串，以作为客户端请求的一个令牌。当第一次登录后，服务器会生成一个 Token 并返回给客户端，客户端后续访问时，只需带上这个 Token 即可完成身份认证。
-![](assets/2024-12-09-Authentication-20250119021304.png)
-
+![](assets/2024-12-09-Authentication-20250901053057.png)
 1. 用户输入其登录信息
 2. 服务器验证信息是否正确，并返回已签名的token
 3. **token储在客户端**，例如存在local storage或cookie中
@@ -69,7 +69,7 @@ Token 是服务端生成的一串字符串，以作为客户端请求的一个�
 
 
 
-> Token 机制的特点
+#### Token 机制的特点
 
 根据上面的案例，我们可以分析出 Token 的优缺点：
 
@@ -77,14 +77,13 @@ Token 是服务端生成的一串字符串，以作为客户端请求的一个�
 - Token 可以存放在前端任何地方，可以不用保存在 Cookie 中，提升了页面的安全性。
 - Token 下发之后，只要在生效时间之内，就一直有效，如果服务器端想收回此 Token 的权限，并不容易。
 
-
-> Token 的生成方式
+#### Token 的生成方式
 
 最常见的 Token 生成方式是使用 JWT（Json Web Token）。一个jwt实际上就是一个字符串，它由三部分组成，头部、载荷与签名，这三个部分都是json格式。
 
 JWT 算法主要分为 3 个部分：header（头信息），playload（消息体），signature（签名）。
 
-```JavaScript
+```js
 header = '{"alg":"HS256","typ":"JWT"}'   
 // `HS256` 表示使用了 HMAC-SHA256 来生成签名。
 payload = '{"loggedInAs":"admin","iat":1422779638}'     
@@ -98,9 +97,7 @@ payload = '{"loggedInAs":"admin","iat":1422779638}'
 	- 输入服务器端私钥、unsignedToken，输出 signature 签名。
 
 
-
-
-> 适合使用jwt的场景
+#### 适合使用jwt的场景
 
 
 - 有效期短
@@ -113,21 +110,18 @@ payload = '{"loggedInAs":"admin","iat":1422779638}'
 
 单点登录指的是在公司内部搭建一个**公共的认证中心**，公司下的所有产品的登录都可以在认证中心里完成，一个产品在认证中心登录后，再去访问另一个产品，可以不用再次登录，即可获取登录状态。
 
-![](assets/2024-12-09-Authentication-20250119021730.png)
 
-1. 用户访问网站a.com下的 pageA 页面。
-2. 由于没有登录，则会重定向到认证中心，并带上回调地址www.sso.com?return_uri=a.com/pageA，以便登录后直接进入对应页面。
+![|500](assets/2024-12-09-Authentication-20250901060338.png)
+1. 用户访问网站a.com下的 pageA 页面。(==返回401+重定向url==，图中错了)
+2. 由于没有登录，则会重定向到认证中心，并带上回调地址www.sso.com?return_uri=a.com/pageA，以便登录后直接进入对应页面
 3. 用户在认证中心输入账号密码，提交登录。
-4. 认证中心验证账号密码有效，然后**重定向a.com?ticket=123带上授权码 ticket，并将认证中心sso.com的登录态写入 Cookie**。
+4. 认证中心验证账号密码有效，然后**重定向a.com?ticket=123带上授权码 ticket，并将认证中心sso.com的登录态写入 Cookie**（==放在url中重定向，cookie有跨域问题==）。
 5. 在a.com服务器中，拿着 ticket 向认证中心确认，授权码 ticket 真实有效。
 6. 验证成功后，服务器将登录信息写入 Cookie（此时客户端有 2 个 Cookie 分别存有a.com和sso.com的登录态）。
 
 认证中心登录完成之后，继续访问a.com下的其他页面。这个时候，由于a.com存在已登录的 Cookie 信息，所以服务器端直接认证成功。
 
 如果认证中心登录完成之后，访问b.com下的页面。这个时候，由于认证中心存在之前登录过的 Cookie，所以也不用再次输入账号密码，直接返回第 4 步，下发 ticket 给b.com即可。
-
-| ![](assets/2024-12-09-Authentication-20250119021957.png) | ![](assets/2024-12-09-Authentication-20250119022036.png) |
-| ---- | ---- |
 
 
 
@@ -265,6 +259,12 @@ document.cookie = "name=value;expires=evalue; path=pvalue; domain=dvalue; secure
 6. web Storage的api接口使用更方便
 
 
+| 存储方式               | 持久化到磁盘 | 重启后是否还在 | 容量限制（约）       | 主要特点           |
+| ------------------ | ------ | ------- | ------------- | -------------- |
+| **Cookie**         | ✅ 是    | ✅ 是     | 4 KB          | 每次请求都会自动携带到服务器 |
+| **localStorage**   | ✅ 是    | ✅ 是     | 5 MB          | 永久保存，需手动清除     |
+| **sessionStorage** | ❌ 否    | ❌ 否     | 5 MB          | 标签页关闭即失效，存在内存  |
+| **IndexedDB**      | ✅ 是    | ✅ 是     | 无明确上限（通常数百MB） | 支持结构化数据、事务、索引  |
 
 
 ### 如何写一个会过期的localStorage
@@ -275,7 +275,7 @@ document.cookie = "name=value;expires=evalue; path=pvalue; domain=dvalue; secure
 
 惰性删除是指，某个键值过期后，该键值不会被马上删除，而是等到下次被使用的时候，才会被检查到过期，此时才能得到删除。我们先来简单实现一下：
 
-```JavaScript
+```js
 var lsc = (function (self) {
     var prefix = 'one_more_lsc_'
     /**
@@ -320,7 +320,7 @@ var lsc = (function (self) {
 2. 删除所有发现的已过期的key。
 3. 若删除的key超过5个则重复步骤1，直至重复500次。
 
-```JavaScript
+```js
 var lsc = (function (self) {
     var prefix = 'one_more_lsc_'
     var list = [];
@@ -395,7 +395,7 @@ var lsc = (function (self) {
 ![](assets/2024-12-09-Authentication-20250119022853.png)
 
 
-### IndexedDB？（与 localStorage 的对比）
+### IndexedDB
 **IndexedDB** 是一个运行在浏览器中的**非关系型（NoSQL）数据库**。它用于在客户端（用户的浏览器中）存储大量结构化数据。
 
 数据不是以表格形式存储，而是以“对象存储”的形式。它更接近于 MongoDB 这类文档数据库，存储的是键值对（Key-Value）或完整的 JavaScript 对象。

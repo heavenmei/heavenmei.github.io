@@ -455,9 +455,7 @@ li.md-list-item {
 
 /* 引用 */
 .markdown-body blockquote {
-  margin: 1rem;
   padding: 0 0.5rem;
-  border: 1px solid var(--element-color);
   border-left-color: var(--element-color);
   border-left-width: 4px;
   border-radius: 4px;
@@ -467,7 +465,8 @@ li.md-list-item {
 
 .markdown-body blockquote p {
   margin: 0;
-  color: #000;
+  color: #787878;
+  font-size: 12px;
 }
 
 /* 超链接 */

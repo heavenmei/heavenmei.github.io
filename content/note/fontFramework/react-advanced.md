@@ -1,73 +1,87 @@
 ---
 title: React 之 进阶篇
-subtitle: 
+subtitle:
 layout: post
 date: 2022-10-02
 author: heavenmei
 categories:
   - Note
-description: 
+description:
 tags:
   - Web
 image:
 ---
 
+## React FC & class 区别
+
+Function 组件本质是一个 JavaScript 函数，它接收 props 作为参数并返回 React 元素。
+
+Class 组件是一个 ES6 类，它继承自 React.Component，通过 render 方法返回 React 元素。
+
+| 特性            | Function 组件                                                 | Class 组件                                            |
+| --------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| **语法形式**    | JavaScript / ES6 函数                                         | ES6 Class，必须继承  `React.Component`                |
+| **状态管理**    | 使用  `useState` Hook                                         | 使用  `this.state`  和  `this.setState()`             |
+| **生命周期**    | 使用  `useEffect` Hook 模拟                                   | 直接使用生命周期方法（如  `componentDidMount`）       |
+| **this 关键字** | ==没有  this，避免了 this 绑定问题==                          | **有** `this`，需要手动绑定事件处理函数               |
+| **代码简洁度**  | **更简洁**，逻辑关注点更容易聚合                              | **相对冗长**，生命周期逻辑分散在各方法中              |
+| **心智模型**    | **闭包**。在每次渲染中都捕获了当次渲染所用的 props 和 state。 | **可变性**。从  `this`  中读取最新的 props 和 state。 |
+| **未来趋势**    | **React 官方推荐方式**，是未来                                | 旧模式，依然支持，但不再推荐在新项目中使用            |
+
+Function 组件最初是无状态的，但引入 Hooks 之后，它具备了 Class 组件的所有能力，并且通过更简洁的代码、更优的逻辑组织方式（如自定义 Hook）和避免了`this`的复杂性，成为了 React 官方推荐的首选方案。
+
 ## React 渲染
 
 更新流程：
-- **trigger**：两种情况触发更新，==初次渲染、state改变==；标记需要更改的组件，解析JSX代码.
-- **render**： ==计算渲染更改==, 生成新的 虚拟DOM，使用differ算法生成更新的DOM操作
-- **commit**：把更改==提交到 DOM== 上， 生成真实DOM，然后交给浏览器渲染引擎
-![|500](assets/react-base-20250329085140.png)
 
+- **trigger**：触发更新，==初次渲染、state 改变、父组件更新==；标记需要更改的组件，解析 JSX 代码.
+- **render**： ==计算渲染更改==, 生成新的 虚拟 DOM，使用 differ 算法生成更新的 DOM 操作
+- **commit**：把更改==提交到 DOM== 上， 生成真实 DOM，然后交给浏览器渲染引擎
 
-![|500](assets/react-base-20250329085510.png)
-
+|                                           |                                               |
+| ----------------------------------------- | --------------------------------------------- |
+| ![](assets/react-base-20250329085140.png) | ![|900](assets/react-base-20250329085510.png) |
 
 #### render
 
 通过调用 `createRoot` 方法并传入目标 DOM 节点，然后用你的组件调用 `render` 函数完成的；这个过程是**递归**的。
-- **初次渲染时,** React 会调用根组件，将VNode 转化为 `Fiber`树（构造新）
-- **重渲染时,** React 会调用内部状态更新触发了渲染的函数组件。因为，`Fiber` 树已经存在于内存中了，所以 只需计算出 `Fiber` 树中的各个节点的差异
+
+- **初次渲染时,** React 会调用根组件，将 VNode 转化为 `Fiber`树（构造新）
+- **重渲染时,** React 会调用内部状态更新触发了渲染的函数组件。因为，`Fiber`  树已经存在于内存中了，所以   只需计算出  `Fiber`  树中的各个节点的差异
+
 ```js
-const root = createRoot(document.getElementById('root'))
+const root = createRoot(document.getElementById("root"));
 root.render(<Image />);
 ```
 
-
-
 #### commit
 
-根据 `render` 阶段的计算结果，执行更新操作，这个过程是**同步**执行的。
-- **初次渲染**，React 会使用 `appendChild()` DOM API 将其创建的所有 DOM 节点放在屏幕上。
+根据  `render`  阶段的计算结果，执行更新操作，这个过程是**同步**执行的。
+
+- **初次渲染**，React 会使用  `appendChild()` DOM API 将其创建的所有 DOM 节点放在屏幕上。
 - **重渲染**，React 将应用最少的必要操作（在渲染时计算！），以使得 DOM 与最新的渲染输出相互匹配。
 
 **React 仅在渲染之间存在差异时才会更改 DOM 节点。**
 
 然后就会走 浏览器渲染 流程。[# 浏览器 之 渲染流程](https://heavenmei.github.io/post/browser-render)
 
+### useEffect 和 useLayoutEffect 触发时机
 
-### useEffect和useLayoutEffect触发时机
-
-
-|      |  useEffect   |             useLayoutEffect              |
-| ---- | :----------: | :--------------------------------------: |
-| 触发时机 |  浏览器完成渲染之后   | 浏览器把内容真正渲染到界面之前<br/>等价于ComponentDidMount |
-| 阻塞   | ❌（==异步执行==）  |           ✅（==同步执行==）会阻塞浏览器绘制            |
-| 顺序   |      后       |                    先                     |
-|      | 无法获取到最新dom元素 |                    可以                    |
-
+|          |        useEffect        |                       useLayoutEffect                       |
+| -------- | :---------------------: | :---------------------------------------------------------: |
+| 触发时机 |   浏览器完成渲染之后    | 浏览器把内容真正渲染到界面之前<br/>等价于 ComponentDidMount |
+| 阻塞     |   ❌（==异步执行==）    |             ✅（==同步执行==）会阻塞浏览器绘制              |
+| 顺序     |           后            |                             先                              |
+|          | 无法获取到最新 dom 元素 |                            可以                             |
 
 ## 虚拟 DOM
 
-- 真实DOM：真实DOM 是浏览器中实际存在的文档对象模型，它由 HTML 元素组成，具有层次结构。操作真实DOM 需要直接访问浏览器 API，并且对真实DOM 进行操作会引起页面的重新渲染和重绘。
-- 虚拟DOM：虚拟DOM 是一种用 **JavaScript 对象模拟真实DOM 的抽象**
+- 真实 DOM：真实 DOM 是浏览器中实际存在的文档对象模型，它由 HTML 元素组成，具有层次结构。操作真实 DOM 需要直接访问浏览器 API，并且对真实 DOM 进行操作会引起页面的重新渲染和重绘。
+- 虚拟 DOM：虚拟 DOM 是一种用 **JavaScript 对象模拟真实 DOM 的抽象**。==虚拟 DOM 不会进行排版与重绘操作，而真实 DOM 会频繁重排与重绘==
 
 #### 为什么要引入虚拟 DOM？
 
-- 单页面应用中SPA，涉及大量 DOM 操作，引起多次计算，每次 DOM 操作都会重新构建渲染树、布局、渲染流程，造成巨大性能损耗
-
-- DOM 元素很庞大，相较之下 JavaScript 对象处理起来更快、更简单。DOM 对象可以很容易用 Javascript 对象来表示。
+- 单页面应用中 SPA，涉及大量 DOM 操作，引起多次计算，每次 DOM 操作都会重新构建渲染树、布局、渲染流程，造成巨大性能损耗。DOM 元素很庞大，相较之下 JavaScript 对象处理起来更快、更简单。DOM 对象可以很容易用 Javascript 对象来表示。
 
 - **状态树-->虚拟 DOM 树-->Diff 比较差异-->`ReactDOM.render()`-->DOM 树**
 
@@ -91,23 +105,27 @@ var element={
 
 ## Diff 算法
 
-react之所以可以快速更新dom，在于react可以对比虚拟dom，找到差异后，只更新改变的部分。diff算法有很多，比如$DFS算法 O(n^3)  > cito.js  > kivi.jsO(n^2)$。通三个假设优化到$O(n)$。 [react diff 算法详解](https://blog.csdn.net/qdmoment/article/details/88798916)
+react 之所以可以快速更新 dom，在于 react 可以对比虚拟 dom，找到差异后，只更新改变的部分。diff 算法有很多，比如$DFS算法 O(n^3)  > cito.js  > kivi.jsO(n^2)$。通三个假设优化到$O(n)$。 [react diff 算法详解](https://blog.csdn.net/qdmoment/article/details/88798916)
 
 2. 两个不同类型的元素会产生不同的树
 3. 对于同一层级的一组子元素，他们可以通过唯一 ID 进行区分
 
 #### tree diff
+
 **同层比较，如果节点不存在直接删除创建**。这样只需要对 DOM 树进行一次遍历，就可以完成整个树的比较。复杂度变为$O(n)$。因此不建议进行 DOM 节点跨层级的操作
 
 ![](assets/react-advanced-20250329104551.png)
 
 #### Component diff
+
 同一类型的组件继续 tree diff 比较，不同类型的组件直接删除重建。
 
 ![](assets/react-advanced-20250329104558.png)
 
 #### element diff
+
 key 标识，判断是否是同一组件
+
 - 插入：新的 component 类型不在老集合里
 - 移动：在老集合有新 component 类型，且 element 是可更新的类型，可以复用以前的 DOM 节点。
 - 删除：老 component 类型，在新集合里也有，但对应的 element 不同则不能直接复用和更新；或者老 component 不在新集合里的。
@@ -118,11 +136,23 @@ key 标识，判断是否是同一组件
 
 ## Fiber 机制
 
+在 React15 及以前，采用**递归的方式创建虚拟 DOM**，递归过程是不能中断的。如果组件树的层级很深，==长时间占用浏览器主线程==，造成卡顿。React15 架构可以分为两层：
 
+- Reconciler（协调器）—— 负责找出变化的组件；
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面上；
 
-**React15采用 Diff 算法**，对 virtural dom 的更新和渲染是同步的。如果组件层级比较深，相应的堆栈也会很深，==长时间占用浏览器主线程==，一些类似用户输入、鼠标滚动等操作得不到响应。
+Fiber 是**React16 出来的新的调度算法**，用分片的方式，彻底解决主线程长时间占用问题的机制。就是把一个任务分成很多小片，当分配给这个小片的时间用尽的时候，就检查任务列表中有没有新的、优先级更高的任务，有就做这个新任务，没有就继续做原来的任务。这种方式被叫做**异步渲染(Async Rendering)**。
 
-Fiber是**React16出来的新的调度算法**，用分片的方式，彻底解决主线程长时间占用问题的机制。就是把一个任务分成很多小片，当分配给这个小片的时间用尽的时候，就检查任务列表中有没有新的、优先级更高的任务，有就做这个新任务，没有就继续做原来的任务。这种方式被叫做**异步渲染(Async Rendering)**。
+React16 架构可以分为三层：
+
+- Scheduler（调度器）—— **调度任务的优先级**，高优任务优先进入 Reconciler；
+- Reconciler（协调器）—— 负责找出变化的组件：**更新工作从递归变成了可以中断的循环过程。Reconciler 内部采用了 Fiber 的架构**；
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面上。
+
+#### Fiber
+
+- 从运行机制来看，Fiber 是一种流程让出机制，可以实现==可中断式渲染==，并将渲染的控制权让回浏览器，从而达到不阻塞浏览器渲染的目的
+- 从数据结构的角度看，==Fiber 是一种数据结构（链表）==，是一个执行单元
 
 #### Fiber 树
 
@@ -133,6 +163,12 @@ Fiber是**React16出来的新的调度算法**，用分片的方式，彻底解�
 - child：该节点的第一个子 Fiber 节点引用
 - sibling：当前层级的下一个兄弟 Fiber 节点
 
+> Fiber 为什么必须是链表，数组不行吗
+
+与数组相比，链表具有更好的插入和删除性能，因为在数组中执行这些操作通常需要移动大量元素，而在链表中只需要修改一些指针即可。
+
+链表缺点：然而，链表的查找性能通常比数组差，因为需要遍历整个列表才能找到所需的元素。
+
 #### 两个阶段
 
 **Reconciliation** 阶段：找出要做的更新工作，就是一个计算阶段，计算结果可以被缓存，也就可以被打断；该阶段包含的生命周期函数有： `componentWillMount` `componentWillReceiveProps` `componentWillUpdate` `shouldComponentUpdate`该阶段任务随时可能被中断或重来，建议不要在这几个生命周期做副作用。（**异步**）
@@ -141,57 +177,89 @@ Fiber是**React16出来的新的调度算法**，用分片的方式，彻底解�
 
 PS：副作用：指函数除了返回一个值之外，造成的其他影响，如修改外部变量、抛出异常、I/O 操作等，这里的副作用指对 Fiber 节点进行插入、更新、删除。
 
-####  Fiber 机制无法解决的问题
+#### Fiber 机制无法解决的问题
 
 - 生命周期内大量的计算任务：由于 Reac Fiber 是以 Fiber 节点作为最小单元，无法在生命周期内对任务进行差分，这些计算任务在执行中途不能被中断
 - 大量真实 DOM 操作：这部分任务在 Commit 阶段被同步执行，无法中断。过大的 DOM 操作压力只能由浏览器承担。
 
 ==总的来说，React Fiber 通过将任务切片，以及采用合适的任务调度机制，解决了高优先级任务被阻塞的问题，使应用展示更加流畅==。
 
+## React 的任务调度机制
 
-
-### React 的任务调度机制
-
-React 的任务调度系统主要负责 **协调组件的渲染和更新**，确保高优先级任务（如用户交互）能快速响应，低优先级任务（如数据预加载）不会阻塞主线程。其核心是 **并发模式（Concurrent Mode）** 和 **时间切片（Time Slicing）**。
+React 的任务调度系统主要负责  **协调组件的渲染和更新**，确保高优先级任务（如用户交互）能快速响应，低优先级任务（如数据预加载）不会阻塞主线程。其核心是  **并发模式（Concurrent Mode）**  和  **时间切片（Time Slicing）**。
 
 #### 流程
 
 1. **触发更新**
-    - 用户交互（如点击）、数据变化、`setState` 等触发任务。
 
-    - React 根据任务类型分配优先级（如 `onClick` 属于 `UserBlocking` 优先级）。
+   - 用户交互（如点击）、数据变化、`setState`  等触发任务。
 
-2. **任务调度**    
-    - React 使用 **调度器（Scheduler）** 管理任务队列。
+   - React 根据任务类型分配优先级（如  `onClick`  属于  `UserBlocking`  优先级）。
 
-    - 高优先级任务插队，低优先级任务可能被中断或延迟。
+2. **任务调度**
+
+   - React 使用  **调度器（Scheduler）**  管理任务队列。
+
+   - 高优先级任务插队，低优先级任务可能被中断或延迟。
 
 3. **渲染阶段（Render Phase）**
 
-    - **可中断**：React 构建虚拟 DOM（Fiber 树），可被高优先级任务打断。
+   - **可中断**：React 构建虚拟 DOM（Fiber 树），可被高优先级任务打断。
 
-    - **时间切片**：每 5ms 检查是否有更高优先级任务（默认时间片大小）。
+   - **时间切片**：每 5ms 检查是否有更高优先级任务（默认时间片大小）。
 
 4. **提交阶段（Commit Phase）**
 
-    - **不可中断**：将最终变更同步到真实 DOM。
-    - 执行副作用（如 `useEffect`）。
-
-
+   - **不可中断**：将最终变更同步到真实 DOM。
+   - 执行副作用（如  `useEffect`）。
 
 #### 优先级分类（React 18+）
 
 React 内部定义了 5 种优先级（从高到低）：
 
-1. **Immediate**（同步执行）：紧急任务，如 `input` 输入反馈。
+1. **Immediate**（同步执行）：紧急任务，如  `input`  输入反馈。
 2. **UserBlocking**（用户阻塞）：用户交互（如点击、拖拽）。
-3. **Normal**（默认）：普通状态更新（如 setState）。
-4. **Low**（低优先级）：延迟任务（如数据预加载）。        
+3. **Normal**（默认）：普通状态更新（如  setState）。
+4. **Low**（低优先级）：延迟任务（如数据预加载）。
 5. **Idle**（空闲时执行）：最低优先级（如日志上报）。
+
+## React 事件机制（合成事件）
+
+React 的  **合成事件（SyntheticEvent）**  是对浏览器原生事件的跨浏览器封装，提供了一致的事件接口，解决了浏览器兼容性问题。
+
+- ==React 所有事件都挂载在 document / 根节点 对象上==
+- 当真实 DOM 元素触发事件，会==冒泡==到 document 对象后，再处理 React 事件
+- 所以会先执行原生事件，然后处理 React 事件
+- 最后真正执行 document 上挂载的事件
+
+#### 为什么需要合成事件？
+
+- **浏览器兼容性问题**：React 通过合成事件提供了完全一致的 API，开发者无需再关心浏览器兼容性问题。
+- **性能优化**：React 并不会将事件处理器直接绑定到每一个真实的 DOM 节点上。极大地减少了内存开销，因为无论应用有多少个事件监听器，最终都只在根节点上绑定一个。
+  - React 会在组件挂载时，在**文档的根节点（React 17 之前）或 React 渲染树的根节点（React 17 及之后）**  为每种事件类型只绑定一个原生事件处理函数。
+  - 当事件==在子元素上触发时，它会冒泡到根节点==，由这个统一的处理函数根据事件触发的目标元素，找到对应的 React 组件实例，并调用其相应的事件处理函数。
+
+#### 合成事件的工作原理
+
+1. **事件绑定**：当你写  `<button onClick={handleClick}>Click me</button>`  时，React 并没有把  `handleClick`  直接绑到  `button`  的  `onclick`  上。
+2. **统一处理**：React 在根容器上监听所有支持的原始事件（如`click`、`change`等）。
+3. **触发分发**：当原生事件触发并冒泡到根容器时，React 的监听函数会执行。它会：
+   - 收集事件冒泡路径上的所有组件实例。
+   - 创建一个**合成事件对象（SyntheticEvent）**  包装原生事件对象。
+   - 模拟捕获和冒泡流程，**按顺序调用**收集到的路径上所有组件对应的事件处理函数。
+
+|              | React 合成事件               | 原生 DOM 事件                |
+| ------------ | ---------------------------- | ---------------------------- |
+| **事件绑定** | `onClick={handleClick}`      | `element.addEventListener()` |
+| **事件对象** | `SyntheticEvent`（跨浏览器） | 原生  `Event`（浏览器差异）  |
+| **事件委托** | 默认委托到  `root`           | 可手动委托                   |
+| **阻止冒泡** | `e.stopPropagation()`        | `e.stopPropagation()`        |
+| **阻止默认** | `e.preventDefault()`         | `e.preventDefault()`         |
+| **事件池**   | 事件对象会被复用             | 无复用机制                   |
 
 ## Redux
 
-### Flux架构
+### Flux 架构
 
 核心思想：利用单项数据流和逻辑单向流来应对 MVC 架构中出现的状态混乱的问题
 
@@ -199,22 +267,18 @@ React 内部定义了 5 种优先级（从高到低）：
 
 ![](assets/react-advanced-20250329105558.png)
 
-流程：
-1. View 发出用户的 Action（动作）即视图层发出的消息（比如mouseClick）
-2. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。
-3. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新
-4. View 收到通知，更新页面
-
+流程： 4. View 发出用户的 Action（动作）即视图层发出的消息（比如 mouseClick） 5. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。 6. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新 7. View 收到通知，更新页面
 
 ### Redux 介绍
 
 三大特性：
 
 - 单一数据源：全局变量 store
-- state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。 
+- state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
 - 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
- 
- Redux 是一个单一的状态机，它==只关注state的变化==，至于视图层怎么变化，关键在于React-redux。
+
+Redux 是一个单一的状态机，它==只关注 state 的变化==，至于视图层怎么变化，关键在于 React-redux。
+
 #### Action
 
 **action 是 store 数据的唯一来源，本质上是 JS 的普通对象**。一般来说通过  `store.dispatch()`将 action 传到 store。我们约定，action 内必须使用一个字符串类型的  `type`  字段来表示将要执行的动作。
@@ -235,7 +299,7 @@ boundAddTodo(text);
 
 #### Reducer
 
-**Reducers**  指定了应用状态的变化如何响应aaction并发送到 store 的，==记住 actions 只是描述了有事情发生了这一事实，并没有描述应用如何更新 state==。
+**Reducers**  指定了应用状态的变化如何响应 aaction 并发送到 store 的，==记住 actions 只是描述了有事情发生了这一事实，并没有描述应用如何更新 state==。
 
 reducer 接收先前的 state 和 action，并返回新的 state
 
@@ -349,9 +413,10 @@ npm install redux-devtools-extension
 ```
 
 #### Provider
+
 让所有容器组件都可以访问 store，而不必显示地传递它。只需要在渲染根组件时使用即可。
 
-Provider的value一旦变化它内部的==所有==消费组件都会重新渲染，会产生性能问题。
+Provider 的 value 一旦变化它内部的==所有==消费组件都会重新渲染，会产生性能问题。
 
 ```js
 import React from "react";
@@ -371,19 +436,17 @@ render(
 ```
 
 #### connect
+
 （高阶组件）==连接 React 组件和 Redux Store，当前组件可以通过 prop 获取应用中的 state 和 Action==。四个参数
 
 - `mapStateToProps()`:指定如何把当前 Redux store state 映射到展示组件的 props 中
 - `mapDispatchToProps()`：接收 dispatch()方法并返回期望注入到展示组件的 props 中的回调方法。
 
+onnect 模块就是一个高阶组件，主要作用是：
 
-onnect模块就是一个高阶组件，主要作用是：
-
-1. connect通过context获取Provider中的store，通过store.getState()获取state tree
-2. connect模块返回函数wrapWithComponent
-3. wrapWithConnect返回一个ReactComponent对象 Connect，Connect重新render外部传入的原组件WrappedComponent（UI组件），==并把connect中传入的mapStateToProps, mapDispatchToProps与组件上原有的props合并后==，通过属性的方式传给WrappedComponent。
-
-  
+8. connect 通过 context 获取 Provider 中的 store，通过 store.getState()获取 state tree
+9. connect 模块返回函数 wrapWithComponent
+10. wrapWithConnect 返回一个 ReactComponent 对象 Connect，Connect 重新 render 外部传入的原组件 WrappedComponent（UI 组件），==并把 connect 中传入的 mapStateToProps, mapDispatchToProps 与组件上原有的 props 合并后==，通过属性的方式传给 WrappedComponent。
 
 ```js
 const getVisibleTodos = (todos, filter) => {
@@ -420,38 +483,38 @@ const WrapChildClass = connect(mapStateToProps, mapDispatchToProps)(TodoList); /
 export default WrapChildClass;
 ```
 
-
-
 ### Zustand
 
 > [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) 是一个轻量级、简洁且强大的 React 状态管理库，与其他流行的状态管理库（如 Redux、MobX 等）相比，Zustand 的 API 更加简洁明了，学习成本较低，且无需引入繁琐的中间件和配置。
 >
 > 教程：[codthing.github.io/react/zusta…](https://link.juejin.cn/?target=https%3A%2F%2Fcodthing.github.io%2Freact%2Fzustand%2Fzustand-base%2F%23%25E4%25B8%2580%25E5%25AE%2589%25E8%25A3%2585 "https://codthing.github.io/react/zustand/zustand-base/#%E4%B8%80%E5%AE%89%E8%A3%85")
 
-
 `src/store/useStore.ts`
+
 ```js
 import { create } from "zustand";
 
 type GlobalStore = {
-  bears: number;
+  bears: number,
 
-  increasePopulation: (payload: boolean) => void;
-  removeAllBears: (payload: any) => void;
-  updateBears: (payload: number) => void;
+  increasePopulation: (payload: boolean) => void,
+  removeAllBears: (payload: any) => void,
+  updateBears: (payload: number) => void,
 };
 
-export const useStore = create<GlobalStore>((set) => ({
-  bears: 0,
-  increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-  removeAllBears: () => set({ bears: 0 }),
-  updateBears: (newBears) => set({ bears: newBears }),
-}));
-
+export const useStore =
+  create <
+  GlobalStore >
+  ((set) => ({
+    bears: 0,
+    increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+    removeAllBears: () => set({ bears: 0 }),
+    updateBears: (newBears) => set({ bears: newBears }),
+  }));
 ```
 
-
 `main.tsx`
+
 ```js
 import { useStore } from "./store/useStore";
 
@@ -464,74 +527,57 @@ function App() {
     </>
   );
 }
-
 ```
 
-
 #### Zustand 如何实现精准更新到订阅组件
+
 ```bash
 store 更新 → 执行所有选择器 → 对比新旧选择结果 → 值变化则通知对应组件
             (state.count)    (oldCount vs newCount)
 ```
 
-使用`useStore` 时Zustand 内部会：
+使用`useStore` 时 Zustand 内部会：
 
-1. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
+11. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
 
-2. **状态对比**：每次 store 更新时，Zustand 会：
+12. **状态对比**：每次 store 更新时，Zustand 会：
 
-    - 用选择器函数从新状态中提取值（如 `newValue = selector(newState)`）
+    - 用选择器函数从新状态中提取值（如  `newValue = selector(newState)`）
 
-    - 用相同的选择器从旧状态中提取值（如 `oldValue = selector(oldState)`）
+    - 用相同的选择器从旧状态中提取值（如  `oldValue = selector(oldState)`）
 
     - **严格相等比较`===`** 这两个值
-3. **决定更新**：只有当 `newValue !== oldValue` 时，才会触发组件重新渲染
 
+13. **决定更新**：只有当  `newValue !== oldValue`  时，才会触发组件重新渲染
 
+#### 与 Redux 区别
 
-#### 与Redux区别
 Zustand 的优势在于：
--  **无依赖注入**：不需要 `Provider` 包裹，store 是**单例全局可访问**
-- **更细粒度**：每个 `useStore` 调用独立订阅，不像 Redux 的 `connect` 会订阅整个 state
-- **零样板代码**：不需要定义 action types/reducers
 
+- **无依赖注入**：不需要  `Provider`  包裹，store 是**单例全局可访问**
+- **更细粒度**：每个  `useStore`  调用独立订阅，不像 Redux 的  `connect`  会订阅整个 state
+- **零样板代码**：不需要定义 action types/reducers
 
 ### 总结
 
 #### 总体流程
+
 - 首先调用`store.dispatch(action)`，同时用`getState`获取当前的状态树 state 并注册`subscribe(listener)`监听 state 变化
 - 再调用`combineReducers`并将获取的 state 和 action 传入。combineReducers 会将传入的 state 和 action 传给所有 reducer，并根据 action 的 type 返回新的 state，触发 state 树的更新，我们调用 subscribe 监听到 state 发生变化后用 getState 获取新的 state 数据。
 
 > 只使用 Redux 流程：component --> dispatch(action) --> reducer --> subscribe --> getState --> component
 
 #### react-redux 流程
+
 - Provider 组件接受 redux 的 store 作为 props，然后通过 context 往下传。
 - connect 函数收到 Provider 传出的 store，然后接受三个参数 mapStateToProps，mapDispatchToProps 和组件，并将 state 和 actionCreator 以 props 传入组件，这时组件就可以调用 actionCreator 函数来触发 reducer 函数返回新的 state，connect 监听到 state 变化调用 setState 更新组件并将新的 state 传入组件。
 
 > react-redux 流程：component --> actionCreator(data) --> reducer --> component
 
-
-## React 合成事件
-
-React 的 **合成事件（SyntheticEvent）** 是对浏览器原生事件的跨浏览器封装，提供了一致的事件接口，解决了浏览器兼容性问题。
-
-|          | React 合成事件              | 原生 DOM 事件                    |
-| -------- | ----------------------- | ---------------------------- |
-| **事件绑定** | `onClick={handleClick}` | `element.addEventListener()` |
-| **事件对象** | `SyntheticEvent`（跨浏览器）  | 原生 `Event`（浏览器差异）            |
-| **事件委托** | 默认委托到 `root`            | 可手动委托                        |
-| **阻止冒泡** | `e.stopPropagation()`   | `e.stopPropagation()`        |
-| **阻止默认** | `e.preventDefault()`    | `e.preventDefault()`         |
-| **事件池**  | 事件对象会被复用                | 无复用机制                        |
-
-
 ## React 17 /18 /19
-
-
-
 
 ## Reference
 
-[React渲染（Render）全过程解析](https://juejin.cn/post/7259253595141095479)
+[React 渲染（Render）全过程解析](https://juejin.cn/post/7259253595141095479)
 
-
+[# 深入理解 React Fiber 机制](https://juejin.cn/post/7184747220036485177)
