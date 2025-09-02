@@ -299,7 +299,7 @@ Content-Length: 122
 
 拿到html文件就开始浏览器的渲染流程
 
-[浏览器 之 渲染流程](https://heavenmei.github.io/post/bvrowser-render)
+[浏览器 之 渲染流程](/post/browser-render)
 
 ![img](https://img.alicdn.com/tps/TB1eabOLpXXXXX3XFXXXXXXXXXX-1093-167.jpg_720x720.jpg#alt=)
 

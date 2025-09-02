@@ -11,12 +11,10 @@ tags:
   - 八股
 image:
 ---
-> 老生长谈的话题了
-> 
-> [前端性能优化](https://fe-perf.web.bytedance.net/#/network/index?varsion=1)([gitHub](https://code.byted.org/ife/performance-engineering))
-> 
+ 
 > [被删的前端游乐场](https://godbasin.github.io/front-end-playground/front-end-basic/)
 
+![](assets/2025-03-26-font-performance-20250329092154.png)
 
 ## 浏览器请求加载
 
@@ -32,7 +30,7 @@ image:
 - redirectStart：页面重定向时的开始时间
 
 - redirectEnd：页面重定向时的结束时间
-    
+
 
 #### 请求阶段
 
@@ -97,12 +95,6 @@ image:
 PerformancePaintTiming 中包含当前 Web 页面的绘制性能打点信息，可通过 `performance.getEntriesByType('paint')` 方法获取， FP和 FCP 就在其中。
 
 ![|500](assets/2025-03-26-font-performance-20250329092019.png)
-
-
-
-## 性能优化大纲
-
-![](assets/2025-03-26-font-performance-20250329092154.png)
 
 
 ## 网络优化

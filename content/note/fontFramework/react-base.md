@@ -382,8 +382,7 @@ useEffect(() => {
 
 ### useRef
 
-useRef 用于缓存数据, ==当需要存放一个数据，需要无论在哪里都取到最新状态时使用==。
-ref 的改变**不会触发 re-render**，保存不用于渲染的值。你不会经常需要它们。
+useRef **在组件的整个生命周期内，创建一个可变的、持久化的引用对象，这个对象的变更不会触发组件的重新渲染**，保存不用于渲染的值。你不会经常需要它们。
 
 - useRef 的返回值可以被useEffect等依赖忽略掉，current上值的更改也不会通知组件render
 - useRef 的值**存在于整个组件存在周期**
@@ -406,24 +405,21 @@ const domRef = useRef(null);
 <div ref={domRef}></div>
 ```
 
-#### 手写 useRef
-
-```js
-function useRef(initialValue) {
-  const [ref, unused] = useState({ current: initialValue });
-  return ref;
-}
-```
-
 #### refs 和 state 的区别
 
 | redfs                         | state                            |
 | ----------------------------- | -------------------------------- |
 | 返回`{ current: initialValue }` | 返回[value, setValue]              |
-| 更改时不会触发重新渲染。                  | 更改时触发重新渲染。                       |
+| ==更改时不会触发重新渲染==。              | 更改时触发重新渲染。                       |
 | 可变的—可在渲染过程之外修改 current        | “不可变”—您必须使用 setState 以排队重新渲染。    |
 | 您不应该在渲染期间读取（或写入）current。      | 您可以随时读取状态。但是，每个渲染都有自己的状态快照，不会改变。 |
+#### useRef 使用场景
+`useRef` 的核心使用场景主要有四类：
 
+1. **访问DOM元素**：这是最基础的用法，用于直接操作input、div等原生DOM节点，比如管理焦点、媒体控制或集成第三方库。
+2. **存储可变值**：把它当作一个**不会触发重新渲染的‘实例变量’**，用来存储计时器ID、计数器或其他任何与UI无关的可变数据。
+3. **保存上一次的状态**：利用其持久化特性，在`useEffect`中缓存上一次的props或state，用于实现比较逻辑。
+4. **性能优化**：避免在每次渲染时重复创建昂贵的初始值。
 #### forwardRef 转发 ref 到dom子组件
 
 默认情况下 React 不允许组件访问其他组件的 DOM 节点，连自己的孩子都不行。用`forwardRef`让一个组件可以指定它把它的引用“转发”给它的一个孩子.
@@ -460,8 +456,20 @@ export default function Form() {
 }
 ```
 
-### useCallback & useMemo
 
+#### 手写 useRef
+
+```js
+function useRef(initialValue) {
+  const [ref, unused] = useState({ current: initialValue });
+  return ref;
+}
+```
+
+### useCallback & useMemo &  react.memo
+[memo、useMemo及useCallback解析](https://juejin.cn/post/6844904119358980110#heading-8)
+
+- react.memo()是一个高阶组件，我们可以使用它来**包装不想重新渲染的组件**，==props没有变化，则不会重新渲染此组件==
 - useMemo: 数据缓存，依赖变化时，工厂函数会重新执行
 - useCallback:  函数缓存，依赖变化时，缓存的函数会更新
 
@@ -478,7 +486,25 @@ const memoizedCallback = useCallback(() => {
 ```
 
 
+#### React.memo
+`React.memo()` 可以支持指定一个`参数`，可以相当于 `shouldComponentUpdate` 的作用。**只有props变化才会触发组件更新**。
+```js
+function MyComponent(props) {
+  /* render using props */
+}
+function areEqual(prevProps, nextProps) {
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+export default React.memo(MyComponent, areEqual);
+```
 
+
+#### useCallback + memo = 最佳实践
+`useCallback` 本身也有性能开销（内存和计算）。==只有当这个函数会被传递给子组件**并且**子组件使用了 `React.memo` 进行优化时，使用 `useCallback` 才有实际意义==。对于内部使用的函数或简单的回调，直接定义即可。
 
 
 #### 为什么需要useCallback？
@@ -615,9 +641,9 @@ React 中的 bind 同上方原理一致,在 JSX 中传递的事件不是一个�
 
 #### react 组件内点击事件的 this 的 3 种指向方法
 
-4. 调用函数时**bind**(this)，，this 指向当前实例化对象。 `onClick={this.handleClick1.bind( this )}`
-5. 声明函数时使用**箭头函数**，并在调用时直接使用 this.变量名即可。 `handleClick3 =()=>{console.log( this )}`
-6. 通过在构造函数**constructor**内使用 bind 对函数内的 this 重定向  `this.handleClick2 = this.handleClick2.bind(this)`  不建议在 render()中 bind，因为它会在每次 render()方法执行时绑定类方法，肯定对于性能有影响。而直接在 constructor 中 bind, 则 bind 只会在组件实例化初时运行一次。
+5. 调用函数时**bind**(this)，，this 指向当前实例化对象。 `onClick={this.handleClick1.bind( this )}`
+6. 声明函数时使用**箭头函数**，并在调用时直接使用 this.变量名即可。 `handleClick3 =()=>{console.log( this )}`
+7. 通过在构造函数**constructor**内使用 bind 对函数内的 this 重定向  `this.handleClick2 = this.handleClick2.bind(this)`  不建议在 render()中 bind，因为它会在每次 render()方法执行时绑定类方法，肯定对于性能有影响。而直接在 constructor 中 bind, 则 bind 只会在组件实例化初时运行一次。
 
 ### useContext（祖先后代）
 

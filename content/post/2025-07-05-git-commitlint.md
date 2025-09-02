@@ -8,7 +8,7 @@ categories:
   - Note
 description: 
 tags:
-  - Web
+  - skill
 image:
 ---
 [`commitlint`](https://commitlint.js.org/) 是一个用于检查 `git` 提交的 `message` 是否符合项目的规范的工具。规范的提交内容可以直接从 提交内容 生成 `changelog`

@@ -18,17 +18,22 @@ Function 组件本质是一个 JavaScript 函数，它接收 props 作为参数�
 
 Class 组件是一个 ES6 类，它继承自 React.Component，通过 render 方法返回 React 元素。
 
-| 特性            | Function 组件                                                 | Class 组件                                            |
-| --------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
-| **语法形式**    | JavaScript / ES6 函数                                         | ES6 Class，必须继承  `React.Component`                |
-| **状态管理**    | 使用  `useState` Hook                                         | 使用  `this.state`  和  `this.setState()`             |
-| **生命周期**    | 使用  `useEffect` Hook 模拟                                   | 直接使用生命周期方法（如  `componentDidMount`）       |
-| **this 关键字** | ==没有  this，避免了 this 绑定问题==                          | **有** `this`，需要手动绑定事件处理函数               |
-| **代码简洁度**  | **更简洁**，逻辑关注点更容易聚合                              | **相对冗长**，生命周期逻辑分散在各方法中              |
-| **心智模型**    | **闭包**。在每次渲染中都捕获了当次渲染所用的 props 和 state。 | **可变性**。从  `this`  中读取最新的 props 和 state。 |
-| **未来趋势**    | **React 官方推荐方式**，是未来                                | 旧模式，依然支持，但不再推荐在新项目中使用            |
+| 特性           | Function 组件                             | Class 组件                                 |
+| ------------ | --------------------------------------- | ---------------------------------------- |
+| **语法形式**     | JavaScript / ES6 函数                     | ES6 Class，必须继承  `React.Component`        |
+| **状态管理**     | 使用  `useState` Hook                     | 使用  `this.state`  和  `this.setState()`   |
+| **生命周期**     | 使用  `useEffect` Hook 模拟                 | 直接使用生命周期方法（如  `componentDidMount`）       |
+| **this 关键字** | ==没有  this，避免了 this 绑定问题==              | **有** `this`，需要手动绑定事件处理函数                |
+| **代码简洁度**    | **更简洁**，逻辑关注点更容易聚合                      | **相对冗长**，生命周期逻辑分散在各方法中                   |
+| **心智模型**     | **闭包**。在每次渲染中都捕获了当次渲染所用的 props 和 state。 | **可变性**。从  `this`  中读取最新的 props 和 state。 |
+| **未来趋势**     | **React 官方推荐方式**，是未来                    | 旧模式，依然支持，但不再推荐在新项目中使用                    |
 
 Function 组件最初是无状态的，但引入 Hooks 之后，它具备了 Class 组件的所有能力，并且通过更简洁的代码、更优的逻辑组织方式（如自定义 Hook）和避免了`this`的复杂性，成为了 React 官方推荐的首选方案。
+
+在性能优化上，**思路是一致的：减少不必要的渲染**，但具体手段不同：
+
+- **Function 组件** 依靠 `React.memo`、`useCallback` 和 `useMemo` 来缓存组件、函数和值，防止无效的重新渲染。
+- **Class 组件** 则主要依赖 `shouldComponentUpdate` 生命周期或直接使用 `PureComponent` 进行浅层比较来控制渲染。
 
 ## React 渲染
 
@@ -38,9 +43,9 @@ Function 组件最初是无状态的，但引入 Hooks 之后，它具备了 Cla
 - **render**： ==计算渲染更改==, 生成新的 虚拟 DOM，使用 differ 算法生成更新的 DOM 操作
 - **commit**：把更改==提交到 DOM== 上， 生成真实 DOM，然后交给浏览器渲染引擎
 
-|                                           |                                               |
-| ----------------------------------------- | --------------------------------------------- |
-| ![](assets/react-base-20250329085140.png) | ![|900](assets/react-base-20250329085510.png) |
+|                                           |                                              |
+| ----------------------------------------- | -------------------------------------------- |
+| ![](assets/react-base-20250329085140.png) | ![900](assets/react-base-20250329085510.png) |
 
 #### render
 
@@ -171,9 +176,9 @@ React16 架构可以分为三层：
 
 #### 两个阶段
 
-**Reconciliation** 阶段：找出要做的更新工作，就是一个计算阶段，计算结果可以被缓存，也就可以被打断；该阶段包含的生命周期函数有： `componentWillMount` `componentWillReceiveProps` `componentWillUpdate` `shouldComponentUpdate`该阶段任务随时可能被中断或重来，建议不要在这几个生命周期做副作用。（**异步**）
+**Reconciliation** 阶段：找出要做的更新工作，就是一个计算阶段，计算结果可以被缓存，也就==可以被打断==；该阶段包含的生命周期函数有： `componentWillMount` `componentWillReceiveProps` `componentWillUpdate` `shouldComponentUpdate`该阶段任务随时可能被中断或重来，建议不要在这几个生命周期做副作用。（**异步**）
 
-**Commmit** 阶段：需要提交所有更新并渲染，为了防止页面抖动，被设置为不能被打断。
+**Commmit** 阶段：需要提交所有更新并渲染，为了防止页面抖动，被设置为==不能被打断==。
 
 PS：副作用：指函数除了返回一个值之外，造成的其他影响，如修改外部变量、抛出异常、I/O 操作等，这里的副作用指对 Fiber 节点进行插入、更新、删除。
 
@@ -267,15 +272,19 @@ React 的  **合成事件（SyntheticEvent）**  是对浏览器原生事件�
 
 ![](assets/react-advanced-20250329105558.png)
 
-流程： 4. View 发出用户的 Action（动作）即视图层发出的消息（比如 mouseClick） 5. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。 6. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新 7. View 收到通知，更新页面
+流程： 
+1. View 发出用户的 Action（动作）即视图层发出的消息（比如 mouseClick） 
+2. Dispatcher（派发器） 接收 Action，执行回调函数，要求 Store 进行相应的更新。 
+3. Store （数据层）用来存放应用的状态，一旦变动通知 View 更新 
+4. View 收到通知，更新页面
 
 ### Redux 介绍
 
 三大特性：
 
-- 单一数据源：全局变量 store
-- state 只读：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
-- 使用纯函数修改：一个函数只有依赖于它的参数，相同输入得到相同输出
+- **单一数据源**：全局变量 store
+- **state 只读**：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事件的普通对象。
+- **使用纯函数修改**：一个函数只有依赖于它的参数，相同输入得到相同输出
 
 Redux 是一个单一的状态机，它==只关注 state 的变化==，至于视图层怎么变化，关键在于 React-redux。
 
@@ -442,11 +451,11 @@ render(
 - `mapStateToProps()`:指定如何把当前 Redux store state 映射到展示组件的 props 中
 - `mapDispatchToProps()`：接收 dispatch()方法并返回期望注入到展示组件的 props 中的回调方法。
 
-onnect 模块就是一个高阶组件，主要作用是：
+connect 模块就是一个高阶组件，主要作用是：
 
-8. connect 通过 context 获取 Provider 中的 store，通过 store.getState()获取 state tree
-9. connect 模块返回函数 wrapWithComponent
-10. wrapWithConnect 返回一个 ReactComponent 对象 Connect，Connect 重新 render 外部传入的原组件 WrappedComponent（UI 组件），==并把 connect 中传入的 mapStateToProps, mapDispatchToProps 与组件上原有的 props 合并后==，通过属性的方式传给 WrappedComponent。
+1. connect 通过 context 获取 Provider 中的 store，通过 store.getState()获取 state tree
+2. connect 模块返回函数 wrapWithComponent
+3. wrapWithConnect 返回一个 ReactComponent 对象 Connect，Connect 重新 render 外部传入的原组件 WrappedComponent（UI 组件），==并把 connect 中传入的 mapStateToProps, mapDispatchToProps 与组件上原有的 props 合并后==，通过属性的方式传给 WrappedComponent。
 
 ```js
 const getVisibleTodos = (todos, filter) => {
@@ -538,9 +547,9 @@ store 更新 → 执行所有选择器 → 对比新旧选择结果 → 值变�
 
 使用`useStore` 时 Zustand 内部会：
 
-11. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
+4. **创建订阅**：组件首次渲染时，Zustand 会将该选择器函数注册到 store 的监听器列表中
 
-12. **状态对比**：每次 store 更新时，Zustand 会：
+5. **状态对比**：每次 store 更新时，Zustand 会：
 
     - 用选择器函数从新状态中提取值（如  `newValue = selector(newState)`）
 
@@ -548,7 +557,7 @@ store 更新 → 执行所有选择器 → 对比新旧选择结果 → 值变�
 
     - **严格相等比较`===`** 这两个值
 
-13. **决定更新**：只有当  `newValue !== oldValue`  时，才会触发组件重新渲染
+6. **决定更新**：只有当  `newValue !== oldValue`  时，才会触发组件重新渲染
 
 #### 与 Redux 区别
 

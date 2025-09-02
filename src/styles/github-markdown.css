@@ -536,7 +536,7 @@ li.md-list-item {
 
 /* 删除线 */
 .markdown-body del {
-  text-decoration-color: var(--element-color-deep);
+  /* text-decoration-color: var(--color-fg-muted); */
 }
 
 /* 分隔线*/
