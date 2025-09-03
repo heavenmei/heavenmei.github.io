@@ -149,10 +149,22 @@ Web 开发中 又叫 客户端激活，Hydration 是指==客户端 js 通过绑�
 	- 版本过滤掉，不加载这个包
 
 
+#### hydrate和render的区别
 
+服务端渲染的时候，服务端会渲染React元素并且生成一个HTML字符串返回给客户端，之后客户端会用这个HTML来生成DOM。`render()`会直接创建一个新的React组件数和相应的DOM节点。
 
-  
-  
+在同构渲染的时候，客户端还会重新执行一遍JS代码，重新生成一个React组件树和相应的DOM节点。而`render()`和`hydrate()`的区别就在这里。`hydrate()`则是在生成的时候，会判断这个节点是否已经在服务端渲染好，==会尽可能地保留现有的DOM，只更新必要的部分==。
+
+这也就是React官网所说的：
+
+> Call hydrate in React 17 and below to “attach” React to existing HTML that was already rendered by React in a server environment.
+> 
+> React will attach to the HTML that exists inside the domNode, and take over managing the DOM inside it.
+
+在React 17及以下版本中调用`hydrate`，可以将React“附加”到在服务器环境中已经由React渲染的现有HTML上。
+
+React将会附加到`domNode`内部现有的HTML，并接管有关的DOM的管理。
+
 ### 虚拟DOM
 
 SSR 之所以能够实现，本质上是因为虚拟 DOM 的存在。
@@ -163,6 +175,104 @@ React 在做页面操作时，实际上不是直接操作 DOM，而是操作虚�
     
 - 在客户端，我也可以操作 JavaScript 对象，判断环境是客户端环境，我就直接将虚拟 DOM 映射成真实 DOM，完成页面挂载
     
+
+## 实践
+
+#### 起个CSR项目观察
+
+`npm run serve` [参考项目](https://github.com/heavenmei/ssr-sample)
+
+- **不利于SEO**：打开源代码发现里面没有任何dom，（虽然f12element中可以定位）
+
+- **首屏加载时间较长**：由于CSR应用页面里所有的内容，都是通过JS动态生成的，那么在访问页面的时候，除了下载HTML外，还需要额外下载JS脚本才可以展示出页面页面在获取到2.21s获取到HTML后，并没有渲染任何内容，而是在又等了7.14s等到JS下载完成之后，才渲染出内容，页面的FCP总计是9k+ ms。
+![|500](assets/2025-08-31-SSR-CSR-SSG-20250903010708.png)
+
+
+
+#### SSR 改造
+`server.js` 中服务端调用ReactDOMServer的`renderToString`方法，将我们的`Home`组件渲染为了HTML字符串，并且拼接到了一个HTML模板中，返回给了客户端。
+```js
+import express from "express";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { Home } from "./Home";
+
+const app = express();
+
+app.get("/", (req, res) => {
+  const app = ReactDOMServer.renderToString(<Home />);
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>React SSR</title>
+      </head>
+      <body>
+        <div id="root">${app}</div>
+      </body>
+    </html>
+  `;
+  res.send(html);
+});
+
+const PORT = process.env.PORT || 3007;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+  console.log(`http://localhost:${PORT}`);
+  console.log(`http://127.0.0.1:${PORT}`);
+});
+
+```
+
+`npm run dev:server`和`npm run start`启动后发现，源代码中有具体dom，但是页面没有css样式，button也无法点击。因为==`renderToString`的时候会把事件处理器给过滤掉==。
+![](assets/2025-08-31-SSR-CSR-SSG-20250903123810.png)
+
+#### 同构
+同构渲染就是同一份代码，既在服务端运行（SSR），又在客户端运行（CSR）。因此需要同时编译client和server.webpack。
+
+`server-hydrate.js`我们不再直接返回一个模板HTML，而是在上面**CSR项目编译出来的HTML中直接加上服务端渲染的内容，同时在服务端提供静态资源访问服务**
+
+```js
+
+const clientDistDir = path.resolve(__dirname, "../dist/client");
+const htmlPath = path.resolve(clientDistDir, "index.html");
+
+const app = express();
+
+app.get("/", (req, res) => {
+  // 读取 dist/client/index.html 文件
+  const html = fs.readFileSync(htmlPath, "utf-8");
+  const app = ReactDOMServer.renderToString(<Home />);
+  // 将渲染后的 React HTML 插入到 div#root 中
+  const finalHtml = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${app}</div>`
+  );
+  res.send(finalHtml);
+});
+
+// 提供静态资源访问服务
+app.use(express.static(clientDistDir));
+
+
+```
+
+`index.tsx`改为水合
+```js
+// CSR
+// ReactDOM.render(<Home />, document.getElementById("root"));
+// SSR
+ReactDOM.hydrate(<Home />, document.getElementById("root"));
+```
+
+运行起来会发现，首先加载html提供无样式无交互的页面，等待main.js加载完成后覆盖
+```bash
+npm run dev
+npm run dev:server
+npm start
+```
+
 
 ## Reference
 
@@ -175,3 +285,5 @@ React 在做页面操作时，实际上不是直接操作 DOM，而是操作虚�
 [CSR，SSR和SSG是什么，有什么优缺点？](https://juejin.cn/post/7039151040188383268)
 
 [彻底理解服务端渲染 - SSR原理](https://github.com/yacan8/blog/issues/30)
+
+[一起从零实现React SSR服务端渲染](https://juejin.cn/post/7316097536548552743#heading-4)

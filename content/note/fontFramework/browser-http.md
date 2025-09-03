@@ -14,6 +14,8 @@ image:
 详细指南：[小林Coding 图解网络](https://xiaolincoding.com/network/)
 
 浏览器存储机制： [cookie VS. sessionStorage VS. localStorage](/post/2024-12-09-Authentication#cookie-vs-sessionstorage-vs-localstorage)
+
+抓包代理：[代理 & 抓包Charles 、Eden Proxy、Mock](/post/2022-09-12-proxy-charles)
 ## HTTP （应用层）
 
 ### 缓存
@@ -163,10 +165,14 @@ Content-Length: 122
 
 
 ### HTTP & HTTPS
+- 对称加密：只有一个钥匙
+- 非对称加密：公钥加密，私钥解密
 
 HTTPS = HTTP + SSL/TLS （CA数字证书保证服务器身份可信）
 
+公私钥可以被劫持伪造，不保证可靠。因此==服务端将公钥注册到CA拿到数字证书发送出去，客户端验证真实性==。
 
+![](assets/browser-http-20250903032329.png)
 ### HTTP 1.1/ 2.0 / 3.0
 
 ![|500](assets/browser-http-20250328105619.png)

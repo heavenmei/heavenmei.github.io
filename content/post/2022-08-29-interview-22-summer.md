@@ -82,6 +82,46 @@ matrix=[
 ]
 num = 4//可以找到
 num = 13//找不到
+
+
+function searchMatrix(matrix, target) {
+    // 处理空矩阵的特殊情况
+    if (!matrix || matrix.length === 0 || matrix[0].length === 0) {
+        return false;
+    }
+    
+    let rows = matrix.length;
+    let cols = matrix[0].length;
+    
+    // 起始点：右上角
+    let row = 0;
+    let col = cols - 1;
+    
+    while (row < rows && col >= 0) {
+        let current = matrix[row][col];
+        
+        if (target === current) {
+            return true; // 找到目标
+        } else if (target < current) {
+            col--; // 目标值更小，排除当前列，向左移动
+        } else {
+            row++; // 目标值更大，排除当前行，向下移动
+        }
+    }
+    
+    // 如果跳出循环，说明找不到
+    return false;
+}
+
+// 测试你的例子
+const matrix = [
+    [1, 3, 5, 10],
+    [2, 4, 6, 11],
+    [7, 8, 9, 12]
+];
+
+console.log(searchMatrix(matrix, 4));  // 输出: true
+console.log(searchMatrix(matrix, 13)); // 输出: false
 ```
 
 ## 字节 二面 4.7
@@ -97,6 +137,20 @@ num = 13//找不到
 5、文字垂直水平居中
 
 6、自适应正方形
+-  **宽百分比，高用 padding；新浏览器，直接 aspect-ratio 搞定。**
+```css
+.square{
+    width: 50%;               /* 任意值，甚至可以是 vw / rem */
+    padding-top: 50%;         /* 百分比 padding 的基准是“父元素宽度” → 高度=宽度 */
+    height: 0;                /* 让内容区高度为 0，纯靠 padding 撑开 */
+    position: relative;       /* 子元素可 absolute 定位填充满 */
+}
+
+.square{
+    width: 50%;               /* 或 200px / 30vw … */
+    aspect-ratio: 1 / 1;      /* 1:1 即正方形，CSS 自动算高 */
+}
+```
 
 7、网页布局关注哪些点做出一个高品质的网站
 
